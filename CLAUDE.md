@@ -81,7 +81,7 @@ For a visual check without Electron, headless Chrome renders a page directly:
 
 - **nginx `add_header` does not merge across levels.** A `location` with any
   `add_header` of its own discards every one inherited from the server block.
-  `clew.nginx.conf` expresses cache policy with `expires` for exactly this
+  `clew-app.com.nginx.conf` expresses cache policy with `expires` for this
   reason; if you add an `add_header` to a location, re-add the three security
   headers with it.
 - **`make sync` uses `--delete`.** The `check` target guards against syncing

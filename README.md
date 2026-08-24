@@ -1,10 +1,14 @@
 # Clew — website and manual
 
-The public documentation for [Clew](https://github.com/jmckalex/clew): a landing
-page and a 28-chapter manual, served as one static tree.
+The public documentation for Clew: a landing page and a 28-chapter manual,
+served as one static tree.
 
-Live at **<https://clew.jmckalex.org>** (see [First-time server setup](#first-time-server-setup)
-— the DNS record is not in place yet).
+Live at **<https://clew-app.com>** — or it will be: the domain is registered
+but still on the registrar's parking IPs. See
+[First-time server setup](#first-time-server-setup).
+
+`clew-app.net` is registered too and redirects to `.com`, so the two do not
+become separately-indexed copies of the same site.
 
 This is a sibling of `Clew-app` and `Clew-iOS` under `~/Source/Clew/`, and it is
 its own git repository. The docs describe *Clew*, not the desktop app
@@ -24,7 +28,8 @@ site/                 ← the web root; everything here is published
 └── downloads/        release binaries — not in git, staged from Clew-app/out/
 
 check-links.js        link checker: `make check-links`
-clew.nginx.conf       the server config, mirrored at /etc/nginx/sites-available/clew
+clew-app.com.nginx.conf   the server config, mirrored on the droplet at
+                          /etc/nginx/sites-available/clew-app.com
 Makefile              deployment; `make help` lists the targets
 CLAUDE.md             guidance for Claude Code, including the editing conventions
 ```
@@ -81,37 +86,53 @@ use `--delete`, so a link that has been posted somewhere keeps working.
 ## First-time server setup
 
 The droplet (`do` → 144.126.236.254, Ubuntu 24.04, nginx 1.24) already hosts
-several sites in this pattern; this adds one more.
+several sites in this pattern; this adds one more. Nothing on it has been
+touched yet.
 
-**1. DNS.** Add an A record for `clew` under `jmckalex.org` pointing at
-`144.126.236.254`. This is the only step that cannot be done from here — it
-needs registrar access. Nothing below will work until it resolves:
-
-```sh
-dig +short clew.jmckalex.org      # must print 144.126.236.254
-```
-
-**2. Web root and config.**
+In order:
 
 ```sh
-make provision        # mkdir /var/www/clew{,/downloads}, chown web:web
+make dns-check        # gate: are the domains pointed here yet?
+make provision        # mkdir /var/www/clew-app.com{,/downloads}, chown web:web
 make nginx-install    # install the config, nginx -t, reload only if it passes
 make sync             # upload the site
+make tls              # certificate for all four names
 ```
 
-`nginx-install` runs `nginx -t` before reloading, because a bad config that
-reaches nginx unchecked takes down every other site on the droplet, not just
-this one.
+**1. DNS — the only step that cannot be done from here.** Both domains are
+registered with GoDaddy (`ns75`/`ns76.domaincontrol.com`) and still resolve to
+its parking IPs. In the GoDaddy DNS panel, point the A record for each apex at
+`144.126.236.254`. `www` is already a CNAME to the apex on both, so it
+follows automatically.
 
-**3. TLS.** Once DNS resolves and the site answers on port 80:
+`make dns-check` verifies all four names and refuses to go on until they
+agree. Propagation is usually minutes, but the TTL on the parked records can
+hold the old answer for up to an hour.
 
-```sh
-ssh do 'certbot --nginx -d clew.jmckalex.org'
+**2. Web root and config.** `nginx-install` runs `nginx -t` before reloading,
+because a bad config that reaches nginx unchecked takes down every other site
+on the droplet, not just this one.
+
+**3. TLS.** `make tls` runs certbot for all four names at once:
+
+```
+clew-app.com  www.clew-app.com  clew-app.net  www.clew-app.net
 ```
 
-Certbot rewrites `/etc/nginx/sites-available/clew` in place, adding the 443
-block and the http→https redirect. The copy in this repo stays at port 80 by
-design; `make nginx-diff` shows how far the server has moved from it.
+The two `.net` names are on the certificate deliberately, even though they
+only ever redirect. A browser in HTTPS-first mode tries `https://clew-app.net`
+before it will try `http://` — without a certificate covering it, that fails
+outright instead of redirecting. This matches the `opensocietyasanenemy.info`
+certificate on the same droplet, which covers all six of its names.
+
+`make tls` is gated on `dns-check` because a failed certbot run counts against
+Let's Encrypt's rate limit (5 failed validations per hostname per hour), so a
+premature attempt costs you the next few as well.
+
+Certbot rewrites `/etc/nginx/sites-available/clew-app.com` in place, adding
+the 443 blocks and the http→https redirects, and installs a renewal timer. The
+copy in this repo stays at port 80 by design; `make nginx-diff` shows how far
+the server has moved from it.
 
 ## Relationship to Clew-app
 

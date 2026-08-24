@@ -1,4 +1,4 @@
-# Makefile for clew.jmckalex.org — the Clew website and manual
+# Makefile for clew-app.com — the Clew website and manual
 #
 # Usage:
 #   make dry-run          Preview what a sync would change (no upload)
@@ -7,19 +7,28 @@
 #   make sync-downloads   Upload the staged binaries (slow — ~640 MB)
 #   make serve            Serve site/ locally at http://localhost:8000
 #   make check-links      Verify every local href/src resolves on disk
+#   make dns-check        Have the domains been pointed at the droplet yet?
 #   make provision        One-time: create the remote web root (idempotent)
 #   make nginx-install    Install/refresh the nginx site config on the droplet
+#   make tls              One-time: get the certificate for all four names
 #   make ls               List remote files
 #   make tail-log         Tail the nginx access log for this site
 #   make help             Show available targets
+#
+# First time, in order: dns-check, provision, nginx-install, sync, tls.
 
 REMOTE_HOST  := do
-REMOTE_PATH  := /var/www/clew
+REMOTE_PATH  := /var/www/clew-app.com
 REMOTE_OWNER := web:web
-DOMAIN       := clew.jmckalex.org
-SITE_URL     := https://clew.jmckalex.org
-LOG_NAME     := clew
-NGINX_CONF   := clew.nginx.conf
+SITE_URL     := https://clew-app.com
+SITE_NAME    := clew-app.com
+NGINX_CONF   := clew-app.com.nginx.conf
+
+# clew-app.com is canonical; clew-app.net redirects to it. All four names go
+# on one certificate — an alternate domain without one fails outright in a
+# browser that tries https first, instead of redirecting.
+CERT_DOMAINS := clew-app.com www.clew-app.com clew-app.net www.clew-app.net
+DROPLET_IP   := 144.126.236.254
 
 # The published tree. The other sites in ~/Sites/digital_ocean list their
 # files explicitly; this one cannot — the manual alone is 28 pages and 24
@@ -67,7 +76,8 @@ RSYNC_FLAGS := -avz --delete \
 MIN_FILES := 50
 
 .PHONY: help check check-links sync dry-run stage-downloads sync-downloads \
-        serve preview ls tail-log provision nginx-install nginx-diff
+        serve preview ls tail-log provision nginx-install nginx-diff \
+        dns-check tls
 
 help:
 	@echo "Targets:"
@@ -78,10 +88,14 @@ help:
 	@echo "  make serve            - Serve $(LOCAL_DIR)/ at http://localhost:8000"
 	@echo "  make check            - Verify the local tree is safe to sync"
 	@echo "  make check-links      - Verify local links resolve on disk"
+	@echo "  make dns-check        - Do the domains point at the droplet yet?"
 	@echo "  make provision        - Create the remote web root (one-time)"
 	@echo "  make nginx-install    - Install the nginx config on the droplet"
+	@echo "  make tls              - Certificate for all four names (one-time)"
 	@echo "  make ls               - List remote files with permissions"
 	@echo "  make tail-log         - Tail the nginx access log"
+	@echo ""
+	@echo "First time, in order: dns-check, provision, nginx-install, sync, tls."
 
 check:
 	@[ -f "$(LOCAL_DIR)/index.html" ] || { \
@@ -152,7 +166,7 @@ ls:
 	ssh $(REMOTE_HOST) 'ls -la $(REMOTE_PATH)'
 
 tail-log:
-	ssh $(REMOTE_HOST) 'sudo tail -f /var/log/nginx/$(LOG_NAME).access.log'
+	ssh $(REMOTE_HOST) 'sudo tail -f /var/log/nginx/$(SITE_NAME).access.log'
 
 provision:
 	ssh $(REMOTE_HOST) 'mkdir -p $(REMOTE_PATH)/downloads && chown -R $(REMOTE_OWNER) $(REMOTE_PATH) && chmod 755 $(REMOTE_PATH) $(REMOTE_PATH)/downloads && ls -ld $(REMOTE_PATH) $(REMOTE_PATH)/downloads'
@@ -163,13 +177,48 @@ provision:
 nginx-install:
 	scp $(NGINX_CONF) $(REMOTE_HOST):/tmp/$(NGINX_CONF)
 	ssh $(REMOTE_HOST) 'set -e; \
-	  install -m 644 /tmp/$(NGINX_CONF) /etc/nginx/sites-available/$(LOG_NAME); \
-	  ln -sfn /etc/nginx/sites-available/$(LOG_NAME) /etc/nginx/sites-enabled/$(LOG_NAME); \
+	  install -m 644 /tmp/$(NGINX_CONF) /etc/nginx/sites-available/$(SITE_NAME); \
+	  ln -sfn /etc/nginx/sites-available/$(SITE_NAME) /etc/nginx/sites-enabled/$(SITE_NAME); \
 	  rm -f /tmp/$(NGINX_CONF); \
 	  nginx -t && systemctl reload nginx && echo "nginx reloaded"'
 
-# Certbot rewrites the live config in place (adding the 443 block), so the
+# Everything else is blocked on this. The domains are registered with GoDaddy
+# and still resolve to its parking IPs; the A records have to be repointed at
+# the droplet by hand. www is a CNAME to the apex at the registrar, so it
+# follows automatically — but it is checked here too rather than assumed,
+# because certbot fails the whole request if any one name does not resolve.
+dns-check:
+	@ok=1; \
+	 for d in $(CERT_DOMAINS); do \
+	   got=$$(dig +short $$d A | tail -1); \
+	   if [ "$$got" = "$(DROPLET_IP)" ]; then \
+	     printf "  OK       %-22s -> %s\n" "$$d" "$$got"; \
+	   else \
+	     printf "  WRONG    %-22s -> %s\n" "$$d" "$${got:-(no A record)}"; ok=0; \
+	   fi; \
+	 done; \
+	 if [ $$ok -eq 1 ]; then \
+	   echo ""; echo "All four names point at the droplet. Safe to run 'make tls'."; \
+	 else \
+	   echo ""; \
+	   echo "Point the A records at $(DROPLET_IP) in the GoDaddy DNS panel."; \
+	   echo "Propagation is usually minutes, but the TTL on the parked records"; \
+	   echo "may hold the old answer for up to an hour."; \
+	   exit 1; \
+	 fi
+
+# One-time. Certbot rewrites /etc/nginx/sites-available/$(SITE_NAME) in place,
+# adding the 443 blocks and the http -> https redirects, and installs a renewal
+# timer. Gated on dns-check because a certbot failure counts against Let's
+# Encrypt's rate limit (5 failed validations per account per hostname per hour)
+# — a premature run costs you the next few attempts as well.
+tls: dns-check
+	ssh -t $(REMOTE_HOST) 'certbot --nginx $(foreach d,$(CERT_DOMAINS),-d $(d))'
+	@echo ""
+	@echo "Now live at $(SITE_URL) — check with: make nginx-diff"
+
+# Certbot rewrites the live config in place (adding the 443 blocks), so the
 # copy here drifts from the server by design. This shows how far.
 nginx-diff:
-	@ssh $(REMOTE_HOST) 'cat /etc/nginx/sites-available/$(LOG_NAME) 2>/dev/null' \
+	@ssh $(REMOTE_HOST) 'cat /etc/nginx/sites-available/$(SITE_NAME) 2>/dev/null' \
 	  | diff -u $(NGINX_CONF) - && echo "identical to the droplet's copy"
