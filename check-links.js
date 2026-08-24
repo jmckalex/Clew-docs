@@ -113,6 +113,28 @@ for (const page of pages) {
 	}
 }
 
+// A chapter written by copying another page inherits its og:url and og:title,
+// and nothing about the rendered page looks wrong — the tags only surface when
+// someone shares the link. `node apply-og.js site` regenerates them; this just
+// reports that they need it. The domain is deliberately not repeated here: the
+// path suffix is what the copy-paste bug gets wrong.
+for (const page of pages) {
+	if (!page.startsWith(manualDir + path.sep)) continue;
+	const file = path.basename(page);
+	const rel = path.relative(root, page);
+	const html = fs.readFileSync(page, 'utf8');
+	const ogUrl = html.match(/<meta\s+property="og:url"\s+content="([^"]*)"/i)?.[1];
+
+	if (!ogUrl) {
+		problems.push(`${rel}  no og:url  (run: node apply-og.js ${path.relative(process.cwd(), root)})`);
+		continue;
+	}
+	const expected = file === 'index.html' ? '/manual/' : `/manual/${file}`;
+	if (!ogUrl.endsWith(expected)) {
+		problems.push(`${rel}  og:url points elsewhere  ${ogUrl}  (expected it to end ${expected})`);
+	}
+}
+
 console.log(`${pages.length} pages, ${checked} local links checked.`);
 
 if (outward.size) {

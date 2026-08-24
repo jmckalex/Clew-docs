@@ -35,6 +35,11 @@ Specifically:
 - **Every chapter ends with a Reference table and an
   `<h2 id="see-also">`.** No exceptions — the see-also anchors are linked
   across chapters and `make check-links` verifies every one of them resolves.
+- **After adding a chapter, run `make og-tags`.** The social tags between the
+  `og:begin`/`og:end` markers are generated from the page's own `<title>` and
+  description; never hand-edit them, and never let a copied skeleton keep the
+  previous chapter's. `make check-links` fails on a page whose `og:url` does
+  not match its filename.
 
 ### House style
 
@@ -92,6 +97,10 @@ For a visual check without Electron, headless Chrome renders a page directly:
 - The version number appears in `site/index.html` (download links and the
   footer) and in the Makefile's `VERSION`. They must agree, and neither is
   derived from the other.
+- The social card must be re-rendered on a Mac (`make og-card`): it uses
+  Avenir Next, a system font, and falls back silently anywhere else. If you
+  change the tagline or palette on the landing page, re-render the card —
+  they are meant to look like one thing.
 
 ## The rule that has no mechanism
 

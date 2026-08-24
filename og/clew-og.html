@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clew — OG card source</title>
+<!--
+  Source for site/images/clew-og-card.jpg. Rendered by `make og-card`
+  (headless Chrome at 2x, downsampled to 1200x630 by sips).
+
+  Same palette and type as the landing page, so a shared link and the page
+  it opens look like one thing. Avenir Next is a macOS system font, which is
+  what the site asks for first — so this must be rendered on the Mac, not in
+  CI, or the wordmark silently falls back to Helvetica.
+
+  Composition notes:
+  - Everything meaningful sits inside a 60px margin. Slack, iMessage and
+    Twitter all crop these cards differently, and the corners are the first
+    thing to go.
+  - The thread leaving the ball and running off the right edge is the whole
+    point of the name — a clew is the ball of thread Ariadne gave Theseus,
+    and "a thread through your notes" is the tagline. It is drawn under the
+    text at low opacity so it reads as texture, not as a divider.
+-->
+<style>
+	:root {
+		--bg: #171321;
+		--bg-2: #211b30;
+		--text: #e6e2f0;
+		--muted: #a89fc0;
+		--accent: #a882ff;
+		--accent-2: #7852ee;
+		--teal: #53dfdd;
+	}
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	html, body { width: 1200px; height: 630px; overflow: hidden; }
+	body {
+		background: var(--bg);
+		color: var(--text);
+		font-family: 'Avenir Next', -apple-system, 'Segoe UI', Roboto, sans-serif;
+		position: relative;
+	}
+
+	/* The landing page's hero glow, sized for this canvas rather than a
+	   viewport — the ellipses are anchored to the icon and the top-right
+	   so the brightest part of the card is behind the mark. */
+	.glow {
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(ellipse 70% 90% at 22% 42%, rgba(120, 82, 238, 0.38), transparent 70%),
+			radial-gradient(ellipse 80% 70% at 88% -10%, rgba(120, 82, 238, 0.30), transparent 70%),
+			radial-gradient(ellipse 50% 45% at 62% 105%, rgba(83, 223, 221, 0.10), transparent 70%);
+	}
+
+	/* Keeps the bottom edge from floating: the card is often shown against
+	   a white feed, and an unclosed gradient looks like a rendering error. */
+	.floor {
+		position: absolute;
+		inset: auto 0 0 0;
+		height: 220px;
+		background: linear-gradient(to bottom, transparent, rgba(9, 6, 16, 0.55));
+	}
+
+	.thread { position: absolute; inset: 0; }
+
+	.card {
+		position: relative;
+		height: 630px;
+		display: grid;
+		grid-template-columns: 400px 1fr;
+		align-items: center;
+		padding: 60px 64px 60px 56px;
+	}
+
+	.mark { display: flex; align-items: center; justify-content: center; }
+	.mark img {
+		width: 300px;
+		height: 300px;
+		/* The icon carries its own transparent margin (it is drawn for a
+		   macOS tile), so it needs no extra padding — just a cast shadow to
+		   lift it off the gradient. */
+		filter: drop-shadow(0 18px 44px rgba(0, 0, 0, 0.55));
+	}
+
+	/* Lifted so the footer reads as a footer rather than a fourth line of the
+	   paragraph. Only the text moves: the icon stays where it is because the
+	   thread below is anchored to the tail in its artwork, and shifting the
+	   mark would tear the cord in half. */
+	.content { padding-left: 8px; margin-top: -26px; }
+
+	.eyebrow {
+		font-family: 'SF Mono', Menlo, Consolas, monospace;
+		font-size: 19px;
+		font-weight: 500;
+		letter-spacing: 0.20em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 20px;
+	}
+
+	h1 {
+		font-size: 132px;
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 0.92;
+		margin-bottom: 14px;
+	}
+
+	.tagline {
+		font-size: 41px;
+		font-weight: 500;
+		line-height: 1.15;
+		color: var(--text);
+		margin-bottom: 26px;
+	}
+
+	.rule {
+		width: 96px;
+		height: 3px;
+		border-radius: 2px;
+		background: linear-gradient(to right, var(--accent), rgba(168, 130, 255, 0));
+		margin-bottom: 26px;
+	}
+
+	.pitch {
+		font-size: 25px;
+		line-height: 1.45;
+		color: var(--muted);
+		max-width: 660px;
+	}
+	.pitch strong { color: var(--text); font-weight: 600; }
+
+	.feet {
+		position: absolute;
+		left: 460px;
+		right: 64px;
+		/* Lifted clear of the bottom band so the thread has an empty lane to
+		   run in — it crossed the text at the original height and read as a
+		   strikethrough. */
+		bottom: 84px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 21px;
+		color: var(--muted);
+	}
+	.feet .platforms { letter-spacing: 0.01em; }
+	.feet .domain {
+		font-family: 'SF Mono', Menlo, Consolas, monospace;
+		font-size: 20px;
+		color: var(--accent);
+		letter-spacing: 0.02em;
+	}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<!-- The thread: leaves the ball at its lower right, dips beneath the text,
+     and runs off the right edge. Two strokes — a wide soft one for glow and
+     a fine bright one for the cord itself — so it reads as lit yarn rather
+     than a drawn line. -->
+<svg class="thread" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<linearGradient id="cord" x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0"    stop-color="#d7c6ff" stop-opacity="0.85"/>
+			<stop offset="0.35" stop-color="#a684f7" stop-opacity="0.55"/>
+			<stop offset="0.75" stop-color="#7852ee" stop-opacity="0.30"/>
+			<stop offset="1"    stop-color="#7852ee" stop-opacity="0"/>
+		</linearGradient>
+	</defs>
+	<path d="M 349 391 C 400 508, 428 570, 528 587 C 655 604, 815 599, 945 583 C 1058 569, 1140 563, 1200 569"
+	      stroke="url(#cord)" stroke-width="14" stroke-linecap="round" opacity="0.28" fill="none"/>
+	<path d="M 349 391 C 400 508, 428 570, 528 587 C 655 604, 815 599, 945 583 C 1058 569, 1140 563, 1200 569"
+	      stroke="url(#cord)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+</svg>
+
+<div class="floor"></div>
+
+<div class="card">
+	<div class="mark">
+		<img src="../site/images/icon.svg" alt="">
+	</div>
+	<div class="content">
+		<div class="eyebrow">Open-source note app</div>
+		<h1>Clew</h1>
+		<div class="tagline">A thread through your notes.</div>
+		<div class="rule"></div>
+		<div class="pitch">
+			Plain-text vaults Obsidian can still open — with <strong>real LaTeX
+			math</strong>, citations, diagrams, canvas and maps, rendered by a
+			typesetting engine.
+		</div>
+	</div>
+</div>
+
+<div class="feet">
+	<span class="platforms">macOS · Windows · Linux</span>
+	<span class="domain">clew-app.com</span>
+</div>
+
+</body>
+</html>

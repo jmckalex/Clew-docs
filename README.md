@@ -28,6 +28,8 @@ site/                 ← the web root; everything here is published
 └── downloads/        release binaries — not in git, staged from Clew-app/out/
 
 check-links.js        link checker: `make check-links`
+apply-og.js           regenerates the manual's social tags: `make og-tags`
+og/clew-og.html       source of the social card: `make og-card`
 clew-app.com.nginx.conf   the server config, mirrored on the droplet at
                           /etc/nginx/sites-available/clew-app.com
 Makefile              deployment; `make help` lists the targets
@@ -49,6 +51,36 @@ The one deliberate exception is the top bar's Home and Download links, which
 point at `../index.html`. Those are navigation rather than assets, they are
 expected to leave the manual, and `check-links` reports them as a counted
 note rather than an error.
+
+## Social previews
+
+Every page carries Open Graph and Twitter card tags, so a shared link renders
+as a card rather than a bare URL. Two moving parts:
+
+**The image** — `site/images/clew-og-card.jpg`, 1200×630, generated from
+`og/clew-og.html` by `make og-card`. It is HTML rather than a drawing so the
+wordmark, palette and tagline cannot drift from the landing page. Rendered
+with headless Chrome at 2× and downsampled by `sips`; both ship with macOS, so
+unlike the `og-renderer` used by the other sites this needs no puppeteer, no
+sharp, and no `node_modules`.
+
+**Must be re-rendered on a Mac.** The card asks for Avenir Next, the same face
+the landing page asks for first. Anywhere else it silently falls back and the
+wordmark comes out in Helvetica.
+
+**The tags** — the landing page's are hand-written and describe the site. The
+manual's 28 pages get theirs from `make og-tags`, derived from each page's own
+`<title>` and `<meta name="description">` so there is one source for a page's
+description rather than two that can disagree.
+
+Run `make og-tags` after adding a chapter. A chapter written by copying an
+existing page inherits its `og:url` and `og:title`, and nothing about the
+rendered page looks wrong — the tags are invisible until someone shares the
+link, at which point the new chapter claims to be the old one. `make
+check-links` reports any page whose `og:url` disagrees with its filename.
+
+If the domain ever changes, it appears in `apply-og.js` (`SITE`), in
+`site/index.html`, and in `og/clew-og.html`'s footer.
 
 ## Deploying
 

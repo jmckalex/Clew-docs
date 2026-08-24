@@ -75,9 +75,18 @@ RSYNC_FLAGS := -avz --delete \
 # case. Never remove this guard.
 MIN_FILES := 50
 
+# The social card. Rendered from og/clew-og.html rather than drawn by hand, so
+# the wordmark, palette and tagline cannot drift from the landing page.
+# Headless Chrome and sips are both already on this machine — the other sites'
+# og-renderer needs puppeteer and sharp, which this repo deliberately does not.
+CHROME  := /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+OG_SRC  := og/clew-og.html
+OG_OUT  := $(LOCAL_DIR)/images/clew-og-card.jpg
+OG_TMP  := /tmp/clew-og-2x.png
+
 .PHONY: help check check-links sync dry-run stage-downloads sync-downloads \
         serve preview ls tail-log provision nginx-install nginx-diff \
-        dns-check tls
+        dns-check tls og-card og-tags
 
 help:
 	@echo "Targets:"
@@ -88,6 +97,8 @@ help:
 	@echo "  make serve            - Serve $(LOCAL_DIR)/ at http://localhost:8000"
 	@echo "  make check            - Verify the local tree is safe to sync"
 	@echo "  make check-links      - Verify local links resolve on disk"
+	@echo "  make og-card          - Re-render the social card (1200x630)"
+	@echo "  make og-tags          - Regenerate the manual's social tags"
 	@echo "  make dns-check        - Do the domains point at the droplet yet?"
 	@echo "  make provision        - Create the remote web root (one-time)"
 	@echo "  make nginx-install    - Install the nginx config on the droplet"
@@ -112,6 +123,30 @@ check:
 
 check-links:
 	@node check-links.js $(LOCAL_DIR)
+
+# Regenerate the manual's social tags from each page's own <title> and
+# description. Idempotent, and the landing page is left alone (its tags are
+# hand-written and describe the site, not a chapter). Run after adding a
+# chapter — `make check-links` reports pages that need it.
+og-tags:
+	@node apply-og.js $(LOCAL_DIR)
+
+# Rendered at 2x and downsampled, which is what makes the type crisp — a
+# straight 1200x630 screenshot of the same page looks soft next to it.
+# Must run on the Mac: the card uses Avenir Next, the same face the landing
+# page asks for first, and it falls back silently anywhere that lacks it.
+og-card:
+	@[ -x "$(CHROME)" ] || { echo "ERROR: Chrome not found at $(CHROME)"; exit 1; }
+	@rm -f "$(OG_TMP)"
+	@"$(CHROME)" --headless --disable-gpu --hide-scrollbars \
+	  --force-device-scale-factor=2 --window-size=1200,630 \
+	  --screenshot="$(OG_TMP)" "file://$(CURDIR)/$(OG_SRC)" >/dev/null 2>&1
+	@[ -f "$(OG_TMP)" ] || { echo "ERROR: Chrome wrote no screenshot."; exit 1; }
+	@sips -s format jpeg -s formatOptions 88 -z 630 1200 "$(OG_TMP)" --out "$(OG_OUT)" >/dev/null
+	@rm -f "$(OG_TMP)"
+	@echo "Wrote $(OG_OUT):"
+	@sips -g pixelWidth -g pixelHeight "$(OG_OUT)" | tail -2
+	@ls -lh "$(OG_OUT)" | awk '{print "  " $$5}'
 
 sync: check
 	rsync $(RSYNC_FLAGS) $(LOCAL_DIR)/ $(REMOTE_HOST):$(REMOTE_PATH)/
