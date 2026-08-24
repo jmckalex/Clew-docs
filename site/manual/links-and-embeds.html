@@ -232,6 +232,91 @@ match (a pixel width converts to points at 0.75&nbsp;pt per pixel), and
 an image without a size fits the line width.
 </p>
 
+<h3 id="image-directive">When a pixel width is not enough: <code>@image</code> and <code>@video</code></h3>
+
+<p>
+The pipe syntax is Obsidian's, and it thinks in pixels. That is the wrong
+unit for a document you also mean to print: 400&nbsp;px is a fixed slab of
+screen, whereas what you usually want is <em>this much of the text
+width</em>, on paper as well as on screen. The engine's <code>@image</code>
+and <code>@video</code> directives take a richer attribute set and
+translate it per output format.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@image(diagram.png)[A small-world graph]{width=0.6}
+
+@image+(diagram.png)[Centred]{width=0.6 align=center}
+
+@video(clips/run.mp4)[A run of the model]{width=0.6 poster=clips/still.png}</code></pre>
+</div>
+
+<p>
+The parentheses hold the path — the one thing neither directive can do
+without. The brackets are alt text. The braces are attributes. The
+<code>+</code> in <code>@image+</code> makes it a block of its own rather
+than something sitting in a line of prose, which is what
+<code>align</code> needs to mean anything: on the inline form it is
+ignored, with a warning.
+</p>
+
+<p>
+Four attributes — <code>width</code>, <code>height</code>,
+<code>scale</code> and <code>align</code> — are interpreted rather than
+passed through, so one source serves both outputs:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You write</th><th>Means</th></tr>
+	<tr><td><code>width=0.6</code></td><td>Six tenths of the text width — <code>0.6\linewidth</code> in LaTeX, 60% in HTML</td></tr>
+	<tr><td><code>width="60%"</code></td><td>The same thing, said the other way</td></tr>
+	<tr><td><code>width=8cm</code></td><td>A physical size, verbatim in both (CSS and LaTeX share cm, mm, in, pt)</td></tr>
+	<tr><td><code>width=400px</code></td><td>Pixels — 400px on screen, 300bp in print. A bare number above 1 means pixels too</td></tr>
+	<tr><td><code>align=center</code></td><td>Centred; also <code>left</code> and <code>right</code>. Block form only</td></tr>
+</table>
+</div>
+
+<p>
+A <code>tex-</code> or <code>web-</code> prefix confines an attribute to
+one output and beats the unprefixed key there, which is how one figure can
+be 50% on screen and 80% on the page:
+<code>{width=0.5 tex-width=0.8 web-loading=lazy}</code>. Anything else in
+the braces passes through as an ordinary HTML attribute
+(<code>class</code>, <code>id</code>, <code>srcset</code>,
+<code>controls</code>, …) and is ignored by LaTeX. For genuinely arbitrary
+LaTeX options there is <code>tex-options</code>.
+</p>
+
+<p>
+One thing to know before it bites: a <strong>backslash is not legal
+inside the braces</strong>. Writing
+<code>{width="0.8\linewidth"}</code> is the natural mistake, and the
+attribute grammar rejects the whole set — which is exactly why
+<code>width</code> is a semantic key you give <code>0.8</code> to instead.
+The engine now warns and names the offender when this happens; it used to
+drop the attributes in silence.
+</p>
+
+<p>
+A video cannot play on paper, so <code>@video</code> degrades rather than
+translates when exporting to LaTeX. By default it becomes the poster frame
+hyperlinked to the video, which works in every PDF viewer; the
+<code>Video mode</code> setting (or <code>{tex-mode=…}</code> on one video)
+can instead embed the stream for Acrobat, attach the file, or print the
+still frame alone. Where a poster is needed and none was given, one is
+extracted from the first frame if <code>ffmpeg</code> is available.
+</p>
+
+<p>
+None of this replaces anything. A plain <code>![[image.png|300]]</code> and
+a standard Markdown <code>![alt](src)</code> both still work exactly as
+before; reach for <code>@image</code> when you want the extra control, and
+for <code>@begin(figure)</code> when you want a numbered caption too — the
+two compose.
+</p>
+
 <h2 id="renames">Renames and moves rewrite links</h2>
 
 <p>
@@ -326,6 +411,9 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td><code>![[img.png|300]]</code></td><td>Media embed, width 300&nbsp;px</td></tr>
 	<tr><td><code>![[img.png|300x200]]</code></td><td>Media embed, width × height</td></tr>
 	<tr><td><code>![[img.png|alt text|300]]</code></td><td>Alt text, then size</td></tr>
+	<tr><td><code>@image(p)[alt]{attrs}</code></td><td>Image with translated attributes (<a href="#image-directive">above</a>)</td></tr>
+	<tr><td><code>@image+(p)[alt]{attrs}</code></td><td>The same as its own block — what <code>align</code> needs</td></tr>
+	<tr><td><code>@video(p)[alt]{attrs}</code></td><td>Video, degrading to a poster frame in print</td></tr>
 	<tr><td><code>[text](url)</code></td><td>External link — opens in the system browser</td></tr>
 </table>
 </div>

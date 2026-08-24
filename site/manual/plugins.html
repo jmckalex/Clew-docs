@@ -228,8 +228,8 @@ lines with comments. Its manifest declares a single surface:
 	<pre><code>{
 	"id": "header",
 	"name": "Note Headers",
-	"version": "1.1.0",
-	"description": "Banner headers for notes: set header-image, header-title, and header-subtitle in a note's frontmatter and reading mode opens with a full-width image banner; header-height, header-position, and header-align tune its size, focal point, and text placement.",
+	"version": "1.2.0",
+	"description": "Banner headers for notes: set header-image, header-title, and header-subtitle in a note's frontmatter and reading mode opens with a full-width image banner; header-height, header-position, and header-align tune its size, focal point, and text placement. header-html puts a live HTML page behind the title instead — a canvas animation, CSS keyframes, anything a browser can draw — sandboxed, and kept running across re-renders.",
 	"apiVersion": 1,
 	"surfaces": {
 		"preview": "preview.js"
@@ -258,6 +258,62 @@ header-position: center 30%
 header-align: bottom
 ---</code></pre>
 </div>
+
+<p>
+<code>header-image</code> takes a wikilink or a plain vault path — both
+work, and a bare name is looked for in <code>Attachments/</code>. Be
+aware that the wikilink form is a <em>convention</em> here rather than a
+tracked link: Clew's indexer deliberately skips frontmatter when
+scanning for links, so an image referenced this way does not appear in
+the graph or in backlinks, and renaming it will not rewrite the
+reference. The banner simply stops loading. Nothing goes wrong with the
+note; it just goes blank at the top.
+</p>
+
+<h4>A living background</h4>
+
+<p>
+<code>header-html</code> replaces the image with an ordinary
+<code>.html</code> file from the vault, loaded into an iframe that fills
+the banner behind the title. Anything a browser can draw will do — a
+<code>&lt;canvas&gt;</code> animation, CSS keyframes, an SVG, a gradient
+that drifts. Write it as a standalone page sized to 100% width and
+height; the banner is its viewport. If both keys are present,
+<code>header-html</code> wins.
+</p>
+
+<div class="example">
+	<p class="example-label">In any note's frontmatter</p>
+	<pre><code>---
+header-html: "[[matrix-rain.html]]"
+header-title: The Matrix
+header-subtitle: an animated HTML background
+header-height: 220
+---</code></pre>
+</div>
+
+<p>
+The page runs <strong>sandboxed</strong>, with
+<code>allow-scripts</code> and nothing else, so it gets its own opaque
+origin: it can animate, but it cannot read the note, reach the vault,
+touch the surrounding document, or use the
+<a href="note-api.html">note API</a>. A decoration should not have the
+run of the place. It is also <code>pointer-events: none</code>, so it
+never swallows a click or a scroll meant for the note.
+</p>
+
+<p>
+The interesting part is what happens on the <em>next</em> render. A
+preview re-renders whenever the note is saved, and the morphdom pass
+that patches the document would ordinarily discard a banner the incoming
+HTML knows nothing about — restarting the animation every few seconds as
+you type. Two things prevent that: the banner carries
+<code>data-clew-keep</code>, which tells the preview client to leave it
+alone, and the plugin compares the frontmatter it just read against what
+the existing banner was built from, reusing it untouched when nothing
+has changed. The animation runs continuously, as though the note were
+never re-rendered at all.
+</p>
 
 <p>
 The script is a working tour of preview-surface technique. It works out
@@ -293,11 +349,14 @@ apply();</code></pre>
 Three habits here are the ones to copy. First, the last two lines:
 run once on load, and re-run on every <code>clew:render</code> — that
 pair makes the plugin immune to live updates. Second,
-<code>apply()</code> begins by removing its own previous output, so
-re-running is idempotent. Third, it composes with what is already in
-the document: MathJax is there, so a banner title may carry
-mathematics. The rest of the script is ordinary DOM construction with
-inline styles.
+<code>apply()</code> is idempotent: it either removes its previous
+output before building again or, when the frontmatter it read is
+unchanged, leaves the existing banner exactly where it is. Re-running it
+any number of times converges on the same document — and, for the HTML
+background above, that second branch is what keeps an animation alive.
+Third, it composes with what is already in the document: MathJax is
+there, so a banner title may carry mathematics. The rest of the script
+is ordinary DOM construction with inline styles.
 </p>
 
 <h3>Word Count — an app surface</h3>
