@@ -190,8 +190,9 @@ separate modifier on macOS, since <kbd>⌘Tab</kbd> belongs to the system
 app switcher. Right-clicking a tab opens a context menu with
 <em>Pin</em>/<em>Unpin</em>, <em>Close</em>, <em>Close others</em>, and
 <em>Close tabs to the right</em> (the latter two leave pinned tabs
-alone), plus <em>Close pane (split)</em> when more than one pane is
-open. Dragging a tab along a tab bar reorders it or moves it to another
+alone), plus <em>Close this pane</em> when more than one pane is open —
+"this" being the pane you right-clicked, whether or not it holds focus.
+Dragging a tab along a tab bar reorders it or moves it to another
 pane's tab bar.
 </p>
 
@@ -257,9 +258,17 @@ Dragging does the other thing: drag a tab onto the <em>edge</em> of a
 pane's body — left, right, top, or bottom — and the pane splits on that
 edge with the dragged tab <em>moving</em> into the new pane. Drop it in
 the pane's centre to move it into that pane's tab bar without
-splitting. A pane's last tab closing collapses the split it lived in;
-<kbd>⌘⇧W</kbd> (Window&nbsp;→&nbsp;Close&nbsp;Split&nbsp;Pane) closes
-the whole active pane, tabs and all. Clicking anywhere in a pane makes
+splitting. A pane's last tab closing collapses the split it lived in.
+Two commands close a pane outright, differing in which one survives:
+<kbd>⌘⇧W</kbd> (Window&nbsp;→&nbsp;Close&nbsp;Current&nbsp;Pane) closes
+the pane you are working in, tabs and all, and leaves its neighbour;
+<em>Close other pane</em> does the reverse, keeping the pane you are in
+and closing the one beside it. The second has no shortcut out of the
+box — bind one under Settings&nbsp;→&nbsp;Hotkeys if you reach for it
+often. With three or more panes open it takes the neighbour only, so
+pressing it repeatedly absorbs them one at a time and the pane you are
+working in is never the one that disappears. Either way the survivor
+expands to fill the space. Clicking anywhere in a pane makes
 it the active one — the target of every tab command and of anything the
 quick switcher opens.
 </p>
@@ -324,7 +333,8 @@ read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as <kbd>Alt</kbd>
 	<tr><td><kbd>⌃Tab</kbd> / <kbd>⌃⇧Tab</kbd></td><td>Next / previous tab in the active pane</td></tr>
 	<tr><td><kbd>⌘\</kbd></td><td>Split right (clones the active tab)</td></tr>
 	<tr><td><kbd>⌘⇧\</kbd></td><td>Split down (clones the active tab)</td></tr>
-	<tr><td><kbd>⌘⇧W</kbd></td><td>Close split pane</td></tr>
+	<tr><td><kbd>⌘⇧W</kbd></td><td>Close current pane (the one you are working in)</td></tr>
+	<tr><td>—</td><td>Close other pane (keeps the one you are working in; unbound by default)</td></tr>
 	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode</td></tr>
 	<tr><td><kbd>⌘G</kbd></td><td>Open graph view (on a canvas tab: group selection instead)</td></tr>
 	<tr><td><kbd>⌘B</kbd> / <kbd>⌘⇧B</kbd></td><td>Toggle left / right sidebar</td></tr>
