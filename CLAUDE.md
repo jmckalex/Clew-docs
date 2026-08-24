@@ -1,7 +1,11 @@
 # CLAUDE.md
 
 Guidance for Claude Code working in the **Clew-docs** repository — the Clew
-website and manual. Read `README.md` first for the layout and the deploy.
+website and manual.
+
+**Read `HANDOVER.md` first** for session state and open items; `README.md`
+has the layout and the deploy procedure. This file is the durable part:
+conventions and gotchas that outlive any one session.
 
 ## What this repo is
 

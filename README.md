@@ -34,6 +34,7 @@ clew-app.com.nginx.conf   the server config, mirrored on the droplet at
                           /etc/nginx/sites-available/clew-app.com
 Makefile              deployment; `make help` lists the targets
 CLAUDE.md             guidance for Claude Code, including the editing conventions
+HANDOVER.md           session state and open items — read this first
 ```
 
 Nothing outside `site/` is ever published. That is the whole reason for the
