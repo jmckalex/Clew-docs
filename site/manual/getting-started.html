@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started — Clew Manual</title>
+<meta name="description" content="Installing Clew on macOS, Windows, and Linux, building from source, opening your first vault, and a guided tour of the window.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Getting started</p>
+<h1>Getting started</h1>
+<p class="lead">
+This chapter takes you from nothing to a working vault: installing Clew
+on macOS, Windows, or Linux (or building it from source), understanding
+what happens the first time it launches, opening a folder of notes, and
+finding your way around the window. It ends with the two example vaults
+that ship in the repository — the fastest way to see what Clew can
+actually do — and a table of the handful of keys worth learning on day
+one.
+</p>
+
+<h2 id="downloading">Downloading and installing</h2>
+
+<p>
+Clew is free software: there is no account to create, no licence key to
+enter, and no telemetry to opt out of. The current release is version
+0.8.0, and the <a href="../index.html#download">download section of the
+website</a> offers a build for each platform.
+</p>
+
+<h3>macOS</h3>
+<p>
+The macOS build is a single universal disk image,
+<code>Clew-0.8.0-universal.dmg</code>, which runs natively on both Apple
+Silicon and Intel Macs. It is signed with a Developer&nbsp;ID
+certificate and notarized by Apple, so it opens without a Gatekeeper
+warning. Installation is the usual dance: open the disk image and drag
+<code>Clew.app</code> into your Applications folder.
+</p>
+
+<h3>Windows</h3>
+<p>
+The Windows build is an NSIS installer, <code>Clew Setup
+0.8.0.exe</code>, for 64-bit Windows&nbsp;10 and&nbsp;11. It is a
+conventional step-through installer — not a one-click one — and lets
+you choose the installation directory. The installer is not
+code-signed, so Windows may interpose a SmartScreen warning before it
+runs; that warning reflects the missing signature, not anything the
+installer does.
+</p>
+
+<h3>Linux</h3>
+<p>
+Linux gets two artefacts, both x64: a portable AppImage,
+<code>Clew-0.8.0.AppImage</code>, and a Debian package,
+<code>clew_0.8.0_amd64.deb</code>, for Debian and Ubuntu. The AppImage
+needs no installation — mark it executable (<code>chmod +x
+Clew-0.8.0.AppImage</code>) and run it. The <code>.deb</code> installs
+through your package manager, for example <code>sudo apt install
+./clew_0.8.0_amd64.deb</code>.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The Windows and Linux builds are cross-compiled from macOS and have
+	not been exercised on real machines by the author — they are offered
+	honestly as untested, community-tested territory. The macOS build is
+	the one the author lives in daily. If you would rather trust nothing
+	at all, every platform builds from source, as the next section
+	describes.
+</div>
+
+<h2 id="from-source">Building from source</h2>
+
+<p>
+Clew builds with Node&nbsp;20 or later and nothing exotic: plain
+JavaScript, no framework, no TypeScript, bundled by esbuild. The
+rendering engine (jmarkdown) is vendored into the repository, so a
+fresh clone builds without any external checkout.
+</p>
+
+<div class="example">
+	<p class="example-label">You type (in a terminal)</p>
+	<pre><code>git clone &lt;repository-url&gt; clew &amp;&amp; cd clew
+npm install
+npm run dev        # develop: build watch + Electron with live reload
+npm run package    # build the app for your platform</code></pre>
+</div>
+
+<p>
+<code>npm run dev</code> is the development loop: it builds everything,
+starts Electron, and reloads the window as you edit the source.
+<code>npm test</code> runs the unit-test suite. For distributable
+artefacts there are dedicated scripts: <code>npm run package</code>
+produces an unsigned macOS app for local testing, <code>npm run
+package:dmg</code> adds a disk image, and <code>npm run
+package:win</code> and <code>npm run package:linux</code> cross-build
+the Windows installer and the Linux AppImage and <code>.deb</code>.
+Everything lands in the <code>out/</code> directory.
+</p>
+
+<h2 id="first-launch">First launch</h2>
+
+<p>
+Clew remembers which vaults were open when it last quit and reopens
+every one of them at launch, each in its own window. The first time you
+run it there is nothing to restore, so you get a single <em>welcome
+window</em> instead: the Clew mark, the tagline, and an
+<strong>Open vault…</strong> button. Once you have opened a vault or
+two, the welcome window also lists your recent vaults, so a later fresh
+window is one click from anywhere you have been.
+</p>
+
+<p>
+The restore set is exactly the windows you left open. Closing a
+vault's window by hand takes that vault out of the set — Clew will not
+resurrect it next launch — while quitting the app with windows open
+keeps them all for next time.
+</p>
+
+<h2 id="opening-a-vault">Opening a vault</h2>
+
+<p>
+A <strong>vault</strong> is any folder of Markdown files. There is no
+import step and no registration: choose
+<strong>File&nbsp;→&nbsp;Open&nbsp;Vault…</strong>
+(<kbd>⌘⇧O</kbd>), point the dialog at a folder, and Clew opens it.
+The dialog can also create a fresh folder on the spot if you are
+starting from nothing. Each vault opens in its own window; opening a
+vault that is already open somewhere focuses its existing window rather
+than duplicating it. The next chapter,
+<a href="vaults-and-files.html">Vaults and files</a>, covers what a
+vault is on disk in full.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	An existing Obsidian vault is a perfectly good Clew vault — open it
+	as-is. Clew never writes into the <code>.obsidian/</code> folder and
+	keeps all of its own state in a separate <code>.clew/</code> folder,
+	so your Obsidian setup survives untouched and the two apps can even
+	have the same vault open at the same time.
+</div>
+
+<h2 id="tour">A tour of the window</h2>
+
+<figure class="shot">
+	<img src="images/welcome.jpg" alt="Clew's Welcome note in reading mode, with the file explorer on the left and a rendered banner across the top of the note">
+	<figcaption>The demo vault's Welcome note in reading mode: file
+	explorer on the left, the note's tab above it, and the status bar
+	along the bottom.</figcaption>
+</figure>
+
+<p>
+A vault window has five regions, and every part of it earns a chapter
+later in this manual; this is the aerial view.
+</p>
+
+<p>
+<strong>The title bar</strong> across the top names the active note and
+the vault it belongs to.
+</p>
+
+<p>
+<strong>The left sidebar</strong> holds four tools, switched by the
+small tabs at its top: <em>Files</em> (the file explorer),
+<em>Search</em> (full-text search across the vault), <em>Marks</em>
+(bookmarked notes), and <em>Diary</em> (the daily-notes calendar).
+The explorer is where you will live at first: click a note to open it,
+right-click for file operations, drag to move things.
+</p>
+
+<p>
+<strong>The center</strong> is the workspace: a tab strip above the
+open note. Tabs can be dragged to reorder them or to split the
+workspace into panes, each pane with its own tabs and history — the
+full story is in
+<a href="navigation.html">Navigation, tabs and splits</a>. A note tab
+is always in one of two modes: <em>source mode</em>, the editor, or
+<em>reading mode</em>, the note rendered by the typesetting engine.
+<kbd>⌘E</kbd> toggles between them, and the same command sits in the
+View menu as <strong>Reading Mode</strong>.
+</p>
+
+<p>
+<strong>The right sidebar</strong> is the context for whatever note is
+active: <em>Links</em> (backlinks — who links here), <em>Out</em>
+(outgoing links), <em>Tags</em>, <em>Outline</em> (the note's
+headings), <em>Props</em> (its frontmatter properties as editable
+rows), and <em>Graph</em> (a local graph of the note's neighbourhood).
+These are covered in <a href="panels.html">Panels</a>.
+</p>
+
+<p>
+<strong>The status bar</strong> along the bottom shows a live word and
+character count for the active note.
+</p>
+
+<p>
+Both sidebars collapse and reopen with a key — <kbd>⌘B</kbd> for the
+left, <kbd>⌘⇧B</kbd> for the right — and resize by dragging their
+inner edge. The layout you arrange (open tabs, splits, sidebar widths)
+is remembered per vault and restored when you return.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Two commands make everything else discoverable. The quick switcher
+	(<kbd>⌘O</kbd>) jumps to any note by typing a few letters of its
+	name. The command palette (<kbd>⌘P</kbd>) lists every command in the
+	app with its current shortcut — when you wonder whether Clew can do
+	something, the palette is the place to ask.
+</div>
+
+<h2 id="example-vaults">The two example vaults</h2>
+
+<p>
+The repository ships two vaults, and they are the best first hour you
+can spend with the app, because neither is a passive sample.
+</p>
+
+<h3><code>demo-vault/</code> — the documentation, written in Clew</h3>
+<p>
+The demo vault is Clew's own documentation as a vault of notes. Open
+it, then open <strong>Welcome</strong> and press <kbd>⌘E</kbd> — the
+note renders, banner and all, and links you into a <code>Guide/</code>
+folder with a note for every feature. Every guide note exercises the
+feature it documents: the note about maps contains working maps, the
+note about attachments embeds a real PDF, the note about the Note API
+is itself scriptable. A <code>Features/</code> folder stress-tests the
+engine — citations against a real bibliography, mathematics and
+theorem environments, footnotes, diagrams, an embedded 1895 film.
+Reading the guide notes in reading mode, then flipping to source mode
+with <kbd>⌘E</kbd> to see how they are written, is the fastest way to
+learn the system.
+</p>
+
+<h3><code>study-vault/</code> — a worked example</h3>
+<p>
+The study vault is one academic's term, staged entirely as plain
+Markdown: papers in progress, a reading list, essays to mark, errands.
+Start with <strong>Start Here</strong>, then read <strong>Why a
+Writable Vault</strong> — it makes the case for the feature this vault
+demonstrates. Then do what it says: open <strong>Pipeline</strong> and
+drag a card to another column, and open that paper's note to watch its
+frontmatter change; open <strong>Reading List</strong>, click a rating
+cell, and type a new one. Every table and board in the vault is a live
+query over the surrounding files, and every edit you make in a view is
+written back into the note the data came from. That is the writable
+database, and <a href="queries.html">Queries</a> explains how to build
+your own.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Experiment fearlessly. Both vaults are ordinary folders of text
+	files — anything you break is visible in any editor and restorable
+	from the repository. Nothing you do in Clew is trapped in the app.
+</div>
+
+<h2 id="reference">Reference: first-day keys</h2>
+
+<p>
+These are the defaults; all but the two native File-menu items (<kbd>⌘⇧N</kbd>, <kbd>⌘⇧O</kbd>) can be rebound in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>. On Windows and
+Linux, read <kbd>⌘</kbd> as <kbd>Ctrl</kbd>.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Key</th><th>Action</th></tr>
+	<tr><td><kbd>⌘E</kbd></td><td>Toggle between source and reading mode</td></tr>
+	<tr><td><kbd>⌘O</kbd></td><td>Quick switcher — jump to any note</td></tr>
+	<tr><td><kbd>⌘P</kbd></td><td>Command palette — every command, searchable</td></tr>
+	<tr><td><kbd>⌘N</kbd></td><td>Create a new note</td></tr>
+	<tr><td><kbd>⌘S</kbd></td><td>Save the note (auto-save runs anyway)</td></tr>
+	<tr><td><kbd>⌘T</kbd> / <kbd>⌘W</kbd></td><td>New tab / close tab</td></tr>
+	<tr><td><kbd>⌘B</kbd> / <kbd>⌘⇧B</kbd></td><td>Toggle the left / right sidebar</td></tr>
+	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
+	<tr><td><kbd>⌘G</kbd></td><td>Open the graph view</td></tr>
+	<tr><td><kbd>⌘⇧D</kbd></td><td>Open today's diary entry</td></tr>
+	<tr><td><kbd>⌘,</kbd></td><td>Open settings</td></tr>
+	<tr><td><kbd>⌘⇧O</kbd></td><td>Open Vault… (File menu)</td></tr>
+	<tr><td><kbd>⌘⇧N</kbd></td><td>New Window (File menu)</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="vaults-and-files.html">Vaults and files</a> — what a
+	vault is on disk, and how Clew coexists with Obsidian and other
+	apps.</li>
+	<li><a href="editing.html">The editor</a> — source mode in
+	detail.</li>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — the syntax
+	reading mode understands, and the per-vault switch back to standard
+	Markdown.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — what
+	happens when you press <kbd>⌘E</kbd>.</li>
+	<li><a href="queries.html">Queries</a> — the writable database the
+	study vault demonstrates.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

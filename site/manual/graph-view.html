@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graph view — Clew Manual</title>
+<meta name="description" content="The vault as a force-directed graph: nodes are notes, edges are links. Opening it, reading it, the local graph panel, and how it tracks the live index.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Workspace</p>
+<h1>Graph view</h1>
+<p class="lead">
+Every <code>[[wikilink]]</code> you write is an edge in a graph you
+never see while writing. The graph view draws it: every note in the
+vault as a node, every resolved link as a line between two of them,
+laid out by a force simulation that pulls linked notes together and
+pushes strangers apart. It is not a diagram you construct — it is a
+picture of the structure your writing already has, and it is the
+fastest way to see which notes have become hubs and which have
+quietly become orphans.
+</p>
+
+<h2 id="opening">Opening the graph</h2>
+
+<p>
+Press <kbd>⌘G</kbd>, choose <em>Graph View</em> from the Go menu, or
+run <em>Open graph view</em> from the command palette
+(<kbd>⌘P</kbd>). The graph opens as a tab like any other — it can sit
+in a <a href="navigation.html">split</a> beside the note you are
+reading — and it is a singleton: if a graph tab already exists in any
+pane, the command switches to it rather than opening a second.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	<kbd>⌘G</kbd> has one deliberate exception: when the active tab is a
+	<a href="canvas.html">canvas</a>, the chord goes to the canvas
+	instead, where it means <em>group the selection</em> — the binding
+	every drawing app uses. With a canvas focused, open the graph from
+	the Go menu or the palette; from any other kind of tab,
+	<kbd>⌘G</kbd> opens the graph as usual.
+</div>
+
+<figure class="shot">
+	<img src="images/graph.jpg" alt="The vault graph view: a force-directed layout of notes as dots connected by link lines, with labels under the larger nodes">
+	<figcaption>The demo vault's graph. Node size tracks how linked a note
+	is; hovering a node highlights its immediate neighbourhood and dims the
+	rest.</figcaption>
+</figure>
+
+<h2 id="reading">What you are looking at</h2>
+
+<p>
+The graph is built from the same live index that powers backlinks and
+the quick switcher, so its rules are exact:
+</p>
+
+<ul>
+	<li><strong>Nodes are notes</strong> — every Markdown file in the
+	vault, including notes nothing links to yet. Attachments, canvases,
+	and tags are not nodes.</li>
+	<li><strong>Edges are resolved links.</strong> Two notes are
+	connected when either links to the other; a pair gets one edge no
+	matter how many links run between them, in either direction. A link
+	to a note that does not exist yet draws nothing — the graph shows
+	the vault as it is, not as it is promised.</li>
+	<li><strong>Size means connectedness.</strong> A node grows with the
+	number of distinct notes it is linked with, up to a cap, so the
+	vault's hubs are visible at a glance while a sea of small dots stays
+	readable.</li>
+	<li><strong>Labels appear as you zoom.</strong> Small graphs are
+	labelled outright; in a large vault, zoom in and the names fade in
+	once there is room for them.</li>
+</ul>
+
+<p>
+The layout itself is a physics simulation: links act as springs,
+nodes repel each other, and the whole graph settles into clusters
+that reflect how your notes actually group. The layout is emergent,
+not saved — positions are not stored anywhere, and a freshly opened
+graph settles into its own arrangement.
+</p>
+
+<h2 id="interactions">Interacting with the graph</h2>
+
+<dl>
+	<dt>Pan and zoom</dt>
+	<dd>Drag the background to pan; scroll to zoom, centred on the
+	cursor.</dd>
+	<dt>Hover</dt>
+	<dd>Hovering a node highlights it and its direct neighbours and dims
+	everything else — a one-gesture answer to “what does this note talk
+	to?”. The label of the hovered note is picked out in the accent
+	colour.</dd>
+	<dt>Click</dt>
+	<dd>Click a node to open the note in the current tab;
+	<kbd>⌘</kbd>-click (Ctrl-click on Windows and Linux) opens it in a
+	new tab. The graph tab stays where it was, so you can bounce
+	between the map and the territory.</dd>
+	<dt>Drag a node</dt>
+	<dd>Drag a node to reposition it; the simulation wakes up and the
+	rest of the graph adjusts around your hand. Released nodes rejoin
+	the simulation — dragging is for untangling and exploring, not for
+	pinning a permanent layout.</dd>
+</dl>
+
+<h2 id="local-graph">The local graph</h2>
+
+<p>
+The same component, scoped down, lives in the right sidebar as the
+<strong>Graph</strong> tool (see <a href="panels.html">Panels</a>): a
+local graph of the active note's immediate neighbourhood — the note
+itself, the notes it links to, and the notes that link to it. The
+centre note is drawn larger and in the accent colour, and the panel
+follows along as you switch tabs, so it acts as a continuous “you are
+here” beside whatever you are reading. For anything wider than one
+step of neighbourhood, open the full graph.
+</p>
+
+<h2 id="live">A live picture of the index</h2>
+
+<p>
+The graph is not a snapshot. It listens to the vault index, and
+rebuilds moments after the index absorbs any change: a saved edit
+that adds or removes a wikilink, a new note, a rename, a file changed
+by another program entirely. Nodes that survive a rebuild keep their
+positions, so the layout does not reshuffle under you — a new note
+drops in near its links, a deleted one vanishes, and the rest of the
+picture holds still. Leave the graph open in a split while writing
+and you can watch a link you have just typed become an edge when the
+note auto-saves.
+</p>
+
+<h2 id="workflow">Using the graph: hubs and orphans</h2>
+
+<p>
+Two honest uses stand out, one for each end of the size scale.
+</p>
+
+<p>
+<strong>Hubs</strong> — the large nodes — are the notes your vault has
+elected as its centres of gravity. They are worth deliberate
+attention: a hub is a natural candidate for a map-of-content note, a
+chapter overview, a landing page for a topic. If a hub's contents
+surprise you, that is the graph telling you a topic has outgrown its
+note.
+</p>
+
+<p>
+<strong>Orphans</strong> — the isolated dots drifting at the edge,
+connected to nothing — are notes you wrote and never wove in. Some
+orphans are fine (a scratch file, a template), but an orphan you
+expected to be connected is a genuine finding: open it straight from
+the graph, add the links it deserved, and watch it get pulled into
+its cluster on the next rebuild.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Hover, don't stare. On a vault of any size the full graph is dense,
+	and the hover highlight is the instrument that makes it legible:
+	sweep the cursor across a cluster and read the neighbourhoods one at
+	a time. For focused work on a single note's connections, the
+	<a href="panels.html">local graph panel</a> shows only what matters
+	and follows you from tab to tab.
+</div>
+
+<h2 id="limits">Limits</h2>
+
+<p>
+The graph is a reading instrument, and a deliberately plain one.
+Tags, attachments, and canvases do not appear as nodes; unresolved
+links are not drawn; there is no filtering, colouring by folder, or
+in-graph search; and the layout cannot be pinned or saved. The local
+panel shows a neighbourhood of exactly one step. If you want a
+curated spatial arrangement of notes that <em>persists</em>, that is
+what the <a href="canvas.html">canvas</a> is for — the graph shows
+you the structure you have, the canvas lets you compose the structure
+you want.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Action</th><th>Gesture</th></tr>
+	<tr><td>Open the graph</td><td><kbd>⌘G</kbd> (except on a canvas tab), Go&nbsp;→&nbsp;Graph View, or the command palette.</td></tr>
+	<tr><td>Pan</td><td>Drag the background.</td></tr>
+	<tr><td>Zoom</td><td>Scroll; zoom centres on the cursor.</td></tr>
+	<tr><td>Highlight a neighbourhood</td><td>Hover a node.</td></tr>
+	<tr><td>Open a note</td><td>Click its node; <kbd>⌘</kbd>-click for a new tab.</td></tr>
+	<tr><td>Rearrange</td><td>Drag a node; the simulation adjusts around it.</td></tr>
+	<tr><td>Local graph</td><td>Right sidebar → Graph tool: the active note's one-step neighbourhood.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the
+	wikilinks the edges are made of.</li>
+	<li><a href="panels.html">Panels</a> — the local graph, backlinks,
+	and outgoing links panels.</li>
+	<li><a href="navigation.html">Navigation, tabs and splits</a> —
+	keeping the graph open beside your writing.</li>
+	<li><a href="search.html">Search</a> — the other way to find what the
+	graph shows you.</li>
+	<li><a href="canvas.html">The canvas</a> — a persistent, hand-arranged
+	counterpart to the graph.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

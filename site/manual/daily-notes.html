@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily notes and the diary — Clew Manual</title>
+<meta name="description" content="Clew's diary: the calendar panel, per-day files or a single log note, composed day/week/month views, and templates with date substitution.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Writing</p>
+<h1>Daily notes and the diary</h1>
+<p class="lead">
+A diary is the lowest-friction note there is: today already has a name,
+so there is nothing to decide before you start writing. Clew's diary is
+a calendar in the sidebar, a keystroke that always lands on today, and
+a choice of two honest storage shapes — one file per day, or one long
+log with a heading per day. On top of either shape it can compose
+read-only views of any stretch of time: today, this week, this month,
+or the entire diary rendered as a single continuous document.
+</p>
+
+<h2 id="calendar">The diary calendar</h2>
+
+<p>
+The diary lives in the <strong>Diary</strong> tab of the left sidebar:
+a month grid, Monday first, with a dot on every day that has an entry
+and today's date highlighted. The interactions are what you would
+guess:
+</p>
+
+<ul>
+	<li><strong>Click a day</strong> to open its entry — or to create
+	it, if the day is blank. There is no separate “new entry” step; the
+	diary treats opening and creating as the same gesture.</li>
+	<li>The <strong>‹ and ›</strong> buttons step through months, and
+	clicking the month name jumps back to the current month.</li>
+	<li><kbd>⌘⇧D</kbd> opens <strong>today's entry</strong> from
+	anywhere, whether or not the panel is showing. The same command sits
+	in the Go menu as <em>Today's Diary Entry</em>, next to <em>Diary
+	Calendar</em>, which opens the panel itself.</li>
+</ul>
+
+<figure class="shot">
+	<img src="images/diary.jpg" alt="The diary calendar panel in the left sidebar, with today highlighted, beside a rendered note">
+	<figcaption>The diary panel (demo vault). Today is highlighted, days
+	with entries gain a dot, and the View buttons underneath compose
+	read-only views of a day, a week, a month, or the whole diary.</figcaption>
+</figure>
+
+<p>
+The dots track the vault live: create an entry by any route — the
+calendar, <kbd>⌘⇧D</kbd>, or a file made by hand in the right folder
+with the right name — and the calendar picks it up.
+</p>
+
+<h2 id="storage">Two ways to store a diary</h2>
+
+<p>
+Settings&nbsp;→&nbsp;Diary offers a <strong>Mode</strong> choice, and
+it is worth a moment's thought, because the two modes produce
+genuinely different vaults on disk. Both are plain Markdown; neither
+locks you in.
+</p>
+
+<h3>One note per day</h3>
+
+<p>
+The classic daily-notes shape: each day is its own file, named by the
+date format, inside the diary folder. With the defaults (folder
+<code>Daily</code>, format <code>YYYY-MM-DD</code>) a week of writing
+looks like this on disk:
+</p>
+
+<div class="example">
+	<p class="example-label">On disk</p>
+	<pre><code>Daily/
+  2026-08-18.md
+  2026-08-19.md
+  2026-08-21.md
+  2026-08-22.md</code></pre>
+</div>
+
+<p>
+Days you skipped are files that never got created — the diary has no
+opinion about gaps. Per-day files suit a diary that accumulates
+substance: each day can grow its own headings, attachments, and
+backlinks, and each day is individually linkable as
+<code>[[2026-08-22]]</code>.
+</p>
+
+<h3>A single log note</h3>
+
+<p>
+In log mode the whole diary is one note (by default
+<code>Diary.md</code>), and each day is a heading inside it, kept
+<strong>newest first</strong>:
+</p>
+
+<div class="example">
+	<p class="example-label">On disk (Diary.md)</p>
+	<pre><code># 2026-08-22
+
+Reviewed the draft; the second section still sags.
+
+# 2026-08-21
+
+Long walk. Nothing written, everything composted.
+
+# 2026-08-19
+
+Started reading the Fleck book.</code></pre>
+</div>
+
+<p>
+Clicking a day in the calendar jumps straight to its section, creating
+the heading at the right chronological position if it does not exist
+yet. Any level-1 or level-2 heading whose text parses as a date in
+your configured format counts as a day; other headings are ordinary
+content inside the day above them. When the log is already open in an
+editor, Clew inserts the new section <em>through</em> that editor, so
+the insertion is undoable and never fights your unsaved edits. A log
+suits a diary of short entries — a line or three a day — where the
+pleasure is scrolling back through time in one file.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	The diary settings are application-wide, not per-vault: the mode,
+	folder, format, log file, and template apply to every vault you open.
+	The entries themselves, of course, live in whichever vault you wrote
+	them in.
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The date format must contain <code>YYYY</code>, <code>MM</code>, and
+	<code>DD</code> — Clew needs to parse names back into dates to put
+	dots on the calendar and order log sections. Any arrangement and
+	separators work (<code>DD.MM.YYYY</code>, say), but in per-day mode
+	the formatted date becomes a file name, so avoid characters that are
+	not valid in file names, such as <code>/</code>.
+</div>
+
+<h2 id="views">Composed views: a week at a glance</h2>
+
+<p>
+Below the calendar sit the <strong>View</strong> buttons:
+<em>Today</em>, <em>This week</em>, <em>This month</em>,
+<em>Everything</em>, and <em>Open interval</em> with a pair of date
+pickers for any custom range. Each one gathers the requested days —
+files or log sections, whichever mode you are in — and composes them
+into a single document, newest first, which opens in a new tab in
+reading mode and is rendered by the full engine like any other note.
+</p>
+
+<p>
+The composition is careful about structure: every day appears under a
+level-2 heading with its date, and any level-1 headings inside a daily
+note are demoted so the day headings remain the document's outline.
+The result reads as one continuous diary — this is the way to re-read
+a month, or to skim an entire year with <em>Everything</em>.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	A composed view is generated fresh each time and begins with a note
+	saying so: edits made <em>in the view</em> are discarded the next
+	time a view is generated. Write in the days themselves — the view is
+	for reading. The view file lives at <code>.clew/Diary View.md</code>,
+	invisible to the file explorer and the index, and view tabs are
+	dropped when the app restarts.
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	<em>This week</em> runs from Monday to today, which makes it a
+	ready-made weekly review: open it Friday afternoon, read the week in
+	one piece, and write the review entry for today while it is all in
+	front of you.
+</div>
+
+<h2 id="templates">Templates</h2>
+
+<p>
+A template is an ordinary note whose text seeds new content, with
+three placeholders substituted at insertion time:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Placeholder</th><th>Becomes</th></tr>
+	<tr><td><code>{{date}}</code></td><td>Today's date, as <code>YYYY-MM-DD</code>.</td></tr>
+	<tr><td><code>{{date:FORMAT}}</code></td><td>Today's date in a custom format — <code>YYYY</code>, <code>MM</code>, <code>DD</code>, <code>HH</code>, <code>mm</code> tokens, e.g. <code>{{date:DD.MM.YYYY}}</code>.</td></tr>
+	<tr><td><code>{{time}}</code></td><td>The current time, as <code>HH:mm</code>.</td></tr>
+	<tr><td><code>{{time:FORMAT}}</code></td><td>The current time in a custom format.</td></tr>
+	<tr><td><code>{{title}}</code></td><td>The note's title — the formatted date for a diary entry, the note's name when inserting into an existing note.</td></tr>
+</table>
+</div>
+
+<p>
+Templates meet the diary through the <strong>Template note</strong>
+setting (Settings&nbsp;→&nbsp;Diary): name a note there and every
+newly created entry — a fresh per-day file, or a fresh section of the
+log — is seeded from it, placeholders substituted. A minimal daily
+template might be:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (the template note)</p>
+	<pre><code>## {{date}} — plan
+
+- [ ]
+
+## Notes
+</code></pre>
+</div>
+
+<p>
+Templates are not only for the diary. <em>Insert Template…</em>
+(<kbd>⌘⌥T</kbd>, or Format&nbsp;→&nbsp;Insert&nbsp;→&nbsp;Template…)
+lists every note in the <code>Templates/</code> folder (the folder
+name is a setting) and inserts the chosen one at the cursor, with the
+same substitution — <code>{{title}}</code> becoming the current note's
+name. The demo vault ships one worked example,
+<code>Templates/Meeting.md</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (Templates/Meeting.md)</p>
+	<pre><code>---
+tags: [meeting]
+---
+# {{title}} — {{date}}
+
+Attendees:
+
+## Notes
+</code></pre>
+</div>
+
+<p>
+Create a note named after the meeting, press <kbd>⌘⌥T</kbd>, choose
+<em>Meeting</em>, and the skeleton lands with the note's name and
+today's date already in the heading.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Because the diary's template is resolved by name like a wikilink,
+	keeping it in <code>Templates/</code> gives you both behaviours from
+	one file: it seeds new diary entries automatically <em>and</em>
+	appears in the <kbd>⌘⌥T</kbd> list for manual insertion elsewhere.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Per-day files follow Obsidian's daily-notes convention — a folder of
+	<code>YYYY-MM-DD.md</code> files — so an existing Obsidian daily-notes
+	folder works as a Clew diary as-is, and entries written in Clew show
+	up in Obsidian's daily notes. Clew never reads
+	<code>.obsidian/</code> settings, so set Clew's diary folder and date
+	format to match what Obsidian uses. A single-log diary is plain
+	Markdown headings that Obsidian renders happily, though Obsidian's
+	own daily-notes machinery does not know about it. Composed views live
+	under <code>.clew/</code> and are invisible to Obsidian.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+The diary's settings (Settings&nbsp;→&nbsp;Diary, plus the templates
+folder under Files):
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Setting</th><th>Default</th><th>Meaning</th></tr>
+	<tr><td>Mode</td><td>One note per day</td><td><em>One note per day</em> or <em>Single log note</em>.</td></tr>
+	<tr><td>Log note (log mode)</td><td><code>Diary.md</code></td><td>The log file's path, in log mode.</td></tr>
+	<tr><td>Folder (per-day mode)</td><td><code>Daily</code></td><td>Where per-day files live.</td></tr>
+	<tr><td>Date format</td><td><code>YYYY-MM-DD</code></td><td>Entry names and log headings; must contain YYYY, MM, and DD.</td></tr>
+	<tr><td>Template note (optional)</td><td>—</td><td>A note whose text seeds every new entry.</td></tr>
+	<tr><td>Templates folder</td><td><code>Templates</code></td><td>Where <em>Insert Template…</em> looks for templates.</td></tr>
+</table>
+</div>
+
+<p>
+Commands (all rebindable in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>):
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Command</th><th>Hotkey</th><th>Where</th></tr>
+	<tr><td>Open today's diary entry</td><td><kbd>⌘⇧D</kbd></td><td>Go menu, command palette.</td></tr>
+	<tr><td>Open diary calendar</td><td>—</td><td>Go menu, command palette, sidebar Diary tab.</td></tr>
+	<tr><td>Insert template…</td><td><kbd>⌘⌥T</kbd></td><td>Format&nbsp;→&nbsp;Insert menu, command palette; needs an open editor.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="editing.html">The editor</a> — where the writing itself
+	happens.</li>
+	<li><a href="panels.html">Panels</a> — the sidebar the diary calendar
+	lives in.</li>
+	<li><a href="properties.html">Properties and metadata</a> —
+	frontmatter you might stamp into a daily template.</li>
+	<li><a href="queries.html">Queries</a> — gather tasks and fields from
+	daily notes into live tables.</li>
+	<li><a href="maps.html">Interactive maps</a> — photo maps pair well
+	with travel diaries.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> —
+	every setting above, and rebinding the shortcuts.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

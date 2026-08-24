@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citations and bibliographies — Clew Manual</title>
+<meta name="description" content="BibTeX-backed citations in Clew: the \cite command family, formatted bibliographies with CSL styles, cite-key autocompletion, and LaTeX export.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reading mode</p>
+<h1>Citations and bibliographies</h1>
+<p class="lead">
+Clew cites the way academic writing cites: from a BibTeX file, with
+LaTeX's <code>\cite</code> commands, formatted by real bibliography
+styles. Keep a <code>.bib</code> file in your vault, name it in a
+note's properties, and reading mode resolves every citation into
+author–year text and assembles a formatted bibliography where you ask
+for one — while the editor autocompletes cite keys as you type. The
+same source exports to LaTeX, where natbib takes over natively, so a
+note can become a submission-ready manuscript without touching its
+citations.
+</p>
+
+<h2 id="bibtex">BibTeX is the source of truth</h2>
+
+<p>
+There is no citation database inside Clew. Your references live in
+ordinary <code>.bib</code> files — the same files you already maintain
+for LaTeX, exported from Zotero or BibDesk or written by hand — stored
+anywhere in the vault. The demo vault keeps
+<code>refs.bib</code> next to the notes that cite it:
+</p>
+
+<div class="example">
+	<p class="example-label">Features/refs.bib</p>
+	<pre><code>@book{lewis1969,
+	author = {Lewis, David},
+	title = {Convention: A Philosophical Study},
+	publisher = {Harvard University Press},
+	address = {Cambridge, MA},
+	year = {1969}
+}
+
+@book{skyrms1996,
+	author = {Skyrms, Brian},
+	title = {Evolution of the Social Contract},
+	publisher = {Cambridge University Press},
+	address = {Cambridge},
+	year = {1996}
+}</code></pre>
+</div>
+
+<p>
+A note that cites declares which bibliography it uses, and switches
+resolution on, in its frontmatter properties:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (at the top of the note)</p>
+	<pre><code>---
+Bibliography: refs.bib
+Resolve citations: true
+Bibliography style: chicago
+---</code></pre>
+</div>
+
+<dl>
+	<dt><code>Bibliography</code></dt>
+	<dd>The <code>.bib</code> file to read. A relative path resolves
+	against the note's own folder; an absolute path works too, so several
+	vaults can share one master bibliography outside any of them.</dd>
+	<dt><code>Resolve citations</code></dt>
+	<dd>Set <code>true</code> to have the engine resolve citations at
+	render time. This is the mode you want in Clew — with resolution off,
+	the engine leaves the commands untouched for a browser-side citation
+	client the preview does not load, so they appear as literal
+	text.</dd>
+	<dt><code>Bibliography style</code></dt>
+	<dd>The citation style; <code>chicago</code> if you say nothing. See
+	<a href="#styles">Styles</a> below.</dd>
+</dl>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The engine's bibliography indexer splits the <code>.bib</code> file on
+	<strong>blank lines</strong>: every entry must be separated from the
+	next by at least one empty line. Two entries run together without a
+	blank line between them are read as one, and the second becomes
+	invisible — its key will report "no bibliography entry found" even
+	though you can see it in the file. Reference managers export with
+	blank lines by default; hand-edited files are where this bites.
+</div>
+
+<h2 id="vault-wide">A vault-wide bibliography</h2>
+
+<p>
+Declaring the same three properties in every citing note gets old, so a
+vault can set them once. <strong>Settings&nbsp;→&nbsp;This vault</strong>
+has a <em>Bibliography file</em> field (a path from the vault root, or an
+absolute path shared between vaults) and a <em>Bibliography style</em>
+field. With a file set, every note in the vault resolves
+<code>\cite</code> commands with no frontmatter at all — Clew writes the
+choice into the engine configuration it generates for the vault, and
+citation resolution switches on with it.
+</p>
+
+<p>
+The precedence is what you would hope: the vault settings are the
+default, and a note's own <code>Bibliography</code> or
+<code>Bibliography style</code> properties override them for that note
+alone. Everything in this chapter — sectional
+<code>@bibliography</code> blocks, scopes, per-bibliography styles —
+keeps working on top of a vault-wide file, because the vault setting
+only supplies what the note does not say itself.
+</p>
+
+<p>
+The same settings section can enable the <strong>References
+panel</strong>: a <em>Refs</em> tab in the right sidebar showing the
+active note's formatted references, updated as you write, whether the
+note is in reading or source mode. Notes never need an inline
+<code>@bibliography</code> block for the panel — and authoring one
+anyway still renders inline as usual. See
+<a href="panels.html">Panels</a>.
+</p>
+
+<h2 id="commands">The cite commands</h2>
+
+<p>
+Citations are written with the natbib-style command family. All of
+them take one or more comma-separated keys in braces:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>The signalling literature descends from \cite{lewis1969}, with the
+evolutionary turn taken by \citep{skyrms1996, maynardsmith1973}.
+As \citeauthor{alexander2023} argues — see \citep[p. 17]{maynardsmith1973} —
+the point generalizes.</code></pre>
+</div>
+
+<p>
+In the chicago author–date style, this renders along the lines of:
+"The signalling literature descends from Lewis (1969), with the
+evolutionary turn taken by (Skyrms 1996; Maynard Smith and Price
+1973). As J.&nbsp;McKenzie Alexander argues — see (Maynard Smith and
+Price 1973, p.&nbsp;17) — the point generalizes."
+</p>
+
+<dl>
+	<dt><code>\cite{key}</code>, <code>\citet{key}</code></dt>
+	<dd>A textual citation, with the author outside the parentheses:
+	"Lewis (1969)". <code>\cite</code> and <code>\citet</code> behave
+	identically in HTML; both pass through to natbib in LaTeX export.</dd>
+	<dt><code>\citep{key}</code></dt>
+	<dd>A parenthetical citation: "(Lewis 1969)". Multiple keys share the
+	parentheses, separated by semicolons.</dd>
+	<dt><code>\citep[p. 17]{key}</code></dt>
+	<dd>One optional argument is a postnote, usually a page reference:
+	"(Maynard Smith and Price 1973, p.&nbsp;17)".</dd>
+	<dt><code>\citep[see][p. 5]{key}</code></dt>
+	<dd>Two optional arguments are prenote and postnote:
+	"(see Lewis 1969, p.&nbsp;5)". The textual forms accept the optional
+	arguments as well.</dd>
+	<dt><code>\citeauthor{key}</code></dt>
+	<dd>The author names only, with no year — "David Lewis"; more than two
+	authors abbreviate to "et&nbsp;al."</dd>
+	<dt><code>\citeauthor*{key}</code></dt>
+	<dd>The full author list, never abbreviated.</dd>
+	<dt><code>\fullcite{key}</code></dt>
+	<dd>The complete bibliography entry, rendered inline — useful for an
+	annotated reading list where each item should carry its full
+	reference.</dd>
+	<dt><code>\nocite{key}</code></dt>
+	<dd>Nothing inline, but the entry is added to the bibliography — the
+	standard way to list a work you consulted without citing it in the
+	text.</dd>
+</dl>
+
+<p>
+Two details of the parsing are worth knowing. A cite command inside a
+code span or fenced code block is left alone, which is how this page's
+own examples survive. And a key that resolves to nothing renders the
+command as literal text and logs a warning naming the missing key, so
+a typo is visible rather than silently dropped.
+</p>
+
+<h2 id="bibliography-list">Placing the bibliography</h2>
+
+<p>
+The bibliography appears wherever you put the <code>@bibliography</code>
+marker, on a line of its own — conventionally under a heading at the
+end of the note:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>## Bibliography
+
+@bibliography</code></pre>
+</div>
+
+<p>
+The engine collects every work cited in the note (including
+<code>\nocite</code> entries), formats each in the active style, and
+emits the list there. The marker takes an optional attribute block:
+<code>@bibliography{title="Works Cited"}</code> adds a heading of its
+own, and <code>@bibliography{style="apa"}</code> overrides the style
+for that list.
+</p>
+
+<h3 id="sectional">Sectional bibliographies</h3>
+
+<p>
+A document can carry more than one bibliography, and the markers
+divide the citations between them — the same placement-marker model
+the engine uses for grouped endnotes. A bare <code>@bibliography</code>
+is <em>sectional</em>: it collects every citation since the previous
+sectional marker, then starts the count afresh, so a marker at the end
+of each chapter gives each chapter its own reference list. Three
+variations widen the net:
+</p>
+
+<dl>
+	<dt><code>@bibliography{all}</code></dt>
+	<dd>Everything cited anywhere in the document, regardless of
+	sections — the right form for a combined list at the very end,
+	after per-section lists.</dd>
+	<dt><code>@bibliography{scope="#part-one"}</code></dt>
+	<dd>Only the citations inside the element a CSS selector names —
+	pair it with a container directive carrying an
+	<code>{#id}</code> to gather a bounded region from anywhere in the
+	document.</dd>
+	<dt><code>@bibliography{style="bjps" title="Chapter references"}</code></dt>
+	<dd>The attributes combine, and a sectional marker's
+	<code>style</code> reaches backwards: the inline citations in its
+	section render in that section's style too, so a document quoting
+	two journals' conventions can honour both.</dd>
+</dl>
+
+<p>
+All of this works unchanged on top of a
+<a href="#vault-wide">vault-wide bibliography</a> — the vault setting
+supplies the <code>.bib</code> file and the default style, and the
+markers carve up the lists.
+</p>
+
+<h3 id="styles">Styles</h3>
+
+<p>
+Formatting is done by citation.js with CSL — the same style language
+Zotero uses. Eight styles ship ready to name in
+<code>Bibliography style</code>:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Name</th><th>Style</th></tr>
+	<tr><td><code>chicago</code></td><td>Chicago author–date (the default)</td></tr>
+	<tr><td><code>apa</code></td><td>APA</td></tr>
+	<tr><td><code>harvard1</code></td><td>Harvard</td></tr>
+	<tr><td><code>vancouver</code></td><td>Vancouver (numeric)</td></tr>
+	<tr><td><code>bjps</code></td><td>British Journal for the Philosophy of Science</td></tr>
+	<tr><td><code>ajp</code></td><td>Australasian Journal of Philosophy</td></tr>
+	<tr><td><code>econometrica</code></td><td>Econometrica</td></tr>
+	<tr><td><code>ergo</code></td><td>Ergo</td></tr>
+</table>
+</div>
+
+<p>
+Any other value is treated as the path to a custom <code>.csl</code>
+file — <code>Bibliography style: my-journal.csl</code> — so any of the
+thousands of styles in the CSL repository can be dropped into the
+vault and used directly.
+</p>
+
+<h2 id="completion">Cite-key autocompletion</h2>
+
+<p>
+You rarely remember cite keys, and you should not have to. In the
+editor, as soon as your cursor is inside the braces of any
+cite-family command — type <code>\cite{</code> and keep going — Clew
+offers a completion list built from <strong>every</strong>
+<code>.bib</code> file in the vault, wherever it lives. Each candidate
+shows its key with the authors, year, and title beside it, and the
+matching is fuzzy over all three, so typing <code>lewis</code>,
+<code>conv</code>, or <code>1969</code> all find
+<code>lewis1969</code>. In a multi-key citation, completion applies to
+the segment after the last comma, so
+<code>\citep{lewis1969, sk…</code> completes the second key without
+disturbing the first.
+</p>
+
+<p>
+The scan behind the completion list is cached against each file's
+modification time, so it stays instant even with a large master
+bibliography, and it refreshes the moment a <code>.bib</code> file
+changes on disk.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Because completion reads every <code>.bib</code> in the vault while
+	each note resolves against the one file its <code>Bibliography</code>
+	property names, the comfortable arrangement is one master
+	<code>.bib</code> for the whole vault — every note points at it, and
+	completion, resolution, and export all agree. Clew supports
+	<a href="vaults-and-files.html">symlinks</a>, so the master file can
+	be a link to wherever your reference manager actually writes it.
+</div>
+
+<h2 id="export">Exporting citations</h2>
+
+<p>
+Citations are where the "same source, two outputs" design pays off
+most. In <a href="export.html">LaTeX and PDF export</a> the engine
+does not imitate LaTeX citations — it emits them. Every
+<code>\cite</code>-family command passes through verbatim for natbib
+to resolve (<code>\fullcite</code> is translated to the
+<code>bibentry</code> package's <code>\bibentry</code>), and
+<code>@bibliography</code> becomes <code>\bibliographystyle</code> plus
+<code>\bibliography</code>, pointed at your <code>.bib</code> file. The
+<code>.bst</code> style for print is chosen to match your CSL style
+where a reasonable match exists, and can be pinned explicitly with a
+<code>LaTeX bib style</code> property in the note. The result compiles
+the way a hand-written manuscript would.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Citations are a Clew/jmarkdown feature. Open the same note in Obsidian
+	and the <code>\cite{lewis1969}</code> commands appear as the literal
+	text you typed — unrendered, but intact and harmless. The
+	<code>.bib</code> file is just a file in the vault; nothing about
+	citing in Clew changes what Obsidian sees or stores.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Command</th><th>Renders as</th></tr>
+	<tr><td><code>\cite{key}</code>, <code>\citet{key}</code></td><td>Textual: Lewis (1969)</td></tr>
+	<tr><td><code>\citep{key}</code></td><td>Parenthetical: (Lewis 1969)</td></tr>
+	<tr><td><code>\citep[p. 17]{key}</code></td><td>With postnote: (Lewis 1969, p. 17)</td></tr>
+	<tr><td><code>\citep[see][p. 5]{key}</code></td><td>With prenote and postnote: (see Lewis 1969, p. 5)</td></tr>
+	<tr><td><code>\citeauthor{key}</code> / <code>\citeauthor*{key}</code></td><td>Author names only / full author list</td></tr>
+	<tr><td><code>\fullcite{key}</code></td><td>The complete bibliography entry, inline</td></tr>
+	<tr><td><code>\nocite{key}</code></td><td>Nothing inline; entry joins the bibliography</td></tr>
+	<tr><td><code>@bibliography</code></td><td>The formatted bibliography, at this position</td></tr>
+	<tr><td><code>@bibliography{title="…"}</code></td><td>The same, with a heading</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Note property</th><th>Meaning</th></tr>
+	<tr><td><code>Bibliography</code></td><td>Path to the <code>.bib</code> file, relative to the note (or absolute)</td></tr>
+	<tr><td><code>Resolve citations</code></td><td><code>true</code> to resolve at render time (the mode Clew uses)</td></tr>
+	<tr><td><code>Bibliography style</code></td><td>A built-in style name or a path to a <code>.csl</code> file; default <code>chicago</code></td></tr>
+	<tr><td><code>LaTeX bib style</code></td><td>The natbib <code>.bst</code> used in LaTeX export</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Vault setting (Settings → This vault)</th><th>Meaning</th></tr>
+	<tr><td>Bibliography file <code>(bibliography)</code></td><td>A <code>.bib</code> path from the vault root (or absolute); switches on citation resolution vault-wide</td></tr>
+	<tr><td>Bibliography style <code>(bibliographyStyle)</code></td><td>A named style — apa, chicago, harvard1, vancouver, bjps, ajp, econometrica, ergo — or a path to a custom <code>.csl</code> file</td></tr>
+	<tr><td>References panel <code>(bibliographyPanel)</code></td><td>Shows the active note's formatted references in a right-sidebar Refs tab</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="reading-mode.html">How rendering works</a> — where and
+	when citations are resolved.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the
+	frontmatter block the citation keys live in.</li>
+	<li><a href="editing.html">The editor</a> — the completion system the
+	cite-key source plugs into.</li>
+	<li><a href="export.html">Exporting notes</a> — the LaTeX/natbib side
+	of the pipeline.</li>
+	<li><a href="math-and-theorems.html">Math and theorems</a> — the other
+	half of academic typesetting in Clew.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How rendering works — Clew Manual</title>
+<meta name="description" content="Reading mode is the jmarkdown typesetting engine: live re-rendering, scroll sync, inverse search, live checkboxes, alerts, footnotes, and query re-rendering.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reading mode</p>
+<h1>How rendering works</h1>
+<p class="lead">
+Press <kbd>⌘E</kbd> and Clew stops showing you Markdown and starts
+showing you a document. What appears is not a preview approximation:
+it is the output of the jmarkdown typesetting engine — the same engine
+that compiles the note to LaTeX and PDF — with live mathematics,
+theorem environments, citations, diagrams, and cross-references. This
+chapter explains what reading mode renders, how it stays in step with
+your editing, and the ways the rendered page talks back: clicks that
+navigate, checkboxes that write to your files, and an inverse search
+that jumps you to the exact source line of anything you see.
+</p>
+
+<h2 id="toggling">Toggling between editing and reading</h2>
+
+<p>
+Every note tab is in one of two modes. <strong>Source mode</strong> is
+the editor; <strong>reading mode</strong> is the rendered note.
+<kbd>⌘E</kbd> (the <em>Toggle reading mode</em> command) flips between
+them, and the tab remembers which mode it is in. When you switch to
+reading mode, the rendered view opens at the line your cursor was on,
+so a mid-document toggle does not throw you back to the top.
+</p>
+
+<p>
+The two modes are not an either/or. Because Clew's workspace supports
+<a href="navigation.html">splits</a> — <kbd>⌘\</kbd> splits the active
+pane to the right, <kbd>⌘⇧\</kbd> splits it downward — the classic
+arrangement is the same note open twice: source on the left, reading
+mode on the right. Each pane keeps its own mode, and the two panes of
+the same note cooperate in ways described below (live updating and
+scroll sync). This side-by-side view is how most long-form writing in
+Clew gets done.
+</p>
+
+<figure class="shot">
+	<img src="images/reading-mode.png" alt="A Guide note from the demo vault rendered in reading mode, showing typeset prose, headings, and rendered features">
+	<figcaption>A Guide note from the demo vault in reading mode. Everything on
+	the page is typeset by the jmarkdown engine, not approximated by a
+	Markdown previewer.</figcaption>
+</figure>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	The app-level shortcuts you care about keep working even while the
+	rendered note has keyboard focus: <kbd>⌘E</kbd> toggles back to the
+	source, <kbd>⌘W</kbd> closes the tab, <kbd>⌘T</kbd> opens a new one, and
+	<kbd>⌘\</kbd> splits. You never need to click back into the editor first.
+</div>
+
+<h2 id="what-renders">What renders</h2>
+
+<p>
+Reading mode runs the full jmarkdown engine over your note, so the
+rendered page carries everything the engine can typeset:
+</p>
+
+<ul>
+	<li><strong>The dialect</strong> — <code>/italics/</code>,
+	<code>*strong*</code>, <code>==highlights==</code>, TeX-style
+	sub- and superscripts, and the rest of
+	<a href="dialect.html">the jmarkdown dialect</a>.</li>
+	<li><strong>Mathematics</strong> — inline <code>$…$</code> and display
+	<code>$$…$$</code> via a locally bundled MathJax, plus numbered
+	equations and <a href="math-and-theorems.html">theorem
+	environments</a>.</li>
+	<li><strong>Citations</strong> — the <code>\cite</code> family resolved
+	against your BibTeX files, with a formatted
+	<a href="citations.html">bibliography</a>.</li>
+	<li><strong>Diagrams</strong> — mermaid, TikZ, and MetaPost, covered in
+	<a href="diagrams.html">their own chapter</a>, and interactive
+	<a href="maps.html">Leaflet maps</a>.</li>
+	<li><strong>Footnotes</strong> — written inline where they attach:
+	<code>[fn: an anonymous note]</code> auto-numbers itself, and
+	<code>[^label: a labelled note]</code> names its label. Standard
+	reference-style <code>[^1]</code> footnotes work as well. Either way the
+	mark renders as a superscript and the collected notes appear as a list
+	at the end of the document.</li>
+	<li><strong>Alerts</strong> — GitHub-style callout boxes, described
+	below.</li>
+	<li><strong>Tables</strong> — rendered as real HTML tables.</li>
+	<li><strong>Code</strong> — fenced code blocks are syntax-highlighted at
+	render time by highlight.js, so the coloring is part of the document
+	rather than a client-side afterthought.</li>
+	<li><strong>Links and embeds</strong> — <code>[[wikilinks]]</code>
+	become navigable links, and <code>![[embeds]]</code> transclude notes,
+	images, audio, video, and PDFs (see
+	<a href="links-and-embeds.html">Links and embeds</a>).</li>
+</ul>
+
+<h3 id="alerts">Alerts</h3>
+
+<p>
+A blockquote whose first line is a bracketed type keyword renders as a
+colored callout box:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>&gt; [!NOTE]
+&gt; Alerts render as callout boxes in reading mode,
+&gt; and as colored boxes in LaTeX and PDF export.</code></pre>
+</div>
+
+<p>
+Seven types are available: the five GitHub-standard ones —
+<code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>,
+<code>[!WARNING]</code>, <code>[!CAUTION]</code> — plus two jmarkdown
+additions, <code>[!QUESTION]</code> and <code>[!SUGGESTION]</code>.
+Each gets its own icon and color. The same source survives
+<a href="export.html">export</a>: in LaTeX and PDF output an alert
+becomes a colored <code>tcolorbox</code> rather than leaking HTML into
+the print file.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	The <code>&gt; [!note]</code> form is the same syntax Obsidian calls
+	callouts, so these boxes render in both apps. The five GitHub types
+	exist on both sides; beyond those, each app has types the other does
+	not (Obsidian has many more decorative variants; Clew adds
+	<code>question</code> and <code>suggestion</code>). An unknown type
+	is not recognised as an alert at all — it renders as an ordinary
+	blockquote with the <code>[!TYPE]</code> line visible as text.
+</div>
+
+<h2 id="live">Live re-rendering</h2>
+
+<p>
+Reading mode is not a snapshot. Clew auto-saves your edits to disk
+about a second after you stop typing, the engine re-renders the note
+from the saved file, and the rendered pane <strong>patches itself in
+place</strong>. The new HTML is diffed against the old and only the
+parts that actually changed are replaced, which is why an update never
+costs you anything you care about:
+</p>
+
+<ul>
+	<li>your scroll position stays where it was;</li>
+	<li>rendered mathematics does not flash back to raw TeX;</li>
+	<li>a Leaflet map keeps its pan and zoom unless the map's own
+	configuration changed;</li>
+	<li>embedded canvases and other live elements are left running;</li>
+	<li>scripts in the note are not re-executed on every keystroke.</li>
+</ul>
+
+<p>
+So with source and reading panes side by side, the rendered page
+follows your typing with a delay of roughly a second — the auto-save
+debounce plus the render — while behaving like a stable document
+rather than a page being torn down and rebuilt.
+</p>
+
+<p>
+One design consequence worth knowing: because the engine renders from
+the saved file, <strong>disk is the source of truth</strong>. What you
+see in reading mode is always the rendering of what is actually in the
+file — never of an unsaved buffer state that could differ from what
+another app, or a sync service, sees.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Inside code spans and fenced code blocks, the engine passes the
+	<code>&lt;</code> character through unescaped. Ordinary code is
+	unaffected, but a literal <code>&lt;script&gt;</code> tag inside a code
+	example will be interpreted by the page rather than displayed, and can
+	swallow the rest of the note. If you need to show HTML markup in a code
+	block, write the angle brackets as entities
+	(<code>&amp;lt;script&amp;gt;</code>).
+</div>
+
+<h2 id="scroll-sync">Scroll sync</h2>
+
+<p>
+When the same note is open in a source pane and a reading pane, the
+two <strong>scroll in sync, in both directions</strong>. Scroll the
+editor and the rendered pane follows; scroll the rendered pane and the
+editor follows. The sync tracks your position by source line — the
+engine stamps every rendered block with the line it came from — so it
+stays accurate even though a paragraph of Markdown and its typeset
+form are rarely the same height.
+</p>
+
+<p>
+Only a scroll you perform is propagated; the pane that follows
+suppresses its own echo, so the two sides never fight each other. The
+rule that falls out is the natural one: the last pane you actually
+scrolled wins.
+</p>
+
+<h2 id="inverse-search">Inverse search: from the page back to the source</h2>
+
+<p>
+Anyone who has used a LaTeX editor knows inverse search: click the
+typeset output, land on the source line. Clew's reading mode does the
+same. <strong><kbd>⌘</kbd>-click any block</strong> in the rendered
+note — a paragraph, a heading, a list item, an equation — and the tab
+flips to source mode with the cursor on the exact line that produced
+what you clicked. On Windows and Linux the gesture is
+<kbd>Ctrl</kbd>-click.
+</p>
+
+<p>
+This works because renders carry per-block source-line information all
+the way into the page. It is the fastest way to fix the typo you just
+noticed while reading: <kbd>⌘</kbd>-click it, correct it, and watch
+the rendered pane patch itself a moment later.
+</p>
+
+<p>
+The one place <kbd>⌘</kbd>-click means something else is on a link,
+where it opens the link in a new tab instead — links come next.
+</p>
+
+<h2 id="interacting">Interacting with the rendered page</h2>
+
+<h3 id="links">Following links</h3>
+
+<p>
+Wikilinks in reading mode are real links. Click one to open the
+target in the current tab — in reading mode, so browsing a chain of
+rendered notes feels like reading a wiki — or <kbd>⌘</kbd>-click to
+open it in a new tab. External <code>http(s)</code> links open in your
+system browser. The rendered page itself never navigates away from
+your note, whatever a link or a script inside it tries to do.
+</p>
+
+<h3 id="checkboxes">Checkboxes are live</h3>
+
+<p>
+Task checkboxes in reading mode are not decorations. Tick one and Clew
+writes the change back into the Markdown source — the
+<code>- [ ]</code> on that line becomes <code>- [x]</code> in the
+file, and every other view of that note follows. Untick it and the
+edit reverses. There is no separate "task state" anywhere: the file is
+the state.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>- [ ] draft the abstract
+- [x] email the co-author</code></pre>
+</div>
+
+<p>
+This write-back also works at a distance. A <code>```tasks</code>
+block gathers checkboxes from across the vault
+(see <a href="tasks-and-kanban.html">Tasks and kanban</a>); each
+gathered item remembers which note and line it came from, and ticking
+it in the query's output rewrites <em>that</em> note. Reading mode is
+the front half of Clew's writable-database story: the page you read is
+also a surface you can edit through.
+</p>
+
+<h3 id="queries-rerender">Notes with queries re-render on any change</h3>
+
+<p>
+A note containing a <code>```query</code>, <code>```tasks</code>, or
+<code>```kanban</code> fence depends on the whole vault, not just on
+its own file — its results may change when <em>any</em> note changes.
+Clew tracks this: whenever a Markdown file anywhere in the vault is
+saved, every open note that contains a query fence is re-rendered
+(briefly debounced, so a burst of typing causes one refresh rather
+than many). A dashboard note sitting in a split really does behave
+like a dashboard: edit a project note on the left and the table on the
+right updates by itself. The details of the query system live in
+<a href="queries.html">Queries</a>.
+</p>
+
+<h2 id="under-the-hood">Under the hood, briefly</h2>
+
+<p>
+Two facts about the machinery explain most of what you observe. First,
+the engine runs in a separate worker process, never inside the app
+itself — a render that goes wrong cannot take the editor with it, and
+a heavy note cannot freeze your typing; a pre-warmed standby worker
+keeps re-renders fast. Second, each render is a complete typeset
+document — full MathJax pass, resolved citations, numbered
+environments — and the in-place patching described above is what makes
+complete re-renders cheap enough to run on every save.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Reading mode changes nothing about your files: they remain plain
+	Markdown that Obsidian opens and renders with its own preview. Features
+	the jmarkdown engine adds — theorem environments, <code>\cite</code>
+	commands, dialect emphasis, TikZ — appear in Obsidian as the literal
+	text you typed, not as errors. Checkbox write-back is fully compatible:
+	a task ticked in Clew is ticked in Obsidian, because both apps read the
+	same <code>[x]</code>.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Action</th><th>Gesture</th></tr>
+	<tr><td>Toggle reading mode</td><td><kbd>⌘E</kbd></td></tr>
+	<tr><td>Split the pane right / down</td><td><kbd>⌘\</kbd> / <kbd>⌘⇧\</kbd></td></tr>
+	<tr><td>Follow a wikilink</td><td>Click</td></tr>
+	<tr><td>Open a wikilink in a new tab</td><td><kbd>⌘</kbd>-click the link</td></tr>
+	<tr><td>Inverse search (jump to the source line)</td><td><kbd>⌘</kbd>-click any non-link block</td></tr>
+	<tr><td>Toggle a task in the source file</td><td>Click its checkbox</td></tr>
+	<tr><td>Open an external link in the browser</td><td>Click</td></tr>
+	<tr><td>Close tab / new tab / split (while the preview has focus)</td><td><kbd>⌘W</kbd> / <kbd>⌘T</kbd> / <kbd>⌘\</kbd></td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Alert type</th><th>Source</th></tr>
+	<tr><td>Note, Tip, Important, Warning, Caution</td><td><code>&gt; [!NOTE]</code> … <code>&gt; [!CAUTION]</code> (GitHub-standard; also Obsidian callouts)</td></tr>
+	<tr><td>Question, Suggestion</td><td><code>&gt; [!QUESTION]</code>, <code>&gt; [!SUGGESTION]</code> (jmarkdown additions)</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — the inline
+	syntax reading mode gives meaning to.</li>
+	<li><a href="math-and-theorems.html">Math and theorems</a>,
+	<a href="citations.html">Citations and bibliographies</a>,
+	<a href="diagrams.html">Diagrams</a>, and
+	<a href="maps.html">Interactive maps</a> — a chapter each for the
+	engine's headline features.</li>
+	<li><a href="navigation.html">Navigation, tabs and splits</a> — the
+	split workspace this chapter leans on.</li>
+	<li><a href="queries.html">Queries</a> and
+	<a href="tasks-and-kanban.html">Tasks and kanban</a> — the live blocks
+	that re-render with the vault and write back to it.</li>
+	<li><a href="export.html">Exporting notes</a> — the same engine,
+	pointed at HTML, LaTeX, and PDF files instead of the screen.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

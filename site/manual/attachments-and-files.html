@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attachments and files — Clew Manual</title>
+<meta name="description" content="Pasting and dropping attachments, how they are named and linked, media embeds with sizing, the built-in viewers for images, PDFs, audio, and video, and organizing the attachment folder.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">The vault</p>
+<h1>Attachments and files</h1>
+<p class="lead">
+Notes are rarely only text. A vault accumulates screenshots, scanned
+papers, photographs, lecture recordings, and PDFs, and Clew treats them
+as what they are: ordinary files in the folder, linked from notes the
+same way notes link to each other. This chapter covers the whole
+pipeline — pasting and dropping files into the editor, where they land
+and what they are called, how embeds render in reading mode, the
+built-in viewer tabs for media, and how to keep the accumulation
+organized.
+</p>
+
+<h2 id="pasting">Pasting and dropping</h2>
+
+<p>
+The fastest way to get a file into the vault is not to think about it.
+Copy an image anywhere — a screenshot, a picture from a web page, a
+chart out of another app — and paste it straight into the editor with
+<kbd>⌘V</kbd>. Clew saves the image into the vault's <strong>attachment
+folder</strong> and inserts an embed at the cursor:
+</p>
+
+<div class="example">
+	<p class="example-label">Inserted at the cursor</p>
+	<pre><code>![[Pasted image 20260823142917.png]]</code></pre>
+</div>
+
+<p>
+Dropping works the same way, and for any kind of file: drag one or more
+files from Finder (or your platform's file manager) onto the editor,
+and each is saved to the attachment folder and linked at the drop
+position, one per line. Media files — images, PDFs, audio, video —
+are inserted as <code>![[embeds]]</code> so they render in reading
+mode; any other file type gets a plain <code>[[link]]</code> instead.
+</p>
+
+<h3 id="naming">What the file is called</h3>
+
+<p>
+A pasted clipboard image usually arrives with no useful name (the
+clipboard calls everything <code>image.png</code>), so Clew names it by
+timestamp: <code>Pasted image 20260823142917.png</code> — year, month,
+day, hour, minute, second. A dropped file keeps its own name. In both
+cases the name is sanitized (path separators and colons become dashes)
+and deduplicated against the attachment folder: pasting
+<code>chart.png</code> twice gives you <code>chart.png</code> and
+<code>chart 1.png</code>, never an overwrite.
+</p>
+
+<h3 id="heic">HEIC photographs</h3>
+
+<p>
+Photographs from an iPhone often arrive as HEIC, which Chromium — and
+therefore Clew's reading mode — cannot display. On macOS, Clew
+converts HEIC and HEIF files to JPEG transparently as they are saved,
+so the vault only ever receives a <code>.jpg</code>. The conversion
+preserves EXIF metadata, including GPS coordinates — which matters if
+you use <a href="maps.html">photo maps</a>, where geotagged photos pin
+themselves to an interactive map. If the conversion fails for some
+reason, the original bytes are kept rather than lost.
+</p>
+
+<h2 id="linking">How attachments are linked</h2>
+
+<p>
+Attachments are addressed exactly like notes: by name, with the vault
+resolving where the file actually lives. <code>![[Earthrise.jpg]]</code>
+finds the file whether it sits in the vault root, in
+<code>Attachments/</code>, or three folders deep — when several files
+share a basename, the one with the shortest path wins, and you can
+always write an explicit path (<code>![[Attachments/Holiday/beach.jpg]]</code>)
+to pick one out. Because bare names resolve regardless of folder, you
+can reorganize the attachment folder later without breaking the embeds
+that point into it.
+</p>
+
+<p>
+A plain <code>[[wikilink]]</code> to an attachment (no <code>!</code>)
+does not embed it; it renders as an ordinary link, and clicking it
+opens the file in a viewer tab. The full link grammar — aliases,
+headings, transclusion of notes — is covered in
+<a href="links-and-embeds.html">Links and embeds</a>; this chapter
+sticks to what is specific to files.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Renaming a <em>note</em> rewrites every link to it across the vault,
+	but renaming an <em>attachment</em> does not — embeds in notes that
+	point at the old name are left behind (references from canvas files
+	are rewritten, but note embeds are not). Moving an attachment
+	between folders is safe, since bare-name embeds resolve by name
+	alone; changing the name itself means updating the embeds by hand,
+	and <a href="search.html">search</a> will find them for you.
+</div>
+
+<h2 id="viewers">Viewer tabs</h2>
+
+<p>
+Images, PDFs, audio, and video open as tabs in their own right — click
+one in the file explorer, or click a <code>[[link]]</code> to one in
+reading mode, and it opens in a viewer tab alongside your note tabs. A
+viewer tab behaves like any other: it can be dragged into a split, kept
+open next to the note that discusses it, and reopened from the tab's
+history. PDFs get Chromium's full PDF viewer — page navigation,
+zooming, text search and selection — the same one your browser uses.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	When writing about a source document, put the PDF's viewer tab in a
+	split next to your note (right-click the file in the explorer →
+	<em>Open to the right (split)</em>). You get the document and your
+	notes side by side, both scrolling independently, without leaving
+	the app.
+</div>
+
+<h2 id="embeds">Embedding media in notes</h2>
+
+<p>
+An embed is an attachment placed <em>inside</em> a note's rendered
+output. The syntax is Obsidian's: an exclamation mark before a
+wikilink, on its own line.
+</p>
+
+<h3 id="images">Images</h3>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[NASA - Earthrise.jpg]]</code></pre>
+</div>
+
+<p>
+renders the image at its natural size, capped to the note's width.
+Images take Obsidian's size syntax after a <code>|</code>: a width in
+pixels, a width and height as
+<code>width</code><code>x</code><code>height</code>, or alt text
+followed by a size.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[clew-gradient.png|200]]
+![[clew-gradient.png|300x200]]
+![[clew-gradient.png|A stretched gradient|320x60]]</code></pre>
+</div>
+
+<p>
+The rule for the segments after the name: only the <em>last</em> one
+can be a size, and it must look like one — all digits, or
+digits<code>x</code>digits. Anything else is treated as alt text, so
+<code>![[photo.jpg|The 1968 original]]</code> is a caption, not a
+mangled size. Videos accept the same size syntax; audio and PDFs
+ignore it.
+</p>
+
+<h3 id="pdfs">PDFs</h3>
+
+<p>
+<code>![[sample.pdf]]</code> embeds the document itself, rendered by
+Chromium's PDF viewer inside a titled box in the note — you can page
+through and search the PDF without leaving reading mode. The box's
+title is a link that opens the same file in a full viewer tab when the
+embedded view is too small for the job.
+</p>
+
+<h3 id="av">Audio and video</h3>
+
+<p>
+<code>![[lecture.mp3]]</code> renders an audio player;
+<code>![[Lumiere - Arrival of a Train (1895).webm]]</code> renders a
+video player with the usual controls. The demo vault's <em>Media
+Gallery</em> note demonstrates both, public-domain film included.
+</p>
+
+<h3 id="canvas-embeds">Canvases</h3>
+
+<p>
+<code>![[Demo Canvas.canvas]]</code> embeds a live, read-only view of
+a <a href="canvas.html">canvas</a> — pannable and zoomable in place.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Embeds are block-level: the <code>![[…]]</code> must stand on its
+	own line. In the middle of a sentence, the <code>!</code> renders
+	as a literal exclamation mark and the <code>[[…]]</code> becomes an
+	ordinary link — a useful fallback, but not an inline image. There
+	is no inline-embed form.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Everything in this section round-trips. The embed syntax, the
+	<code>|300</code> and <code>|300x200</code> size aliases, the
+	timestamped <em>Pasted image</em> names, and an attachment folder
+	of your choosing are all Obsidian conventions; a vault whose notes
+	embed media this way renders in both apps. Clew's HEIC-to-JPEG
+	conversion also mirrors what Obsidian users typically want, since
+	neither app can display HEIC directly.
+</div>
+
+<h3 id="export">Embeds in exports</h3>
+
+<p>
+When a note is <a href="export.html">exported to LaTeX or PDF</a>,
+image embeds become proper <code>\includegraphics</code> figures — a
+pixel width from the size alias is converted to points — and an
+embedded PDF is included the same way (which works for single-page
+PDFs). Audio and video have no meaning on paper and are omitted.
+</p>
+
+<h2 id="other-files">Non-media files</h2>
+
+<p>
+Any other file type — an archive, a spreadsheet, a data file — can
+live in the vault and be linked with a plain <code>[[name]]</code>,
+but Clew has no viewer for it: clicking it in the explorer does
+nothing, and the right-click menu's <em>Reveal in Finder</em> hands it
+to the application that owns it. Two non-media types get special
+treatment elsewhere: <code>.canvas</code> files open in the
+<a href="canvas.html">canvas</a>, and <code>.bib</code> files feed
+<a href="citations.html">citation completion and bibliographies</a>.
+</p>
+
+<h2 id="organizing">Where attachments live</h2>
+
+<p>
+Pasted and dropped files land in one folder, set in
+Settings&nbsp;→&nbsp;Files&nbsp;→&nbsp;<em>Attachment folder</em> —
+<code>Attachments</code> by default, created on first use. Nothing
+forces attachments to stay there: an image sitting next to the note
+that uses it works just as well, and subfolders inside the attachment
+folder are fine (the demo vault keeps an <code>Attachments/Holiday/</code>
+folder of geotagged photos for its photo map). Since embeds resolve by
+name, the folder layout is an organizational choice, not a linking
+constraint — pick a scheme and let the setting enforce it for
+everything you paste from now on.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Kind</th><th>Extensions</th><th>Embed renders as</th><th>Viewer tab</th><th>Size alias</th></tr>
+	<tr><td>Image</td>
+		<td><code>.png</code> <code>.jpg</code> <code>.jpeg</code> <code>.gif</code> <code>.webp</code> <code>.avif</code> <code>.svg</code> <code>.bmp</code></td>
+		<td>Inline image</td><td>Yes</td><td>Yes</td></tr>
+	<tr><td>PDF</td>
+		<td><code>.pdf</code></td>
+		<td>Chromium PDF viewer in a titled box</td><td>Yes</td><td>—</td></tr>
+	<tr><td>Audio</td>
+		<td><code>.mp3</code> <code>.m4a</code> <code>.wav</code> <code>.ogg</code> <code>.flac</code></td>
+		<td>Audio player</td><td>Yes</td><td>—</td></tr>
+	<tr><td>Video</td>
+		<td><code>.mp4</code> <code>.webm</code> <code>.mov</code></td>
+		<td>Video player</td><td>Yes</td><td>Yes</td></tr>
+	<tr><td>Canvas</td>
+		<td><code>.canvas</code></td>
+		<td>Live read-only canvas scene</td><td>Canvas tab</td><td>—</td></tr>
+	<tr><td>Anything else</td>
+		<td>—</td>
+		<td>Not embeddable; <code>[[link]]</code> only</td><td>No</td><td>—</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Behaviour</th><th>Detail</th></tr>
+	<tr><td>Attachment folder</td>
+		<td>Settings → Files → <em>Attachment folder</em>; default
+		<code>Attachments</code>.</td></tr>
+	<tr><td>Pasted-image names</td>
+		<td><code>Pasted image YYYYMMDDHHMMSS.ext</code>; dropped files
+		keep their names.</td></tr>
+	<tr><td>Name collisions</td>
+		<td>Deduplicated: <code>x.png</code>, <code>x 1.png</code>,
+		<code>x 2.png</code>…</td></tr>
+	<tr><td>HEIC/HEIF</td>
+		<td>Converted to JPEG on macOS as they are saved; EXIF GPS
+		preserved.</td></tr>
+	<tr><td>Resolution</td>
+		<td>By basename, shortest path wins; explicit paths allowed.</td></tr>
+	<tr><td>Media embed</td>
+		<td><code>![[file]]</code> on its own line; plain
+		<code>[[file]]</code> opens the viewer instead.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the full
+	wikilink and transclusion syntax.</li>
+	<li><a href="vaults-and-files.html">Vaults and files</a> — the
+	explorer, file operations, and what renames rewrite.</li>
+	<li><a href="maps.html">Interactive maps</a> — photo maps built
+	from geotagged attachments.</li>
+	<li><a href="canvas.html">The canvas</a> — attachments as canvas
+	nodes, and canvas embeds in notes.</li>
+	<li><a href="export.html">Exporting notes</a> — how embeds carry
+	over to HTML, LaTeX, and PDF.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction — Clew Manual</title>
+<meta name="description" content="What Clew is, the ideas behind it, how it relates to Obsidian, and how to read this manual.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Getting started</p>
+<h1>Introduction</h1>
+<p class="lead">
+Clew is a free, open-source note-taking application in the style of
+Obsidian: your notes are plain Markdown files in a folder on your own
+disk, connected by <code>[[wikilinks]]</code>, browsed through backlinks,
+graphs, and full-text search. What sets Clew apart is what happens when
+you <em>read</em> a note — reading mode is a real typesetting engine —
+and what happens when you ask your notes questions, because Clew's
+queries can write their answers back into your files.
+</p>
+
+<h2 id="what-is-clew">What Clew is</h2>
+
+<p>
+At its core, Clew manages <strong>vaults</strong>: ordinary folders of
+Markdown files. It adds an editor built on CodeMirror&nbsp;6, a reading
+mode rendered by the <strong>jmarkdown</strong> engine, an
+infinite-canvas board with real drawing tools, interactive maps, a
+diary, a graph view, and a query system that treats the vault as a
+database. Everything lives in files you can open with any text editor,
+version with git, and sync however you already sync things. There are
+no accounts, no telemetry, and no cloud service — Clew talks to no
+server it was not explicitly pointed at.
+</p>
+
+<figure class="shot">
+	<img src="images/welcome.jpg" alt="Clew's Welcome note in reading mode, with the file explorer on the left and a rendered banner across the top of the note">
+	<figcaption>The demo vault's Welcome note in reading mode. The banner is
+	rendered by a vault plugin — a folder of JavaScript that travels with the
+	vault itself.</figcaption>
+</figure>
+
+<p>
+The name is not an arbitrary syllable. A <em>clew</em> is the old word
+for a ball of thread — the one Ariadne handed Theseus so he could find
+his way back out of the labyrinth. It is where the modern word
+<em>clue</em> comes from. That is the promise of the app in one image: a
+thread through your notes, so that no idea, once written down, is ever
+truly lost in the maze.
+</p>
+
+<h2 id="commitments">Five design commitments</h2>
+
+<p>
+Clew makes a small number of promises and takes them seriously. They
+explain most of the design decisions you will meet in the rest of this
+manual.
+</p>
+
+<h3>1. Plain text, on your disk</h3>
+<p>
+A vault is a folder. A note is a Markdown file. A canvas is a JSON
+file. Clew's own state — its cache, its per-vault settings, its
+plugins — lives in a single <code>.clew/</code> subfolder you can delete
+at any time without losing a word you wrote. Nothing about your notes is
+held hostage: no proprietary format, no database file, no export step
+between you and your own writing.
+</p>
+
+<h3>2. Obsidian compatibility is a hard constraint</h3>
+<p>
+Clew deliberately keeps its file formats Obsidian-shaped. Wikilinks
+resolve the way Obsidian resolves them; canvases are standard JSON
+Canvas files that Obsidian opens; Clew never writes into the
+<code>.obsidian/</code> folder, so its own settings survive untouched.
+You can open the same vault in Clew and Obsidian — even at the same
+time — and switch between them freely. Migration, in either direction,
+is a non-event.
+</p>
+
+<h3>3. Reading mode is a typesetting engine</h3>
+<p>
+When Clew renders a note it does not run a lightweight preview
+approximation. It runs <strong>jmarkdown</strong>, a Markdown engine
+built for academic writing, in which the same source file compiles to
+HTML in the app and to LaTeX or PDF for print. That is why reading mode
+has real LaTeX mathematics with AMS numbering, theorem environments,
+BibTeX citations with proper bibliography styles, footnotes, mermaid
+and TikZ and MetaPost diagrams, and cross-references — and why
+<a href="export.html">exporting a note to PDF</a> produces a printed
+page, not a screenshot of a preview.
+</p>
+
+<h3>4. The vault is a database — a writable one</h3>
+<p>
+Notes carry structured data: frontmatter properties, inline
+<code>Key:: value</code> fields, checkboxes. Clew's
+<a href="queries.html"><code>query</code> fences</a> collect that data
+into live tables and lists, and — unlike any query system in the
+Obsidian world — the results are <em>editable</em>: retype a table
+cell, tick a task, drag a kanban card, and Clew rewrites the
+frontmatter of the note the data came from. There is no separate
+database file to fall out of sync, because the notes <em>are</em> the
+database.
+</p>
+
+<h3>5. Programmable to the bone</h3>
+<p>
+Because Clew is free software, extension is not a business model — it
+is a folder. A <code>&lt;script&gt;</code> tag inside a note gets a
+<a href="note-api.html">Note API</a> for reading and writing the vault;
+a folder under <code>.clew/plugins/</code> can add
+<a href="plugins.html">new syntax to the engine, decorations to the
+preview, and commands to the app</a>. Both travel with the vault, so a
+shared vault carries its own behaviour along with its content.
+</p>
+
+<h2 id="vs-obsidian">If you are coming from Obsidian</h2>
+
+<p>
+Everything you expect is here: wikilinks and embeds, tags, frontmatter
+properties, backlinks and outgoing links, a quick switcher, a command
+palette, tabs and splits, a graph view, daily notes, canvases,
+attachments by paste or drag, themes. The table below is the short
+version of what is <em>different</em> — each row links to the chapter
+that covers it.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Area</th><th>What Clew does differently</th></tr>
+	<tr><td><a href="reading-mode.html">Reading mode</a></td>
+		<td>A full typesetting engine: numbered equations, theorem environments,
+		BibTeX citations, TikZ/MetaPost, GitHub-style alerts — the same source
+		exports to print-grade LaTeX and PDF.</td></tr>
+	<tr><td><a href="dialect.html">Syntax</a></td>
+		<td>An optional academic dialect (<code>/italics/</code>,
+		<code>*strong*</code>, <code>==highlights==</code>, TeX-style
+		subscripts) — a superset of Markdown, and switchable back to standard
+		Markdown per vault.</td></tr>
+	<tr><td><a href="queries.html">Queries</a></td>
+		<td>Built in, no plugin — and writable. Edit a query cell, drag a
+		kanban card, tick a gathered task: the source note is rewritten.</td></tr>
+	<tr><td><a href="canvas.html">Canvas</a></td>
+		<td>Excalidraw-grade drawing on the canvas itself: ink, shapes,
+		sloppiness, flowchart node styles, groups — in files Obsidian still
+		opens.</td></tr>
+	<tr><td><a href="maps.html">Maps</a></td>
+		<td>Interactive Leaflet maps as a built-in fence, including photo maps
+		that pin every geotagged photo in a folder.</td></tr>
+	<tr><td><a href="publishing.html">Publishing</a></td>
+		<td>File&nbsp;→&nbsp;Export&nbsp;→&nbsp;Vault as Website compiles the
+		whole vault to a static site — Obsidian Publish without the
+		subscription.</td></tr>
+	<tr><td><a href="vaults-and-files.html">Symlinks</a></td>
+		<td>Fully supported and cycle-safe, so a vault can weave in folders
+		that live elsewhere on your disk.</td></tr>
+	<tr><td><a href="plugins.html">Extension</a></td>
+		<td>Plugins live inside the vault and extend three seams: the engine,
+		the preview, and the app. Notes themselves can be programs.</td></tr>
+</table>
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Throughout this manual, boxes like this one flag exactly how a feature
+	behaves when the same vault is opened in Obsidian — what round-trips
+	cleanly, and what (like Clew's canvas ink) rides along in data Obsidian
+	ignores.
+</div>
+
+<h2 id="the-vaults">Two vaults ship with Clew</h2>
+
+<p>
+The repository includes two example vaults, and they are worth opening
+before anything else, because they are not passive samples:
+</p>
+
+<ul>
+	<li><strong><code>demo-vault/</code></strong> is Clew's own documentation
+	<em>written in Clew</em>. Its <code>Guide/</code> folder walks every
+	feature, and every guide note exercises the feature it documents — the
+	page about maps contains working maps; the page about the Note API is
+	itself scriptable. Its <code>Features/</code> folder stress-tests the
+	engine: citations with a real bibliography, math and theorems, diagrams,
+	an embedded 1895 film.</li>
+	<li><strong><code>study-vault/</code></strong> is a worked example: a
+	semester of academic life — papers in progress, a reading list, essays to
+	mark — run entirely on the writable database. Drag a card on its kanban
+	board and watch a dashboard table, a rating cell, and a task list all
+	follow the same edit, because they all read the same files.</li>
+</ul>
+
+<h2 id="how-to-read">How this manual is organized</h2>
+
+<p>
+The manual reads front to back if you are new, but every chapter stands
+alone and cross-links the others, so you can equally start at whatever
+itch brought you here.
+</p>
+
+<ul>
+	<li><strong>Getting started</strong> — installation, your first vault,
+	and a guided tour.</li>
+	<li><strong>The vault</strong> — what a vault is on disk, the file
+	explorer, attachments, and how Clew coexists with other apps editing the
+	same files.</li>
+	<li><strong>Writing</strong> — the editor, the jmarkdown dialect, links
+	and embeds, properties, and the diary.</li>
+	<li><strong>Reading mode</strong> — how rendering works, then a chapter
+	each for mathematics, citations, diagrams, and maps.</li>
+	<li><strong>The vault as a database</strong> — queries, tasks, and
+	kanban boards, including how writing back works.</li>
+	<li><strong>Canvas</strong> — the infinite board: cards, live note
+	embeds, web pages, ink, shapes, groups, and portals.</li>
+	<li><strong>Workspace</strong> — tabs, splits, panels, search, and the
+	graph.</li>
+	<li><strong>Sharing your work</strong> — exporting single notes to
+	HTML/LaTeX/PDF, and publishing a vault as a website.</li>
+	<li><strong>Extending Clew</strong> — the Note API, vault plugins, and
+	theming.</li>
+	<li><strong>Reference</strong> — every setting and every default
+	hotkey.</li>
+</ul>
+
+<h2 id="conventions">Conventions used in this manual</h2>
+
+<p>
+<strong>Keyboard shortcuts</strong> are written with macOS symbols:
+<kbd>⌘P</kbd> means hold Command and press P. On Windows and Linux,
+read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> (Option) as
+<kbd>Alt</kbd> throughout — Clew maps them automatically, and nearly every
+shortcut can be rebound in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>.
+</p>
+
+<p>
+<strong>Source examples</strong> show what you type into the editor:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>The ball of thread — the *clew* — is where the word /clue/ comes from.</code></pre>
+</div>
+
+<p>
+and where the rendered result is simple enough to reproduce in a web
+page, it appears in a result box:
+</p>
+
+<div class="rendered">
+	<p class="rendered-label">Reading mode shows</p>
+	<p>The ball of thread — the <strong>clew</strong> — is where the word <em>clue</em> comes from.</p>
+</div>
+
+<p>
+Where the result is richer than a page like this can imitate — a
+rendered equation, a live map, a canvas — the manual shows a
+screenshot from the real app instead, captioned with the vault and
+note it came from.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	Boxes like this carry asides: details worth knowing that would
+	interrupt the main thread. <strong>Tip</strong> boxes (green) suggest a
+	workflow; <strong>caution</strong> boxes (amber) flag sharp edges.
+</div>
+
+<h2 id="licence">Free software</h2>
+
+<p>
+Clew is released under the <strong>GNU General Public License, version
+3 or later</strong>. You may use it for anything, study how it works,
+share it, and change it; if you distribute it or a derivative, it
+travels under the same licence, with source. The full licence text
+ships with the app, and the
+<a href="../index.html#licence">licence and credits section</a> of the
+website records the third-party components Clew builds on.
+</p>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

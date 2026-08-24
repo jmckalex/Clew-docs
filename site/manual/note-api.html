@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Note API — Clew Manual</title>
+<meta name="description" content="A script tag in a note turns the rendered note into a small application: window.clew reads and writes the vault, runs commands, opens notes, and shares state that travels with the vault.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Extending Clew</p>
+<h1>The Note API</h1>
+<p class="lead">
+A <code>&lt;script&gt;</code> tag inside a note turns the rendered note
+into a small application. When the Note API is enabled for a vault,
+every script in a note runs in reading mode with a
+<code>window.clew</code> object that talks to the app: it can read and
+write notes, edit frontmatter, search, open tabs, run palette commands,
+and keep shared state in a file that travels with the vault. A habit
+tracker, a capture inbox, a dashboard, a text adventure — each is just
+a note.
+</p>
+
+<h2 id="enabling">Enabling it (and why it is off)</h2>
+
+<p>
+The Note API is <strong>off by default in every vault</strong>. With it
+on, opening a note runs that note's code — so the toggle is best
+thought of as an install button: switch it on for vaults you wrote or
+trust, leave it off for vaults you merely cloned. The switch lives in
+<strong>Settings&nbsp;→&nbsp;This vault</strong>, labelled <em>"Note
+API: scripts in rendered notes may control Clew"</em>, and is stored
+per vault as <code>"noteApi": true</code> in
+<code>.clew/vault-settings.json</code> — which means the choice rides
+with the vault folder, like everything else in <code>.clew/</code>.
+(The demo vault ships with it on, so its example notes work out of the
+box.)
+</p>
+
+<p>
+The security model behind the toggle is worth knowing, because it is
+what makes the feature reasonable at all. Rendered notes live in an
+isolated preview origin with no Node.js and no filesystem access;
+everything a script does goes as a message to a single dispatcher in
+the app, which accepts only the explicitly whitelisted methods listed
+in this chapter and tags every request with the path of the note it
+came from. File methods touch only text formats
+(<code>.md</code>, <code>.jmd</code>, <code>.canvas</code>,
+<code>.json</code>, <code>.txt</code>, <code>.csv</code>,
+<code>.bib</code>), and every path is validated against the vault. A
+note script can never do more than Clew itself can do to your vault —
+but with the gate on, it can do that much, which is why the gate
+exists. When the gate is off, calls reject with a clear message rather
+than failing silently.
+</p>
+
+<h2 id="first-app">A first application: the shared counter</h2>
+
+<p>
+The demo vault's <em>API Playground</em> note opens with the smallest
+complete example — a counter shared by every view of the note:
+</p>
+
+<div class="example">
+	<p class="example-label">In the note (API Playground)</p>
+	<pre><code>&lt;div class="api-demo"&gt;
+  &lt;button id="counter-dec"&gt;−&lt;/button&gt;
+  &lt;strong id="counter-value"&gt;…&lt;/strong&gt;
+  &lt;button id="counter-inc"&gt;+&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(async () =&gt; {
+  if (!window.clew) return; // exported HTML: stay static
+  const show = (v) =&gt; {
+    const el = document.getElementById('counter-value');
+    if (el) el.textContent = v ?? 0;
+  };
+  show(await clew.kv.get('playground:counter'));
+  clew.on('kv', ({ key, value }) =&gt; { if (key === 'playground:counter') show(value); });
+  document.addEventListener('click', async (e) =&gt; {
+    const delta = e.target.id === 'counter-inc' ? 1 : e.target.id === 'counter-dec' ? -1 : 0;
+    if (!delta) return;
+    const current = (await clew.kv.get('playground:counter')) ?? 0;
+    await clew.kv.set('playground:counter', current + delta);
+  });
+})();
+&lt;/script&gt;</code></pre>
+</div>
+
+<p>
+Three things in those twenty lines are the whole discipline of writing
+note applications, and the rest of this chapter elaborates on each:
+</p>
+
+<ol>
+	<li><strong>The guard.</strong> <code>if (!window.clew) return;</code>
+	makes the note degrade to a static page wherever there is no app to
+	talk to — most importantly on a
+	<a href="publishing.html">published website</a>.</li>
+	<li><strong>State lives in the store, not in the DOM.</strong> The
+	counter's value is a key in the vault's shared key-value store, so
+	every open view of the note — a second pane, a
+	<a href="canvas.html">canvas embed</a> — shows the same number.</li>
+	<li><strong>Views react to changes.</strong> The
+	<code>clew.on('kv', …)</code> subscription fires in <em>every</em>
+	open preview whenever any of them (or an external sync) changes the
+	key. Click plus in one pane and the other pane updates the same
+	instant.</li>
+</ol>
+
+<h2 id="lifecycle">The script lifecycle</h2>
+
+<p>
+Reading mode does not reload the page when a note changes; it patches
+the rendered DOM in place, which is what makes live previews feel
+instant. That has one important consequence for scripts:
+<strong>scripts run once per document load, and are never re-executed
+by an update</strong>. Your variables, timers, and closures survive
+while you type in the other pane — which is a gift — but any DOM your
+script decorated may be replaced under it by the next patch.
+</p>
+
+<p>
+Two habits make this a non-issue:
+</p>
+
+<ul>
+	<li><strong>Bind clicks by delegation on
+	<code>document</code></strong>, not on individual elements, and
+	re-query elements inside handlers. A delegated listener survives any
+	amount of DOM patching. Every example in the demo vault is written
+	this way.</li>
+	<li><strong>Re-render on the <code>render</code> event.</strong>
+	After each in-place update, the document fires a
+	<code>clew:render</code> DOM event, also surfaced as
+	<code>clew.on('render', fn)</code>. If your script builds DOM from
+	state, call your build function there and it can never be stranded by
+	an edit.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — writing about script tags inside a note</span>
+	One authoring quirk of the engine: code spans and fenced code blocks
+	pass the <code>&lt;</code> character through unescaped, so a literal
+	script tag written <em>inside a code example in a note</em> opens a
+	real HTML element and can swallow the rest of the note. When a note's
+	prose needs to mention markup, name the tags in words (as the demo
+	vault's notes do) rather than typing them into code spans. This
+	applies only to authoring notes — actual script tags in the note body
+	are exactly how the feature is used.
+</div>
+
+<h2 id="surface">The API, by group</h2>
+
+<p>
+Everything hangs off <code>window.clew</code>, and every method returns
+a promise. Errors arrive as clean promise rejections. The full
+signatures are in the <a href="#reference">reference table</a>; this
+section is the guided tour.
+</p>
+
+<h3>Context</h3>
+<p>
+<code>clew.context()</code> resolves to
+<code>{ path, vault, theme }</code>: the calling note's own
+vault-relative path, the vault's name, and the current theme
+(<code>'dark'</code> or <code>'light'</code>). The path is how a script
+can act on "this note" without hard-coding its location; the theme —
+together with the <code>theme</code> event — lets a widget restyle
+itself when the app switches appearance.
+</p>
+
+<h3>Reading the vault</h3>
+<p>
+<code>clew.notes.list()</code> returns every note path in the vault;
+<code>clew.notes.read(path)</code> returns a file's text. For
+structured questions, <code>clew.index.get(path)</code> returns the
+note's entry in Clew's metadata cache — its headings, links, and tags,
+already extracted, no parsing required — and
+<code>clew.index.backlinks(path)</code> returns the notes that link to
+it. <code>clew.search(query)</code> runs the vault's full-text search
+with the complete operator syntax of the
+<a href="search.html">search panel</a>, resolving to matching paths
+with line-level match snippets. Finally,
+<code>clew.properties.get(path)</code> parses a note's frontmatter into
+typed entries. The Playground's <em>vault stats</em> widget is the
+pattern in miniature:
+</p>
+
+<div class="example">
+	<p class="example-label">In the note (API Playground)</p>
+	<pre><code>const paths = await clew.notes.list();
+let links = 0;
+const tags = new Set();
+for (const path of paths) {
+  const meta = await clew.index.get(path);
+  links += meta?.links?.length ?? 0;
+  for (const t of meta?.tags ?? []) tags.add(t.tag);
+}</code></pre>
+</div>
+
+<h3>Writing the vault</h3>
+<p>
+<code>clew.notes.write(path, content)</code> replaces a file's contents
+(creating the file if needed); <code>clew.notes.append(path, text)</code>
+adds to the end, taking care of the trailing newline and creating the
+file on first use; <code>clew.notes.create(path, content)</code> makes
+a new note and resolves to the path actually created. The Playground's
+<em>quick capture</em> box is one line of write:
+</p>
+
+<div class="example">
+	<p class="example-label">In the note (API Playground)</p>
+	<pre><code>await clew.notes.append('Inbox.md', `- ${stamp} — ${text}`);</code></pre>
+</div>
+
+<p>
+<code>clew.properties.set(path, key, value)</code> edits a single
+frontmatter property in place, preserving the rest; passing
+<code>null</code> removes the key. It works on notes only, and it
+refuses to touch frontmatter that uses YAML beyond Clew's editable
+subset (the <code>clean</code> flag returned by
+<code>properties.get</code> tells you in advance) — the same guarantee
+that protects your frontmatter everywhere else in Clew, as described in
+<a href="properties.html">Properties and metadata</a>.
+</p>
+
+<h3>Controlling the app</h3>
+<p>
+<code>clew.open(target, opts)</code> opens a note with full wikilink
+semantics — <code>'Note'</code>, <code>'Note#Heading'</code>, an
+attachment name, a canvas — creating the note if the name resolves to
+nothing, exactly as clicking a wikilink would.
+<code>opts.newTab</code> defaults to <code>true</code>; pass
+<code>false</code> to reuse the current tab, and <code>mode</code>
+(<code>'reading'</code> or <code>'source'</code>) to force a view mode.
+<code>clew.command(id)</code> runs any command the
+<a href="settings-and-hotkeys.html">command palette</a> can run, by its
+id — the Playground's "command deck" is nothing but buttons calling
+<code>clew.command('view:toggle-theme')</code> and friends.
+</p>
+
+<h3>Shared state: the kv store</h3>
+<p>
+<code>clew.kv.get / set / delete / list(prefix)</code> is the heart of
+most note applications. The backing file is
+<strong><code>clewdata.json</code> in the vault root</strong> — visible
+on purpose, not hidden in <code>.clew/</code>, so that application
+state travels when you share or sync the vault. Its behaviour is tuned
+for exactly that life:
+</p>
+
+<ul>
+	<li><strong>Keys are written sorted</strong> and the file is
+	tab-indented JSON, so it diffs and merges politely in git.</li>
+	<li><strong>Writes are debounced</strong> (about a third of a
+	second), so a burst of updates costs one disk write.</li>
+	<li><strong>External edits flow back in.</strong> When sync, a
+	<code>git pull</code>, or your text editor changes the file, Clew
+	reloads it and works out which keys actually changed.</li>
+	<li><strong>Every change broadcasts.</strong> Each changed key fires
+	the <code>kv</code> event in every open preview and canvas embed —
+	which is what makes the whole vault feel like one application.</li>
+	<li><strong>Values must be JSON-safe</strong>, and setting a key to
+	<code>null</code> deletes it.</li>
+</ul>
+
+<div class="callout tip">
+	<span class="callout-title">Tip — namespace your keys</span>
+	The store is one flat namespace shared by every scripted note in the
+	vault. Prefix your keys with your application's name —
+	<code>habit:2026-08-23</code>, <code>adventure:thread</code> — and
+	use <code>clew.kv.list('habit:')</code> to fetch exactly your slice.
+	Every example in the demo vault follows this convention, and the
+	<code>kv</code> event handlers filter on the same prefix.
+</div>
+
+<h2 id="habit-tracker">Worked example: the Habit Tracker</h2>
+
+<p>
+The demo vault's <em>Habit Tracker</em> note is the canonical shape of
+a vault application, small enough to read in full and complete enough
+to copy. It renders a fourteen-day grid of three habits; clicking a
+cell toggles that habit on that day, and because the state is in the kv
+store, an embedded copy of the note on a canvas updates in real time as
+you click.
+</p>
+
+<figure class="shot">
+	<img src="images/habit-tracker.png" alt="The Habit Tracker note in reading mode: a grid of fourteen day columns and three habit rows, with completed days filled green">
+	<figcaption>The Habit Tracker note from the demo vault in reading
+	mode. Every green cell is an entry in <code>clewdata.json</code>;
+	clicking any cell writes through <code>clew.kv.set</code>.</figcaption>
+</figure>
+
+<p>
+The note holds a style block, one placeholder
+<code>&lt;div id="habit-app"&gt;</code>, and one script. The script's
+state model is a key per day, holding the list of habits done that day.
+Rendering starts by pulling the whole slice:
+</p>
+
+<div class="example">
+	<p class="example-label">Habit Tracker — reading state</p>
+	<pre><code>const HABITS = ['Write', 'Read', 'Walk'];
+const DAYS = 14;
+
+async function build() {
+  const stored = await clew.kv.list('habit:');
+  const doneOn = (day, habit) =&gt; (stored[`habit:${day}`] ?? []).includes(habit);
+  // … builds the table HTML from days × habits and sets
+  // document.getElementById('habit-app').innerHTML …
+}</code></pre>
+</div>
+
+<p>
+Every cell carries its coordinates as data attributes
+(<code>data-day</code>, <code>data-habit</code>), so a single delegated
+click handler serves the whole grid — no per-cell listeners to lose
+when the DOM is patched:
+</p>
+
+<div class="example">
+	<p class="example-label">Habit Tracker — writing state</p>
+	<pre><code>document.addEventListener('click', async (e) =&gt; {
+  const { day, habit } = e.target.dataset;
+  if (!day || !habit) return;
+  const key = `habit:${day}`;
+  const current = (await clew.kv.get(key)) ?? [];
+  const next = current.includes(habit)
+    ? current.filter((h) =&gt; h !== habit)
+    : [...current, habit];
+  await clew.kv.set(key, next.length ? next : null);
+});</code></pre>
+</div>
+
+<p>
+Note the last line's economy: a day with no habits left is deleted
+outright (setting <code>null</code> removes the key), so
+<code>clewdata.json</code> holds only days with content. And note what
+the handler does <em>not</em> do: it never updates the DOM. Rendering
+belongs to exactly one place — the subscription:
+</p>
+
+<div class="example">
+	<p class="example-label">Habit Tracker — closing the loop</p>
+	<pre><code>clew.on('kv', ({ key }) =&gt; { if (key.startsWith('habit:')) build(); });
+build();</code></pre>
+</div>
+
+<p>
+The click writes to the store; the store broadcasts; the broadcast
+triggers the rebuild — in this view and every other view of the note
+at once. This one-way loop (state → render, event → state) is the
+skeleton of most small vault applications, from a counter to a
+spaced-repetition system, and it is why the tracker needs no
+synchronisation logic at all. To make it yours, edit the
+<code>HABITS</code> array in the note's source.
+</p>
+
+<p>
+The third worked example, the <em>Adventure</em>, pushes the idea to
+its logical end: a tiny game whose rooms are three notes, whose
+inventory is a pair of kv keys, and whose movement is
+<code>clew.open(target, { newTab: false, mode: 'reading' })</code> — so
+play proceeds in a single rendered tab, each note a scene reading and
+writing the same shared state. The vault is the program; the notes are
+its rooms.
+</p>
+
+<h2 id="everywhere">Where note scripts run</h2>
+
+<ul>
+	<li><strong>Reading mode</strong> — the normal case.</li>
+	<li><strong>Canvas note embeds</strong> — a note dropped onto a
+	<a href="canvas.html">canvas</a> is a live preview with the same API
+	and the same events, which makes a canvas of scripted notes a
+	dashboard.</li>
+	<li><strong>The published website</strong> — the scripts ship with
+	their pages, but there is no app behind them:
+	<code>window.clew</code> does not exist on a
+	<a href="publishing.html">published site</a>. A script that starts
+	with the <code>if (!window.clew) return;</code> guard degrades into
+	static content; a call made anyway rejects after a ten-second timeout
+	rather than hanging forever.</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+The complete method surface. This list is exhaustive: the dispatcher in
+the app accepts exactly these methods and nothing else.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Method</th><th>Resolves to</th><th>Behaviour</th></tr>
+	<tr><td><code>clew.context()</code></td>
+		<td><code>{ path, vault, theme }</code></td>
+		<td>The calling note's vault-relative path, the vault name, and the
+		current theme.</td></tr>
+	<tr><td><code>clew.notes.list()</code></td>
+		<td><code>string[]</code></td>
+		<td>Every note path in the vault.</td></tr>
+	<tr><td><code>clew.notes.read(path)</code></td>
+		<td><code>string</code></td>
+		<td>The file's text. Text files only (<code>.md</code>,
+		<code>.jmd</code>, <code>.canvas</code>, <code>.json</code>,
+		<code>.txt</code>, <code>.csv</code>, <code>.bib</code>).</td></tr>
+	<tr><td><code>clew.notes.write(path, content)</code></td>
+		<td><code>true</code></td>
+		<td>Replaces the file's contents; creates the file if absent. Same
+		text-file restriction.</td></tr>
+	<tr><td><code>clew.notes.append(path, text)</code></td>
+		<td><code>true</code></td>
+		<td>Appends to the file, managing the newline between old and new
+		content; creates the file on first use.</td></tr>
+	<tr><td><code>clew.notes.create(path, content?)</code></td>
+		<td><code>string</code></td>
+		<td>Creates a note, optionally with initial content; resolves to
+		the path actually created.</td></tr>
+	<tr><td><code>clew.properties.get(path)</code></td>
+		<td><code>{ present, clean, entries }</code></td>
+		<td>Parses the note's frontmatter: whether a block is present,
+		whether it is within the editable subset, and its
+		<code>{ key, value }</code> entries.</td></tr>
+	<tr><td><code>clew.properties.set(path, key, value)</code></td>
+		<td><code>true</code></td>
+		<td>Sets one frontmatter property, preserving the rest;
+		<code>null</code> removes the key. Notes only; refuses frontmatter
+		flagged not <code>clean</code>.</td></tr>
+	<tr><td><code>clew.index.get(path)</code></td>
+		<td><code>object | null</code></td>
+		<td>The note's metadata-cache entry (headings, links, tags, …) as
+		plain data.</td></tr>
+	<tr><td><code>clew.index.backlinks(path)</code></td>
+		<td><code>array</code></td>
+		<td>The notes that link to the given note.</td></tr>
+	<tr><td><code>clew.search(query)</code></td>
+		<td><code>array</code></td>
+		<td>Full-text search with the search panel's operator syntax;
+		each result carries the matching path and line-level snippets.</td></tr>
+	<tr><td><code>clew.open(target, opts?)</code></td>
+		<td><code>true</code></td>
+		<td>Opens with wikilink semantics (<code>'Note#Heading'</code>
+		included); creates missing notes. <code>opts.newTab</code> defaults
+		to <code>true</code>; <code>opts.mode</code> is
+		<code>'reading'</code> or <code>'source'</code>.</td></tr>
+	<tr><td><code>clew.command(id)</code></td>
+		<td>command result</td>
+		<td>Runs any palette command by id.</td></tr>
+	<tr><td><code>clew.kv.get(key)</code></td>
+		<td>value</td>
+		<td>The stored value, or <code>null</code> when absent.</td></tr>
+	<tr><td><code>clew.kv.set(key, value)</code></td>
+		<td>value</td>
+		<td>Stores a JSON-safe value; <code>null</code> or
+		<code>undefined</code> deletes the key.</td></tr>
+	<tr><td><code>clew.kv.delete(key)</code></td>
+		<td><code>null</code></td>
+		<td>Removes the key.</td></tr>
+	<tr><td><code>clew.kv.list(prefix?)</code></td>
+		<td><code>object</code></td>
+		<td>All entries whose keys start with <code>prefix</code>
+		(<code>''</code> for everything), keys sorted.</td></tr>
+	<tr><td><code>clew.on(name, fn)</code></td>
+		<td>unsubscribe function</td>
+		<td>Subscribes to an event (below); calling the returned function
+		unsubscribes.</td></tr>
+	<tr><td><code>clew.call(method, params?)</code></td>
+		<td>method result</td>
+		<td>The raw RPC form every helper above wraps.</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Event</th><th>Payload</th><th>Fires</th></tr>
+	<tr><td><code>kv</code></td><td><code>{ key, value }</code></td>
+		<td>Once per changed key, in every open preview and canvas embed —
+		local writes and external file changes alike (<code>value</code> is
+		<code>null</code> for a deletion).</td></tr>
+	<tr><td><code>render</code></td><td><code>{}</code></td>
+		<td>After each in-place re-render of the note (also available as
+		the <code>clew:render</code> DOM event).</td></tr>
+	<tr><td><code>theme</code></td><td><code>{ theme }</code></td>
+		<td>When the app switches between dark and light.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="plugins.html">Vault plugins</a> — the vault-wide
+	extension mechanism; the Note API is the in-note one, and they
+	compose.</li>
+	<li><a href="publishing.html">Publishing as a website</a> — what
+	becomes of scripted notes on a static site.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the
+	frontmatter model behind <code>properties.get</code> and
+	<code>properties.set</code>.</li>
+	<li><a href="canvas.html">The canvas</a> — live note embeds, which
+	carry the full API.</li>
+	<li><a href="queries.html">Queries</a> — the declarative way to build
+	views over the vault, no script required.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Links and embeds — Clew Manual</title>
+<meta name="description" content="Wikilinks and how they resolve, display text and heading links, note transclusion, image, PDF, audio, video, and canvas embeds, and vault-wide link rewriting on rename.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Writing</p>
+<h1>Links and embeds</h1>
+<p class="lead">
+Wikilinks are the connective tissue of a vault: type
+<code>[[</code> and a name, and two notes are joined — no paths, no
+URLs, no ceremony. This chapter covers how Clew resolves those names,
+how to control a link's text and target, how <code>![[embeds]]</code>
+pull whole notes, images, PDFs, video, and even canvases into the
+middle of another note, and what keeps every link working when you
+rename and reorganize.
+</p>
+
+<h2 id="wikilinks">Wikilinks</h2>
+
+<p>
+The basic form is a note name in double brackets. All of these are
+live in the demo vault:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>[[Welcome]]                          link by name
+[[Clew Design|the design note]]      with display text
+[[Math and Theorems#Dialect extras]] to a heading
+[[#Embeds (transclusion)]]           to a heading in this note
+[[Syntax Showcase]]                  via a frontmatter alias</code></pre>
+</div>
+
+<h3 id="resolution">How names resolve</h3>
+
+<p>
+Resolution is Obsidian-style, and the rules are worth knowing exactly:
+</p>
+
+<ul>
+	<li><strong>A bare name matches by file name.</strong>
+	<code>[[Welcome]]</code> finds any note whose file name (without the
+	extension) is <code>Welcome</code>, wherever it sits in the folder
+	tree. Matching is case-insensitive, and the <code>.md</code> extension
+	may be included or left off.</li>
+	<li><strong>Ambiguity goes to the shortest path.</strong> When two
+	notes share a name — <code>Notes.md</code> in the root and
+	<code>Archive/2023/Notes.md</code> — a bare <code>[[Notes]]</code>
+	resolves to the one with the shortest path. To reach the other one,
+	write the path.</li>
+	<li><strong>A name containing <code>/</code> is a path</strong>,
+	resolved directly from the vault root:
+	<code>[[Archive/2023/Notes]]</code> is unambiguous regardless of what
+	else is called <code>Notes</code>.</li>
+	<li><strong>Aliases resolve as a fallback.</strong> A note whose
+	frontmatter declares <code>aliases: [Syntax Showcase]</code> is
+	reachable as <code>[[Syntax Showcase]]</code> — but only when no
+	actual file of that name exists, so an alias can never shadow a real
+	note. See <a href="properties.html">Properties and metadata</a>.</li>
+</ul>
+
+<h3 id="display">Display text and heading links</h3>
+
+<p>
+A pipe sets the link's visible text: <code>[[Clew Design|the design
+note]]</code> shows "the design note" and opens <code>Clew
+Design</code>. A <code>#</code> targets a heading:
+<code>[[Note#Heading]]</code> opens the note and jumps to that heading
+(matched case-insensitively), and without display text such a link
+renders as "Note § Heading". The two combine as
+<code>[[Note#Heading|shown text]]</code>. A link with an empty target —
+<code>[[#Heading]]</code> — jumps to a heading of the note it appears
+in. The editor completes heading names for you after the
+<code>#</code> (see <a href="editing.html#completions">the editor
+chapter</a>).
+</p>
+
+<h3 id="unresolved">Unresolved links create notes</h3>
+
+<p>
+A link to a name that matches nothing is still a link — it renders
+dashed, as a visible loose end. Clicking it <strong>creates the
+note</strong> — <code>name.md</code> in the vault root for a bare name,
+or at the written path for a path-form link — and opens it,
+which makes the natural drafting flow work: write prose, bracket the
+concepts that deserve their own notes, and follow the dashed links
+later to fill them in. The <strong>Out</strong> panel lists a note's
+unresolved links so the loose ends are visible in one place
+(<a href="panels.html">Panels</a>).
+</p>
+
+<h3 id="non-notes">Links to files that are not notes</h3>
+
+<p>
+The target of a wikilink need not be a note. <code>[[sample.pdf]]</code>,
+<code>[[clew-gradient.png]]</code>, or a link to any audio or video
+file opens the file in a viewer tab; <code>[[Demo
+Canvas.canvas]]</code> opens the canvas itself. Non-note names resolve
+by the same shortest-path rule, using the full file name with its
+extension.
+</p>
+
+<h3 id="following">Following links</h3>
+
+<p>
+In <strong>reading mode</strong>, links are links: click to follow,
+<kbd>⌘</kbd>-click to open in a new tab. In the <strong>editor</strong>,
+where a plain click must place the cursor, <kbd>⌘</kbd>-click a
+wikilink to follow it, adding <kbd>⌥</kbd> for a new tab. External
+Markdown links — <code>[text](https://…)</code> — open in your system
+browser; the rendered note itself never navigates away.
+</p>
+
+<h2 id="embeds">Embeds: transclusion</h2>
+
+<p>
+Prefix a wikilink with <code>!</code>, on a line of its own, and the
+target is rendered <em>inside</em> the current note:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[Clew Design]]
+
+![[Clew Design#Goals]]</code></pre>
+</div>
+
+<p>
+A note embed appears as a framed box: a title bar linking to the
+embedded note, and below it the note's rendered body — frontmatter
+stripped, everything else typeset exactly as the note itself would be.
+With a <code>#Heading</code>, only that section is embedded: from the
+heading line to the next heading of the same or higher level.
+</p>
+
+<p>
+Embeds nest — an embedded note may contain embeds of its own — and
+the nesting is cycle-safe: a note that embeds itself, directly or
+around a loop, renders a "(circular embed)" box instead of hanging,
+and chains deeper than three levels stop there. An embed whose target
+does not exist renders a "(not found)" box.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Block embeds are recognized only when the <code>![[…]]</code> stands
+	on its own line. In the middle of a sentence, the <code>!</code>
+	renders as a literal exclamation mark and the <code>[[…]]</code>
+	becomes an ordinary link — the text flows on, nothing breaks, but
+	nothing is transcluded either.
+</div>
+
+<h2 id="media">Media embeds</h2>
+
+<p>
+When the target of an embed is a media file, it renders natively:
+</p>
+
+<ul>
+	<li><strong>Images</strong> — <code>![[clew-gradient.png]]</code>
+	shows the image inline.</li>
+	<li><strong>PDFs</strong> — <code>![[sample.pdf]]</code> embeds
+	Chromium's full PDF viewer in a framed box, with a title bar linking
+	to the file's own viewer tab.</li>
+	<li><strong>Audio and video</strong> — <code>![[clip.mp3]]</code> and
+	<code>![[film.mp4]]</code> get playback controls.</li>
+	<li><strong>Canvases</strong> — <code>![[Demo Canvas.canvas]]</code>
+	embeds a live, read-only view of the canvas that you can pan and
+	zoom; see <a href="canvas.html">The canvas</a>.</li>
+</ul>
+
+<h3 id="sizes">Sizes and captions</h3>
+
+<p>
+Images and video take Obsidian's size syntax after a pipe. The last
+pipe segment, when it is a bare number or a
+<code>width</code><code>x</code><code>height</code> pair, is read as a
+size in pixels; any earlier segments form the alt text:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[clew-gradient.png|200]]                        width 200
+![[clew-gradient.png|300x200]]                    width 300, height 200
+![[clew-gradient.png|A stretched gradient|320x60]] alt text, then size</code></pre>
+</div>
+
+<p>
+A segment that is not a well-formed size — <code>|300x</code>,
+<code>|x200</code>, <code>|large</code> — is treated as alt text, so
+nothing is ever silently swallowed. The sizes become the image's HTML
+width and height attributes (CSS pixels); in
+<a href="export.html">LaTeX and PDF export</a>, images are scaled to
+match (a pixel width converts to points at 0.75&nbsp;pt per pixel), and
+an image without a size fits the line width.
+</p>
+
+<h2 id="renames">Renames and moves rewrite links</h2>
+
+<p>
+Renaming or moving a note — from the file explorer, or by dragging it
+into another folder — rewrites every wikilink to it, across the whole
+vault, in the same operation. Renaming a <em>folder</em> does the same
+for every note inside it. The rewriting is aware of how each link was
+written:
+</p>
+
+<ul>
+	<li>a link written as a path (<code>[[Projects/Roadmap]]</code>) gets
+	the new path;</li>
+	<li>a link written as a bare name (<code>[[Roadmap]]</code>) is
+	touched only when the file's <em>name</em> actually changed — a pure
+	move between folders leaves bare-name links alone, because they still
+	resolve;</li>
+	<li>display text is preserved: only the target inside the brackets
+	changes.</li>
+</ul>
+
+<p>
+The rewriting extends beyond Markdown. Canvas files reference notes,
+images, and PDFs by path, and a rename updates every file reference in
+every <code>.canvas</code> in the vault too — so a reorganized vault's
+canvases keep pointing at the right files.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Because links repair themselves, reorganizing is cheap. Start flat,
+	let structure emerge, and move notes into folders when a grouping
+	becomes obvious — nothing breaks. The one thing rewriting cannot fix
+	is a link that was already unresolved: dashed links track the
+	<em>name</em> you typed, and only gain a target when a note of that
+	name appears.
+</div>
+
+<h2 id="backlinks">Backlinks and unlinked mentions</h2>
+
+<p>
+Every link is indexed from both ends. The <strong>Links</strong> panel
+shows the active note's backlinks — who links <em>here</em>, grouped by
+source, with the line each link sits on — and below them
+<strong>unlinked mentions</strong>: places where the note's name or an
+alias appears in plain text without being a link, each with a
+<strong>Link</strong> button that turns the mention into a wikilink
+where it stands. The panels have
+<a href="panels.html">a chapter of their own</a>.
+</p>
+
+<h2 id="symlinks">Links beyond the vault</h2>
+
+<p>
+Because Clew fully supports symbolic links
+(<a href="vaults-and-files.html">Vaults and files</a>), a vault can
+weave in folders that live elsewhere on disk: symlink a project's
+notes folder into the vault and its files are first-class citizens —
+indexed, searchable, linkable, and rendered — even though the real
+files sit outside the vault. Wikilinks to them resolve like any
+others, and edits save through the link to the real file. Cycles are
+detected and walked once, so a link loop cannot hang the indexer.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Everything on this page is Obsidian-shaped on disk: the link syntax,
+	the shortest-path resolution rule, alias fallback, the
+	<code>![[…]]</code> embed forms, and the size pipe all match, so a
+	vault's links mean the same thing in both apps. Two asymmetries to
+	know: Clew also treats <code>.jmd</code> files as notes, which
+	Obsidian does not index — stick to <code>.md</code> in a shared
+	vault — and symlinked folders, first-class in Clew, are largely
+	ignored by Obsidian.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>Link and embed forms:</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Form</th><th>Meaning</th></tr>
+	<tr><td><code>[[Name]]</code></td><td>Link by note name (case-insensitive; shortest path wins on ties)</td></tr>
+	<tr><td><code>[[Folder/Name]]</code></td><td>Link by explicit vault path</td></tr>
+	<tr><td><code>[[Name|text]]</code></td><td>Link showing <em>text</em></td></tr>
+	<tr><td><code>[[Name#Heading]]</code></td><td>Link to a heading (shows "Name § Heading")</td></tr>
+	<tr><td><code>[[#Heading]]</code></td><td>Link to a heading in the same note</td></tr>
+	<tr><td><code>[[file.pdf]]</code>, <code>[[file.canvas]]</code></td><td>Link to a non-note file (opens viewer / canvas)</td></tr>
+	<tr><td><code>![[Name]]</code> (own line)</td><td>Embed the note's rendered body</td></tr>
+	<tr><td><code>![[Name#Heading]]</code></td><td>Embed just that section</td></tr>
+	<tr><td><code>![[img.png|300]]</code></td><td>Media embed, width 300&nbsp;px</td></tr>
+	<tr><td><code>![[img.png|300x200]]</code></td><td>Media embed, width × height</td></tr>
+	<tr><td><code>![[img.png|alt text|300]]</code></td><td>Alt text, then size</td></tr>
+	<tr><td><code>[text](url)</code></td><td>External link — opens in the system browser</td></tr>
+</table>
+</div>
+
+<p>File types that embed as media, by extension:</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Kind</th><th>Extensions</th><th>Renders as</th></tr>
+	<tr><td>Image</td><td><code>.png .jpg .jpeg .gif .webp .avif .svg .bmp</code></td><td>Inline image (size pipe applies)</td></tr>
+	<tr><td>PDF</td><td><code>.pdf</code></td><td>Embedded Chromium PDF viewer</td></tr>
+	<tr><td>Audio</td><td><code>.mp3 .m4a .wav .ogg .flac</code></td><td>Audio player</td></tr>
+	<tr><td>Video</td><td><code>.mp4 .webm .mov</code></td><td>Video player (size pipe applies)</td></tr>
+	<tr><td>Canvas</td><td><code>.canvas</code></td><td>Live read-only canvas view</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="editing.html">The editor</a> — link completion,
+	<kbd>⌘K</kbd>, and <kbd>⌘</kbd>-click in source mode.</li>
+	<li><a href="attachments-and-files.html">Attachments and files</a> —
+	how pasted and dropped files become embeds.</li>
+	<li><a href="properties.html">Properties and metadata</a> — declaring
+	the aliases that links can resolve through.</li>
+	<li><a href="panels.html">Panels</a> — backlinks, outgoing links, and
+	unlinked mentions.</li>
+	<li><a href="canvas.html">The canvas</a> — canvas embeds, and notes
+	embedded in canvases.</li>
+	<li><a href="vaults-and-files.html">Vaults and files</a> — symlinks,
+	and moving files in the explorer.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

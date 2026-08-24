@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+
+# Release binaries — ~640 MB per version. They are staged here from
+# ../Clew-app/out/ by `make stage-downloads` and uploaded by
+# `make sync-downloads`. Git is the wrong place for them: they are
+# reproducible from a tagged build, they would dwarf the rest of the
+# history, and every future clone would pay for them forever.
+site/downloads/

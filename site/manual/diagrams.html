@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagrams — Clew Manual</title>
+<meta name="description" content="Diagrams in Clew: mermaid fences with theme-aware rendering, plus TikZ and MetaPost figures compiled through a real TeX toolchain and cached as SVG.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reading mode</p>
+<h1>Diagrams</h1>
+<p class="lead">
+Clew draws diagrams from text in two quite different ways. Mermaid
+diagrams — flowcharts, sequence diagrams, and the rest of mermaid's
+catalogue — render instantly in the preview and follow the app's
+light and dark themes. TikZ and MetaPost figures go further: the note
+is handed to a real TeX toolchain on your machine, compiled, and the
+resulting vector graphic cached next to the note — publication-grade
+figures, living as plain text in a Markdown file.
+</p>
+
+<h2 id="mermaid">Mermaid</h2>
+
+<p>
+The quickest way to a diagram is the fence Obsidian users already
+know:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```mermaid
+graph LR
+	A[Welcome] --&gt; B[Clew Design]
+	A --&gt; C[Dialect Demo]
+	C --&gt; B
+	B --&gt; D{{Graph view}}
+```</code></pre>
+</div>
+
+<p>
+Reading mode renders it client-side with a bundled copy of mermaid —
+no network involved. Anything mermaid can draw is available:
+flowcharts, sequence diagrams, state and class diagrams, Gantt
+charts, pie charts, and the rest of its steadily growing catalogue.
+A sequence diagram, for instance:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```mermaid
+sequenceDiagram
+	Editor-&gt;&gt;Engine: note changed
+	Engine-&gt;&gt;Preview: rendered HTML
+	Preview-&gt;&gt;Preview: morphdom patch
+```</code></pre>
+</div>
+
+<p>
+The <code>```mermaid</code> fence is not native jmarkdown — it is an
+Obsidian-compatibility extension Clew adds to the engine, precisely so
+vaults written in Obsidian render their diagrams unchanged. The
+engine's own spellings work too, as a container directive or a block
+environment:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (native forms)</p>
+	<pre><code>:::mermaid
+graph TD
+	idea --&gt; note --&gt; essay
+:::
+
+@begin(mermaid)
+graph TD
+	idea --&gt; note --&gt; essay
+@end(mermaid)</code></pre>
+</div>
+
+<p>
+In the preview all three spellings look identical. The difference
+appears at <a href="export.html">export</a> time: the native forms can
+be rasterized for LaTeX and PDF output through the mermaid CLI
+(<code>mmdc</code>), while the compatibility fence renders in HTML
+only and exports to LaTeX as nothing. If you expect a note to become a
+PDF, prefer the native forms. (When <code>mmdc</code> is not
+installed, a LaTeX export skips the diagram with a one-line hint
+rather than failing.)
+</p>
+
+<p>
+Mermaid diagrams are <strong>theme-aware</strong>: Clew initializes
+mermaid with a theme matching the app — its default light theme in
+light mode, its dark theme in dark mode — and when you switch themes,
+every diagram on the page is re-rendered from its source so the colors
+follow. You never end up with a light-background diagram floating on a
+dark page.
+</p>
+
+<figure class="shot">
+	<img src="images/diagrams.png" alt="The Diagrams feature note in reading mode: a rendered mermaid sequence diagram and a compiled TikZ plot of a parabola">
+	<figcaption>The demo vault's Diagrams note: a mermaid sequence diagram
+	rendered client-side, and below it the TikZ figure compiled to SVG by
+	the local TeX toolchain and cached beside the note.</figcaption>
+</figure>
+
+<h2 id="tikz">TikZ</h2>
+
+<p>
+TikZ is LaTeX's drawing language — the standard for figures in
+mathematical and scientific publishing. A TikZ figure in a note is
+written as a block environment holding an ordinary
+<code>tikzpicture</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(TiKZ)
+\begin{tikzpicture}[scale=1.1]
+\draw[thick,-&gt;] (0,0) -- (3,0) node[right] {$x$};
+\draw[thick,-&gt;] (0,0) -- (0,2.2) node[above] {$y$};
+\draw[blue,very thick,domain=0:2.8,smooth] plot (\x, {0.25*\x*\x});
+\node[blue] at (2.2,1.9) {$y = x^2/4$};
+\end{tikzpicture}
+@end(TiKZ)</code></pre>
+</div>
+
+<p>
+Note the capitalization: the environment is spelled
+<code>TiKZ</code>. The container-directive spelling
+<code>:::TiKZ … :::</code> is equivalent. When the note renders, Clew
+does what a LaTeX author would do by hand: it wraps the picture in a
+minimal standalone document, compiles it with <code>lualatex</code>,
+converts the result to a vector SVG with <code>dvisvgm</code>, and
+embeds the SVG in the page. Nothing is approximated — the figure in
+your note is the figure LaTeX draws, TeX fonts, math labels and all.
+</p>
+
+<p>
+A generous set of TikZ libraries is preloaded —
+<code>positioning</code>, <code>shapes</code>, <code>calc</code>,
+<code>fit</code>, <code>matrix</code>, <code>trees</code>,
+<code>graphs</code>, <code>arrows.meta</code>, the
+<code>decorations</code> families, <code>intersections</code>,
+<code>patterns</code>, <code>backgrounds</code>, and more — so typical
+figures need no preamble of their own.
+</p>
+
+<h2 id="metapost">MetaPost</h2>
+
+<p>
+MetaPost, the drawing sibling of TeX's METAFONT, is available the same
+way:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(metapost)
+beginfig(1);
+path tri; tri := (0,0)--(70,45)--(140,0)--cycle;
+fill tri withcolor (0.55,0.5,0.8);
+draw tri withpen pencircle scaled 1.2;
+endfig;
+end.
+@end(metapost)</code></pre>
+</div>
+
+<p>
+The source is compiled by <code>mpost</code> directly to SVG. A file
+with several <code>beginfig</code> blocks produces several images, one
+after another; and a bare body of drawing commands, without the
+<code>beginfig</code>/<code>end</code> scaffolding, is wrapped into a
+compilable program for you. Unlike TikZ there is no
+<code>:::</code> spelling — <code>@begin(metapost)</code> is the only
+form.
+</p>
+
+<h2 id="caching">Compilation and caching</h2>
+
+<p>
+Shelling out to LaTeX on every keystroke would be unusable, so
+compiled figures are <strong>cached by content</strong>. Each TikZ
+block's source is hashed, and the compiled SVG is written to a
+<code>TiKZ/</code> folder next to the note, named by that hash;
+MetaPost figures go to a <code>MetaPost/</code> folder the same way.
+On every subsequent render — including the re-render after each edit
+elsewhere in the note — the SVG already exists and is embedded with no
+compile at all. Only when you change the diagram's own source does the
+hash change and a fresh compile run. The demo vault ships with these
+folders populated (<code>Features/TiKZ/</code>,
+<code>Features/MetaPost/</code>), which is why its diagrams appear
+instantly on first open.
+</p>
+
+<p>
+Because the cache is just SVG files sitting beside the note, it
+travels with the vault: sync or commit those folders and the figures
+display on machines that have no TeX installed at all — a compile
+happens only where a figure is authored or changed.
+</p>
+
+<p>
+Four attributes tune the embedding, written in the environment's
+attribute block:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Attribute</th><th>Effect</th></tr>
+	<tr><td><code>scale=1.5</code></td><td>Scale the embedded image (CSS transform)</td></tr>
+	<tr><td><code>width=300px</code></td><td>Set the embedded image's width instead</td></tr>
+	<tr><td><code>embed</code></td><td>Inline the SVG as a data URI rather than referencing the cached file</td></tr>
+	<tr><td><code>empty-cache</code></td><td>Delete the cache folder's contents before compiling (a reset switch)</td></tr>
+</table>
+</div>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(TiKZ){scale=1.5}
+…
+@end(TiKZ)</code></pre>
+</div>
+
+<h2 id="toolchain">The TeX toolchain</h2>
+
+<p>
+TikZ and MetaPost are honest about what they are: real TeX, which
+means a real TeX installation. Everything needed —
+<code>lualatex</code>, <code>dvisvgm</code>, <code>mpost</code> —
+ships with the standard distributions: TeX&nbsp;Live on Linux and
+Windows, MacTeX on macOS. Clew looks for the tools on your
+<code>PATH</code> and, because an app launched from the macOS dock
+does not inherit your shell's <code>PATH</code>, additionally checks
+the usual locations (<code>/Library/TeX/texbin</code>,
+<code>/opt/homebrew/bin</code>, <code>/usr/local/bin</code>). On
+Windows the TeX installer puts the tools on <code>PATH</code> itself.
+So in practice: install MacTeX or TeX&nbsp;Live normally, and it
+works.
+</p>
+
+<p>
+<strong>Without a TeX installation</strong> nothing else about Clew
+changes — mermaid still renders, since it never leaves the browser —
+but a TikZ or MetaPost block whose SVG is not already cached cannot
+compile. The figure's place in the note is taken by an inline error
+box ("Error processing TikZ diagram") rather than a broken page, and
+for TikZ the box carries a <em>Show Error Log</em> button that opens
+the full LaTeX log — which is also exactly where to look when a
+figure fails for the ordinary reason, a typo in the TikZ code.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	While drafting a figure, keep the note in a split — source left,
+	reading mode right — and save deliberately: each save that changes the
+	block costs one compile (a second or two), after which the figure is
+	cached and free. If a figure seems stuck on a stale rendering, add
+	<code>empty-cache</code> to its attribute block for one render to
+	force a clean rebuild, then remove it.
+</div>
+
+<h2 id="export">Diagrams in export and publishing</h2>
+
+<p>
+In <a href="export.html">LaTeX and PDF export</a>, TikZ figures are
+not embedded as images at all — the <code>tikzpicture</code> source
+passes through natively, so the print figure is drawn by the same
+engine as the rest of the document, in the document's own fonts.
+MetaPost figures are compiled and included as vector graphics, and
+mermaid's native forms rasterize through <code>mmdc</code> as
+described above. When a whole vault is
+<a href="publishing.html">published as a website</a>, the cache
+folders are copied with everything else — the site export preserves
+every non-note file in place — so the published pages show the same
+figures without any TeX on the server. A single note exported to HTML
+references its <code>TiKZ/</code> and <code>MetaPost/</code> folders
+by relative path, so keep the exported page next to the note, or copy
+the folders along with it.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	The <code>```mermaid</code> fence renders in Obsidian too — that is
+	why Clew supports it — so mermaid diagrams round-trip between the two
+	apps. Everything else in this chapter is Clew-only:
+	<code>:::mermaid</code>, <code>@begin(mermaid)</code>, TikZ, and
+	MetaPost appear in Obsidian as the literal block text. The
+	<code>TiKZ/</code> and <code>MetaPost/</code> cache folders are
+	ordinary folders of SVG files that Obsidian lists but does not touch.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Diagram</th><th>Syntax</th><th>Rendered by</th><th>Needs</th></tr>
+	<tr><td>Mermaid (Obsidian-compatible)</td><td><code>```mermaid … ```</code></td><td>Bundled mermaid, in the preview; not exported to LaTeX</td><td>Nothing</td></tr>
+	<tr><td>Mermaid (native)</td><td><code>:::mermaid … :::</code> or <code>@begin(mermaid) … @end(mermaid)</code></td><td>Bundled mermaid; rasterized via <code>mmdc</code> for LaTeX/PDF</td><td><code>mmdc</code> for print only</td></tr>
+	<tr><td>TikZ</td><td><code>@begin(TiKZ) … @end(TiKZ)</code> or <code>:::TiKZ … :::</code></td><td><code>lualatex</code> + <code>dvisvgm</code> → SVG cached in <code>TiKZ/</code>; native in LaTeX export</td><td>TeX installation</td></tr>
+	<tr><td>MetaPost</td><td><code>@begin(metapost) … @end(metapost)</code></td><td><code>mpost</code> → SVG cached in <code>MetaPost/</code></td><td>TeX installation</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Attribute (TikZ and MetaPost)</th><th>Effect</th></tr>
+	<tr><td><code>scale=</code></td><td>Scale the embedded SVG</td></tr>
+	<tr><td><code>width=</code></td><td>Set an explicit width</td></tr>
+	<tr><td><code>embed</code></td><td>Inline the SVG as a data URI</td></tr>
+	<tr><td><code>empty-cache</code></td><td>Clear the cache folder before compiling</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="reading-mode.html">How rendering works</a> — the render
+	pipeline, and why cached figures survive re-renders untouched.</li>
+	<li><a href="math-and-theorems.html">Math and theorems</a> — the same
+	TeX toolchain, pointed at equations.</li>
+	<li><a href="maps.html">Interactive maps</a> — the other kind of
+	rendered block, live rather than compiled.</li>
+	<li><a href="export.html">Exporting notes</a> and
+	<a href="publishing.html">Publishing as a website</a> — where your
+	diagrams go next.</li>
+	<li><a href="canvas.html">The canvas</a> — for freehand diagrams drawn
+	by hand rather than declared in text.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

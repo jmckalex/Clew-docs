@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings and hotkeys — Clew Manual</title>
+<meta name="description" content="Every Clew setting — app-global and per-vault — and the complete default hotkey table, plus the hotkey editor for rebinding any command.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reference</p>
+<h1>Settings and hotkeys</h1>
+<p class="lead">
+Clew keeps its configuration small and legible: a handful of app-wide
+preferences, a handful of per-vault switches, and a hotkey editor that
+can rebind any command. This chapter is the reference for all of it —
+every settings section as it appears in the app, the difference between
+app-global and per-vault settings and where each lives on disk, how
+rebinding works, and the complete table of default hotkeys.
+</p>
+
+<h2 id="opening">The settings tab</h2>
+
+<p>
+Press <kbd>⌘,</kbd> (or Clew&nbsp;→&nbsp;Settings… on macOS,
+File&nbsp;→&nbsp;Settings… on Windows and Linux) and settings open as a
+<em>tab</em> in the workspace, not a floating dialog. It is a singleton:
+if a settings tab is already open anywhere — even in another split
+pane — the command focuses it rather than opening a second. Being a tab,
+it closes with <kbd>⌘W</kbd> like anything else, and can sit in a split
+beside a note while you experiment. Every change applies immediately;
+there is no Save button.
+</p>
+
+<figure class="shot">
+	<img src="images/settings-hotkeys.png" alt="The settings tab open on the hotkey editor, showing a filter field and rows of commands with their current key chords and Set and Reset buttons">
+	<figcaption>The settings tab, scrolled to the hotkey editor: filter to a
+	command, press Set, type the new chord.</figcaption>
+</figure>
+
+<h2 id="scopes">App-global versus per-vault</h2>
+
+<p>
+Clew has exactly two configuration scopes, and the settings tab shows
+both:
+</p>
+
+<ul>
+	<li><strong>App-global settings</strong> — everything in the
+	Appearance, Diary, Files, and Hotkeys sections — apply to every vault
+	and are stored in <code>clew-settings.json</code> in the operating
+	system's per-user application-data directory (alongside them, Clew
+	keeps its recent-vaults list and the set of windows to restore at
+	launch). Nothing app-global is written into any vault.</li>
+	<li><strong>Per-vault settings</strong> — the <em>This vault</em>
+	section — are stored in <code>.clew/vault-settings.json</code> inside
+	the vault itself, so they travel with it: clone or sync the vault and
+	its behaviour comes along.</li>
+</ul>
+
+<h2 id="sections">The settings sections</h2>
+
+<h3 id="appearance">Appearance</h3>
+
+<dl>
+	<dt>Theme</dt>
+	<dd>Dark or light. See <a href="theming.html">Theming and CSS
+	snippets</a> for what the switch reaches and how to restyle
+	further.</dd>
+	<dt>New note tabs open in</dt>
+	<dd>Whether a freshly opened note tab starts in source (edit) mode or
+	reading mode. Navigating an existing tab keeps that tab's current
+	mode; this setting governs new tabs only.</dd>
+	<dt>Explorer click opens files</dt>
+	<dd>Whether clicking a file in the explorer opens it in a new tab, or
+	in the current tab, Obsidian-style.</dd>
+	<dt>Editor font size (px)</dt>
+	<dd>10–28, default 16. Applies live to every editor.</dd>
+	<dt>Editor line width (em)</dt>
+	<dd>20–120, default 44 — the measure of the editing column.</dd>
+</dl>
+
+<h3 id="diary">Diary</h3>
+
+<dl>
+	<dt>Mode</dt>
+	<dd><em>One note per day</em> or <em>Single log note</em> — the two
+	shapes a diary can take (see
+	<a href="daily-notes.html">Daily notes and the diary</a>).</dd>
+	<dt>Log note (log mode)</dt>
+	<dd>The note holding the whole diary in log mode; default
+	<code>Diary.md</code>.</dd>
+	<dt>Folder (per-day mode)</dt>
+	<dd>Where daily notes are created; default <code>Daily</code>.</dd>
+	<dt>Date format</dt>
+	<dd>The file-name pattern for daily notes; default
+	<code>YYYY-MM-DD</code>.</dd>
+	<dt>Template note (optional)</dt>
+	<dd>A note whose contents seed each new daily note.</dd>
+</dl>
+
+<h3 id="files">Files</h3>
+
+<dl>
+	<dt>Attachment folder</dt>
+	<dd>Where pasted and dropped files land; default
+	<code>Attachments</code> (see
+	<a href="attachments-and-files.html">Attachments and files</a>).</dd>
+	<dt>Templates folder</dt>
+	<dd>Where <em>Insert template…</em> (<kbd>⌘⌥T</kbd>) looks for
+	templates; default <code>Templates</code>.</dd>
+</dl>
+
+<h3 id="this-vault">This vault</h3>
+
+<p>
+The per-vault switches, stored in
+<code>.clew/vault-settings.json</code>. There are six, plus the
+plugin list:
+</p>
+
+<dl>
+	<dt>jmarkdown project <code>(jmarkdownProject)</code></dt>
+	<dd>For vaults that are jmarkdown manuscripts — a book folder, say.
+	Re-enables the engine's own-line <code>[[file.md]]</code> inclusion,
+	so reading mode transcludes chapters exactly the way the jmarkdown
+	command-line build does. The trade-off: a wikilink alone on its own
+	line stops being a plain link while this is on. Open previews
+	re-render as soon as the box is toggled.</dd>
+	<dt>Standard Markdown syntax <code>(normalSyntax)</code></dt>
+	<dd>Disables the jmarkdown inline dialect, so <code>*italic*</code>
+	and <code>**bold**</code> behave as they do everywhere else, while
+	keeping math, citations, diagrams, and theorems. Renders and exports
+	both honour it; the editor's dialect highlighting does not adapt yet.
+	See <a href="dialect.html">The jmarkdown dialect</a>.</dd>
+	<dt>Note API <code>(noteApi)</code></dt>
+	<dd>Gives <code>&lt;script&gt;</code> elements in rendered notes a
+	<code>window.clew</code> API — open notes, search, read and write
+	notes and frontmatter, run commands, share state. Off by default,
+	deliberately: with it on, notes are code. Enable it only for vaults
+	you trust. See <a href="note-api.html">The Note API</a>.</dd>
+	<dt>Bibliography file <code>(bibliography)</code></dt>
+	<dd>A <code>.bib</code> file — a path from the vault root, or an
+	absolute path — that every note in the vault resolves
+	<code>\cite</code> commands against, with citation resolution
+	switched on. Per-note <code>Bibliography:</code> properties still
+	override it. See
+	<a href="citations.html">Citations and bibliographies</a>.</dd>
+	<dt>Bibliography style <code>(bibliographyStyle)</code></dt>
+	<dd>The vault's citation style: a name the engine ships (apa,
+	chicago, harvard1, vancouver, bjps, ajp, econometrica, ergo) or a
+	path to a custom <code>.csl</code> file. Notes override with a
+	<code>Bibliography style:</code> property.</dd>
+	<dt>References panel <code>(bibliographyPanel)</code></dt>
+	<dd>Adds a <em>Refs</em> tab to the right sidebar showing the active
+	note's formatted references, even while the note is in source
+	mode.</dd>
+	<dt>Plugins <code>(plugins)</code></dt>
+	<dd>Below the switches, every plugin discovered in
+	<code>.clew/plugins/</code> is listed with its version and surfaces,
+	each with its own enable checkbox; the enabled set is stored as an
+	array of plugin ids. A plugin is arbitrary code — enable only what
+	you trust. See <a href="plugins.html">Vault plugins</a>.</dd>
+</dl>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The Note API switch and the plugin checkboxes are trust decisions, not
+	feature toggles. Both are per-vault and off by default, so a vault you
+	downloaded cannot run code in Clew until you explicitly say so — keep
+	it that way for vaults whose contents you have not read.
+</div>
+
+<h2 id="hotkey-editor">The hotkey editor</h2>
+
+<p>
+The final settings section lists <em>every</em> command Clew has —
+built-ins, all the formatting commands, and commands registered by
+enabled plugins — alphabetically, with a filter field at the top. Each
+row shows the command's current binding (a dash when unbound), a
+<strong>Set</strong> button, and a <strong>Reset</strong> button.
+</p>
+
+<p>
+To rebind: filter to the command, press <strong>Set</strong>, and type
+the new chord — the row shows <em>Press a shortcut…</em> until you do
+(<kbd>Esc</kbd> cancels). The chord must include a modifier; the first
+full chord you press becomes the command's binding, replacing its
+defaults. Custom bindings are marked with an accent-coloured key cap,
+and <strong>Reset</strong> — enabled only on customized rows — restores
+the default. When the same chord is claimed by more than one command,
+both rows show it in red, and you should re-bind one of them: which
+command wins an ambiguous chord is not defined.
+</p>
+
+<p>
+Overrides are stored (app-globally, keyed by command id) in
+<code>clew-settings.json</code>, so your keymap follows you across
+vaults. The <a href="navigation.html">command palette</a> always
+displays current bindings, and the native menus do too: menu
+accelerators are display-only — Clew's own dispatcher handles every
+chord — so a rebound command shows its new chord in the menu and the
+old chord does nothing.
+</p>
+
+<h3 id="notation">Chord notation</h3>
+
+<p>
+Internally, chords use CodeMirror's notation — <code>Mod-Shift-p</code>,
+<code>Mod-Alt-ArrowLeft</code> — where <code>Mod</code> is the platform
+command key: <kbd>⌘</kbd> on macOS, <kbd>Ctrl</kbd> on Windows and
+Linux. On macOS, Control is a separate modifier of its own
+(<kbd>⌃</kbd>), used for tab cycling because <kbd>⌘Tab</kbd> belongs to
+the system; away from macOS such chords fold into the Ctrl key, so
+<kbd>⌃Tab</kbd> reads as Ctrl+Tab everywhere. You never type this
+notation — the editor records chords from real keystrokes — but it is
+what appears in the settings file.
+</p>
+
+<h2 id="default-hotkeys">Default hotkeys — the complete table</h2>
+
+<p>
+Every default binding in Clew, grouped by area. This is the complete
+list: any command not shown here ships unbound and is reachable through
+the command palette, the menus, or a binding of your own. Shortcuts are
+shown in macOS notation — on Windows and Linux, read <kbd>⌘</kbd> as
+<kbd>Ctrl</kbd> and <kbd>⌥</kbd> as <kbd>Alt</kbd>.
+</p>
+
+<h3 id="hk-files">Files</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘N</kbd></td><td>Create new note</td></tr>
+	<tr><td><kbd>⌘S</kbd></td><td>Save note (auto-save runs anyway; this flushes immediately)</td></tr>
+</table>
+</div>
+
+<h3 id="hk-navigation">Navigation</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘O</kbd></td><td>Open quick switcher</td></tr>
+	<tr><td><kbd>⌘P</kbd></td><td>Open command palette</td></tr>
+	<tr><td><kbd>⌘⌥←</kbd></td><td>Navigate back</td></tr>
+	<tr><td><kbd>⌘⌥→</kbd></td><td>Navigate forward</td></tr>
+	<tr><td><kbd>⌘G</kbd></td><td>Open graph view — except on a canvas tab, where <kbd>⌘G</kbd> groups the selected nodes instead (the binding every drawing app uses); the graph stays reachable from the palette and the Go menu</td></tr>
+	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
+	<tr><td><kbd>⌘⇧D</kbd></td><td>Open today's diary entry</td></tr>
+</table>
+</div>
+
+<h3 id="hk-tabs">Tabs and splits</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘T</kbd></td><td>New tab</td></tr>
+	<tr><td><kbd>⌘W</kbd></td><td>Close tab</td></tr>
+	<tr><td><kbd>⌃Tab</kbd></td><td>Next tab</td></tr>
+	<tr><td><kbd>⌃⇧Tab</kbd></td><td>Previous tab</td></tr>
+	<tr><td><kbd>⌘\</kbd></td><td>Split right</td></tr>
+	<tr><td><kbd>⌘⇧\</kbd></td><td>Split down</td></tr>
+	<tr><td><kbd>⌘⇧W</kbd></td><td>Close split pane</td></tr>
+</table>
+</div>
+
+<h3 id="hk-view">View and panels</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode</td></tr>
+	<tr><td><kbd>⌘B</kbd></td><td>Toggle left sidebar</td></tr>
+	<tr><td><kbd>⌘⇧B</kbd></td><td>Toggle right sidebar</td></tr>
+	<tr><td><kbd>⌘,</kbd></td><td>Open settings</td></tr>
+</table>
+</div>
+
+<h3 id="hk-editing">Editing</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘F</kbd></td><td>Find in note</td></tr>
+	<tr><td><kbd>⌘K</kbd></td><td>Insert wikilink (wraps the selection, or opens completion)</td></tr>
+	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template…</td></tr>
+</table>
+</div>
+
+<h3 id="hk-native">Native menu shortcuts</h3>
+
+<p>
+Two shortcuts are native menu items rather than commands, so they do
+not appear in the hotkey editor and cannot be rebound there:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Menu item</th></tr>
+	<tr><td><kbd>⌘⇧N</kbd></td><td>File&nbsp;→&nbsp;New Window</td></tr>
+	<tr><td><kbd>⌘⇧O</kbd></td><td>File&nbsp;→&nbsp;Open Vault…</td></tr>
+</table>
+</div>
+
+<h3 id="hk-unbound">Unbound by default</h3>
+
+<p>
+Everything else ships without a chord, waiting in the palette: creating
+folders and canvases, opening another vault, revealing the note in the
+file manager, bookmarking, pinning tabs, the diary calendar, the
+properties panel, the theme commands, all four exports, and the entire
+Format family — inline styles, headings, lists, alignment, alerts,
+tables, and block inserts, each a rebindable command. If you use one
+daily, give it a key.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	When a chord does not seem to work, check three things in order: the
+	hotkey editor (is it bound, and shown in red as a conflict?), the
+	context (many commands need a vault, a note, or an editor — the
+	palette hides commands that do not currently apply), and the tab kind
+	(<kbd>⌘G</kbd> on a canvas is Group, by design).
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Clew's per-vault settings live in <code>.clew/vault-settings.json</code>
+	and its app settings outside the vault altogether — neither touches
+	<code>.obsidian/</code>, so a shared vault carries Obsidian's
+	configuration and Clew's side by side. Hotkey customizations are
+	per-app: rebinding a key in Clew changes nothing in Obsidian, and vice
+	versa.
+</div>
+
+<h2 id="reference">Reference: where settings live</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
+	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides — plus recent vaults and the windows to restore at launch</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="navigation.html">Navigation, tabs and splits</a> — the
+	commands most of these chords drive.</li>
+	<li><a href="theming.html">Theming and CSS snippets</a> — beyond the
+	theme dropdown.</li>
+	<li><a href="daily-notes.html">Daily notes and the diary</a> — what the
+	Diary settings configure.</li>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — what the
+	standard-syntax switch turns off.</li>
+	<li><a href="note-api.html">The Note API</a> and
+	<a href="plugins.html">Vault plugins</a> — what the trust switches
+	enable.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

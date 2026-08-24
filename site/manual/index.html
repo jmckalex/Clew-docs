@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clew Manual</title>
+<meta name="description" content="The complete manual for Clew: vaults, the editor, the jmarkdown dialect, reading mode, queries, canvas, maps, publishing, the Note API, and plugins.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Clew 0.8.0</p>
+<h1>The Clew Manual</h1>
+<p class="lead">
+Everything Clew does, explained properly: what to type, what happens,
+why it works that way, and where the sharp edges are. If you are new,
+start with the <a href="introduction.html">Introduction</a> and read
+forward; if you came here for one feature, every chapter stands alone.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Clew's bundled <code>demo-vault/</code> is this manual's live twin —
+	documentation <em>written in Clew</em>, where every guide note exercises
+	the feature it documents. This manual goes deeper and works in any
+	browser; the demo vault lets you poke the features as you read about
+	them. They are best side by side.
+</div>
+
+<h2>Getting started</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="introduction.html">
+		<h3>Introduction</h3>
+		<p>What Clew is, the five design commitments behind it, and how it
+		relates to Obsidian.</p>
+	</a>
+	<a class="toc-card" href="getting-started.html">
+		<h3>Getting started</h3>
+		<p>Installing on macOS, Windows, and Linux; building from source;
+		opening your first vault; a guided tour.</p>
+	</a>
+</div>
+
+<h2>The vault</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="vaults-and-files.html">
+		<h3>Vaults and files</h3>
+		<p>What a vault is on disk, the file explorer, renames that rewrite
+		links, symlinks, multiple windows, and Obsidian coexistence.</p>
+	</a>
+	<a class="toc-card" href="attachments-and-files.html">
+		<h3>Attachments and files</h3>
+		<p>Pasting and dragging images, the attachment folder, and the
+		built-in viewers for images, PDFs, audio, and video.</p>
+	</a>
+</div>
+
+<h2>Writing</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="editing.html">
+		<h3>The editor</h3>
+		<p>CodeMirror 6, dialect highlighting, completions for links, tags,
+		and citations, auto-save, undo, and conflict handling.</p>
+	</a>
+	<a class="toc-card" href="dialect.html">
+		<h3>The jmarkdown dialect</h3>
+		<p>The academic inline syntax — and the per-vault switch back to
+		standard Markdown.</p>
+	</a>
+	<a class="toc-card" href="links-and-embeds.html">
+		<h3>Links and embeds</h3>
+		<p>Wikilinks, headings and display text, transclusion, media embeds
+		with sizes, and what happens when files move.</p>
+	</a>
+	<a class="toc-card" href="properties.html">
+		<h3>Properties and metadata</h3>
+		<p>Frontmatter as typed, editable rows; inline <code>Key:: value</code>
+		fields; how properties feed queries.</p>
+	</a>
+	<a class="toc-card" href="daily-notes.html">
+		<h3>Daily notes and the diary</h3>
+		<p>The calendar panel, per-day files or a single log, composed
+		interval views, and templates.</p>
+	</a>
+</div>
+
+<h2>Reading mode</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="reading-mode.html">
+		<h3>How rendering works</h3>
+		<p>The jmarkdown engine, live preview, scroll sync, inverse search,
+		and checkboxes that write back.</p>
+	</a>
+	<a class="toc-card" href="math-and-theorems.html">
+		<h3>Math and theorems</h3>
+		<p>LaTeX mathematics with AMS numbering, theorem environments, and
+		cross-references.</p>
+	</a>
+	<a class="toc-card" href="citations.html">
+		<h3>Citations and bibliographies</h3>
+		<p>BibTeX files, <code>\cite</code> commands, bibliography styles, and
+		cite-key completion.</p>
+	</a>
+	<a class="toc-card" href="diagrams.html">
+		<h3>Diagrams</h3>
+		<p>Mermaid fences built in; TikZ and MetaPost through your TeX
+		toolchain.</p>
+	</a>
+	<a class="toc-card" href="maps.html">
+		<h3>Interactive maps</h3>
+		<p>Leaflet fences: markers, tracks, regions, custom tiles, and photo
+		maps from geotagged photos.</p>
+	</a>
+</div>
+
+<h2>The vault as a database</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="queries.html">
+		<h3>Queries</h3>
+		<p>Filter notes by folder, tag, and properties; date arithmetic;
+		grouping and sorting — and table cells you can type into.</p>
+	</a>
+	<a class="toc-card" href="tasks-and-kanban.html">
+		<h3>Tasks and kanban</h3>
+		<p>Every checkbox in the vault in one list; boards whose columns are a
+		frontmatter field, where dragging a card rewrites the note.</p>
+	</a>
+</div>
+
+<h2>Canvas</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="canvas.html">
+		<h3>The canvas</h3>
+		<p>An infinite board of cards, live note embeds, web pages, and PDFs —
+		plus ink, shapes, groups, frames, portals, and PNG export.</p>
+	</a>
+</div>
+
+<h2>Workspace</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="navigation.html">
+		<h3>Navigation, tabs and splits</h3>
+		<p>The quick switcher, the command palette, tab history, pinned tabs,
+		and split panes.</p>
+	</a>
+	<a class="toc-card" href="panels.html">
+		<h3>Panels</h3>
+		<p>The explorer, backlinks, outgoing links, unlinked mentions, tags,
+		outline, bookmarks, and the status bar.</p>
+	</a>
+	<a class="toc-card" href="search.html">
+		<h3>Search</h3>
+		<p>Full-text search across the vault and its operators.</p>
+	</a>
+	<a class="toc-card" href="graph-view.html">
+		<h3>Graph view</h3>
+		<p>The whole vault — or the current note's neighbourhood — as a
+		force-directed graph.</p>
+	</a>
+</div>
+
+<h2>Sharing your work</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="export.html">
+		<h3>Exporting notes</h3>
+		<p>HTML, LaTeX, and PDF from the same source, through the real
+		engine.</p>
+	</a>
+	<a class="toc-card" href="publishing.html">
+		<h3>Publishing as a website</h3>
+		<p>Compile the whole vault to a static site any web host can
+		serve.</p>
+	</a>
+</div>
+
+<h2>Extending Clew</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="note-api.html">
+		<h3>The Note API</h3>
+		<p>Notes as programs: a scripting API inside rendered notes, with
+		shared state that travels with the vault.</p>
+	</a>
+	<a class="toc-card" href="plugins.html">
+		<h3>Vault plugins</h3>
+		<p>Extend the engine, the preview, and the app from a folder inside
+		the vault.</p>
+	</a>
+	<a class="toc-card" href="theming.html">
+		<h3>Theming and CSS snippets</h3>
+		<p>Dark and light themes, and restyling both the app and reading
+		mode.</p>
+	</a>
+</div>
+
+<h2>Reference</h2>
+<div class="toc-cards">
+	<a class="toc-card" href="settings-and-hotkeys.html">
+		<h3>Settings and hotkeys</h3>
+		<p>Every setting, app-wide and per-vault, and the complete default
+		keymap — plus the hotkey editor that changes it.</p>
+	</a>
+</div>
+
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

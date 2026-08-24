@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaults and files — Clew Manual</title>
+<meta name="description" content="What a vault is on disk, the .clew folder, Obsidian coexistence, one window per vault, the file explorer, external edits, and full symlink support.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">The vault</p>
+<h1>Vaults and files</h1>
+<p class="lead">
+A vault is a plain folder. That single fact does most of the work in
+this chapter: because a vault is only files, everything Clew does to it
+is inspectable, everything it adds is deletable, and every other tool
+you own — git, grep, Obsidian, a text editor from 1991 — keeps
+working on the same notes at the same time. What follows is the full
+account: what Clew writes where, how it shares a vault with other
+apps, how windows map to vaults, what the file explorer can do, and
+the two places Clew deliberately goes beyond Obsidian — external
+edits handled without data loss, and real symbolic-link support.
+</p>
+
+<h2 id="what-is-a-vault">A vault is a folder</h2>
+
+<p>
+Any folder of <code>.md</code> or <code>.jmd</code> files is a vault;
+so is an empty folder you intend to fill. Notes are Markdown files,
+canvases are JSON files, attachments are ordinary images and PDFs
+sitting wherever you put them. There is no database, no manifest, and
+no import step — opening a vault means pointing Clew at the folder,
+nothing more. Subfolders structure the vault however you like, and the
+explorer shows them as a tree, folders first, then files, each sorted
+alphabetically (Obsidian's default order). Files and folders whose
+names begin with a dot are hidden, and a few directories are ignored
+outright wherever Clew walks the vault: <code>.obsidian</code>,
+<code>.clew</code>, <code>.git</code>, <code>node_modules</code>, and
+<code>.trash</code>.
+</p>
+
+<h2 id="clew-folder">What Clew adds on disk: <code>.clew/</code></h2>
+
+<p>
+Clew keeps every piece of its own state in a single subfolder of the
+vault, <code>.clew/</code>, created when the vault is first opened.
+Everything in it falls into two kinds: caches Clew can rebuild from
+your notes at any time, and small settings files recording choices you
+made. Neither kind contains a word of your writing — deleting the
+whole folder loses no content, only convenience (your window layout,
+bookmarks, and per-vault settings go back to defaults, and the first
+re-render after deletion is a little slower while the caches rebuild).
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Path</th><th>What it is</th></tr>
+	<tr><td><code>cache/</code></td>
+		<td>Rendered output from reading mode — rebuilt on demand.</td></tr>
+	<tr><td><code>cache.json</code></td>
+		<td>The note index (links, tags, metadata), validated against file
+		modification times so reopening a large vault is fast.</td></tr>
+	<tr><td><code>engine/</code></td>
+		<td>The working directory and generated configuration for the
+		rendering engine — see
+		<a href="reading-mode.html">How rendering works</a>.</td></tr>
+	<tr><td><code>workspace.json</code></td>
+		<td>Your window layout: open tabs, splits, sidebar state.</td></tr>
+	<tr><td><code>bookmarks.json</code></td>
+		<td>Bookmarked notes.</td></tr>
+	<tr><td><code>vault-settings.json</code></td>
+		<td>Per-vault options: the standard-Markdown syntax switch, the
+		jmarkdown-project mode, the Note API gate, and which plugins are
+		enabled — the “This vault” section of Settings.</td></tr>
+	<tr><td><code>snippets/</code></td>
+		<td>Your CSS snippets — see
+		<a href="theming.html">Theming and CSS snippets</a>.</td></tr>
+	<tr><td><code>plugins/</code></td>
+		<td>Vault plugins — see <a href="plugins.html">Vault
+		plugins</a>.</td></tr>
+	<tr><td><code>scripts/</code></td>
+		<td>Vault scripts, injected into every rendered note — see
+		<a href="note-api.html">The Note API</a>.</td></tr>
+</table>
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	If the vault is a git repository, add <code>.clew/</code> to its
+	<code>.gitignore</code> — caches and window layout are per-machine
+	noise. The exceptions are deliberate: a shared vault may want to
+	commit <code>vault-settings.json</code> (so collaborators get the
+	same syntax mode and plugin set) and <code>plugins/</code> or
+	<code>scripts/</code> (so the vault's behaviour travels with it).
+	Clew's own demo vault does exactly this.
+</div>
+
+<h2 id="obsidian">Living with Obsidian</h2>
+
+<p>
+Obsidian compatibility is a hard constraint in Clew's design, not an
+aspiration. Notes stay <code>.md</code>; wikilinks resolve the way
+Obsidian resolves them; canvases are standard JSON Canvas files. Most
+importantly for this chapter, Clew treats <code>.obsidian/</code> as
+foreign territory: it never writes there, never reads your Obsidian
+configuration, and keeps everything of its own in <code>.clew/</code>.
+The two state folders sit side by side without contact.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	You can keep the same vault open in Clew and Obsidian
+	<em>simultaneously</em>. Each app watches the folder, so a note
+	saved in one appears in the other within moments. Migration in
+	either direction is a non-event, because there is nothing to
+	migrate — the vault was never converted in the first place.
+</div>
+
+<h2 id="windows">One window, one vault</h2>
+
+<p>
+Clew's window model is strict and worth internalizing: <strong>one
+window shows exactly one vault</strong>, and the same vault is never
+open in two windows. When you open a vault — from the welcome screen,
+the <strong>File&nbsp;→&nbsp;Open&nbsp;Vault…</strong> dialog
+(<kbd>⌘⇧O</kbd>), or the recent-vaults list — Clew first looks
+for a window that already shows it and focuses that instead of opening
+a duplicate. If the window you asked from has no vault yet (a fresh
+welcome window), the vault opens right there; otherwise you get a new
+window. <strong>File&nbsp;→&nbsp;New&nbsp;Window</strong>
+(<kbd>⌘⇧N</kbd>) opens an empty window ready to take a vault.
+</p>
+
+<p>
+Every window that is open when you quit is restored at the next
+launch, one window per vault. Closing a vault's window by hand removes
+that vault from the restore set. To work in two vaults at once, open
+them both — each gets its own window, its own explorer, its own
+search index, and its own layout, completely independent of the other.
+</p>
+
+<h2 id="explorer">The file explorer</h2>
+
+<p>
+The explorer is the <em>Files</em> tool in the left sidebar. Clicking
+a note opens it — in a new tab by default, though a note that is
+already open in the pane focuses its existing tab rather than
+multiplying. <kbd>⌘</kbd>-clicking inverts the default for one click,
+and Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>Explorer click
+opens files</em> flips the default itself if you prefer Obsidian's
+replace-in-place behaviour. Clicking an image, PDF, audio, or video
+file opens a viewer tab (see
+<a href="attachments-and-files.html">Attachments and files</a>), and
+clicking a <code>.canvas</code> file opens the
+<a href="canvas.html">canvas</a>.
+</p>
+
+<p>
+Right-clicking brings up the file operations. On a file: open in a new
+tab, in the current tab, or to the right in a split. On anything: new
+note, new folder, rename, reveal in Finder (or your platform's file
+manager), and delete — deletions go to the system Trash, not into the
+void, so a slip is recoverable the usual way.
+</p>
+
+<p>
+Moving is dragging: drop a note or folder onto another folder to move
+it there, or onto the empty background of the tree to move it to the
+vault root.
+</p>
+
+<h3 id="rename-links">Renames rewrite links</h3>
+
+<p>
+Renaming or moving a note is safe for the rest of the vault, because
+Clew rewrites every <code>[[wikilink]]</code> that pointed at it —
+across all notes, in the same pass as the rename. The rewrite respects
+how each link was written: a link by bare name
+(<code>[[Project Notes]]</code>) is updated only when the note's
+<em>name</em> actually changed, since a pure move between folders
+keeps bare names valid; a link written with a path gets the new path.
+Renaming a folder does the same for every note inside it. Canvas files
+are included: a canvas's file nodes reference vault paths, and those
+references are rewritten too — for renamed files of any type, not
+only notes.
+</p>
+
+<h2 id="external-edits">Edits from other apps</h2>
+
+<p>
+Clew watches the vault continuously. Create, delete, or move a file in
+Finder, in a terminal, in Obsidian, or via a sync service, and the
+explorer updates by itself; edit a note's content elsewhere and any
+open editor or preview of it reloads in place. This is what makes the
+simultaneous-Obsidian arrangement above workable, and it is equally
+what makes a synced vault (Dropbox, iCloud Drive, Syncthing) behave
+sensibly on the receiving machine.
+</p>
+
+<p>
+The interesting case is a genuine conflict: the file changed on disk
+<em>while you have unsaved local edits</em> to it. Clew refuses to
+guess. A banner appears over the editor, auto-save pauses so your
+typing cannot clobber the disk version behind your back, and you
+choose: <strong>Keep my version</strong> (your buffer wins and is
+saved over the disk change) or <strong>Load disk version</strong>
+(your unsaved edits are discarded in favour of the file). Nothing is
+overwritten silently in either direction. The same banner protects
+canvases.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The conflict banner can only offer a whole-file choice — Clew does
+	not merge line-level changes from both sides. If you routinely edit
+	the same note from two machines through a sync service, save before
+	you switch machines, and let the sync settle before typing. For
+	anything more concurrent than that, a git-managed vault gives you
+	real merges.
+</div>
+
+<h2 id="symlinks">Symbolic links</h2>
+
+<p>
+Symlinked files and folders inside a vault are first-class citizens.
+A linked note appears in the explorer, is indexed for links,
+backlinks, search, and the quick switcher, renders in reading mode,
+and saves through the link to the real file — even when the target
+lives entirely outside the vault folder. A linked folder brings its
+whole subtree in the same way. The file watcher follows links too, so
+an external edit to a linked file reloads like any other. The
+degenerate cases are handled rather than feared: link cycles are
+detected and each real directory is walked exactly once, and dangling
+links are skipped quietly.
+</p>
+
+<p>
+This is a deliberate design point, not an accident of implementation.
+It means a vault can <em>weave in</em> material that lives elsewhere
+on your disk — a folder of shared bibliography files, a project
+directory maintained by another tool, one note that belongs to two
+vaults at once — while the vault itself remains a clean, syncable
+folder. In-vault links pointing outside the vault are allowed by
+design.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	This is a place where the two apps differ: Obsidian largely ignores
+	symlinks, and symlinked folders are a well-known source of quiet
+	trouble there. The links themselves are ordinary filesystem
+	objects, so a vault containing them still opens fine in Obsidian —
+	but only Clew will index and follow what they point to. If a vault
+	must behave identically in both apps, prefer real files.
+</div>
+
+<h2 id="recent">Recent vaults, and opening another</h2>
+
+<p>
+Clew keeps a list of the last ten vaults you opened.
+<strong>File&nbsp;→&nbsp;Open&nbsp;Recent&nbsp;Vault</strong> lists
+them (with a <strong>Clear Recent Vaults</strong> entry at the
+bottom), and a vaultless welcome window shows the same list as
+one-click entries. Opening a recent vault follows the window rules
+above: an already-open vault focuses its window; anything else fills
+the current vaultless window or opens a new one.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Operation</th><th>How</th><th>Notes</th></tr>
+	<tr><td>Open a vault</td>
+		<td>File → Open Vault… (<kbd>⌘⇧O</kbd>)</td>
+		<td>Any folder; the dialog can create one. Already-open vaults
+		focus their window.</td></tr>
+	<tr><td>Open a recent vault</td>
+		<td>File → Open Recent Vault, or the welcome screen</td>
+		<td>Last ten vaults kept.</td></tr>
+	<tr><td>New window</td>
+		<td>File → New Window (<kbd>⌘⇧N</kbd>)</td>
+		<td>Opens vaultless, ready for a vault.</td></tr>
+	<tr><td>New note / folder</td>
+		<td>Explorer right-click; <kbd>⌘N</kbd> for a note</td>
+		<td></td></tr>
+	<tr><td>Rename / move</td>
+		<td>Right-click → Rename; drag to move</td>
+		<td>Wikilinks and canvas file references rewritten
+		vault-wide (attachment renames update canvas references only — see
+		<a href="attachments-and-files.html">Attachments and files</a>).</td></tr>
+	<tr><td>Delete</td>
+		<td>Right-click → Delete</td>
+		<td>Goes to the system Trash.</td></tr>
+	<tr><td>Reveal on disk</td>
+		<td>Right-click → Reveal in Finder</td>
+		<td>File manager equivalent on Windows/Linux.</td></tr>
+	<tr><td>Clew's state</td>
+		<td><code>.clew/</code> in the vault root</td>
+		<td>Safe to delete; gitignore it, except what you mean to
+		share.</td></tr>
+	<tr><td>Obsidian's state</td>
+		<td><code>.obsidian/</code></td>
+		<td>Never touched by Clew.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="attachments-and-files.html">Attachments and files</a> —
+	pasting images, the attachment folder, and the built-in viewers.</li>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the
+	wikilink syntax the rename machinery preserves.</li>
+	<li><a href="navigation.html">Navigation, tabs and splits</a> — the
+	workspace those explorer clicks open into.</li>
+	<li><a href="panels.html">Panels</a> — the explorer's siblings in
+	the sidebars.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> —
+	including the per-vault settings stored in
+	<code>vault-settings.json</code>.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

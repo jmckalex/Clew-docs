@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exporting notes — Clew Manual</title>
+<meta name="description" content="Export any note to a standalone HTML page, print-quality LaTeX source, or a typeset PDF — the same jmarkdown source drives all three.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Sharing your work</p>
+<h1>Exporting notes</h1>
+<p class="lead">
+Because Clew's reading mode is the jmarkdown typesetting engine — a
+dual-output engine that compiles the same source to HTML <em>and</em> to
+LaTeX — exporting is not an afterthought bolted onto a preview. Any note
+exports to a standalone HTML page, to print-quality LaTeX source, or,
+when a TeX toolchain is installed, straight to a typeset PDF. The
+mathematics, theorem environments, citations, and diagrams you see in
+reading mode survive into print, because print was always one of the
+engine's two native targets.
+</p>
+
+<h2 id="where">Where the commands live</h2>
+
+<p>
+The export commands for the current note sit under
+<strong>File&nbsp;→&nbsp;Export</strong>:
+</p>
+
+<ul>
+	<li><strong>As HTML…</strong></li>
+	<li><strong>As LaTeX…</strong></li>
+	<li><strong>As PDF (via LaTeX)…</strong></li>
+</ul>
+
+<p>
+(The fourth item in that submenu, <strong>Vault as Website…</strong>,
+exports the whole vault at once and has
+<a href="publishing.html">its own chapter</a>.) The same three commands
+are in the command palette (<kbd>⌘P</kbd>) as <em>Export note as
+HTML</em>, <em>Export note as LaTeX (.tex)</em>, and <em>Export note as
+PDF (via LaTeX)</em>, and like every command they can be given hotkeys
+in the <a href="settings-and-hotkeys.html">hotkey editor</a>. All three
+act on the active note's tab and need a note to be open.
+</p>
+
+<p>
+Each command opens a save dialog. The suggested destination is the vault
+root, with the note's own name and the right extension
+(<code>.html</code>, <code>.tex</code>, or <code>.pdf</code>); you can
+point it anywhere on disk. Nothing is written until you confirm the
+dialog, and cancelling it cancels the export.
+</p>
+
+<h2 id="one-source">One source, three outputs</h2>
+
+<p>
+The point of exporting through the engine — rather than printing the
+preview to PDF, as most note apps do — is that each format is generated
+<em>natively</em> from the Markdown source:
+</p>
+
+<ul>
+	<li><strong>HTML</strong> produces a complete, standalone web page
+	using the engine's own page templates. Mathematics is typeset,
+	citations are resolved against your bibliography, diagrams render,
+	footnotes and cross-references link up. It is a document you can mail
+	to someone or drop on a server as-is.</li>
+	<li><strong>LaTeX</strong> produces real LaTeX source: theorem
+	environments become <code>\begin{theorem}</code>, displayed equations
+	keep their AMS numbering, citations go through natbib, figures become
+	floats, and TikZ pictures are emitted as native TikZ — not as embedded
+	screenshots. The <code>.tex</code> file is yours to edit, include in a
+	larger document, or hand to a journal.</li>
+	<li><strong>PDF</strong> is the LaTeX route carried one step further:
+	Clew generates the <code>.tex</code> and then runs your TeX toolchain
+	on it. The result is a typeset page in the full LaTeX sense — proper
+	line breaking, real fonts, print-ready mathematics.</li>
+</ul>
+
+<p>
+This is the practical payoff of the design commitment described in the
+<a href="introduction.html">introduction</a>: a note about, say, a
+convergence proof — with numbered equations, a theorem, a couple of
+citations from your <code>.bib</code> file — renders in the app, exports
+as a web page, and typesets as a paper, all from the file you were
+editing a minute ago. Nothing needs to be rewritten for print.
+</p>
+
+<h2 id="config-cascade">Exports use <em>your</em> jmarkdown configuration</h2>
+
+<p>
+Here is the subtle point of this chapter, and it is worth understanding
+because it explains everything else about how exports behave. When Clew
+renders a note for reading mode, it runs the engine with a private
+configuration of its own — one that loads Clew's wikilink and fence
+extensions, points at local assets, and uses Clew's preview template.
+When Clew <em>exports</em> a note, it deliberately does not use that
+configuration. Instead, the export runs the engine in a fresh process
+whose working directory is <strong>the note's own folder</strong>, which
+means the engine's normal configuration cascade applies: the built-in
+defaults, then your global <code>~/.jmarkdown</code> configuration, then
+any <code>.jmarkdown/</code> folder next to the note.
+</p>
+
+<p>
+In other words, an export behaves exactly as if you had run the
+jmarkdown command-line tool on the file yourself. That is a feature:
+</p>
+
+<ul>
+	<li>Exports use the engine's own page and LaTeX templates — including
+	any customisations you have made to them — rather than Clew's
+	app-oriented preview template.</li>
+	<li>Your bibliography setup, citation style, and other engine options
+	from <code>~/.jmarkdown</code> are honoured.</li>
+	<li>Power users can keep a <code>.jmarkdown/</code> configuration
+	folder next to a set of notes to control precisely how those notes
+	export — different templates for different projects, extra engine
+	extensions, LaTeX preamble additions — without touching how the notes
+	look inside Clew.</li>
+	<li>A note's own metadata header still applies, as it does in the
+	preview.</li>
+</ul>
+
+<p>
+One per-vault setting does carry over: if the vault is set to
+standard Markdown syntax (the <em>normal syntax</em> toggle in
+Settings&nbsp;→&nbsp;This vault, described in
+<a href="dialect.html">the dialect chapter</a>), exports honour it, so a
+vault written in ordinary Markdown exports as ordinary Markdown.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — Clew's preview extensions do not apply</span>
+	Clew's Obsidian-flavoured additions are extensions loaded by the
+	<em>preview</em> configuration, and single-note exports do not load
+	them. Concretely: inline <code>[[wikilinks]]</code> are not turned
+	into links (they come out as written), <code>![[…]]</code> embeds are
+	not expanded, and the <code>```mermaid</code>, <code>```leaflet</code>,
+	and <code>```query</code> fences render as plain code blocks. The
+	engine's native forms still work — <code>:::mermaid</code> or
+	<code>@begin(mermaid)</code> blocks export fine, and everything in
+	<a href="math-and-theorems.html">math</a>,
+	<a href="citations.html">citations</a>, and the engine's own
+	<a href="diagrams.html">diagram</a> machinery is native. A note you
+	intend to publish as a paper is best written leaning on the engine's
+	own vocabulary; a note leaning on Clew's vault features is better
+	shared via <a href="publishing.html">website export</a>, which does
+	load all of Clew's extensions.
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — own-line wikilinks become inclusions</span>
+	The engine has its own meaning for a <code>[[chapter.md]]</code>
+	standing alone on a line: file inclusion, and it is on by default in
+	the engine's configuration. In an export, such a line splices the
+	named file's contents into the document — useful on purpose for
+	book-style projects (it is the same behaviour the per-vault
+	<em>jmarkdown project</em> setting brings into the preview), but
+	surprising if you meant it as a mere link. Add
+	<code>File inclusion: false</code> to a note's metadata header or a
+	<code>.jmarkdown/</code> config next to the note to switch it off.
+</div>
+
+<h2 id="pdf-toolchain">PDF export and the TeX toolchain</h2>
+
+<p>
+PDF export needs a TeX installation on your machine — Clew does not
+bundle one, because a TeX distribution is enormous and you likely
+already have one if you want this feature. On macOS, MacTeX is the
+usual choice.
+Clew looks for <code>latexmk</code> first and falls back to
+<code>pdflatex</code>, checking the standard installation directories
+(<code>/Library/TeX/texbin</code>, <code>/usr/local/bin</code>, and
+<code>/opt/homebrew/bin</code>). With <code>latexmk</code> available,
+reruns for cross-references and bibliographies are handled
+automatically, which is why it is preferred.
+</p>
+
+<p>
+A related detail that saves real head-scratching: apps launched from the
+Dock or Finder inherit a minimal <code>PATH</code> that usually lacks
+the TeX directories, which is why "it works in my terminal but not in
+the app" is such a common failure elsewhere. Clew sidesteps it by
+extending the <code>PATH</code> it hands to every engine process with
+the common TeX and Homebrew locations
+(<code>/Library/TeX/texbin</code>, <code>/opt/homebrew/bin</code>,
+<code>/usr/local/bin</code>). This matters beyond PDF export: TikZ,
+MetaPost, and similar diagram tools shell out to <code>latex</code>,
+<code>dvisvgm</code>, and <code>mpost</code> by name even when
+rendering the preview. On Windows, TeX installers put themselves on the
+<code>PATH</code>, so no extension is needed.
+</p>
+
+<p>
+Mechanically, a PDF export first writes the intermediate
+<code>.tex</code> file next to your chosen destination — deliberately,
+so that relative graphics paths resolve — and then compiles it there.
+The compiler runs with a two-minute timeout, in nonstop mode. One
+pragmatic wrinkle: <code>pdflatex</code> exits with a non-zero status on
+mere warnings, so Clew accepts the run as successful whenever the PDF
+actually materialised.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip — the .tex file is your debugging window</span>
+	After a PDF export, the generated <code>.tex</code> (and the
+	compiler's <code>.log</code> and auxiliary files) remain next to the
+	PDF. If a compile fails or the output looks wrong, open the
+	<code>.tex</code> and run <code>latexmk -pdf</code> on it yourself:
+	you get the full compiler output, and you can fix or restyle the LaTeX
+	directly. Exporting to LaTeX first and compiling by hand is exactly
+	the same pipeline, one step at a time. If you dislike the auxiliary
+	clutter, export into a scratch folder and copy out the PDF.
+</div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<dl>
+	<dt>"No TeX toolchain found (latexmk/pdflatex)"</dt>
+	<dd>Clew could not find <code>latexmk</code> or <code>pdflatex</code>
+	in any of the directories listed above. Install MacTeX (or your
+	platform's TeX distribution) and try again; no restart of Clew should
+	be needed if the tools land in one of the standard locations.</dd>
+
+	<dt>The PDF was not produced</dt>
+	<dd>The LaTeX compile failed hard enough that no PDF appeared. Export
+	the same note as LaTeX and compile it in a terminal — the compiler's
+	error messages will name the offending line. Common causes are a
+	missing LaTeX package and raw HTML in the note, which has no LaTeX
+	equivalent.</dd>
+
+	<dt>Citations show as question marks in the PDF</dt>
+	<dd>The bibliography did not resolve. Check that the note's
+	bibliography setup (see <a href="citations.html">Citations and
+	bibliographies</a>) points at a <code>.bib</code> file the export can
+	reach from the note's own folder — remember that exports run from the
+	note's directory, not from wherever Clew was started.</dd>
+
+	<dt>The export looks different from reading mode</dt>
+	<dd>Almost always the configuration-cascade point above: the preview
+	runs with Clew's extensions and per-vault settings, the export runs
+	with yours. Wikilinks, Obsidian-style fences, and query blocks are the
+	usual suspects.</dd>
+
+	<dt>The exported HTML page needs the network</dt>
+	<dd>Unlike Clew's preview, which uses only local assets, the engine's
+	own HTML template may reference assets such as MathJax from a CDN.
+	The page is standalone in the sense of being a single file, but
+	rendering mathematics in the browser can require a network connection,
+	depending on your jmarkdown template configuration.</dd>
+</dl>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Obsidian's PDF export prints its HTML preview to a PDF — a picture of
+	the app's rendering. Clew's PDF export generates LaTeX and typesets
+	it, which is a different kind of artifact: selectable, searchable,
+	journal-grade output with real mathematics. The trade is the one this
+	chapter describes — the export pipeline speaks jmarkdown, not
+	Obsidian's dialect, so it shines brightest on notes written with the
+	engine's own vocabulary.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Format</th><th>Menu item</th><th>Palette command</th><th>Produces</th><th>Requires</th></tr>
+	<tr><td><strong>HTML</strong></td>
+		<td>File → Export → As HTML…</td>
+		<td><em>Export note as HTML</em></td>
+		<td>A standalone <code>.html</code> page from the engine's own
+		templates, at the location you choose.</td>
+		<td>Nothing extra.</td></tr>
+	<tr><td><strong>LaTeX</strong></td>
+		<td>File → Export → As LaTeX…</td>
+		<td><em>Export note as LaTeX (.tex)</em></td>
+		<td>A <code>.tex</code> source file; relative graphics resolve
+		from where it is saved.</td>
+		<td>Nothing extra (a TeX installation to compile it later).</td></tr>
+	<tr><td><strong>PDF</strong></td>
+		<td>File → Export → As PDF (via LaTeX)…</td>
+		<td><em>Export note as PDF (via LaTeX)</em></td>
+		<td>A typeset <code>.pdf</code>; the intermediate <code>.tex</code>
+		and log files remain alongside it.</td>
+		<td><code>latexmk</code> or <code>pdflatex</code> on the machine.</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Fact</th><th>Detail</th></tr>
+	<tr><td>Working directory</td><td>The note's own folder — the normal
+		jmarkdown config cascade applies (<code>~/.jmarkdown</code>, then a
+		<code>.jmarkdown/</code> next to the note, then the note's metadata
+		header).</td></tr>
+	<tr><td>Not applied</td><td>Clew's preview configuration: wikilink and
+		embed rendering, <code>```mermaid</code>/<code>```leaflet</code>/<code>```query</code>
+		fences, local preview assets.</td></tr>
+	<tr><td>Applied</td><td>The vault's standard-Markdown-syntax setting;
+		the note's metadata header; all engine-native features.</td></tr>
+	<tr><td>TeX search path</td><td><code>/Library/TeX/texbin</code>,
+		<code>/usr/local/bin</code>, <code>/opt/homebrew/bin</code>
+		(<code>latexmk</code> preferred over <code>pdflatex</code>); the same
+		directories are appended to <code>PATH</code> for every engine
+		process.</td></tr>
+	<tr><td>Compile behaviour</td><td>Nonstop mode, two-minute timeout;
+		accepted as success if the PDF exists even when the compiler
+		returned warnings.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="publishing.html">Publishing as a website</a> — exporting
+	the whole vault, with all of Clew's extensions applied.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — what the
+	preview pipeline does differently, and why.</li>
+	<li><a href="math-and-theorems.html">Math and theorems</a> and
+	<a href="citations.html">Citations and bibliographies</a> — the
+	features that make print export worth having.</li>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — including the
+	per-vault standard-syntax switch that exports honour.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

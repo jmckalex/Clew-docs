@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panels — Clew Manual</title>
+<meta name="description" content="Clew's sidebar panels: files, search, bookmarks, and the diary calendar on the left; backlinks with unlinked mentions, outgoing links, tags, outline, properties, an optional references panel, and a local graph on the right.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Workspace</p>
+<h1>Panels</h1>
+<p class="lead">
+Two sidebars frame the workspace. The left one is about the vault as a
+whole — its files, its search, your bookmarks, the diary calendar. The
+right one is about the note you are looking at — who links to it, what
+it links to, its tags, its outline, its properties, and its immediate
+neighbourhood in the graph. This chapter walks through every panel, with
+particular attention to the backlinks panel, whose <em>unlinked
+mentions</em> quietly do more work than anything else in the sidebar.
+</p>
+
+<h2 id="sidebar-system">How the sidebars work</h2>
+
+<p>
+Each sidebar carries a row of tool tabs across its top; clicking one
+swaps the panel below. The left sidebar offers <strong>Files</strong>,
+<strong>Search</strong>, <strong>Marks</strong> (bookmarks), and
+<strong>Diary</strong>; the right offers <strong>Links</strong>
+(backlinks), <strong>Out</strong> (outgoing links),
+<strong>Tags</strong>, <strong>Outline</strong>, <strong>Props</strong>
+(properties), and <strong>Graph</strong> (a local graph) — plus
+<strong>Refs</strong> (the active note's bibliography) in vaults that
+enable it.
+</p>
+
+<p>
+<kbd>⌘B</kbd> toggles the left sidebar and <kbd>⌘⇧B</kbd> the right one
+(also View&nbsp;→&nbsp;Left/Right&nbsp;Sidebar). Drag a sidebar's inner
+edge to resize it. Which tool is selected, whether each sidebar is open,
+and both widths are saved with the rest of the workspace layout, per
+vault. A few commands land on a specific panel directly:
+<kbd>⌘⇧F</kbd> opens the left sidebar on Search with the input focused,
+<em>Open properties panel</em> (View&nbsp;→&nbsp;Properties&nbsp;Panel)
+opens the right sidebar on Props, and <em>Open diary calendar</em>
+(Go&nbsp;→&nbsp;Diary&nbsp;Calendar) opens the left sidebar on Diary.
+</p>
+
+<p>
+Every right-sidebar panel tracks the <em>active tab</em>: switch tabs or
+panes and the backlinks, outline, properties, and local graph all follow.
+The panels read from Clew's metadata index, which updates when a note is
+saved — and since auto-save runs about a second after you stop typing,
+the sidebar is never more than a moment behind the editor.
+</p>
+
+<h2 id="left">The left sidebar</h2>
+
+<h3 id="files">Files</h3>
+
+<p>
+The file explorer: the vault's folder tree, with creation, renaming,
+moving, and deletion. It has its own chapter — see
+<a href="vaults-and-files.html">Vaults and files</a> for the tree
+itself and <a href="attachments-and-files.html">Attachments and
+files</a> for how non-note files behave.
+</p>
+
+<h3 id="search">Search</h3>
+
+<p>
+Full-text search over the whole vault, with operators for paths, file
+names, tags, and quoted phrases. It is covered in its own chapter:
+<a href="search.html">Search</a>.
+</p>
+
+<h3 id="bookmarks">Marks (bookmarks)</h3>
+
+<p>
+Bookmarks are a hand-picked list of notes you want a fixed handle on.
+Bookmark the active note with <em>Bookmark / unbookmark active note</em>
+from the command palette, or File&nbsp;→&nbsp;Bookmark&nbsp;This&nbsp;Note
+(a checkmark shows the current state). The Marks panel lists every
+bookmarked note in the order you added them: click one to open it,
+<kbd>⌘</kbd>-click to open it in a new tab, and right-click for
+<em>Remove bookmark</em>. Running the bookmark command again on an
+already-bookmarked note also removes it.
+</p>
+
+<p>
+Bookmarks are stored per vault in <code>.clew/bookmarks.json</code>, and
+they follow renames: moving or renaming a bookmarked note (or a folder
+above it) through Clew updates the bookmark rather than breaking it.
+</p>
+
+<h3 id="diary">Diary</h3>
+
+<p>
+A month-grid calendar with a dot on every day that has a diary entry;
+click any day to open it, or create it if it does not exist yet. The
+controls above the grid build composed views of a day, an interval, or
+the whole diary. The diary — including its two modes, one-note-per-day
+and single-log — has its own chapter:
+<a href="daily-notes.html">Daily notes and the diary</a>.
+</p>
+
+<h2 id="backlinks">Links: backlinks and unlinked mentions</h2>
+
+<p>
+The Links panel answers the question every linked-notes app exists to
+answer: <em>who points here?</em> It has two sections.
+</p>
+
+<p>
+<strong>Linked mentions</strong> lists every note containing a wikilink
+to the active note, grouped by source note, with the count in the
+section title. Under each source you see the actual line each link sits
+on, as a context snippet. Click the source's name to open that note;
+click a snippet to open the note <em>at that exact line</em>, in source
+mode with the cursor placed — no scanning around for where the link was.
+</p>
+
+<p>
+<strong>Unlinked mentions</strong> is the more interesting half: places
+where the active note's name — or any of its frontmatter aliases —
+appears in plain prose <em>without</em> being a link. Matching is
+case-insensitive and word-bounded (a note called <em>Graph</em> does
+not match <em>photograph</em>), skips occurrences already inside a
+wikilink, skips tags, and ignores text inside code fences, inline code,
+and script blocks, because code is not prose. Each mention shows its
+snippet, and hovering reveals a <strong>Link</strong> button: press it
+and Clew rewrites the occurrence in place, turning the plain words into
+<code>[[Note]]</code> — or <code>[[Note|alias]]</code> when the mention
+matched an alias, so the visible text is preserved. The edit goes
+through the open editor when the source note has one (so it is undoable
+there), and straight to disk otherwise. The section is collapsible via
+its header.
+</p>
+
+<figure class="shot">
+	<img src="images/backlinks-panel.png" alt="The right sidebar's Links panel showing linked mentions with context snippets, and an unlinked mentions section below">
+	<figcaption>The Links panel on the demo vault's Welcome note: linked
+	mentions with clickable context snippets above, unlinked mentions below
+	(hover a mention to reveal its Link button).</figcaption>
+</figure>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Unlinked mentions make a good weekly gardening pass: open an important
+	note, fold out the section, and Link the mentions that deserve it. Every
+	press strengthens the graph without retyping a word — and because
+	aliases count, a note on <em>Principal Component Analysis</em> with the
+	alias <em>PCA</em> collects mentions under both names.
+</div>
+
+<h2 id="outgoing">Out: outgoing links</h2>
+
+<p>
+The mirror image: every wikilink <em>leaving</em> the active note, in
+two groups. <strong>Links</strong> are resolved — their targets exist —
+and clicking one opens the target (honouring any
+<code>#Heading</code> fragment). <strong>Unresolved</strong> links point
+at notes that do not exist yet; clicking one creates the note, exactly
+as clicking the link in the note would. That makes the panel a to-do
+list of stubs: draft freely, linking things that ought to exist, then
+work down the unresolved list turning red links into notes.
+</p>
+
+<h2 id="tags">Tags</h2>
+
+<p>
+Every tag in the vault with its usage count, sorted busiest first.
+Click a tag to expand the list of notes carrying it, inline; click a
+note to open it. Nested tags such as <code>#project/clew</code> appear
+whole. For more powerful tag queries — combining a tag with text terms
+or path filters — use the <code>tag:</code> operator in
+<a href="search.html">search</a>, or build a live table with a
+<a href="queries.html">query</a>.
+</p>
+
+<h2 id="outline">Outline</h2>
+
+<p>
+The active note's heading tree, indented by heading level. Click any
+heading to jump the editor to it. The outline reads from the metadata
+index, so it reflects the note as of its last save — with auto-save,
+within about a second of typing. For long structured notes this pairs
+well with a <a href="navigation.html">split</a>: outline in the sidebar,
+source and reading mode side by side.
+</p>
+
+<h2 id="props">Props</h2>
+
+<p>
+The active note's frontmatter properties as editable rows. This panel
+has its own chapter — see
+<a href="properties.html">Properties and metadata</a>.
+</p>
+
+<h2 id="refs">Refs: the References panel</h2>
+
+<p>
+In vaults with a bibliography configured, an optional <strong>Refs</strong>
+tab shows the active note's formatted references — every work the note
+cites, set in the vault's citation style (or the note's own, when its
+properties override it). The list updates as the note re-renders, and it
+works in source mode too, so you can watch the reference list grow while
+you draft. The note itself needs no inline <code>@bibliography</code>
+block. Switch the tab on per vault in
+<strong>Settings&nbsp;→&nbsp;This vault</strong>; the details live in
+<a href="citations.html">Citations and bibliographies</a>.
+</p>
+
+<h2 id="local-graph">Graph</h2>
+
+<p>
+A local graph of the active note's immediate neighbourhood: the note at
+the centre and everything one link away, in either direction. It is the
+same component as the full <a href="graph-view.html">graph view</a>,
+scoped down to the note at hand — a quick visual answer to "what is
+around this note?" without leaving the sidebar.
+</p>
+
+<h2 id="status-bar">The status bar</h2>
+
+<p>
+Along the window's bottom edge, the status bar shows a live word count
+and character count for the active note, updating as you type. Words
+are counted as runs of letters and digits, with apostrophes and hyphens
+kept inside a word — <em>doesn't</em> and <em>front-matter</em> each
+count once. When the active tab is not a note — a canvas, the graph,
+settings — the status bar is empty.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Everything the panels persist — bookmarks in
+	<code>.clew/bookmarks.json</code>, the chosen tools and sidebar widths
+	in <code>.clew/workspace.json</code> — lives in <code>.clew/</code>,
+	which Obsidian ignores. Obsidian's own bookmarks and layout in
+	<code>.obsidian/</code> are equally invisible to Clew, so each app
+	keeps its own sidebar state over the same notes. The Link button's
+	rewrites, by contrast, edit the notes themselves — those are ordinary
+	wikilinks Obsidian resolves identically.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+The full panel set. Hotkeys shown are macOS; on Windows and Linux read
+<kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as <kbd>Alt</kbd>.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Panel</th><th>Sidebar</th><th>Shows</th><th>Reached by</th></tr>
+	<tr><td><strong>Files</strong></td><td>Left</td><td>The vault's folder tree</td><td>Tool tab · <kbd>⌘B</kbd> toggles the sidebar</td></tr>
+	<tr><td><strong>Search</strong></td><td>Left</td><td>Full-text search results</td><td><kbd>⌘⇧F</kbd> or the tool tab</td></tr>
+	<tr><td><strong>Marks</strong></td><td>Left</td><td>Bookmarked notes</td><td>Tool tab; bookmark via palette or File menu</td></tr>
+	<tr><td><strong>Diary</strong></td><td>Left</td><td>Month calendar with entry dots</td><td>Tool tab or Go&nbsp;→&nbsp;Diary&nbsp;Calendar</td></tr>
+	<tr><td><strong>Links</strong></td><td>Right</td><td>Backlinks and unlinked mentions</td><td>Tool tab · <kbd>⌘⇧B</kbd> toggles the sidebar</td></tr>
+	<tr><td><strong>Out</strong></td><td>Right</td><td>Outgoing links, resolved and unresolved</td><td>Tool tab</td></tr>
+	<tr><td><strong>Tags</strong></td><td>Right</td><td>All tags with counts; expandable note lists</td><td>Tool tab</td></tr>
+	<tr><td><strong>Outline</strong></td><td>Right</td><td>The active note's heading tree</td><td>Tool tab</td></tr>
+	<tr><td><strong>Refs</strong></td><td>Right</td><td>The active note's formatted bibliography (vaults that enable it)</td><td>Tool tab · Settings&nbsp;→&nbsp;This vault</td></tr>
+	<tr><td><strong>Props</strong></td><td>Right</td><td>Frontmatter properties, editable</td><td>Tool tab or View&nbsp;→&nbsp;Properties&nbsp;Panel</td></tr>
+	<tr><td><strong>Graph</strong></td><td>Right</td><td>Local graph, one link deep</td><td>Tool tab</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="search.html">Search</a> — the Search panel in full,
+	including every operator.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the Props
+	panel and the frontmatter it edits.</li>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the
+	wikilinks the Links and Out panels index.</li>
+	<li><a href="graph-view.html">Graph view</a> — the full-vault version
+	of the local graph.</li>
+	<li><a href="daily-notes.html">Daily notes and the diary</a> — the
+	Diary panel's calendar and views.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

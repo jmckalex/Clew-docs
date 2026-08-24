@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navigation, tabs and splits — Clew Manual</title>
+<meta name="description" content="Moving around a Clew vault: the quick switcher, the command palette, tabs and tab kinds, pinning, per-tab history, split panes, and multiple windows.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Workspace</p>
+<h1>Navigation, tabs and splits</h1>
+<p class="lead">
+A vault of a few hundred notes is only useful if any one of them is a
+second away. Clew gives you three fast routes to anywhere — the quick
+switcher, the command palette, and the links woven through your notes —
+and a workspace of tabs and split panes to hold what you find. This
+chapter covers all of it: how tabs open, navigate, pin, and remember
+where they have been; how to split the window; and how multiple vaults
+map onto multiple windows.
+</p>
+
+<h2 id="quick-switcher">The quick switcher</h2>
+
+<p>
+Press <kbd>⌘O</kbd> to open the quick switcher: a single text field that
+fuzzy-matches against every note in the vault — by file name, by any
+alias declared in a note's frontmatter, and by path — and against every
+canvas as well. Fuzzy matching means the characters you type need only
+appear in order, not adjacently: <code>rmode</code> finds
+<em>Reading Mode</em>, <code>gu/nav</code> finds
+<em>Guide/Navigation</em>. Results that match an alias are marked with a
+small <code>⤷</code> arrow, and each row shows the full vault path so
+same-named notes in different folders stay distinguishable.
+</p>
+
+<figure class="shot">
+	<img src="images/quick-switcher.png" alt="The quick switcher open over the workspace, with a partial query typed and fuzzy-matched notes listed below the input">
+	<figcaption>The quick switcher (<kbd>⌘O</kbd>) over the demo vault's
+	Welcome note. Type a few characters of a name, alias, or path; the
+	arrow keys move the selection.</figcaption>
+</figure>
+
+<p>
+From the switcher, four keys do everything:
+</p>
+
+<ul>
+	<li><kbd>Enter</kbd> opens the selected result in the current tab, following
+	the usual navigation rules described below.</li>
+	<li><kbd>⌘Enter</kbd> opens the selected result in a new tab instead.
+	Clicking a result with <kbd>⌘</kbd> held does the same.</li>
+	<li><kbd>⇧Enter</kbd> <em>creates</em> a note with exactly the name you have
+	typed, whether or not any results are showing. When nothing matches at
+	all, the result list itself offers the same thing. This makes the
+	switcher the fastest way to start a new note: <kbd>⌘O</kbd>, type the
+	title, <kbd>⇧Enter</kbd>, and you are writing.</li>
+	<li><kbd>Esc</kbd> dismisses the switcher, as does clicking anywhere
+	outside it.</li>
+</ul>
+
+<h2 id="command-palette">The command palette</h2>
+
+<p>
+Press <kbd>⌘P</kbd> for the command palette: the same modal, but listing
+every command Clew knows — file operations, navigation, formatting,
+exports, theme switches, everything registered by the app or by an
+enabled plugin. Each entry shows its current hotkey, including any
+rebindings you have made in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>, so the palette
+doubles as a live cheat sheet. Commands that make no sense in the current
+context — editor commands while a canvas is focused, say — are filtered
+out rather than shown disabled.
+</p>
+
+<figure class="shot">
+	<img src="images/command-palette.png" alt="The command palette open, showing a filtered list of commands with their hotkeys aligned on the right">
+	<figcaption>The command palette (<kbd>⌘P</kbd>) over the demo vault's
+	Welcome note. Every command is searchable, and each shows the hotkey
+	that currently triggers it.</figcaption>
+</figure>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Most commands ship without a default hotkey — creating a canvas,
+	exporting to PDF, pinning a tab. The palette is how you reach them
+	without leaving the keyboard, and the
+	<a href="settings-and-hotkeys.html">hotkey editor</a> is where you
+	promote the ones you use daily to a chord of their own.
+</div>
+
+<h2 id="links">Navigating from links</h2>
+
+<p>
+The third route through a vault is the vault itself. In the editor,
+hold <kbd>⌘</kbd> and click a <code>[[wikilink]]</code> to follow it;
+add <kbd>⌥</kbd> to open the target in a new tab. In reading mode a
+plain click follows a link, and <kbd>⌘</kbd>-click opens it in a new
+tab. A link to a note that does not exist yet creates it, Obsidian-style —
+in the vault root for a bare name, at the written path for a path-form
+link. Links of the form <code>[[Note#Heading]]</code> land
+on that heading — the cursor jumps there in source mode, reading mode
+scrolls to it — and <code>[[#Heading]]</code> jumps within the current
+note.
+</p>
+
+<p>
+Beyond inline links, nearly everything in the
+<a href="panels.html">panels</a> is a navigation surface: backlinks and
+unlinked mentions jump to the exact line they sit on, outgoing links
+open (or create) their targets, the outline jumps to a heading, tags
+expand into note lists, bookmarks open with a click, and nodes in the
+<a href="graph-view.html">graph view</a> open the notes they represent.
+</p>
+
+<h2 id="tabs">Tabs</h2>
+
+<h3 id="tab-kinds">What a tab can hold</h3>
+
+<p>
+A tab is not only a note. Clew's workspace knows six kinds of tab:
+</p>
+
+<ul>
+	<li><strong>Note</strong> tabs hold a Markdown file, in source or
+	reading mode (<kbd>⌘E</kbd> toggles).</li>
+	<li><strong>File</strong> tabs are viewers for non-note files — images,
+	PDFs, media — opened from the explorer or from links.</li>
+	<li><strong>Canvas</strong> tabs hold a <code>.canvas</code> board
+	(see <a href="canvas.html">The canvas</a>).</li>
+	<li><strong>Graph</strong> is the vault-wide
+	<a href="graph-view.html">graph view</a>; only one graph tab exists at
+	a time, and <kbd>⌘G</kbd> focuses it wherever it is.</li>
+	<li><strong>Settings</strong> is the
+	<a href="settings-and-hotkeys.html">settings tab</a>, likewise a
+	singleton.</li>
+	<li><strong>Empty</strong> tabs are what <kbd>⌘T</kbd> creates — a blank
+	slate, usually filled a moment later by the quick switcher.</li>
+</ul>
+
+<h3 id="opening-closing">Opening, closing, cycling</h3>
+
+<p>
+Opening a note follows Obsidian's rules. If a tab in the active pane
+already shows that path, it is activated — the same note is not opened
+twice in one pane. Otherwise the current tab navigates in place, pushing
+its old location onto that tab's history. Only when you ask for a new
+tab explicitly (<kbd>⌘Enter</kbd> in the switcher, <kbd>⌘⌥</kbd>-click on an
+editor link, <kbd>⌘</kbd>-click on a reading-mode link or bookmark, or
+<kbd>⌘T</kbd> first) does the tab count grow.
+</p>
+
+<p>
+<kbd>⌘W</kbd> closes the active tab, and middle-clicking a tab closes it
+too. <kbd>⌃Tab</kbd> and <kbd>⌃⇧Tab</kbd> cycle forward and backward
+through the tabs of the active pane — note the Control key, a real,
+separate modifier on macOS, since <kbd>⌘Tab</kbd> belongs to the system
+app switcher. Right-clicking a tab opens a context menu with
+<em>Pin</em>/<em>Unpin</em>, <em>Close</em>, <em>Close others</em>, and
+<em>Close tabs to the right</em> (the latter two leave pinned tabs
+alone), plus <em>Close pane (split)</em> when more than one pane is
+open. Dragging a tab along a tab bar reorders it or moves it to another
+pane's tab bar.
+</p>
+
+<h3 id="pinning">Pinning</h3>
+
+<p>
+Pin a tab — right-click it and choose <em>Pin</em>, use
+Window&nbsp;→&nbsp;Pin&nbsp;Tab, or run <em>Pin / unpin tab</em> from
+the palette — to protect it. Pinned tabs sit first in the tab bar with
+a pin icon in place of the close button; they ignore <kbd>⌘W</kbd> and
+middle-click, and every bulk close operation skips them. Above all, a
+pinned tab never navigates away from its path: following a link from a
+pinned tab opens a new tab instead of replacing it, and the tab's
+back/forward history is disabled while pinned. Unpin it and it becomes
+an ordinary tab again.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Pin the note you keep coming back to — a dashboard of
+	<a href="queries.html">queries</a>, today's plan, an index note. It
+	becomes a fixed landmark at the left of the tab bar that no amount of
+	link-following can carry away.
+</div>
+
+<h2 id="history">Per-tab history</h2>
+
+<p>
+Every tab keeps its own navigation history, like a browser tab:
+<kbd>⌘⌥←</kbd> goes back and <kbd>⌘⌥→</kbd> goes forward (also
+Go&nbsp;→&nbsp;Back/Forward in the menu), up to fifty entries deep.
+History records more than the path — each entry remembers the kind of
+tab and its view state, so going back returns you to the note in the
+mode you were reading it. Because history is per-tab, two tabs can walk
+different trails through the same corner of the vault without
+interfering, and cycling tabs never disturbs where any of them can go
+back to.
+</p>
+
+<h2 id="splits">Split panes</h2>
+
+<p>
+The workspace is not limited to one row of tabs. <kbd>⌘\</kbd> splits
+the active pane to the right, and <kbd>⌘⇧\</kbd> splits it downward
+(Window&nbsp;→&nbsp;Split&nbsp;Right / Split&nbsp;Down). Splits nest to
+any depth and any mixture of directions — a left pane beside a column of
+two, three columns, whatever the work calls for — and dragging the
+divider between panes resizes them.
+</p>
+
+<p>
+The split commands <em>clone</em> the active tab: the original stays
+where it is, and the new pane opens a fresh tab on the same file in the
+same mode. That is the useful behaviour, because the natural next act is
+to put the two panes to different uses — source mode on the left,
+reading mode on the right, live-updating as you type; or the same long
+note open at two different places. The clone is an independent tab with
+its own history, so navigating one pane never moves the other.
+</p>
+
+<p>
+Dragging does the other thing: drag a tab onto the <em>edge</em> of a
+pane's body — left, right, top, or bottom — and the pane splits on that
+edge with the dragged tab <em>moving</em> into the new pane. Drop it in
+the pane's centre to move it into that pane's tab bar without
+splitting. A pane's last tab closing collapses the split it lived in;
+<kbd>⌘⇧W</kbd> (Window&nbsp;→&nbsp;Close&nbsp;Split&nbsp;Pane) closes
+the whole active pane, tabs and all. Clicking anywhere in a pane makes
+it the active one — the target of every tab command and of anything the
+quick switcher opens.
+</p>
+
+<p>
+The entire layout — panes, sizes, tabs, their histories and view modes,
+and the sidebar widths — is saved per vault and restored, exactly as you
+left it, when the vault is next opened. While a note's tab is focused
+but the rendered preview has keyboard focus, the essential chords keep
+working: <kbd>⌘E</kbd>, <kbd>⌘W</kbd>, <kbd>⌘⇧W</kbd>, <kbd>⌘T</kbd>,
+<kbd>⌘\</kbd>, and <kbd>⌘⇧\</kbd> are forwarded from the preview to the
+app.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	<kbd>⌘W</kbd> is Clew's <em>close tab</em>, not the system's close
+	window — a window with one last tab stays open as an empty workspace.
+	And on a canvas tab, <kbd>⌘G</kbd> does not open the graph view: it
+	groups the selected canvas nodes, the binding every drawing app uses.
+	The graph stays reachable from the palette and the Go menu.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Clew saves its workspace layout to <code>.clew/workspace.json</code>,
+	never touching the layout Obsidian keeps in <code>.obsidian/</code>.
+	The same vault can be open in both apps at once, each restoring its own
+	arrangement of tabs and panes.
+</div>
+
+<h2 id="windows">Multiple windows</h2>
+
+<p>
+One window holds one vault. File&nbsp;→&nbsp;New&nbsp;Window
+(<kbd>⌘⇧N</kbd>) opens an empty window ready to receive one;
+File&nbsp;→&nbsp;Open&nbsp;Vault… (<kbd>⌘⇧O</kbd>) and the
+Open&nbsp;Recent&nbsp;Vault submenu open vaults into it. Opening a vault
+that is already open somewhere focuses its existing window rather than
+opening it twice, and every window you had open is restored at the next
+launch. See <a href="vaults-and-files.html">Vaults and files</a> for the
+full story of what a vault is and how windows map onto them.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+Default hotkeys for everything in this chapter. On Windows and Linux,
+read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as <kbd>Alt</kbd>
+(so <kbd>⌃Tab</kbd> is Ctrl+Tab everywhere). All but the two native File-menu items are rebindable in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘O</kbd></td><td>Open quick switcher (<kbd>Enter</kbd> open · <kbd>⌘Enter</kbd> new tab · <kbd>⇧Enter</kbd> create)</td></tr>
+	<tr><td><kbd>⌘P</kbd></td><td>Open command palette</td></tr>
+	<tr><td><kbd>⌘⌥←</kbd> / <kbd>⌘⌥→</kbd></td><td>Navigate back / forward (per-tab history)</td></tr>
+	<tr><td><kbd>⌘T</kbd></td><td>New tab</td></tr>
+	<tr><td><kbd>⌘W</kbd></td><td>Close tab (pinned tabs are protected)</td></tr>
+	<tr><td><kbd>⌃Tab</kbd> / <kbd>⌃⇧Tab</kbd></td><td>Next / previous tab in the active pane</td></tr>
+	<tr><td><kbd>⌘\</kbd></td><td>Split right (clones the active tab)</td></tr>
+	<tr><td><kbd>⌘⇧\</kbd></td><td>Split down (clones the active tab)</td></tr>
+	<tr><td><kbd>⌘⇧W</kbd></td><td>Close split pane</td></tr>
+	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode</td></tr>
+	<tr><td><kbd>⌘G</kbd></td><td>Open graph view (on a canvas tab: group selection instead)</td></tr>
+	<tr><td><kbd>⌘B</kbd> / <kbd>⌘⇧B</kbd></td><td>Toggle left / right sidebar</td></tr>
+	<tr><td><kbd>⌘⇧N</kbd></td><td>New window (native menu item)</td></tr>
+	<tr><td><kbd>⌘⇧O</kbd></td><td>Open vault… (native menu item)</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="panels.html">Panels</a> — the sidebars this chapter's
+	<kbd>⌘B</kbd> and <kbd>⌘⇧B</kbd> toggle.</li>
+	<li><a href="search.html">Search</a> — full-text search across the
+	vault.</li>
+	<li><a href="graph-view.html">Graph view</a> — navigating by
+	structure.</li>
+	<li><a href="vaults-and-files.html">Vaults and files</a> — vaults,
+	windows, and the file explorer.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> — the
+	complete default keymap and how to change it.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

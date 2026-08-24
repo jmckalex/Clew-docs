@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math and theorems — Clew Manual</title>
+<meta name="description" content="LaTeX mathematics in Clew: inline and display math, numbered equations, cross-references, and the theorem, lemma, definition, and proof environments.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reading mode</p>
+<h1>Math and theorems</h1>
+<p class="lead">
+Clew's mathematics is LaTeX mathematics. Inline and display math are
+written with the delimiters every mathematical writer already knows,
+rendered by a locally bundled MathJax that works entirely offline; on
+top of that, the jmarkdown engine adds what a note-taking app almost
+never has — numbered equations you can cross-reference from prose, and
+a full family of theorem environments with shared, stable numbering.
+The same source exports to LaTeX and PDF, where the engine's
+<code>amsmath</code> and <code>amsthm</code> machinery takes over
+natively.
+</p>
+
+<h2 id="inline-display">Inline and display math</h2>
+
+<p>
+Inline math goes between single dollar signs (or, equivalently,
+<code>\(…\)</code>):
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Euler's identity, $e^{i\pi} + 1 = 0$, connects five constants.</code></pre>
+</div>
+
+<p>
+Display math stands on its own line, between double dollars or
+<code>\[…\]</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>$$
+\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}
+$$</code></pre>
+</div>
+
+<p>
+Everything between math delimiters is handed to MathJax verbatim —
+subscripts, commands, matrices, the lot — so anything you would write
+in a LaTeX document works here. Display blocks written with
+<code>$$…$$</code> and <code>\[…\]</code> are unnumbered; numbered
+equations are the engine's own construct, described next.
+</p>
+
+<p>
+A bare AMS environment also works as a display block, without any
+dollar-sign wrapper at all:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>\begin{align}
+f(x) &amp;= x^2 - 1 \\
+     &amp;= (x-1)(x+1)
+\end{align}</code></pre>
+</div>
+
+<p>
+The engine recognizes a <code>\begin{…}…\end{…}</code> block at the
+start of a line, protects its contents from all Markdown processing,
+and passes it through for MathJax to typeset — nested environments
+such as a <code>pmatrix</code> inside an <code>align</code> are handled
+correctly. MathJax is configured with AMS numbering
+(<code>tags: 'ams'</code>), so environments that number their lines do,
+and MathJax-level <code>\label</code>/<code>\eqref</code> resolve
+between math blocks on the same page. For references you make from
+<em>prose</em>, though, use the engine's own equation environment
+below — those resolve at build time and survive LaTeX export.
+</p>
+
+<figure class="shot">
+	<img src="images/math.jpg" alt="The Math and Theorems demo note in reading mode: a numbered display equation, theorem and lemma environments with a proof, and a rendered alert box">
+	<figcaption>The demo vault's Math and Theorems note: a numbered equation,
+	a theorem, a lemma citing the equation by number, a proof, and an
+	alert box — all from plain-text source.</figcaption>
+</figure>
+
+<h2 id="numbered-equations">Numbered equations</h2>
+
+<p>
+To number an equation and refer to it later, use the
+<code>@begin(equation)</code> environment:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(equation){#eq-euler}
+e^{i\pi} + 1 = 0
+@end(equation)
+
+As @ref[eq-euler] shows, the five constants are not strangers.</code></pre>
+</div>
+
+<p>
+The body is raw mathematics — no <code>$$</code> delimiters; the
+environment supplies them — and the engine itself assigns the number,
+counting <code>@begin(equation)</code> blocks in document order and
+placing <code>(1)</code>, <code>(2)</code>, … beside each. Because the
+numbering is done by the engine at build time rather than by MathJax in
+the browser, a reference like <code>@ref[eq-euler]</code> resolves to a
+hyperlinked number exactly the way figure and section references do,
+and the HTML and LaTeX outputs agree on every number.
+</p>
+
+<p>
+The <code>{#eq-euler}</code> attaches the label. Two spellings are
+accepted: the shorthand <code>{#name}</code>, and the explicit
+<code>{id=name}</code> — use the explicit form when your label
+contains a colon (<code>{id=eq:euler}</code>), which the shorthand
+cannot carry.
+</p>
+
+<h2 id="crossrefs">Cross-references</h2>
+
+<p>
+Three reference forms work anywhere in prose, for equations and
+theorems alike (and for figures, tables, and sections, which have
+labels of their own):
+</p>
+
+<dl>
+	<dt><code>@ref[key]</code></dt>
+	<dd>The bare number, as a hyperlink to the target — LaTeX's
+	<code>\ref</code>. For an equation the number reads with its
+	parentheses.</dd>
+	<dt><code>@cref[key]</code></dt>
+	<dd>A typed reference: the kind word plus the number — "equation (1)",
+	"theorem 2", "lemma 3" — LaTeX's cleveref <code>\cref</code>. The
+	engine knows what kind of thing each label marks, so you never write
+	the word yourself and it can never disagree with the target.</dd>
+	<dt><code>@Cref[key]</code></dt>
+	<dd>The same, capitalized for the start of a sentence: "Equation (1)",
+	"Theorem 2".</dd>
+</dl>
+
+<p>
+A reference to a label that does not exist renders as
+<code>??</code> — the same mark LaTeX uses — so a broken reference is
+visible in the output rather than silently wrong. In LaTeX export
+these forms become native <code>\ref</code> and <code>\cref</code>, so
+the print document resolves them with the real machinery.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	<code>@ref[…]</code> and <code>:ref[…]</code> are the same directive in
+	two spellings — jmarkdown accepts both, and the same goes for
+	<code>cref</code>, <code>Cref</code>, and <code>label</code>. This
+	manual writes the <code>@</code> forms throughout, matching the demo
+	vault.
+</div>
+
+<h2 id="theorems">Theorem environments</h2>
+
+<p>
+The engine provides seven theorem-like environments plus
+<code>proof</code>. Each is written as a block environment:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(theorem)[Pythagoras]{id=thm:pyth}
+For a right triangle, $a^2 + b^2 = c^2$.
+@end(theorem)
+
+@begin(lemma)
+If $x &gt; 0$ then $\log x$ is defined.
+@end(lemma)
+
+@begin(proof)
+By rearrangement. $\blacksquare$
+@end(proof)</code></pre>
+</div>
+
+<p>
+The optional bracket after the opener — <code>[Pythagoras]</code> — is
+the environment's name, rendered in parentheses after the number
+exactly as <code>amsthm</code> does: "Theorem&nbsp;1&nbsp;(Pythagoras)."
+The optional <code>{id=…}</code> attaches a cross-reference label, so
+<code>@cref[thm:pyth]</code> elsewhere produces "theorem&nbsp;1".
+</p>
+
+<p>The full set of kinds, and how each presents its body:</p>
+
+<ul>
+	<li><strong>theorem, lemma, corollary, proposition</strong> — the
+	classical "plain" style: the body is italicized.</li>
+	<li><strong>definition, example</strong> — definition style: an upright
+	body, since definitions read badly in italics.</li>
+	<li><strong>remark</strong> — remark style, also upright.</li>
+	<li><strong>proof</strong> — unnumbered, labelled "Proof.", closed with
+	a QED mark.</li>
+</ul>
+
+<h3 id="numbering">How numbering works</h3>
+
+<p>
+All seven numbered kinds share <strong>one sequential counter</strong>:
+if a theorem is followed by a lemma and then a definition, they are
+Theorem&nbsp;1, Lemma&nbsp;2, Definition&nbsp;3. This is a deliberate
+choice, and the classical one for mathematical writing — with per-kind
+counters, "does Lemma&nbsp;1 come before or after Theorem&nbsp;2?" is a
+puzzle a reader has to solve on every reference; with a shared counter,
+the numbers alone give the document order. A typed reference still
+names each kind correctly: <code>@cref</code> to a lemma says
+"lemma&nbsp;2", never "theorem&nbsp;2".
+</p>
+
+<p>
+The body of a theorem is ordinary jmarkdown, so wikilinks, citations,
+math, and even footnotes work inside it — the demo vault's Dialect
+Demo note puts an inline footnote inside a theorem to make the point.
+</p>
+
+<h2 id="mathjax">MathJax under the hood</h2>
+
+<p>
+Clew ships MathJax with the app and loads it from local files — there
+is no CDN request, and mathematics renders identically with no network
+connection at all. The configuration accepts the four delimiter pairs
+described above (<code>$…$</code>, <code>\(…\)</code>,
+<code>$$…$$</code>, <code>\[…\]</code>) with the AMS extension
+enabled, and output is SVG, so rendered math is crisp at any zoom.
+When you edit a note, the re-rendered preview patches in place and math
+is re-typeset without the page flashing back to raw TeX (see
+<a href="reading-mode.html">How rendering works</a>).
+</p>
+
+<h2 id="export">Math in export</h2>
+
+<p>
+Because the source is already LaTeX mathematics, export is not a
+translation. In HTML export the same MathJax pipeline runs; in LaTeX
+and PDF export the delimiters pass straight through to the real
+engine, <code>@begin(equation)</code> becomes an
+<code>amsmath</code> <code>equation</code> environment, and each
+theorem kind is declared with <code>amsthm</code>/<code>thmtools</code>
+sharing the theorem counter, with cleveref resolving the typed
+references. The numbers in your PDF match the numbers in your preview
+because both sides count the same blocks in the same order. See
+<a href="export.html">Exporting notes</a>.
+</p>
+
+<h2 id="advice">Practical advice</h2>
+
+<p>
+The <a href="dialect.html">jmarkdown dialect</a> and TeX use some of
+the same characters, and it pays to keep the boundary straight:
+</p>
+
+<ul>
+	<li><strong>In prose</strong>, the dialect gives you TeX-style
+	sub- and superscripts directly: <code>H_2O</code>, <code>x^2</code>,
+	<code>x^{10}</code> render as H<sub>2</sub>O, x<sup>2</sup>,
+	x<sup>10</sup> with no math mode required. Reach for <code>$…$</code>
+	when you need actual mathematics — symbols, operators, spacing —
+	rather than a lone sub- or superscript.</li>
+	<li><strong>Inside <code>$…$</code></strong>, you are in TeX, and the
+	dialect's remappings do not apply: <code>*</code>, <code>/</code>,
+	<code>_</code>, and <code>^</code> all mean what they mean in LaTeX.
+	Write <code>$x_1^2$</code> without a second thought.</li>
+	<li><strong>Inside code spans and fences</strong>, nothing is
+	interpreted at all — the place to show math source without rendering
+	it.</li>
+	<li>The body of <code>@begin(equation)</code> is taken verbatim, so
+	underscores, carets, and backslashes survive untouched; you never need
+	to escape for the Markdown layer inside it.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Because <code>_</code> and <code>^</code> are live in prose, an
+	unintended subscript is the most common dialect surprise: a variable
+	name like <code>my_var</code> in running text will render "var" as a
+	subscript. Put identifiers in code spans (<code>`my_var`</code>) —
+	which is better typography anyway — or switch the vault to standard
+	Markdown syntax if your notes are code-heavy
+	(see <a href="dialect.html">the dialect chapter</a>).
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Obsidian renders <code>$…$</code> and <code>$$…$$</code> with its own
+	MathJax, so plain inline and display math round-trips between the two
+	apps. The engine-level constructs — <code>@begin(equation)</code>,
+	the theorem environments, <code>@ref</code>/<code>@cref</code> — are
+	jmarkdown features: in Obsidian those lines appear as the literal text
+	you typed. Nothing breaks; the notes remain plain Markdown files.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Construct</th><th>Syntax</th><th>Notes</th></tr>
+	<tr><td>Inline math</td><td><code>$…$</code> or <code>\(…\)</code></td><td>TeX inside; unnumbered</td></tr>
+	<tr><td>Display math</td><td><code>$$…$$</code> or <code>\[…\]</code></td><td>Unnumbered display block</td></tr>
+	<tr><td>Bare AMS environment</td><td><code>\begin{align} … \end{align}</code></td><td>No wrapper needed; contents protected verbatim</td></tr>
+	<tr><td>Numbered equation</td><td><code>@begin(equation){#key} … @end(equation)</code></td><td>Engine-numbered; body is raw math</td></tr>
+	<tr><td>Theorem-like environment</td><td><code>@begin(theorem)[Name]{id=key} … @end(theorem)</code></td><td>Kinds: theorem, lemma, corollary, proposition, definition, example, remark</td></tr>
+	<tr><td>Proof</td><td><code>@begin(proof) … @end(proof)</code></td><td>Unnumbered; QED mark</td></tr>
+	<tr><td>Label</td><td><code>{#key}</code> or <code>{id=key}</code></td><td>Use <code>id=</code> when the key contains a colon</td></tr>
+	<tr><td>Reference (number)</td><td><code>@ref[key]</code></td><td>Hyperlinked number; <code>??</code> if unresolved</td></tr>
+	<tr><td>Typed reference</td><td><code>@cref[key]</code> / <code>@Cref[key]</code></td><td>"theorem 2" / "Theorem 2"; cleveref in LaTeX</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="reading-mode.html">How rendering works</a> — the render
+	pipeline that typesets all of this, and how it updates as you
+	type.</li>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — the prose-side
+	sub/superscripts and the standard-Markdown switch.</li>
+	<li><a href="citations.html">Citations and bibliographies</a> — the
+	other pillar of academic writing in Clew.</li>
+	<li><a href="export.html">Exporting notes</a> — the LaTeX and PDF side
+	of the same source.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

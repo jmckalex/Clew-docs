@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The editor — Clew Manual</title>
+<meta name="description" content="Clew's CodeMirror 6 editor: dialect-aware highlighting, completions for links, tags, and citations, formatting commands, auto-save, and how conflicts are handled.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Writing</p>
+<h1>The editor</h1>
+<p class="lead">
+Notes are written in <strong>source mode</strong>: a plain-text editor
+built on CodeMirror&nbsp;6 that understands the jmarkdown dialect —
+links, tags, citations, math, directives, and footnotes all get faces of
+their own. The editor saves for you, remembers your undo history even
+after you navigate away, and refuses to lose your work when the same
+file changes under it. One keystroke, <kbd>⌘E</kbd>, flips between the
+source and the typeset result.
+</p>
+
+<h2 id="modes">Source mode and reading mode</h2>
+
+<p>
+Every note tab is in one of two modes. <strong>Source mode</strong> shows
+the Markdown as you typed it; <strong>reading mode</strong> shows the
+same file rendered by the jmarkdown engine (the subject of
+<a href="reading-mode.html">its own chapter</a>). <kbd>⌘E</kbd> toggles
+between them, and each tab remembers its mode independently, so a
+reference note can sit rendered in one tab while you draft in another.
+A setting controls which mode newly opened notes start in.
+</p>
+
+<p>
+The two modes are designed to be used <em>together</em>. Split the
+window (<kbd>⌘\</kbd>) and open the same note on both sides — source on
+the left, reading on the right — and the rendered pane updates in place
+as you type: scroll position and typeset math survive, and only the
+blocks you changed are re-rendered. The two panes scroll in sync, in
+both directions, and reading mode opens at your cursor line. Going the
+other way, <kbd>⌘</kbd>-click any block in reading mode to jump the
+editor to that exact source line (inverse search).
+</p>
+
+<figure class="shot">
+	<img src="images/editor-split.png" alt="A Clew window split in two: jmarkdown source in one pane, the fully typeset reading mode of the same note in the other">
+	<figcaption>The Dialect Demo note (demo vault) in a split: source and
+	reading mode side by side. The rendered pane updates in place as you
+	type, and the two panes scroll in sync.</figcaption>
+</figure>
+
+<h2 id="highlighting">Dialect-aware highlighting</h2>
+
+<p>
+The editor does not treat your notes as generic Markdown. A dedicated
+overlay scans each document for the jmarkdown dialect — the same
+constructs the engine will render — and paints them over the standard
+Markdown grammar. What gets a face of its own:
+</p>
+
+<ul>
+	<li><strong>Inline dialect spans</strong> — <code>/italics/</code>,
+	<code>==highlights==</code>, inline and display math
+	(<code>$…$</code>, <code>$$…$$</code>), <code>\cite{…}</code>-family
+	citations with their keys picked out, and the footnote openers
+	<code>[fn:</code> and <code>[^label:</code>.</li>
+	<li><strong>Wikilinks and tags</strong> — <code>[[Target]]</code>,
+	<code>[[Target|alias]]</code>, <code>[[Target#Heading]]</code>, and
+	<code>![[…]]</code> embeds, with brackets, target, and alias each
+	styled; <code>#tags</code>, including nested ones like
+	<code>#project/clew</code>.</li>
+	<li><strong>Directives and environments</strong> —
+	<code>:::name … :::</code> container blocks (nesting by colon count),
+	<code>@begin(name) … @end(name)</code> environments, inline
+	<code>:name[content]{.class}</code> directives, and
+	<code>{{variables}}</code>. Bodies that are really another language —
+	the LaTeX inside <code>:::TiKZ</code> or <code>@begin(equation)</code>,
+	mermaid diagram source, <code>&lt;script&gt;</code> and
+	<code>&lt;style&gt;</code> blocks — are styled as embedded code rather
+	than mis-read as prose.</li>
+	<li><strong>Standard Markdown</strong> — headings, lists, quotes, code,
+	and the emphasis forms <code>*strong*</code>, <code>**intense**</code>,
+	and <code>__underline__</code> come from the base Markdown grammar,
+	restyled by the theme.</li>
+</ul>
+
+<p>
+The same scan feeds the fold gutter: <code>:::</code> directive blocks
+and <code>@begin(…)</code>/<code>@end(…)</code> environments fold away,
+which keeps a note full of large TikZ pictures or long proofs
+navigable. The scanner is careful about context — a wikilink inside a
+code fence, a <code>#word</code> inside a math span, or a slash in
+<code>/usr/bin</code> never lights up.
+</p>
+
+<figure class="shot">
+	<img src="images/editor-editing.png" alt="The Clew editor in source mode on the Dialect Demo note, with wikilinks, highlights, math, a citation, and a theorem environment each syntax-highlighted">
+	<figcaption>Source mode on the demo vault's Dialect Demo note: wikilinks,
+	tags, math, a citation, a footnote, and a theorem environment each carry
+	their own face.</figcaption>
+</figure>
+
+<h2 id="completions">Completions</h2>
+
+<p>
+Three completion sources run as you type. Each of them matches fuzzily —
+you can type fragments of the middle of a name — and each is fed live
+from the vault index, so new notes, tags, and references appear the
+moment they exist.
+</p>
+
+<h3>Wikilinks</h3>
+
+<p>
+Typing <code>[[</code> pops the full list of notes in the vault;
+continue typing to narrow it. The list includes every note name
+<em>and</em> every alias declared in a note's frontmatter — aliases are
+shown with an arrow to the path they resolve to. After a
+<code>#</code>, the completions switch to the headings of the target
+note, so <code>[[Math and Theorems#</code> offers that note's sections:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>See [[Math and Theorems#Dialect extras]] for the details.</code></pre>
+</div>
+
+<p>
+Names that do not resolve to anything can still be typed and linked —
+clicking such a link later creates the note
+(see <a href="links-and-embeds.html">Links and embeds</a>).
+</p>
+
+<h3>Tags</h3>
+
+<p>
+Typing <code>#</code> at the start of a word offers every tag in the
+vault, with a count of how many notes carry each one. Nested tags such
+as <code>#project/clew</code> are offered whole.
+</p>
+
+<h3>Citations</h3>
+
+<p>
+Inside the braces of any <code>\cite</code>-family command —
+<code>\cite{</code>, <code>\citep{</code>, <code>\citet{</code>,
+<code>\fullcite{</code>, <code>\citeauthor{</code>, starred variants,
+with or without the optional <code>[pre][post]</code> arguments — the
+editor completes citation keys drawn from every <code>.bib</code> file
+in the vault. Each candidate shows its author, year, and title, and the
+fuzzy match runs over all three, so typing an author's name finds the
+key. When a command holds several comma-separated keys, completion
+applies to the segment after the last comma.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>The argument goes back to \cite{alexander2023}, though see
+also \citep[cf.][ch. 2]{skyrms1996}.</code></pre>
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Keep a <code>refs.bib</code> anywhere in the vault — the demo vault
+	keeps one in <code>Features/</code> — and citation completion works
+	vault-wide with no configuration. The entries are cached and refresh
+	whenever the vault's file tree changes. See
+	<a href="citations.html">Citations and bibliographies</a> for how the
+	rendered output works.
+</div>
+
+<h2 id="formatting">Formatting commands and the Format menu</h2>
+
+<p>
+The <strong>Format</strong> menu is a map of the whole jmarkdown
+dialect: every label shows the exact syntax it produces, so the menu
+doubles as a discovery tool for the
+<a href="dialect.html">dialect chapter</a>'s contents. It covers the
+inline styles (strong, intense, italic, underline, highlight,
+strikethrough, subscript, superscript, code, math), headings, lists and
+quotes, the alignment forms (<code>&gt;&gt; text &lt;&lt;</code> centers,
+<code>&gt;&gt; text</code> right-aligns), GitHub-style alerts, table
+insertion, footnotes, citations, labels and references, and every block
+container from <code>:::mermaid</code> and <code>:::TiKZ</code> to
+<code>:::TeX</code>, <code>:::game</code>, and <code>:::comment</code>.
+</p>
+
+<p>
+The commands behave the way you would hope:
+</p>
+
+<ul>
+	<li><strong>Inline styles toggle.</strong> Apply strong to text that is
+	already strong and the markers are removed. The same goes for the list
+	and quote commands — and applying the task-list command to a bullet
+	list converts it directly into a task list.</li>
+	<li><strong>Containers wrap the selection.</strong> Select three
+	paragraphs and insert a <code>:::comment</code> block, and the fence
+	goes around them; with nothing selected you get the fence with a
+	placeholder ready to type over.</li>
+	<li><strong>Insert wikilink</strong> (<kbd>⌘K</kbd>) wraps the
+	selection in <code>[[…]]</code> — or, with nothing selected, inserts
+	empty brackets and pops the note-name completion. The citation command
+	does the same with <code>\cite{}</code> and the key completion.</li>
+	<li><strong>Every item is a command.</strong> All of it is in the
+	command palette (<kbd>⌘P</kbd>), and any item can be given a hotkey of
+	your own in the <a href="settings-and-hotkeys.html">hotkey
+	editor</a> — out of the box, only Insert wikilink (<kbd>⌘K</kbd>) and
+	Insert template (<kbd>⌘⌥T</kbd>) carry default bindings.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The formatting commands always emit <em>dialect</em> syntax —
+	<code>*strong*</code>, <code>/italic/</code>, <code>~strike~</code> —
+	and the editor's highlighting likewise assumes the dialect, even in a
+	vault where the per-vault <strong>Standard Markdown syntax</strong>
+	switch is on. In such a vault, prefer typing standard emphasis by hand;
+	the switch changes how notes render, not (yet) how the editor writes.
+	See <a href="dialect.html#normal-syntax">the dialect chapter</a>.
+</div>
+
+<h2 id="autosave">Auto-save: disk is the source of truth</h2>
+
+<p>
+There is no unsaved-document lifecycle to manage. About one second
+after you stop typing, the note is written to disk; switching tabs,
+clicking away from the editor, or closing a tab writes it immediately.
+<kbd>⌘S</kbd> exists for the reflex, and forces the pending save right
+now.
+</p>
+
+<p>
+Auto-save is not just a convenience — it is how rendering works. The
+jmarkdown engine renders the file <em>on disk</em>, so the saved file is
+always the source of truth: what reading mode shows, what
+<a href="export.html">exports</a> produce, and what other apps see is
+exactly what has been saved, never an in-memory draft that exists only
+inside Clew.
+</p>
+
+<h2 id="undo">Undo history survives navigation</h2>
+
+<p>
+Leaving a note does not discard its editing state. The editor banks the
+full CodeMirror state — undo history, cursor, selection — per note
+path, for the last 25 notes you have touched. Follow a link away, read
+three other notes, come back, and <kbd>⌘Z</kbd> still unwinds your
+earlier edits.
+</p>
+
+<p>
+There is one deliberate exception: the banked state is reused only when
+the file on disk still matches what that state holds. If the note was
+changed elsewhere in the meantime — another app, a git pull, a sync —
+the stale history is discarded and the editor starts fresh from the
+disk content, so undo can never resurrect a version that conflicts with
+what the file has since become.
+</p>
+
+<h2 id="conflicts">External changes and conflicts</h2>
+
+<p>
+Clew watches the vault, so files edited by other programs — Obsidian,
+a sync client, a script — flow back in. What happens depends on
+whether you have unsaved edits of your own:
+</p>
+
+<ul>
+	<li><strong>Your editor is clean:</strong> the note reloads in place,
+	silently, keeping your cursor position where possible.</li>
+	<li><strong>You have unsaved edits:</strong> a banner appears —
+	<em>"This file changed on disk while you have unsaved edits. Auto-save
+	is paused."</em> — and auto-save stays paused so your typing cannot
+	clobber the on-disk version behind your back. The banner offers two
+	buttons: <strong>Keep my version</strong> writes your editor's content
+	over the disk version, and <strong>Load disk version</strong> discards
+	your local edits and loads what is on disk. Nothing is overwritten
+	until you choose.</li>
+</ul>
+
+<p>
+Clew recognizes echoes of its own saves, so the watcher seeing a file
+change that Clew itself just wrote never triggers the banner.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	This is what makes it safe to keep the same vault open in Clew and
+	Obsidian at the same time. Edits made in Obsidian appear in Clew's
+	editor as external changes — reloaded silently when your editor is
+	clean, and guarded by the conflict banner when it is not.
+</div>
+
+<h2 id="attachments">Attachments by paste and drag</h2>
+
+<p>
+Paste an image from the clipboard, or drop any file onto the editor,
+and Clew saves it into the vault's attachment folder (Settings →
+Files, default <code>Attachments/</code>) and inserts an embed at the
+cursor. The full story — viewer tabs, embed syntax, supported media —
+is in <a href="attachments-and-files.html">Attachments and files</a>
+and <a href="links-and-embeds.html">Links and embeds</a>.
+</p>
+
+<h2 id="long-notes">Working with long notes</h2>
+
+<p>
+A few features earn their keep as notes grow:
+</p>
+
+<ul>
+	<li><kbd>⌘F</kbd> opens find-and-replace within the note;
+	<kbd>⌘⇧F</kbd> searches the whole vault instead.</li>
+	<li>The <strong>Outline</strong> panel in the right sidebar shows the
+	note's heading tree — click to jump
+	(see <a href="panels.html">Panels</a>).</li>
+	<li>The fold gutter collapses directive blocks and
+	<code>@begin/@end</code> environments, so a note interleaving prose
+	with long diagram or LaTeX bodies reads as prose.</li>
+	<li>Editor font size and line width are adjustable in
+	<a href="settings-and-hotkeys.html">Settings</a>.</li>
+</ul>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	On very large documents — past roughly 500,000 characters — the
+	dialect overlay degrades gracefully: it scans only the visible region
+	rather than the whole file on every keystroke, and dialect folding
+	turns off. Standard Markdown highlighting continues throughout. A
+	construct that opens far above the visible window can occasionally be
+	mis-styled at the window's edge; the file itself renders correctly
+	regardless.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>Default hotkeys relevant to editing (all rebindable in the
+<a href="settings-and-hotkeys.html">hotkey editor</a>; on Windows and
+Linux read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as
+<kbd>Alt</kbd>):</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode</td></tr>
+	<tr><td><kbd>⌘S</kbd></td><td>Save note now (auto-save runs regardless)</td></tr>
+	<tr><td><kbd>⌘F</kbd></td><td>Find in note</td></tr>
+	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
+	<tr><td><kbd>⌘K</kbd></td><td>Insert wikilink (pops note-name completion)</td></tr>
+	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template</td></tr>
+	<tr><td><kbd>⌘N</kbd></td><td>Create new note</td></tr>
+	<tr><td><kbd>⌘O</kbd></td><td>Quick switcher</td></tr>
+	<tr><td><kbd>⌘P</kbd></td><td>Command palette (every Format item lives here too)</td></tr>
+</table>
+</div>
+
+<p>Completion triggers:</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You type</th><th>Completes</th><th>Drawn from</th></tr>
+	<tr><td><code>[[</code></td><td>Note names and aliases</td>
+		<td>The vault index (aliases from frontmatter)</td></tr>
+	<tr><td><code>[[Note#</code></td><td>Headings of that note</td>
+		<td>The vault index</td></tr>
+	<tr><td><code>#</code></td><td>Tags, nested included, with note counts</td>
+		<td>The vault index</td></tr>
+	<tr><td><code>\cite{</code> (any <code>\cite</code>-family command)</td>
+		<td>Citation keys, showing author, year, title</td>
+		<td>Every <code>.bib</code> file in the vault</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="dialect.html">The jmarkdown dialect</a> — every inline
+	form the Format menu produces, and the Standard Markdown switch.</li>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — what
+	wikilinks resolve to and what clicking them does.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — the other
+	half of <kbd>⌘E</kbd>.</li>
+	<li><a href="attachments-and-files.html">Attachments and files</a> —
+	where pasted and dropped files go.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> —
+	rebinding, editor font size and line width, new-tab mode.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

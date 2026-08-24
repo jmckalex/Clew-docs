@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publishing as a website — Clew Manual</title>
+<meta name="description" content="File → Export → Vault as Website compiles the whole vault to a static site any web host can serve — wikilinks become real links, maps stay interactive, dashboards bake to snapshots.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Sharing your work</p>
+<h1>Publishing as a website</h1>
+<p class="lead">
+<strong>File&nbsp;→&nbsp;Export&nbsp;→&nbsp;Vault as Website…</strong>
+compiles an entire vault into a folder of static web pages: every note
+becomes an <code>.html</code> page, wikilinks turn into real relative
+links, attachments copy over in place, and a single
+<code>assets/</code> folder carries everything the pages need. The
+result works on any web host — or straight from disk — with no server
+code, no build step, and no subscription. It is, in short, Obsidian
+Publish as a menu item.
+</p>
+
+<h2 id="running">Running an export</h2>
+
+<p>
+Choose <strong>File&nbsp;→&nbsp;Export&nbsp;→&nbsp;Vault as
+Website…</strong> (or the palette command <em>Export vault as
+website…</em>). Clew asks you to pick a destination folder; the site is
+written into a subfolder of it named after the vault with a
+<code>-site</code> suffix — exporting a vault called
+<code>research</code> into <code>~/Sites</code> produces
+<code>~/Sites/research-site/</code>. A notice appears while the export
+runs, and when it finishes another gives the page count, the output
+path, and the number of pages that failed to build, if any.
+</p>
+
+<p>
+Every Markdown note in the vault (<code>.md</code> and
+<code>.jmd</code>) is rendered through the same jmarkdown engine that
+powers reading mode, with the vault's own render settings applied — so
+what you see in the app is what the site shows. The vault's folder
+structure is preserved: <code>Guide/Maps.md</code> becomes
+<code>Guide/Maps.html</code>. Hidden folders and app internals
+(<code>.clew/</code>, <code>.obsidian/</code>, <code>.git/</code>, and
+so on) are skipped. Everything that is not a note — images, PDFs,
+audio, video, arbitrary attachments — is copied to the same relative
+location, so nothing a page references goes missing.
+</p>
+
+<p>
+The export is fast in a way worth a sentence: each page builds in a
+fresh engine process, but the next process warms up while the current
+page renders, so a vault of dozens of notes pays the engine's start-up
+cost roughly once, not once per note. A page that fails to render does
+not stop the run; it is recorded and reported at the end, and the rest
+of the site still builds. As a benchmark, the demo vault that ships with
+Clew exports to roughly forty pages with zero failures.
+</p>
+
+<h2 id="what-translates">How each piece translates</h2>
+
+<p>
+The interesting question about a static export is always what survives
+the trip. The answer here is: nearly everything you can <em>read</em>,
+and deliberately nothing you could <em>write</em>.
+</p>
+
+<h3>Links become real links</h3>
+<p>
+Inline <code>[[wikilinks]]</code> are rewritten as genuine relative
+<code>&lt;a href&gt;</code> links to the corresponding pages, correct
+for each page's depth in the folder tree — a link from
+<code>Guide/Maps.html</code> up to <code>Welcome.html</code> comes out
+as <code>../Welcome.html</code>. Heading links
+(<code>[[Note#Section]]</code>) carry their anchors along. A wikilink
+whose target does not exist in the vault is rendered as inert styled
+text rather than a broken link. Note embeds (<code>![[Note]]</code>)
+are expanded in place as they are in reading mode, and media embeds
+point at the copied attachments.
+</p>
+
+<h3>Rendering survives wholesale</h3>
+<p>
+Mathematics, theorem environments, citations and bibliographies,
+footnotes, alerts, mermaid diagrams, media embeds with their sizes —
+all of it renders on the exported pages exactly as in reading mode,
+because it is the same engine doing the rendering. The
+<code>assets/</code> folder ships local copies of the runtime pieces
+(MathJax, mermaid, highlighting styles, Font Awesome, jQuery, Leaflet,
+and the preview stylesheet), so the pages do not depend on a CDN.
+</p>
+
+<h3>Maps stay interactive</h3>
+<p>
+<a href="maps.html">Leaflet maps</a> — including photo maps — keep
+their pins, popups, panning, and zooming. A small static runtime script
+on every page initialises them against the exported assets. Map
+<em>tiles</em> still come from the tile server the map uses, as they do
+in the app.
+</p>
+
+<h3>Queries bake to snapshots</h3>
+<p>
+<a href="queries.html">Query tables</a>, task lists, and kanban boards
+are rendered with the data the vault held at export time, then frozen.
+A published dashboard is a snapshot of the vault the moment you
+exported — which is exactly what a website should be. What does not
+carry over is the writing-back: cells are not editable, checkboxes do
+not toggle, cards do not drag, because the site has no vault to write
+to.
+</p>
+
+<h3>Vault scripts ship with the site</h3>
+<p>
+The vault's shared JavaScript — <code>.clew/scripts/*.js</code>, the
+<a href="plugins.html">vault scripts</a> mechanism — is copied into
+<code>assets/vault-scripts/</code> and loaded on every page, in the
+same alphabetical order as in the app. Custom elements defined there
+render their content on the published site just as they do in reading
+mode. Inline scripts written into notes also ship as part of their
+pages; see the caution below for what they can and cannot do once
+published.
+</p>
+
+<h2 id="what-doesnt">What deliberately does not carry over</h2>
+
+<p>
+A static site is a collection of documents, and the export is honest
+about that:
+</p>
+
+<ul>
+	<li><strong>Anything that writes.</strong> Editable query cells,
+	kanban drags, task toggles — every write-back path in the app depends
+	on a running Clew with a vault to rewrite. On the site, those views
+	are static.</li>
+	<li><strong>The Note API.</strong> Published pages have no
+	<code>window.clew</code>. Note scripts written the recommended way —
+	beginning with a <code>if (!window.clew) return;</code> guard —
+	degrade gracefully into static content (see
+	<a href="note-api.html">The Note API</a>).</li>
+	<li><strong>Canvas embeds.</strong> A <code>![[board.canvas]]</code>
+	embed appears as a labelled placeholder box, not a live scene — the
+	canvas renderer is part of the app, not of the export runtime.</li>
+	<li><strong>Plugins.</strong> Preview-surface plugin scripts are an
+	app feature and are not injected into exported pages. (Engine-surface
+	plugins, by contrast, <em>do</em> take effect, since the pages are
+	rendered by the same configured engine — any custom syntax they add
+	renders into the exported HTML.)</li>
+	<li><strong>Editing, search, backlink panels, the graph</strong> —
+	the app around the notes, in general.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — the export does not prune</span>
+	Exporting writes pages into the destination folder but never deletes
+	from it. If you re-export after renaming or removing notes, pages for
+	the old names remain from the previous run. For a site you publish
+	repeatedly, either delete the site folder before re-exporting or
+	export to a fresh folder each time and swap it into place.
+</div>
+
+<h2 id="home-page">The home page</h2>
+
+<p>
+Alongside the per-note pages, the export creates an
+<code>index.html</code> so the site has a front door. It is a copy of
+the first of these notes found at the vault root:
+<code>Welcome.md</code>, <code>Start Here.md</code>, <code>Home.md</code>,
+or <code>index.md</code> — and failing all four, the first note the
+export encountered, provided it sits at the root. If nothing qualifies,
+no <code>index.html</code> is produced; give the vault a root-level
+<code>Welcome.md</code> (a good idea anyway — see
+<a href="vaults-and-files.html">Vaults and files</a>) and it becomes the
+landing page.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip — design the Welcome note as your front page</span>
+	Since the home note doubles as the site's landing page, it pays to
+	make it a hub: a short introduction and a handful of wikilinks into
+	the vault's main areas. The demo vault's Welcome note is built exactly
+	this way, and the exported demo site inherits its structure for
+	free.
+</div>
+
+<h2 id="hosting">Hosting the result</h2>
+
+<p>
+The output folder is self-contained static HTML: any web host that can
+serve files can serve it. Copy it to GitHub Pages, Netlify, an
+S3 bucket, the <code>public_html</code> of a university account, or a
+Raspberry Pi running nginx — there is no server component, no
+database, and no build pipeline to install. The pages also open
+directly from disk, so double-clicking <code>index.html</code> is a
+perfectly good way to check the export before uploading it.
+</p>
+
+<p>
+Re-exporting after you change the vault is the whole publishing
+workflow: run the menu item again and upload the folder. Because the
+site is a pure function of the vault, there is no separate content
+management step — the vault is the CMS.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	This feature occupies the same niche as Obsidian Publish, but as a
+	local export rather than a hosted service: no subscription, no
+	account, and the output is a folder you control. A vault shared
+	between the two apps publishes from Clew with all of Clew's rendering
+	(mathematics, citations, maps, query snapshots) applied.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Vault content</th><th>On the published site</th></tr>
+	<tr><td>Note (<code>.md</code>, <code>.jmd</code>)</td>
+		<td>An <code>.html</code> page at the same relative path.</td></tr>
+	<tr><td><code>[[Wikilink]]</code> / <code>[[Note#Heading]]</code></td>
+		<td>A real relative link, depth-correct, with the heading anchor;
+		unresolved targets become inert styled text.</td></tr>
+	<tr><td>Note and media embeds</td>
+		<td>Expanded in place / pointing at the copied files.</td></tr>
+	<tr><td>Math, theorems, citations, footnotes, alerts</td>
+		<td>Rendered as in reading mode, from local assets.</td></tr>
+	<tr><td>Mermaid diagrams</td>
+		<td>Rendered on page load by the shipped mermaid runtime.</td></tr>
+	<tr><td>Leaflet and photo maps</td>
+		<td>Fully interactive; pins and popups preserved.</td></tr>
+	<tr><td>Query / tasks / kanban blocks</td>
+		<td>Baked to a read-only snapshot of export-time results.</td></tr>
+	<tr><td>Attachments and other files</td>
+		<td>Copied unchanged, structure preserved.</td></tr>
+	<tr><td>Vault scripts (<code>.clew/scripts/*.js</code>)</td>
+		<td>Shipped in <code>assets/vault-scripts/</code> and loaded on
+		every page, alphabetically.</td></tr>
+	<tr><td>Note scripts using the Note API</td>
+		<td>Ship with their pages but find no <code>window.clew</code>;
+		well-written ones degrade to static content.</td></tr>
+	<tr><td>Canvas embeds</td>
+		<td>A labelled placeholder box.</td></tr>
+	<tr><td>Preview-surface plugins</td>
+		<td>Not included.</td></tr>
+	<tr><td><code>.clew/</code>, <code>.obsidian/</code>, <code>.git/</code>, dotfiles</td>
+		<td>Skipped entirely.</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Output</th><th>Detail</th></tr>
+	<tr><td>Destination</td><td>A <code>&lt;vault-name&gt;-site/</code>
+		subfolder of the folder you pick in the dialog.</td></tr>
+	<tr><td><code>index.html</code></td><td>Copy of the first found root
+		note among <code>Welcome.md</code>, <code>Start Here.md</code>,
+		<code>Home.md</code>, <code>index.md</code>, else the first note
+		found if it sits at the root.</td></tr>
+	<tr><td><code>assets/</code></td><td>MathJax, mermaid, highlight
+		styles, Font Awesome, jQuery, Leaflet (with images), the preview
+		stylesheet, the static runtime, and vault scripts.</td></tr>
+	<tr><td>Server requirements</td><td>None — static files only; the site
+		also opens directly from disk.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="export.html">Exporting notes</a> — single-note HTML,
+	LaTeX, and PDF export, which uses a different pipeline on purpose.</li>
+	<li><a href="queries.html">Queries</a> and
+	<a href="tasks-and-kanban.html">Tasks and kanban</a> — the live views
+	that bake to snapshots.</li>
+	<li><a href="maps.html">Interactive maps</a> — which stay interactive
+	on the site.</li>
+	<li><a href="note-api.html">The Note API</a> — writing note scripts
+	that degrade gracefully when published.</li>
+	<li><a href="plugins.html">Vault plugins</a> — including the vault
+	scripts that ship with the site.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

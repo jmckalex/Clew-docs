@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tasks and kanban — Clew Manual</title>
+<meta name="description" content="The tasks fence that gathers every checkbox in the vault, the kanban fence that turns a frontmatter field into a board, and how both write back to the source notes.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">The vault as a database</p>
+<h1>Tasks and kanban</h1>
+<p class="lead">
+Two more fences complete Clew's database views.
+<code>tasks</code> gathers every checkbox in the vault — or a filtered
+slice of them — into one list, and ticking a gathered task writes the
+<code>[x]</code> back into the note it came from.
+<code>kanban</code> projects notes onto a board whose columns are the
+values of one frontmatter field, and dragging a card to another column
+rewrites that note's field. Like <a href="queries.html">queries</a>,
+both are views over the plain files: the vault stays the only source of
+truth, and every view follows every edit.
+</p>
+
+<h2 id="checkboxes">Where tasks come from</h2>
+
+<p>
+A task is an ordinary Markdown checkbox item — a list bullet
+(<code>-</code>, <code>*</code>, or <code>+</code>) followed by
+<code>[ ]</code> for open or <code>[x]</code> for done (a capital
+<code>X</code> also counts as done):
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>- [ ] Renew library carrel for the year
+- [ ] Book train for the Bristol workshop
+- [x] Send Synthese the conflict-of-interest form</code></pre>
+</div>
+
+<p>
+Indented (nested) items count too, and checkboxes inside fenced code
+blocks are ignored — an example of the syntax never becomes a real
+task. Tasks live wherever they are natural: the
+<code>study-vault</code> keeps errands in an Errands note and the
+per-paper to-dos inside the papers themselves, and lets the fence below
+do the gathering.
+</p>
+
+<p>
+In <a href="reading-mode.html">reading mode</a>, a note's own
+checkboxes are live: click one and Clew flips the <code>[ ]</code> to
+<code>[x]</code> (or back) on that source line. When the note is open
+in an editor, the toggle is applied through the editor — so it is
+undoable and auto-saved — and otherwise it is written straight to
+disk.
+</p>
+
+<h2 id="tasks-fence">The <code>tasks</code> fence</h2>
+
+<p>
+A <code>tasks</code> fence scans the vault's notes and renders their
+checkbox items as one aggregated view, grouped under a link to each
+source note. The fence body takes a status word plus filters:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```tasks
+not done
+limit: 12
+```</code></pre>
+</div>
+
+<div class="rendered">
+	<p class="rendered-label">Reading mode shows</p>
+	<p><a>Errands</a></p>
+	<ul>
+		<li><input type="checkbox" disabled> Renew library carrel for the year</li>
+		<li><input type="checkbox" disabled> Book train for the Bristol workshop</li>
+		<li><input type="checkbox" disabled> Fix the bibliography style in the book template</li>
+	</ul>
+	<p><a>Signals and Society</a></p>
+	<ul>
+		<li><input type="checkbox" disabled> Rewrite §2 with the simpler model</li>
+		<li><input type="checkbox" disabled> Ask R. about the replicator-dynamics figure</li>
+	</ul>
+	<p><a>The Craft of Notation</a></p>
+	<ul>
+		<li><input type="checkbox" disabled> Shorten §1 by a third</li>
+		<li><input type="checkbox" disabled> Expand appendix A with the mixed-strategy case</li>
+	</ul>
+</div>
+
+<p>
+That is the <code>study-vault</code> Dashboard's “everything still to
+do” block: three errands, and the open items from two papers, gathered
+from three different files. The options, all of them:
+</p>
+
+<dl>
+	<dt><code>not done</code> · <code>todo</code> · <code>done</code> · <code>all</code></dt>
+	<dd>A bare word on its own line selects which tasks to show:
+	<code>not done</code> (or its synonym <code>todo</code>) shows open
+	items and is the default, <code>done</code> shows completed items,
+	<code>all</code> shows both.</dd>
+
+	<dt><code>from: Folder</code></dt>
+	<dd>Gather only from notes in this folder and its subfolders — the
+	same semantics as a query's <code>from:</code>.</dd>
+
+	<dt><code>tag: #name</code></dt>
+	<dd>Gather only from notes whose <code>tags</code> frontmatter
+	property contains the tag (<code>#</code> optional,
+	case-insensitive). As with queries, body hashtags do not count
+	here.</dd>
+
+	<dt><code>group: note</code> · <code>group: none</code></dt>
+	<dd>By default (<code>note</code>) tasks appear under a linked
+	heading for each source note. <code>group: none</code> drops the
+	headings for one flat checklist.</dd>
+
+	<dt><code>limit: n</code></dt>
+	<dd>Cap the total number of items shown across the whole view.</dd>
+</dl>
+
+<p>
+Notes appear in alphabetical order by name, tasks in the order they
+occur within each note. A fence that gathers nothing renders <em>“No
+matching tasks.”</em>
+</p>
+
+<h2 id="tasks-write-back">Ticking a gathered task</h2>
+
+<p>
+The checkboxes in a <code>tasks</code> view are live, and — this is the
+point — each one knows the note and line it came from. Tick a box on
+the Dashboard and Clew rewrites the <code>[ ]</code> in the
+<em>source</em> note: the box in Errands flips because the file
+<code>Errands.md</code> now says <code>[x]</code>. As with in-note
+checkboxes, the write goes through an open editor when there is one
+(undoable, auto-saved) and straight to disk otherwise; Clew even
+tolerates the task having drifted a line up or down since the view was
+rendered. Because every open query view re-renders on any file change,
+the ticked task then vanishes from every “not done” list at once.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Keep tasks next to the work they belong to — inside the paper, the
+	project note, the meeting note — and build one <code>tasks</code>
+	fence in a daily-note template or dashboard as the master list.
+	You get the single inbox without ever moving a task out of its
+	context, and ticking it in either place updates both.
+</div>
+
+<h2 id="kanban">The <code>kanban</code> fence</h2>
+
+<p>
+Where a query is notes-as-rows, a kanban is notes-as-cards. The board
+groups notes into columns by the value of one frontmatter field — by
+default <code>status</code> — with one card per note. The
+<code>study-vault</code> Pipeline note drives its whole papers workflow
+from this fence:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```kanban
+group: status
+from: Papers
+columns: drafting, submitted, revise, accepted
+show: venue, due
+```</code></pre>
+</div>
+
+<figure class="shot">
+	<img src="images/kanban-board.png" alt="A kanban board of papers grouped by status, each card showing the paper's venue and due date, with column headers carrying card counts; the fourth column continues past the right edge of the note column">
+	<figcaption>The Pipeline board from <code>study-vault</code>: columns
+	are the values of the <code>status</code> field, cards are the notes
+	in <code>Papers/</code>, and each card shows its
+	<code>venue</code> and <code>due</code> metadata. The fourth column
+	continues past the edge of the note column — a wide board scrolls
+	horizontally.</figcaption>
+</figure>
+
+<p>
+The options, all of them:
+</p>
+
+<dl>
+	<dt><code>group: field</code></dt>
+	<dd>The frontmatter field whose values become the columns. Defaults
+	to <code>status</code>.</dd>
+
+	<dt><code>from: Folder</code> and <code>tag: #name</code></dt>
+	<dd>Which notes become cards — the same filters as queries and
+	tasks. With no filter, every note in the vault is a card, which is
+	rarely what you want.</dd>
+
+	<dt><code>columns: a, b, c</code></dt>
+	<dd>An explicit column list. This fixes the columns and their order —
+	<code>drafting, submitted, revise, accepted</code> reads
+	left-to-right as a pipeline — and makes the board exclusive: notes
+	whose field value is not one of the listed columns are not shown.
+	Without <code>columns:</code>, the board grows one column per
+	distinct value, ordered alphabetically, plus a “—” column for notes
+	where the field is missing or empty. A board wider than the note
+	column does not wrap — it scrolls horizontally, so trailing columns
+	sit just past the edge of the pane.</dd>
+
+	<dt><code>show: f1, f2, …</code></dt>
+	<dd>Fields to display on each card beneath its title, as
+	<code>field: value</code> pairs joined with a “·” separator. Fields a
+	note does not have are omitted from its card. The built-ins
+	(<code>name</code>, <code>path</code>, <code>modified</code>) are
+	allowed here too.</dd>
+</dl>
+
+<p>
+Each column header carries a count of its cards; within a column, cards
+are ordered alphabetically by note name. Double-click a card to open
+its note in a new tab — a single click begins a drag.
+</p>
+
+<h2 id="kanban-write-back">Dragging a card writes the field</h2>
+
+<p>
+Drag a card into another column and drop it. Clew rewrites the
+<code>group</code> field in that note's frontmatter to the new column's
+value: move <em>Signals and Society</em> from <em>drafting</em> to
+<em>submitted</em> and the file now reads <code>status:
+submitted</code>. If the note did not have the field, the drop creates
+it. The card moves immediately, and the live re-render then confirms
+the board from the file itself.
+</p>
+
+<p>
+Because the board wrote an ordinary frontmatter value, every other view
+reading that field follows on the next render: the Dashboard's
+papers-by-status groups reshuffle, a <code>where: status =
+drafting</code> table loses the row, the properties panel on that note
+shows the new value. Nothing synchronised these views — they all read
+the same file.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Kanban drops (like editable query cells) respect the
+	<a href="properties.html#subset">frontmatter safety valve</a>: if a
+	note's frontmatter uses YAML beyond Clew's editable subset, the drop
+	is refused with a notice rather than risking the block, and the card
+	snaps back on the next render. Flatten that note's frontmatter and
+	the card becomes draggable like any other.
+</div>
+
+<h2 id="canvas">Boards and task lists on the canvas</h2>
+
+<p>
+Note embeds on the <a href="canvas.html">canvas</a> are live previews,
+so a note holding a kanban or tasks fence works there too — the
+<code>study-vault</code> ships <code>Pipeline Board.canvas</code>, where
+the papers board sits alongside the papers themselves. Drags, ticks,
+and cell edits inside canvas embeds route back to the source notes
+exactly as they do in reading mode, and the embedded views re-render as
+the vault changes.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Open the same vault in Obsidian and the fences show as fenced code
+	blocks — the board and the gathered list are Clew renderings, not
+	file formats. Everything they operate on, though, is standard:
+	<code>- [ ]</code> checkboxes are ordinary Markdown tasks Obsidian
+	renders and can tick, and <code>status: submitted</code> is plain
+	frontmatter Obsidian's own property editor can change. Move a card in
+	Clew, and Obsidian sees a normal frontmatter edit; tick a task in
+	Obsidian, and Clew's next render gathers it as done.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th><code>tasks</code> option</th><th>Meaning</th></tr>
+	<tr><td><code>not done</code> / <code>todo</code></td><td>Show open tasks only (the default).</td></tr>
+	<tr><td><code>done</code></td><td>Show completed tasks only.</td></tr>
+	<tr><td><code>all</code></td><td>Show every task.</td></tr>
+	<tr><td><code>from: Folder</code></td><td>Gather from this folder and its subfolders.</td></tr>
+	<tr><td><code>tag: #name</code></td><td>Gather from notes whose <code>tags</code> property contains the tag.</td></tr>
+	<tr><td><code>group: note</code></td><td>Group tasks under a link to their source note (the default).</td></tr>
+	<tr><td><code>group: none</code></td><td>One flat list, no per-note headings.</td></tr>
+	<tr><td><code>limit: n</code></td><td>Show at most <em>n</em> tasks in total.</td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th><code>kanban</code> option</th><th>Meaning</th></tr>
+	<tr><td><code>group: field</code></td><td>The frontmatter field that defines the columns (default <code>status</code>).</td></tr>
+	<tr><td><code>from: Folder</code></td><td>Cards come from this folder and its subfolders.</td></tr>
+	<tr><td><code>tag: #name</code></td><td>Cards come from notes whose <code>tags</code> property contains the tag.</td></tr>
+	<tr><td><code>columns: a, b, c</code></td><td>Fix the columns and their order; notes with other values are hidden. Omit for one column per value plus “—”.</td></tr>
+	<tr><td><code>show: f1, f2</code></td><td>Fields displayed on each card beneath the title.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="queries.html">Queries</a> — the table and list views
+	over the same data, and the full filter semantics
+	<code>from:</code>/<code>tag:</code> share.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the
+	frontmatter the boards rewrite, and the safety valve that protects
+	it.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — reading
+	mode, where checkboxes in a note's own body are toggled.</li>
+	<li><a href="canvas.html">The canvas</a> — live note embeds, boards
+	included.</li>
+	<li><a href="daily-notes.html">Daily notes and the diary</a> — a
+	natural home for a personal <code>tasks</code> view.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive maps — Clew Manual</title>
+<meta name="description" content="Live Leaflet maps in reading mode: markers, note-driven pins, GeoJSON regions, GPX tracks, image-based maps, and photo maps built from EXIF GPS data.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Reading mode</p>
+<h1>Interactive maps</h1>
+<p class="lead">
+A <code>```leaflet</code> fence turns into a live, pannable map when the
+note renders: real cartography, clickable markers, regions, tracks, and
+photo pins. Clew builds most of the Obsidian Leaflet plugin's surface
+directly into the app — no plugin to install — and adds a few things of
+its own, most notably photo maps that pin every geotagged photo in a
+folder. Because a map is just a code fence, it lives in the note like
+any other text: it travels with the vault, diffs cleanly in git, and
+survives every other editor untouched.
+</p>
+
+<h2 id="first-map">A first map</h2>
+
+<p>
+A map is a fenced code block whose language is <code>leaflet</code>.
+Inside the fence, one option per line, in <code>key: value</code> form.
+The essentials are a centre (<code>lat</code> and <code>long</code>), a
+<code>zoom</code> level, and optionally a <code>height</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+lat: 51.5074
+long: -0.1278
+zoom: 13
+height: 380
+marker: 51.5007, -0.1246, Westminster
+marker: 51.5194, -0.1270, The British Museum
+marker: 51.5145, -0.1163, [[Welcome|The LSE]]
+```</code></pre>
+</div>
+
+<p>
+Switch the note to reading mode and the fence becomes a map of central
+London with three pins. Pan by dragging, zoom with the scroll wheel or
+the <kbd>+</kbd>/<kbd>−</kbd> control, and click a pin to open its
+popup. A marker line is <code>marker: lat, long</code> followed by an
+optional third field: plain text becomes a popup label, and a
+<code>[[wikilink]]</code> becomes a popup <em>link</em> that opens the
+note when clicked (<kbd>⌘</kbd>-click opens it in a new tab). The
+<code>[[Note|display text]]</code> form works exactly as it does in
+prose, so the popup can say something friendlier than the file name.
+</p>
+
+<figure class="shot">
+	<img src="images/maps.jpg" alt="An interactive Leaflet map rendered inside a note, with several markers and map controls">
+	<figcaption>A <code>```leaflet</code> fence in reading mode (demo vault,
+	Features/Maps): live tiles, pan and zoom, and markers whose popups can
+	link to notes in the vault.</figcaption>
+</figure>
+
+<p>
+Map tiles stream from the network, so viewing a map needs a
+connection. The one fully offline variety is the
+<a href="#image-maps">image-based map</a>, which renders from a file in
+your vault.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	Every option name is case-insensitive (<code>maxZoom</code> and
+	<code>maxzoom</code> are the same key), unknown keys are ignored, and a
+	line that does not parse is skipped rather than breaking the map. A
+	fence with no <code>lat</code>/<code>long</code> at all is fine too:
+	the map fits itself around whatever markers it has.
+</div>
+
+<h2 id="cartography">Cartography and tile servers</h2>
+
+<p>
+The default cartography is CARTO <strong>Voyager</strong> — the clean,
+Google-Maps-like look. Five other named styles are built in; pick one
+with <code>tiles:</code> (or its alias <code>style:</code>):
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Style</th><th>Source</th><th>Character</th></tr>
+	<tr><td><code>voyager</code></td><td>CARTO</td><td>The default: clear, modern general-purpose cartography.</td></tr>
+	<tr><td><code>light</code></td><td>CARTO</td><td>Near-white minimal basemap — good under dense marker sets.</td></tr>
+	<tr><td><code>dark</code></td><td>CARTO</td><td>Dark basemap that matches Clew's dark theme natively.</td></tr>
+	<tr><td><code>satellite</code></td><td>Esri</td><td>Aerial imagery.</td></tr>
+	<tr><td><code>terrain</code></td><td>OpenTopoMap</td><td>Topographic style with contour lines and hillshading.</td></tr>
+	<tr><td><code>osm</code></td><td>OpenStreetMap</td><td>The classic OpenStreetMap rendering.</td></tr>
+</table>
+</div>
+
+<p>
+When Clew is in its dark theme, light tile styles are automatically
+dimmed so the map sits comfortably in the page; styles that are
+already dark or photographic (<code>dark</code>,
+<code>satellite</code>) are left alone. The <code>darkMode</code> key
+from the Obsidian Leaflet plugin is accepted for compatibility, but in
+Clew the theme handling is automatic.
+</p>
+
+<p>
+Beyond the named styles, <code>tileServer:</code> accepts any standard
+<code>{z}/{x}/{y}</code> tile URL template — a self-hosted tile
+server, a historical-map provider, a game map. Two companions refine
+it: <code>tileOverlay:</code> (repeatable) draws additional
+semi-transparent tile layers over the base map, and
+<code>tileSubdomains:</code> supplies the subdomain letters for
+servers that use a <code>{s}</code> placeholder.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+lat: 46.4
+long: 8.0
+zoom: 10
+tiles: terrain
+```</code></pre>
+</div>
+
+<h2 id="markers">Markers</h2>
+
+<p>
+The full form of a marker line is:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>marker: [type,] lat, long [, label or [[wikilink]] or [[wikilink|label]]]</code></pre>
+</div>
+
+<p>
+The optional leading <em>type</em> colours the marker. Seven named
+colours render as filled dots — <code>red</code>, <code>orange</code>,
+<code>yellow</code>, <code>green</code>, <code>teal</code>,
+<code>blue</code>, <code>purple</code> — which is enough to build a
+simple legend (red for restaurants, blue for museums). The type
+<code>default</code>, and any name Clew does not recognize, falls back
+to the standard pin.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>marker: red, 41.8902, 12.4922, [[Colosseum]]
+marker: blue, 41.9022, 12.4539, Vatican Museums
+marker: 41.8986, 12.4769, Largo di Torre Argentina</code></pre>
+</div>
+
+<h2 id="note-markers">Markers gathered from your notes</h2>
+
+<p>
+Listing coordinates by hand is fine for three pins; it does not scale
+to a travel journal. Three repeatable options gather markers from the
+<em>frontmatter of other notes</em> instead, so the map stays in one
+place while the data lives where it belongs:
+</p>
+
+<dl>
+	<dt><code>markerFile: [[Note]]</code></dt>
+	<dd>Adds a pin for one specific note.</dd>
+	<dt><code>markerFolder: Trips</code></dt>
+	<dd>Adds a pin for every note in a folder (searched recursively).</dd>
+	<dt><code>markerTag: #travel</code></dt>
+	<dd>Adds a pin for every note in the vault whose frontmatter
+	<code>tags:</code> include the tag.</dd>
+</dl>
+
+<p>
+A note earns a pin by carrying a <code>location</code> property; two
+further properties are optional:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (in the pinned note's frontmatter)</p>
+	<pre><code>---
+location: [41.8902, 12.4922]
+mapmarker: red
+map-label: The Colosseum
+---</code></pre>
+</div>
+
+<p>
+<code>location</code> is the coordinate pair (the brackets are
+optional); <code>mapmarker</code> is a marker type, exactly as in a
+<code>marker:</code> line; <code>map-label</code> overrides the popup
+text, which otherwise defaults to the note's name. Every gathered
+marker links back to its note, so the map doubles as a spatial index:
+click the pin, read the note.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+markerFolder: Trips
+markerTag: #travel
+height: 420
+```</code></pre>
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	<code>markerTag</code> matches tags in a note's <em>frontmatter</em>
+	only — the inline <code>tags: [travel, italy]</code> array or the
+	YAML list form. Inline <code>#travel</code> hashtags in the body of a
+	note are not scanned. Markers are also gathered when the note
+	containing the map renders, so a location added to another note shows
+	up the next time the map's note is re-rendered, not instantaneously.
+</div>
+
+<h2 id="regions-tracks">Regions, tracks, and overlays</h2>
+
+<p>
+Three kinds of geometry can be drawn over the base map, each loaded
+from a file in the vault (referenced by <code>[[wikilink]]</code> or a
+plain path, all repeatable):
+</p>
+
+<ul>
+	<li><strong>GeoJSON regions</strong> — <code>geojson:
+	[[regions.json]]</code> draws the file's features, coloured by
+	<code>geojsonColor:</code> (default blue). A feature with a
+	<code>name</code> or <code>title</code> property gets it as a hover
+	tooltip.</li>
+	<li><strong>GPX tracks</strong> — <code>gpx: [[walk.gpx]]</code>
+	draws the recorded track as a line coloured by
+	<code>gpxColor:</code> (default orange), with a green dot at the
+	start, a red dot at the end, and a small purple dot for each named
+	waypoint. A hike, a cycle tour, a run exported from a watch — they
+	all drop straight in.</li>
+	<li><strong>Circle overlays</strong> — <code>overlay: [color,] lat,
+	long, radius[unit] [, label]</code> draws a translucent circle: a
+	blast radius, a delivery zone, a “within walking distance” ring. The
+	radius takes a unit suffix — <code>m</code>, <code>km</code>,
+	<code>mi</code>, or <code>ft</code> (metres when omitted) — and
+	<code>overlayColor:</code> sets the default colour for circles that
+	do not name their own.</li>
+</ul>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+gpx: [[Attachments/coast-walk.gpx]]
+gpxColor: teal
+overlay: red, 51.5007, -0.1246, 500m, Search area
+zoomFeatures: true
+```</code></pre>
+</div>
+
+<p>
+With <code>zoomFeatures: true</code> the map frames itself around the
+loaded GeoJSON and GPX geometry instead of using
+<code>lat</code>/<code>long</code>/<code>zoom</code> — handy when the
+track <em>is</em> the point of the map.
+</p>
+
+<p>
+Finally, <code>imageOverlay:</code> pins an image from the vault onto
+real-world coordinates — a scanned historical map over the modern
+city, a site plan over the satellite view:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>imageOverlay: [[rome-1748.png]], [[41.8, 12.4], [41.95, 12.55]]</code></pre>
+</div>
+
+<p>
+The two coordinate pairs are opposite corners of the rectangle the
+image should cover; the overlay renders semi-transparent so the base
+map shows through.
+</p>
+
+<h2 id="image-maps">Image-based maps</h2>
+
+<p>
+Setting <code>image: [[file.png]]</code> replaces the world entirely:
+the map becomes the image, in its own pixel coordinate system, fully
+offline. This is the mode for floor plans, campus maps, board-game
+boards, and fantasy worlds — anything that deserves pan, zoom, and
+markers but has no latitude.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+image: [[Attachments/castle-plan.png]]
+height: 420
+marker: 640, 210, The keep
+```</code></pre>
+</div>
+
+<p>
+The image is resolved like any attachment wikilink, the map fits
+itself to the image when it loads, and markers and circle overlays
+work exactly as on a world map — their coordinates are read in the
+image's own units rather than degrees. An explicit
+<code>bounds: [[0,0],[1000,1000]]</code> substitutes a coordinate
+system of your choosing for the image's pixel dimensions, which keeps
+marker coordinates stable if you later re-export the image at a
+different resolution.
+</p>
+
+<h2 id="photo-maps">Photo maps</h2>
+
+<p>
+The <code>photos:</code> option is Clew's own. Point it at a vault
+folder and every geotagged photo in that folder becomes a pin, placed
+where the photo was taken — the GPS coordinates come straight from the
+photo's EXIF data. This fence is quoted verbatim from the demo vault's
+<em>Features/Maps</em> note:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```leaflet
+photos: [[Attachments/Holiday]]
+height: 380
+```</code></pre>
+</div>
+
+<p>
+Each pin's popup shows a thumbnail of the photo, its capture day and
+time when the EXIF records one, and the photo's name as a link.
+Clicking the thumbnail opens the full image in a new tab; clicking the
+name opens — or <em>creates</em> — a note named after the photo. That
+second click is the point of the feature: a day of holiday photos
+becomes a day of annotated pins, each one a note you can write into,
+link from, and find again in search.
+</p>
+
+<figure class="shot">
+	<img src="images/photomap.jpg" alt="A photo map of Rome with an open popup showing a photo thumbnail, its name, and its capture time">
+	<figcaption>A photo map of Rome (demo vault, Features/Maps). The open popup shows the photo's
+	thumbnail, its name (a link that opens or creates a note about it), and
+	the capture time read from the photo's EXIF data.</figcaption>
+</figure>
+
+<p>
+The mechanics, in order:
+</p>
+
+<ul>
+	<li>The folder is found by its vault-relative path first; failing
+	that, Clew searches the vault for a folder whose path ends with what
+	you wrote, case-insensitively — so <code>photos: Holiday</code> finds
+	<code>Attachments/Holiday</code>. (<code>markerFolder</code> resolves
+	the same way.)</li>
+	<li>Only JPEG files are scanned, because JPEG is where EXIF GPS
+	lives; other image types in the folder are ignored.</li>
+	<li>iPhone <strong>HEIC photos are converted to JPEG
+	automatically</strong>, once, alongside the original — an existing,
+	newer <code>.jpg</code> is never overwritten — so a folder of photos
+	dragged off an iPhone needs no manual preparation.</li>
+	<li>Photos without location data are not lost silently: a small
+	counter in the corner of the map reports how many were skipped, and a
+	misspelled folder reports itself the same way.</li>
+	<li>With no <code>lat</code>/<code>long</code> in the fence, the map
+	fits itself around the pins automatically.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The automatic HEIC-to-JPEG conversion uses the <code>sips</code> tool
+	that ships with macOS, so it runs on Macs only. On Windows and Linux,
+	unconverted HEIC photos are counted in the “without location” corner
+	note; convert them to JPEG before adding them to the folder.
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Combine a photo map with the diary: a note for each day of a trip,
+	each holding a <code>photos:</code> fence pointed at that day's
+	folder. The map <em>is</em> the day's index — click a pin's name to
+	start the note about that place, and the note is created on the
+	spot.
+</div>
+
+<h2 id="distance">Measuring distance</h2>
+
+<p>
+Every map carries a measuring tool: hold <kbd>Shift</kbd> and click
+two points, and the map draws a dashed line between them and reports
+the distance in the corner. <kbd>Esc</kbd> clears the current
+measurement, and another <kbd>Shift</kbd>-click starts a new one —
+though the previous line and readout currently remain on the map until
+the note re-renders. Two options tune the
+readout: <code>unit:</code> selects <code>m</code>, <code>km</code>,
+<code>mi</code>, or <code>ft</code> (kilometres by default), and
+<code>scale:</code> multiplies the measured distance before display —
+useful on <a href="#image-maps">image maps</a>, where the underlying
+units are pixels and only you know how many leagues the kingdom map
+spans.
+</p>
+
+<h2 id="framing">Framing and behaviour</h2>
+
+<p>
+A handful of options control how the map frames itself and how it
+responds to the user:
+</p>
+
+<ul>
+	<li><code>bounds: [[lat,long],[lat,long]]</code> fits the view to a
+	rectangle instead of a centre-plus-zoom.</li>
+	<li><code>showAllMarkers: true</code> fits the view around every
+	marker even when a centre is given.</li>
+	<li><code>minZoom:</code> / <code>maxZoom:</code> clamp the zoom
+	range; <code>zoomDelta:</code> sets the step a zoom click or scroll
+	takes (e.g. <code>0.5</code> for finer control).</li>
+	<li><code>noScrollZoom: true</code> disables wheel zoom — worth
+	setting on tall maps that would otherwise capture the page's
+	scroll.</li>
+	<li><code>lock: true</code> disables panning and gesture zooming;
+	combine it with <code>noUI: true</code> to remove the zoom buttons
+	too, for a fully frozen figure that still renders live tiles and
+	popups.</li>
+	<li><code>recenter: true</code> lets the reader pan but glides the
+	view home a moment after they stop.</li>
+	<li><code>noUI: true</code> hides the zoom control.</li>
+	<li><code>height:</code> and <code>width:</code> size the map. A
+	bare number means pixels (<code>height: 380</code> is 380px), and
+	any CSS length works (<code>height: 50vh</code>,
+	<code>width: 80%</code>). The default height is 400px.</li>
+</ul>
+
+<h2 id="publishing">Maps on published sites</h2>
+
+<p>
+When you publish a vault with
+File&nbsp;→&nbsp;Export&nbsp;→&nbsp;Vault as Website, maps stay fully
+interactive on the exported pages: the Leaflet library ships with the
+site's assets, tiles stream from the same servers, and the pins —
+including gathered note markers and photo pins, with their thumbnails
+— are baked into each page at export time. See
+<a href="publishing.html">Publishing as a website</a>.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	The fence syntax is compatible with the Obsidian Leaflet plugin where
+	the two overlap — <code>lat</code>, <code>long</code>,
+	<code>zoom</code>, <code>marker:</code> lines, <code>image:</code>
+	maps, <code>geojson</code>, <code>gpx</code>, overlays, and the
+	framing options all read the same — so a vault written for the plugin
+	largely renders as-is, and keys Clew does not use (the plugin's
+	<code>id:</code>, for instance) are ignored harmlessly. In plain
+	Obsidian without the plugin, a <code>```leaflet</code> fence displays
+	as an ordinary code block: nothing breaks, the map is just not drawn.
+	<code>photos:</code> is Clew-only.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+The complete option surface of the <code>```leaflet</code> fence.
+Options marked “repeatable” may appear on multiple lines. Boolean
+options accept <code>true</code> (or the bare key with no value).
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Option</th><th>Form</th><th>Effect</th></tr>
+	<tr><td><code>lat</code>, <code>long</code></td><td>decimal degrees</td><td>Map centre. <code>lng</code> is an alias for <code>long</code>. Omit both to auto-fit around the markers.</td></tr>
+	<tr><td><code>zoom</code></td><td>number</td><td>Initial zoom level (default 5). <code>defaultZoom</code> is an alias.</td></tr>
+	<tr><td><code>minZoom</code>, <code>maxZoom</code></td><td>number</td><td>Zoom range limits.</td></tr>
+	<tr><td><code>zoomDelta</code></td><td>number</td><td>Zoom step per click/scroll.</td></tr>
+	<tr><td><code>height</code>, <code>width</code></td><td>number or CSS length</td><td>Map size; bare numbers are pixels. Height defaults to 400px.</td></tr>
+	<tr><td><code>tiles</code> / <code>style</code></td><td>style name</td><td>Named tile style: <code>voyager</code> (default), <code>light</code>, <code>dark</code>, <code>satellite</code>, <code>terrain</code>, <code>osm</code>.</td></tr>
+	<tr><td><code>tileServer</code></td><td>URL template</td><td>Custom <code>{z}/{x}/{y}</code> tile source; overrides <code>tiles</code>.</td></tr>
+	<tr><td><code>tileOverlay</code></td><td>URL template, repeatable</td><td>Semi-transparent tile layer over the base map.</td></tr>
+	<tr><td><code>tileSubdomains</code></td><td>letters</td><td>Subdomains for a <code>{s}</code> placeholder in the tile URL.</td></tr>
+	<tr><td><code>marker</code></td><td><code>[type,] lat, long [, label/[[link]]]</code>, repeatable</td><td>A pin. Colour types: red, orange, yellow, green, teal, blue, purple. Wikilink popups open the note.</td></tr>
+	<tr><td><code>markerFile</code></td><td><code>[[Note]]</code>, repeatable</td><td>Pin one note via its <code>location</code> frontmatter.</td></tr>
+	<tr><td><code>markerFolder</code></td><td>folder, repeatable</td><td>Pin every note in a folder (recursive).</td></tr>
+	<tr><td><code>markerTag</code></td><td><code>#tag</code>, repeatable</td><td>Pin every note whose frontmatter tags include the tag.</td></tr>
+	<tr><td><code>geojson</code></td><td>file, repeatable</td><td>Draw a GeoJSON file's features; <code>geojsonColor</code> sets the colour.</td></tr>
+	<tr><td><code>gpx</code></td><td>file, repeatable</td><td>Draw a GPX track with start/end/waypoint dots; <code>gpxColor</code> sets the track colour.</td></tr>
+	<tr><td><code>overlay</code></td><td><code>[color,] lat, long, radius[m|km|mi|ft] [, label]</code>, repeatable</td><td>Translucent circle; <code>overlayColor</code> sets the default colour.</td></tr>
+	<tr><td><code>imageOverlay</code></td><td><code>[[file]], [[lat,long],[lat,long]]</code>, repeatable</td><td>Pin an image over real coordinates.</td></tr>
+	<tr><td><code>image</code></td><td><code>[[file]]</code></td><td>Image-based map in the image's own coordinates; fully offline.</td></tr>
+	<tr><td><code>photos</code></td><td>folder</td><td>Photo map: a pin for every geotagged JPEG in the folder. Clew-only.</td></tr>
+	<tr><td><code>bounds</code></td><td><code>[[lat,long],[lat,long]]</code></td><td>Fit the view to a rectangle; on image maps, defines the coordinate system.</td></tr>
+	<tr><td><code>zoomFeatures</code></td><td>boolean</td><td>Frame the view around the GeoJSON/GPX geometry.</td></tr>
+	<tr><td><code>showAllMarkers</code></td><td>boolean</td><td>Frame the view around every marker.</td></tr>
+	<tr><td><code>noScrollZoom</code></td><td>boolean</td><td>Disable wheel zoom.</td></tr>
+	<tr><td><code>noUI</code></td><td>boolean</td><td>Hide the zoom control.</td></tr>
+	<tr><td><code>lock</code></td><td>boolean</td><td>Disable all pan/zoom interaction.</td></tr>
+	<tr><td><code>recenter</code></td><td>boolean</td><td>Glide back to the configured centre after a pan.</td></tr>
+	<tr><td><code>unit</code></td><td><code>m</code>/<code>km</code>/<code>mi</code>/<code>ft</code></td><td>Unit for the Shift-click distance tool (default km).</td></tr>
+	<tr><td><code>scale</code></td><td>number</td><td>Multiplier applied to measured distances.</td></tr>
+	<tr><td><code>darkMode</code></td><td>boolean</td><td>Accepted for Obsidian Leaflet compatibility; Clew themes maps automatically.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="reading-mode.html">How rendering works</a> — where fences
+	like this one are rendered, and when notes re-render.</li>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the
+	wikilink syntax markers and file references reuse.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the
+	frontmatter that <code>markerFolder</code> and <code>markerTag</code>
+	read.</li>
+	<li><a href="attachments-and-files.html">Attachments and files</a> —
+	getting photos, GPX files, and images into the vault.</li>
+	<li><a href="publishing.html">Publishing as a website</a> — maps on
+	exported sites.</li>
+	<li><a href="daily-notes.html">Daily notes and the diary</a> — a
+	natural companion to photo maps for travel journals.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

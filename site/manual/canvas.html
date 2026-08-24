@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The canvas — Clew Manual</title>
+<meta name="description" content="Clew's infinite canvas: JSON Canvas files with cards, live note embeds, web pages and connections — plus ink, shapes and groups that Obsidian preserves.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Canvas</p>
+<h1>The canvas</h1>
+<p class="lead">
+A canvas is an infinite board: notes, cards, images, PDFs, web pages and
+even other canvases, arranged in space and joined by connections. On top
+of that spatial layer Clew adds a full drawing layer — freehand ink,
+hand-drawn shapes, standalone text, and groups that bind any of it
+together — all saved in a <code>.canvas</code> file that Obsidian can
+still open. This chapter covers the whole board, from the file format to
+the last context-menu entry.
+</p>
+
+<h2 id="what-is-a-canvas">What a canvas is</h2>
+
+<p>
+Where a note is a linear document, a canvas is a plane. You place things
+on it at whatever position and size you like, pan and zoom freely, and
+draw connections between them. The things a canvas holds are called
+<strong>nodes</strong>: text cards, embedded files, web pages, and
+frames. Alongside the nodes, and unique to Clew, live
+<strong>strokes</strong> (freehand ink) and <strong>shapes</strong>
+(rectangles, ellipses, diamonds, arrows, lines, text) — the drawing
+layer — plus <strong>groups</strong> that can tie nodes, shapes and
+strokes into units that move together.
+</p>
+
+<figure class="shot">
+	<img src="images/canvas.jpg" alt="A Clew canvas with an embedded live note, text cards, an image, a PDF, connections between nodes, and hand-drawn ink and shapes">
+	<figcaption>The demo vault's Demo Canvas: a live note embed, cards, an
+	image, a PDF, connections — and the ink and shape layers drawn over
+	the top.</figcaption>
+</figure>
+
+<p>
+The best introduction is the demo vault's own example. Open
+<code>demo-vault</code> and then <code>Projects/Demo&nbsp;Canvas.canvas</code>,
+which exercises everything this chapter describes.
+</p>
+
+<h2 id="creating">Creating a canvas</h2>
+
+<p>
+There are three equivalent ways to make one:
+</p>
+
+<ul>
+	<li><strong>File&nbsp;→&nbsp;New&nbsp;Canvas</strong> in the menu;</li>
+	<li>the command palette (<kbd>⌘P</kbd>) →
+	<em>Create new canvas</em>;</li>
+	<li>right-clicking a folder (or empty space) in the file explorer →
+	<em>New canvas</em>.</li>
+</ul>
+
+<p>
+A canvas opens in a tab like any note, participates in
+<a href="navigation.html">splits and tab history</a>, and auto-saves as
+you work — edits are written to disk half a second after you make them,
+and the tab keeps its own <kbd>⌘Z</kbd> history of up to a hundred
+steps. If you open the same canvas in two split panes, the panes stay in
+live sync. If the file changes on disk while you have unsaved edits — a
+sync tool, or Obsidian editing the same vault — a banner appears and
+auto-save pauses until you pick <em>Keep my version</em> or
+<em>Load disk version</em>; loading the disk version still leaves your
+own version one <kbd>⌘Z</kbd> away.
+</p>
+
+<h2 id="file-format">The file on disk</h2>
+
+<p>
+A canvas is a single JSON file in the open
+<a href="https://jsoncanvas.org">JSON Canvas 1.0</a> format — the same
+format Obsidian uses — with <code>nodes</code> and <code>edges</code>
+arrays at the top level. Everything Clew adds beyond the specification —
+ink strokes, shapes, groups, and the flowchart-style node and edge
+styling — lives under a single top-level <code>clew</code> key, which
+other applications ignore but preserve. A schematic example:
+</p>
+
+<div class="example">
+	<p class="example-label">A .canvas file</p>
+	<pre><code>{
+  "nodes": [
+    { "id": "a1", "type": "text", "text": "An idea",
+      "x": -140, "y": -60, "width": 250, "height": 100 },
+    { "id": "b2", "type": "file", "file": "Projects/Plan.md",
+      "x": 180, "y": -120, "width": 420, "height": 400 }
+  ],
+  "edges": [
+    { "id": "e1", "fromNode": "a1", "fromSide": "right",
+      "toNode": "b2", "toSide": "left", "label": "expands into" }
+  ],
+  "clew": {
+    "strokes": [ { "id": "s1", "color": "2", "width": 3, "points": [12, 40, 15, 44] } ],
+    "shapes":  [ { "id": "h1", "kind": "ellipse", "x": 300, "y": 200,
+                   "width": 160, "height": 90, "color": "4", "fillStyle": "hachure" } ],
+    "groups":  [ { "id": "g1", "members": [ { "kind": "shape", "id": "h1" },
+                                            { "kind": "stroke", "id": "s1" } ] } ]
+  }
+}</code></pre>
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Open the same <code>.canvas</code> file in Obsidian and you will see
+	the nodes and connections exactly as Clew laid them out. Obsidian does
+	not display the ink, shapes, groups or flowchart styling — it has no
+	concept of them — but it <strong>preserves</strong> the
+	<code>clew</code> key when it saves, so nothing is lost by
+	round-tripping. Clew also defends the data on its side: every load
+	re-checks the group structure, so even when Obsidian deletes nodes
+	that belonged to a group, the group degrades cleanly instead of
+	corrupting (see <a href="#groups">Groups</a>).
+</div>
+
+<h2 id="getting-around">Getting around</h2>
+
+<p>
+The camera is always yours: <strong>scroll</strong> to pan in any
+direction, <strong>pinch</strong> or <strong>⌘-scroll</strong> to zoom
+at the cursor. Hold <kbd>Space</kbd> and drag (or drag with the middle
+mouse button) to pan by hand, or switch to the hand tool with
+<kbd>H</kbd>. The controls at the bottom right zoom in and out, reset to
+100%, and <strong>fit</strong> the whole canvas in the window — the fit
+is also on <kbd>⇧1</kbd>. Zoom runs from 8% to 300%. The camera position
+is remembered per tab, so a canvas reopens where you left it.
+</p>
+
+<h2 id="interaction-model">The interaction model</h2>
+
+<p>
+One decision shapes how the whole canvas feels: <strong>node content is
+inert until you engage it</strong>. A canvas full of live content — a
+scrollable note, a web page, a PDF viewer — poses a conflict: when you
+scroll over an embedded note, should the note scroll, or the canvas pan?
+Clew resolves it by keeping content non-interactive by default, so
+panning and dragging always win and the board behaves predictably no
+matter what is on it. When you want to interact with a node's content,
+<strong>double-click</strong> it — the node is now <em>engaged</em>, and
+you can scroll the note, click its links, tick its checkboxes, or browse
+the web page. Press <kbd>Esc</kbd> or click outside the node to
+return to canvas mode.
+</p>
+
+<p>
+All the manipulation affordances — resize handles, connection anchors,
+the selection marquee — are drawn by the canvas itself in an overlay, so
+they work identically over every kind of node.
+</p>
+
+<h3 id="selection">Selecting</h3>
+
+<p>
+With the select tool (<kbd>V</kbd>, the default), <strong>click</strong>
+anything — a node, a shape, an ink stroke — to select it.
+<strong>Shift-click</strong> adds to or removes from the selection.
+<strong>Drag on empty canvas</strong> to sweep out a marquee, which
+selects every node, shape and stroke it touches (hold <kbd>Shift</kbd>
+to add the marquee's catch to what is already selected).
+<kbd>⌘A</kbd> selects everything. Connections are selected by clicking
+them directly. Pressing <kbd>Esc</kbd> clears the selection.
+</p>
+
+<h3 id="moving-resizing">Moving and resizing</h3>
+
+<p>
+Drag any member of the selection and the whole selection moves.
+The arrow keys nudge the selected nodes and shapes by one pixel — ten
+with <kbd>Shift</kbd>. A single selected node or shape shows eight
+resize handles on its outline (lines and arrows show a handle at each
+endpoint instead); drag a handle to resize. Ink strokes are the
+exception: a freehand stroke is a trail of points with no meaningful
+resize, so strokes never show handles — see <a href="#ink">Ink</a>.
+</p>
+
+<h3 id="duplicate-delete">Duplicating and deleting</h3>
+
+<p>
+<kbd>⌘D</kbd> duplicates the selection, offset slightly, and selects the
+copies. The duplicate is faithful: connections between selected nodes
+are copied along with them, and any group lying wholly inside the
+selection is reproduced as a new group. <kbd>Backspace</kbd> (or
+<kbd>Delete</kbd>) deletes the selection; deleting a node also removes
+the connections attached to it.
+</p>
+
+<h3 id="z-order">Stacking order</h3>
+
+<p>
+Things on a canvas paint in a defined order, and you can change it:
+right-click a node or shape and use the <em>Order</em> row — bring to
+front, bring forward, send backward, send to back. Ink strokes offer
+<em>Bring to front</em> and <em>Send to back</em> in their own menu.
+The order is part of the file (paint order is array order, per the JSON
+Canvas specification), so it survives saving and reopening.
+</p>
+
+<h2 id="node-types">What a canvas holds</h2>
+
+<h3 id="cards">Cards</h3>
+
+<p>
+A card is a floating piece of Markdown. <strong>Double-click empty
+canvas</strong> to make one (the Obsidian gesture), or press
+<kbd>C</kbd> and click, or right-click empty canvas →
+<em>New card</em>. Double-click an existing card to edit its text in
+place; <kbd>Esc</kbd> or a click elsewhere commits the edit.
+</p>
+
+<p>
+Cards are not a cut-down preview: their text renders through the same
+jmarkdown engine as <a href="reading-mode.html">reading mode</a>. Math
+typesets, GitHub-style alerts render, the full
+<a href="dialect.html">dialect</a> applies — the same text produces the
+same result in a card and in a note. (A card paints instantly with a
+lightweight renderer, and the engine's render swaps in a moment later.)
+Right-click a card for <em>Edit card</em>, colours, flowchart shapes
+(see <a href="#node-styles">below</a>), ordering, and delete.
+</p>
+
+<h3 id="note-embeds">Notes — live previews</h3>
+
+<p>
+A note placed on a canvas is not a snapshot or a link — it is a
+<strong>live rendered preview</strong> of the real file, produced by the
+same rendering pipeline as reading mode and updated whenever the note
+changes. Mathematics, mermaid diagrams, citations, checkboxes, even
+<a href="queries.html">query tables</a> and
+<a href="tasks-and-kanban.html">kanban boards</a> all work; tick a
+checkbox or drag a kanban card inside an embedded note and the change is
+written back to the source file, exactly as it would be in a normal
+reading-mode tab.
+</p>
+
+<p>
+To add one, use the <em>Add note or file…</em> button on the toolbar (or
+right-click empty canvas), and pick the note. Double-click the embed to
+engage it — scroll, click links, interact — and <kbd>Esc</kbd> to
+return to the board. For full editing, right-click →
+<em>Open in tab</em>.
+</p>
+
+<h3 id="file-nodes">Images, PDFs and media</h3>
+
+<p>
+The same <em>Add note or file…</em> picker places any vault file on the
+canvas. Images display directly; PDFs get Chromium's full viewer, so an
+engaged PDF node can be paged, searched and zoomed; audio and video
+files get playback controls. Files with no viewer appear as a named
+chip that still opens in a tab from the context menu.
+</p>
+
+<h3 id="web-nodes">Web pages</h3>
+
+<p>
+The globe button on the toolbar (<em>Add web page…</em>) embeds a live
+web page; pasting a URL onto the canvas does the same. Engage the node
+to browse. Web nodes are contained deliberately: pop-ups are denied
+(links that try to open new windows are sent to your system browser
+instead), and navigation inside the node is pinned to
+<code>http(s)</code> URLs. All web nodes share one persistent browsing
+session, so a site you sign in to stays signed in. Right-click a web
+node for <em>Open in browser</em> and <em>Edit URL…</em>.
+</p>
+
+<h3 id="frames">Frames</h3>
+
+<p>
+Select two or more nodes and right-click → <em>Enclose in frame</em> to
+draw a labelled box around them. A frame is <strong>spatial</strong>: it
+carries whatever nodes sit inside its bounds, so dragging the frame
+moves its contents, while dragging a node out of the frame removes it
+from the frame's cargo. Double-click a frame to rename it.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	A frame is the JSON Canvas <code>group</code> node — Obsidian's own
+	grouping construct — so frames survive the round-trip and behave the
+	same there. Because the specification only knows about nodes, a frame
+	cannot hold ink or shapes. When you need to bind drawing-layer objects
+	together, or want membership that survives moving things apart, use a
+	Clew <a href="#groups">group</a> instead.
+</div>
+
+<h3 id="portals">Portals</h3>
+
+<p>
+Add a <code>.canvas</code> file to a canvas — the same file picker
+offers them — and it renders as a <strong>portal</strong>: a live,
+read-only miniature of that entire other canvas, cards, edges, note
+previews, ink and shapes included, scaled to fit its box. The portal
+rebuilds whenever the other canvas changes on disk. Double-click a
+portal to open the real canvas in a tab. Portals do not recurse: a
+canvas node <em>inside</em> a portal draws as a name chip rather than
+another miniature.
+</p>
+
+<h2 id="connections">Connections</h2>
+
+<p>
+Hover over a node and four <strong>anchor dots</strong> appear, one just
+outside each side (outside, so they never fight with the resize handles
+on the border itself). Drag from a dot to another node: the connection
+snaps to the nearest side of the target as you approach, and releasing
+creates the edge with an arrowhead at the destination. When you later
+move a node, its connections re-pick their sides automatically so they
+keep facing the other endpoint — but a side you chose deliberately is
+kept as long as it still makes geometric sense.
+</p>
+
+<p>
+<strong>Double-click a connection</strong> to give it a label, which
+sits at the midpoint of the path. Right-click a connection for the full
+set of options:
+</p>
+
+<dl>
+	<dt>Colour</dt>
+	<dd>The swatch row: the default line colour, or one of the six accent
+	colours.</dd>
+	<dt>Arrows</dt>
+	<dd>An arrowhead at the destination (→, the default), at both ends
+	(↔), or none (—).</dd>
+	<dt>Line</dt>
+	<dd>Solid, dashed, or dotted.</dd>
+	<dt>Path</dt>
+	<dd>How the connection is routed: <strong>curved</strong> (the
+	default), <strong>straight</strong>, or <strong>square</strong> —
+	axis-aligned elbows, the flowchart look.</dd>
+	<dt>Edit label… / Delete</dt>
+	<dd>Labelling without the double-click, and removal. A selected
+	connection can also be deleted with <kbd>Backspace</kbd>.</dd>
+</dl>
+
+<p>
+Arrowheads, colours and labels are standard JSON Canvas fields and
+travel to Obsidian; the dash and routing styles are Clew styling and
+live under the <code>clew</code> key.
+</p>
+
+<h2 id="drawing">Drawing</h2>
+
+<p>
+Everything so far exists in some form in other canvas tools. The drawing
+layer is where Clew goes further: real freehand ink and hand-drawn
+shapes, directly on the board, in the same file.
+</p>
+
+<figure class="shot">
+	<img src="images/canvas-demo.png" alt="The Demo Canvas open in Clew, showing the canvas toolbar and style bar alongside cards, connections, ink and shapes">
+	<figcaption>The Demo Canvas
+	(<code>demo-vault/Projects/Demo&nbsp;Canvas.canvas</code>) open in
+	Clew, with the canvas toolbar and the style bar for shapes.</figcaption>
+</figure>
+
+<h3 id="ink">Ink</h3>
+
+<p>
+The pen (<kbd>P</kbd>) draws freehand strokes. The toolbar sets the pen:
+a swatch row with the default ink colour plus six accents, and three nib
+widths (<em>S</em>, <em>M</em>, <em>L</em>). The eraser (<kbd>E</kbd>)
+removes whole strokes as you drag across them, and right-clicking empty
+canvas offers <em>Clear drawing</em>, which removes every ink stroke on
+the canvas (shapes are unaffected).
+</p>
+
+<p>
+Ink strokes are first-class objects, not pixels. With the select tool, a
+stroke behaves like everything else on the board: click it to select it
+(it picks up an accent-coloured halo along the ink, plus a thin bounding
+box for grabbing), shift-click or marquee to take several, drag to move,
+<kbd>⌘D</kbd> to duplicate, <kbd>Backspace</kbd> to delete. The
+right-click menu on a stroke recolours every selected stroke via the
+swatch row, groups and ungroups, re-orders (<em>Bring to front</em> /
+<em>Send to back</em>), and deletes. Two deliberate differences from
+shapes: selected ink shows a halo rather than changing colour — Clew
+will not misrepresent your drawing while you work on it — and strokes
+never grow resize handles, because a freehand trail of points has no
+sensible resize. A stroke in the selection also suppresses handles on
+everything else selected with it, so a drag can only ever mean
+<em>move</em>.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The style bar's colour and opacity controls currently apply to
+	selected <strong>shapes</strong>, not to selected ink. To recolour
+	strokes you already drew, use the stroke's right-click menu — its
+	swatch row applies to every selected stroke at once.
+</div>
+
+<p>
+One nicety of the hit-testing is worth knowing: ink is painted above
+shapes, and it is hit-tested above them too, so a stroke drawn across a
+filled shape stays selectable. Nodes, however, always win over ink — a
+card must remain clickable even with a scribble across it.
+</p>
+
+<h3 id="shapes">Shapes</h3>
+
+<p>
+Five tools drag out shapes: <strong>rectangle</strong> (<kbd>R</kbd>),
+<strong>ellipse</strong> (<kbd>O</kbd>), <strong>diamond</strong>
+(<kbd>D</kbd>), <strong>arrow</strong> (<kbd>A</kbd>), and
+<strong>line</strong> (<kbd>L</kbd>). After each shape the tool returns
+to select, so you can adjust immediately. Double-click a shape to give
+it a label.
+</p>
+
+<p>
+The <strong>style bar</strong> under the toolbar controls how shapes
+look — it sets the defaults for new shapes, and applies the same change
+to whatever shapes are selected:
+</p>
+
+<dl>
+	<dt>Stroke</dt>
+	<dd>Solid, dashed, or dotted outlines.</dd>
+	<dt>Sloppiness</dt>
+	<dd>Three levels of hand-drawnness: <strong>architect</strong>
+	(clean geometric lines), <strong>artist</strong> (the sketchy
+	default), and <strong>cartoonist</strong> (an exuberant scrawl).</dd>
+	<dt>Fill</dt>
+	<dd>None, solid, or <strong>hachure</strong> — the diagonal
+	pen-stroke fill.</dd>
+	<dt>Opacity</dt>
+	<dd>A slider from 10% to 100%.</dd>
+</dl>
+
+<p>
+The sketchy look is generated the way Excalidraw generates it: each
+outline is drawn as two slightly bowed, jittered passes. The randomness
+is seeded from the shape's own identity, so a shape keeps its exact
+wobble across re-renders, saves and app restarts — your diagram does not
+shimmer every time you open it.
+</p>
+
+<h3 id="standalone-text">Standalone text</h3>
+
+<p>
+The text tool (<kbd>T</kbd>) places text directly on the drawing layer,
+outside any card. When text is in play the style bar grows two more
+groups: a choice of four typefaces — <strong>hand</strong> (the default,
+matching the sketchy shapes), <strong>sans</strong>,
+<strong>serif</strong>, and <strong>mono</strong> — and four sizes.
+Double-click text to edit it; committing an empty edit on a freshly
+placed text object removes it.
+</p>
+
+<h3 id="node-styles">Flowchart styling for nodes</h3>
+
+<p>
+The drawing layer meets the node layer in the node context menu. Any
+card, note, file or web node can take a flowchart <em>shape</em>:
+<strong>pill</strong> (terminal), <strong>circle</strong>,
+<strong>diamond</strong> (decision), <strong>parallelogram</strong>
+(input/output), or <strong>predefined process</strong> — plus dashed or
+dotted borders and a transparent fill. Combined with square-routed
+connections and edge labels, a canvas of cards becomes a proper
+flowchart. Like everything Obsidian's format cannot express, this
+styling lives under the <code>clew</code> key: in Obsidian the same
+nodes appear as plain rectangles, and come back styled.
+</p>
+
+<h2 id="groups">Groups</h2>
+
+<p>
+Select any two or more objects — nodes, shapes, ink strokes, freely
+mixed — and press <kbd>⌘G</kbd> (or right-click → <em>Group</em>).
+From then on the group behaves as a single object: clicking any member
+selects the whole group, which draws one dotted outline around
+everything, and dragging any member moves the group as a unit.
+Shift-clicking a member toggles the entire group in and out of a larger
+selection. <kbd>⌘⇧G</kbd> (or <em>Ungroup</em>) dissolves it.
+</p>
+
+<p>
+A group is a <strong>membership set, not a region</strong> — the
+complement of a <a href="#frames">frame</a>. Its members stay grouped
+however far apart you drag them, and it can hold ink and shapes, which
+frames cannot. Groups are deliberately flat and disjoint: there is no
+nesting, and no object belongs to two groups. When a new group would
+touch existing ones, it absorbs them — grouping a selection that
+overlaps two groups yields one group containing everything. A group
+that falls below two members dissolves.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Groups live under the <code>clew</code> key, so Obsidian neither shows
+	nor edits them — but it can still delete nodes that belong to one.
+	Clew re-checks every group each time it loads or saves the file:
+	members that no longer exist are dropped, an object claimed twice
+	keeps its first group, and groups reduced below two members dissolve.
+	An outside editor can therefore never corrupt a canvas's groups — at
+	worst a group quietly shrinks.
+</div>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	<kbd>⌘G</kbd> does double duty in Clew. On a canvas tab it means
+	<strong>group</strong> — the binding every drawing tool uses.
+	Everywhere else it opens the <a href="graph-view.html">graph
+	view</a>. One chord cannot mean both things at once on the same tab,
+	so Clew gives the canvas priority; the graph remains reachable from
+	the command palette and the menu even while a canvas is focused, and
+	every binding can be changed in the
+	<a href="settings-and-hotkeys.html">hotkey editor</a>.
+</div>
+
+<h2 id="embeds-in-notes">Canvases inside notes</h2>
+
+<p>
+The <a href="links-and-embeds.html">embed syntax</a> works for canvases
+too:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[Demo Canvas.canvas]]</code></pre>
+</div>
+
+<p>
+In reading mode this renders a live, read-only view of the whole scene —
+cards, connections, ink, shapes, note previews — scaled to fit the note
+column, re-rendered whenever the canvas changes, with a title link that
+opens the real thing. The embedded scene handles like the canvas proper:
+scroll to pan, pinch or ⌘-scroll to zoom at the cursor, drag empty
+background to pan by hand, double-click the background to re-fit. Note
+previews inside the scene scroll and follow clicks, media plays, and web
+nodes load live where the site allows itself to be framed. Embeds do not
+recurse indefinitely: a canvas inside a note inside that same canvas
+bottoms out in a placeholder rather than a hall of mirrors. (In a vault
+<a href="publishing.html">published as a website</a>, a canvas embed
+appears as a titled placeholder — the static site has no canvas
+renderer.)
+</p>
+
+<h2 id="png-export">Exporting the drawing as PNG</h2>
+
+<p>
+Right-click empty canvas → <em>Export drawing as PNG…</em> (the entry
+appears once the canvas has any ink or shapes) renders the drawing
+layer — every stroke and shape, at twice resolution, on a transparent
+background — and asks where to save it. The colours are baked in from
+the current theme, so the PNG looks exactly like the canvas did. Nodes
+and connections are not part of the drawing layer and are not included;
+this is the tool for lifting a sketch off the board and into a document
+or a slide.
+</p>
+
+<h2 id="renames">Renames follow</h2>
+
+<p>
+Canvas file nodes refer to vault paths, and Clew treats them like
+wikilinks when things move: rename or move a note, an image, a PDF — any
+file a canvas embeds — and every <code>.canvas</code> file in the vault
+is rewritten to match. A canvas never wakes up with a dead embed because
+its subject was renamed.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<h3 id="reference-keys">Keys on the canvas</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Key</th><th>Action</th></tr>
+	<tr><td><kbd>V</kbd> / <kbd>H</kbd></td><td>Select tool / pan (hand) tool</td></tr>
+	<tr><td><kbd>C</kbd></td><td>Card tool (or double-click empty canvas)</td></tr>
+	<tr><td><kbd>P</kbd> / <kbd>E</kbd></td><td>Pen / eraser</td></tr>
+	<tr><td><kbd>R</kbd> <kbd>O</kbd> <kbd>D</kbd> <kbd>A</kbd> <kbd>L</kbd></td><td>Rectangle, ellipse, diamond, arrow, line</td></tr>
+	<tr><td><kbd>T</kbd></td><td>Standalone text</td></tr>
+	<tr><td><kbd>Space</kbd>-drag</td><td>Pan (also middle-mouse drag)</td></tr>
+	<tr><td>Scroll / ⌘-scroll</td><td>Pan / zoom at the cursor</td></tr>
+	<tr><td><kbd>⇧1</kbd></td><td>Zoom to fit</td></tr>
+	<tr><td><kbd>⌘A</kbd></td><td>Select all</td></tr>
+	<tr><td><kbd>⌘G</kbd> / <kbd>⌘⇧G</kbd></td><td>Group / ungroup the selection</td></tr>
+	<tr><td><kbd>⌘D</kbd></td><td>Duplicate the selection</td></tr>
+	<tr><td><kbd>⌘Z</kbd> / <kbd>⌘⇧Z</kbd></td><td>Undo / redo (per canvas tab)</td></tr>
+	<tr><td><kbd>Backspace</kbd></td><td>Delete the selection</td></tr>
+	<tr><td>Arrow keys</td><td>Nudge selected nodes and shapes 1&nbsp;px (10&nbsp;px with <kbd>Shift</kbd>)</td></tr>
+	<tr><td><kbd>Esc</kbd></td><td>Leave an engaged node; else clear the selection; else return to the select tool</td></tr>
+</table>
+</div>
+
+<h3 id="reference-menus">The right-click vocabulary</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Right-click on…</th><th>Offers</th></tr>
+	<tr><td>Empty canvas</td>
+		<td>New card · Add note or file… · Add web page… · Group / Ungroup /
+		Enclose in frame (when the selection allows) · Select all · Zoom to
+		fit · Export drawing as PNG… · Clear drawing</td></tr>
+	<tr><td>A node</td>
+		<td>Colour swatches · type-specific entries (Edit card; Open in tab;
+		Open in browser and Edit URL…; Rename group on a frame) · Group /
+		Ungroup / Enclose in frame · flowchart Shape, Border and Fill ·
+		Order (front / forward / backward / back) · Delete</td></tr>
+	<tr><td>An ink stroke</td>
+		<td>Colour swatches (recolours all selected strokes) · Group /
+		Ungroup · Bring to front / Send to back · Delete</td></tr>
+	<tr><td>A shape</td>
+		<td>Colour swatches · Group / Ungroup · Fill · Line
+		(solid/dashed/dotted) · Slop (architect · artist · cartoonist) · Order ·
+		Edit label… (Edit text on a text object) · Delete</td></tr>
+	<tr><td>A connection</td>
+		<td>Colour swatches · Arrows (→ ↔ —) · Line (solid/dashed/dotted) ·
+		Path (curved/straight/square) · Edit label… · Delete</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — the
+	<code>![[…]]</code> syntax that puts a canvas inside a note, and how
+	wikilinks resolve.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — the
+	pipeline behind the live note embeds and engine-rendered cards.</li>
+	<li><a href="graph-view.html">Graph view</a> — what <kbd>⌘G</kbd>
+	opens when you are not on a canvas.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Properties and metadata — Clew Manual</title>
+<meta name="description" content="Frontmatter properties, the typed properties panel, the YAML subset Clew edits safely, and Dataview-style inline fields.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Writing</p>
+<h1>Properties and metadata</h1>
+<p class="lead">
+A note is prose, but it usually knows a few facts about itself: this
+paper is <em>submitted</em>, that book is by <em>David Lewis</em> and
+rated <em>9</em>, this essay is <em>not yet marked</em>. Clew gives
+those facts two plain-text homes — a <strong>frontmatter</strong> block
+at the top of the note, and inline <code>Key:: value</code> fields in
+the body — and a typed panel for editing them. Everything here is what
+the <a href="queries.html">query system</a> reads, and what editable
+query cells, kanban boards, and the properties panel write.
+</p>
+
+<h2 id="frontmatter">The frontmatter block</h2>
+
+<p>
+Frontmatter is a block of <code>key: value</code> lines fenced by
+<code>---</code>, sitting at the very top of the file — it must begin
+at the first character of the note, or it is just a horizontal rule.
+Here is a real note from the <code>study-vault</code> example vault:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>---
+status: submitted
+venue: Synthese
+due: 2026-09-15
+---
+# Norms Without Minds
+
+Under review. Referee window closes mid-September; the due date above
+is when to nudge the editor.</code></pre>
+</div>
+
+<p>
+The block does not render in reading mode — it is metadata, not
+content. What it does instead is feed everything else: the properties
+panel shows it as editable rows, the vault index reads <code>tags</code>
+and <code>aliases</code> out of it, and every <code>status:</code>,
+<code>due:</code>, and <code>rating:</code> becomes a column a query
+can tabulate, filter, and write back to.
+</p>
+
+<h3 id="value-types">Value types</h3>
+
+<p>
+Clew reads and writes a deliberate subset of YAML. Within that subset,
+values are typed:
+</p>
+
+<dl>
+	<dt>Strings</dt>
+	<dd><code>venue: Synthese</code>. Quotes are optional; use them when
+	the text would otherwise read as another type — <code>version:
+	"1.0"</code> stays the string <code>1.0</code> rather than becoming
+	the number. Both <code>"double"</code> and <code>'single'</code>
+	quotes work.</dd>
+
+	<dt>Numbers</dt>
+	<dd><code>priority: 2</code>, <code>rating: 4.5</code>. Integers and
+	decimals, negative numbers included. Numbers sort and compare
+	numerically in queries.</dd>
+
+	<dt>Booleans</dt>
+	<dd><code>reviewed: true</code>, <code>marked: false</code>. The bare
+	words <code>true</code> and <code>false</code>, nothing else.</dd>
+
+	<dt>Empty</dt>
+	<dd><code>draft:</code> with nothing after the colon is a null value —
+	the property exists but holds nothing yet.</dd>
+
+	<dt>Lists</dt>
+	<dd>Two equivalent spellings: inline, <code>tags: [guide,
+	properties]</code>, or block form, one <code>- item</code> line per
+	entry. List items are themselves typed scalars.</dd>
+
+	<dt>Dates</dt>
+	<dd>There is no separate date type — a date is a string in ISO form,
+	<code>due: 2026-09-15</code>. That convention is what makes dates
+	work everywhere: ISO dates compare correctly as text, so
+	<a href="queries.html#dates">query date arithmetic</a> works, and the
+	properties panel recognises the shape and offers a native date
+	picker.</dd>
+</dl>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>---
+status: published
+reviewed: true
+priority: 2
+tags:
+  - guide
+  - properties
+aliases:
+  - Frontmatter
+---</code></pre>
+</div>
+
+<p>
+That is the frontmatter of the demo vault's own Properties guide note:
+a string, a boolean, a number, and two block lists.
+</p>
+
+<h2 id="panel">The properties panel</h2>
+
+<p>
+Open the <strong>Props</strong> tab in the right sidebar and the active
+note's frontmatter appears as key/value rows. The panel is typed — it
+looks at each value and picks the right editor:
+</p>
+
+<ul>
+	<li><strong>Booleans</strong> get a checkbox.</li>
+	<li><strong>Lists</strong> become chips, with a trailing input for
+	adding items.</li>
+	<li><strong>ISO dates</strong> (<code>2026-09-15</code>) get the
+	native date picker.</li>
+	<li><strong>Everything else</strong> — strings, numbers, empty
+	values — is a text field. When you commit, the text is re-typed:
+	<code>42</code> is stored as a number, <code>true</code> and
+	<code>false</code> as booleans, an emptied field as null, anything
+	else as a string.</li>
+</ul>
+
+<figure class="shot">
+	<img src="images/properties-panel.png" alt="The properties panel showing typed rows for a study-vault paper note: text fields for status and venue, a date picker for the due date">
+	<figcaption>The Props panel on a <code>study-vault</code> paper note:
+	each frontmatter key is an editable, typed row.</figcaption>
+</figure>
+
+<p>
+The panel is a full editor, not just a viewer:
+</p>
+
+<ul>
+	<li><strong>+ Add</strong> creates a new property with a placeholder
+	key and focuses it so you can name it at once.</li>
+	<li>The <strong>×</strong> that appears on a row removes that
+	property.</li>
+	<li><strong>Rename</strong> a key by editing it in place; press
+	<kbd>Enter</kbd> or click away to commit. Keys must start with a
+	letter, digit, or underscore and may contain word characters,
+	spaces, dots, slashes, and hyphens — an invalid rename snaps
+	back.</li>
+	<li>For <strong>list</strong> properties, type in the trailing field
+	and press <kbd>Enter</kbd> to add a chip; <kbd>Backspace</kbd> in the
+	empty field removes the last one; each chip has its own ×.</li>
+</ul>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	When the note is open in an editor, panel edits are applied
+	<em>through</em> that editor rather than to the file behind its back —
+	which means <kbd>⌘Z</kbd> in the editor undoes a property change, and
+	the usual auto-save persists it. With no editor open, the panel writes
+	straight to disk.
+</div>
+
+<h2 id="direct-editing">Editing the block directly</h2>
+
+<p>
+The panel and the text block are two views of the same lines. You can
+always edit the YAML directly in the editor — add a key, reorder
+properties, paste a block from another note — and the panel follows
+your keystrokes. Working in the other direction, when you commit an
+edit through the panel Clew rewrites the whole block in a canonical
+form:
+</p>
+
+<ul>
+	<li>Key order is preserved.</li>
+	<li>Lists are written in block form (one <code>- item</code> per
+	line); an empty list is written inline as <code>[]</code>.</li>
+	<li>Strings are quoted only when they need to be — when they would
+	otherwise parse as a number or boolean, start or end with a space,
+	begin like a list item, or contain characters YAML could misread.</li>
+	<li>Removing the last property removes the <code>---</code> fences
+	entirely; adding a property to a note without frontmatter creates
+	the block.</li>
+</ul>
+
+<h2 id="subset">A deliberate subset — and the safety valve</h2>
+
+<p>
+YAML at large is a big language: nested mappings, anchors and aliases,
+multi-line block scalars, comments, flow maps. Clew's parser
+deliberately covers only the flat subset described above, because that
+is the shape of note properties — and because a parser that
+half-understands a construct and then rewrites the block is how
+metadata gets destroyed.
+</p>
+
+<p>
+So the parser carries a safety valve. When a frontmatter block contains
+anything outside the subset — a nested mapping, a flow map like
+<code>{a: 1}</code>, an anchor (<code>&amp;name</code>) or alias
+(<code>*name</code>), a block scalar (<code>|</code> or
+<code>&gt;</code>), or a comment — Clew flags the whole block as
+outside the editable subset and <strong>refuses to rewrite it</strong>:
+</p>
+
+<ul>
+	<li>The properties panel shows the rows it could read, but read-only,
+	with a note explaining why.</li>
+	<li>Editable query cells and kanban drags that would write into that
+	note's frontmatter refuse, with a notice, instead of writing.</li>
+	<li>The block itself passes through Clew byte-for-byte, untouched.</li>
+</ul>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	This is a one-way gate by design: Clew will still <em>read</em> what
+	it can from a complex frontmatter block — queries see the flat keys —
+	but it will never <em>write</em> a block it cannot fully represent,
+	because a partial rewrite would silently drop the parts it did not
+	understand. If you want such a note back in the editable world, open
+	it in the editor and flatten the frontmatter by hand; the panel
+	becomes editable again the moment the block fits the subset.
+</div>
+
+<h2 id="inline-fields">Inline fields</h2>
+
+<p>
+Not every fact wants to live at the top of the file. Clew also reads
+Dataview-style <strong>inline fields</strong> from the note body, in
+two forms:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Rating:: 8
+
+Reading for the Society paper. The relevant argument is in
+[chapter:: 5], which repays a slow read.</code></pre>
+</div>
+
+<ul>
+	<li><strong>Own-line form:</strong> <code>Key:: value</code> starting
+	at the beginning of a line. The key must start with a letter and may
+	contain word characters, spaces, and hyphens.</li>
+	<li><strong>Bracketed form:</strong> <code>[key:: value]</code>
+	anywhere inside a sentence, so a field can sit in the middle of
+	prose.</li>
+</ul>
+
+<p>
+Inline field values are typed the same way frontmatter values are:
+numbers become numbers, <code>true</code>/<code>false</code> become
+booleans, everything else is a string. A few rules govern where they
+count:
+</p>
+
+<ul>
+	<li>Fields inside fenced code blocks are ignored — a
+	<code>Key:: value</code> in an example stays an example.</li>
+	<li>If the same key appears more than once in a note, the
+	<strong>first</strong> occurrence wins.</li>
+	<li>If a key exists both inline and in frontmatter,
+	<strong>frontmatter wins</strong>.</li>
+</ul>
+
+<p>
+To queries, inline fields are indistinguishable from frontmatter: the
+note above answers <code>where: chapter = 5</code> just as if
+<code>chapter</code> were a frontmatter key. The difference appears
+when you write. Editing an inline field's cell in a query table
+rewrites <em>that very line</em> of the note — the sentence stays a
+sentence, with a new number in it — while frontmatter edits go through
+the block-rewriting machinery above.
+</p>
+
+<h2 id="tags-aliases">Tags, aliases, and the index</h2>
+
+<p>
+Two frontmatter keys are special because the vault index reads them:
+</p>
+
+<ul>
+	<li><code>tags</code> — a list of tags, written without the
+	<code>#</code>. These make the note show up in the tag pane and
+	answer <code>tag:</code> filters in queries. Tags also work inline in
+	the body as <code>#hashtags</code> (including nested ones like
+	<code>#project/clew</code>; a pure number such as <code>#123</code>
+	is not a tag, matching Obsidian's rule).</li>
+	<li><code>aliases</code> — alternative names for the note. An alias
+	makes <code>[[Frontmatter]]</code> resolve to a note actually called
+	<em>Properties</em>, and the quick switcher finds notes by alias as
+	well as by name. See <a href="links-and-embeds.html">Links and
+	embeds</a>.</li>
+</ul>
+
+<h2 id="feeding-queries">From metadata to database</h2>
+
+<p>
+Properties and inline fields are the raw material of Clew's
+<a href="queries.html">vault database</a>. Every key becomes a field
+that a <code>query</code> fence can tabulate, filter, sort, and group
+on; a <a href="tasks-and-kanban.html">kanban board</a>'s columns are
+the values of one chosen field; and because query tables are
+<em>editable</em>, the flow runs both ways — retype a cell and Clew
+writes the new value into that note's frontmatter, or onto its inline
+<code>Key:: value</code> line, using exactly the machinery described in
+this chapter, safety valve included.
+</p>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Frontmatter is standard Obsidian properties: the same
+	<code>---</code> block, the same <code>tags</code> and
+	<code>aliases</code> conventions, so Obsidian's property editor and
+	Clew's panel edit the same data interchangeably. Clew's canonical
+	rewrite stays inside plain YAML that Obsidian reads without
+	complaint. Inline <code>Key:: value</code> fields are the Dataview
+	plugin's convention — Obsidian's core renders them as ordinary text,
+	while Dataview reads them the same way Clew does.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You write</th><th>Stored as</th><th>Panel editor</th></tr>
+	<tr><td><code>venue: Synthese</code></td><td>string</td><td>text field</td></tr>
+	<tr><td><code>version: "1.0"</code></td><td>string (quotes keep the type)</td><td>text field</td></tr>
+	<tr><td><code>priority: 2</code> · <code>rating: 4.5</code></td><td>number</td><td>text field, re-typed on commit</td></tr>
+	<tr><td><code>reviewed: true</code></td><td>boolean</td><td>checkbox</td></tr>
+	<tr><td><code>draft:</code></td><td>null (empty)</td><td>empty text field</td></tr>
+	<tr><td><code>tags: [a, b]</code></td><td>list (inline form)</td><td>chips</td></tr>
+	<tr><td><code>tags:</code> then <code>- a</code> lines</td><td>list (block form)</td><td>chips</td></tr>
+	<tr><td><code>due: 2026-09-15</code></td><td>string in ISO date form</td><td>date picker</td></tr>
+	<tr><td><code>Key:: value</code> on its own line</td><td>inline field (body)</td><td>— (edit in the note or a query table)</td></tr>
+	<tr><td><code>[key:: value]</code> in a sentence</td><td>inline field (body)</td><td>— (edit in the note or a query table)</td></tr>
+	<tr><td>Nested maps, <code>{…}</code>, <code>&amp;</code>/<code>*</code>, <code>|</code>/<code>&gt;</code>, comments</td><td>outside the subset</td><td>read-only; Clew never rewrites the block</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="queries.html">Queries</a> — tabulating, filtering, and
+	editing this metadata across the vault.</li>
+	<li><a href="tasks-and-kanban.html">Tasks and kanban</a> — boards
+	whose columns are a frontmatter field's values.</li>
+	<li><a href="links-and-embeds.html">Links and embeds</a> — how
+	aliases affect wikilink resolution.</li>
+	<li><a href="panels.html">Panels</a> — the sidebar the Props tab
+	lives in.</li>
+	<li><a href="editing.html">The editor</a> — undo, auto-save, and how
+	panel edits flow through an open editor.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The jmarkdown dialect — Clew Manual</title>
+<meta name="description" content="The jmarkdown inline syntax: /italics/, *strong*, ==highlights==, TeX-style sub- and superscripts, inline footnotes — and the per-vault switch back to standard Markdown.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Writing</p>
+<h1>The jmarkdown dialect</h1>
+<p class="lead">
+Clew's reading mode is the jmarkdown engine, and jmarkdown speaks a
+dialect: a small set of inline forms designed around what academic
+writing actually needs — italics for terms, highlights for emphasis
+that survives a photocopier, subscripts that work in prose, footnotes
+written where they belong. The dialect is a superset of Markdown: it
+adds and remaps a handful of inline forms and leaves everything else —
+headings, lists, tables, links, code — exactly as you know it. And it
+is optional: a per-vault switch restores standard Markdown emphasis for
+vaults written elsewhere.
+</p>
+
+<h2 id="philosophy">The philosophy</h2>
+
+<p>
+Standard Markdown gives its best syntax to the wrong things for
+scholarly prose. The single most common inline operation in academic
+writing — italicizing a term, a title, a foreign phrase — costs
+asterisks that clutter the source, and the things academics write
+constantly (subscripts, superscripts, highlights, inline footnotes)
+have no syntax at all. jmarkdown redistributes the keystrokes:
+</p>
+
+<ul>
+	<li><code>/italics/</code> reads like the typesetting instruction it
+	is, and frees the single asterisk;</li>
+	<li><code>*strong*</code> makes bold a one-character affair;</li>
+	<li>sub- and superscripts are written the way TeX writes them —
+	<code>H_2O</code>, <code>x^2</code> — which any mathematical writer
+	already has in their fingers;</li>
+	<li>footnotes are written <em>inline</em>, at the point they attach,
+	instead of as a marker here and a body somewhere at the bottom of the
+	file.</li>
+</ul>
+
+<p>
+The same source renders to HTML in the app and to LaTeX for
+<a href="export.html">print export</a>, which is why the dialect leans
+toward TeX conventions wherever the two worlds meet. All examples in
+this chapter assume the dialect — the default in a Clew vault; the
+<a href="#normal-syntax">Standard Markdown switch</a> at the end of the
+chapter is for vaults that opt out.
+</p>
+
+<figure class="shot">
+	<img src="images/editor-split.png" alt="The Dialect Demo note in a split: jmarkdown source in one pane, the typeset result with italics, strong, highlights, and a theorem in the other">
+	<figcaption>The demo vault's Dialect Demo note, source beside rendered
+	result: italics, strong, highlights, a tag, wikilinks, inline math, and
+	a theorem environment with an inline footnote.</figcaption>
+</figure>
+
+<h2 id="inline">The inline forms</h2>
+
+<h3>Emphasis</h3>
+
+<p>
+Four grades, each with its own marker:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Some /italics/, *strong*, **intense**, and __underlined__ text.</code></pre>
+</div>
+
+<div class="rendered">
+	<p class="rendered-label">Reading mode shows</p>
+	<p>Some <em>italics</em>, <strong>strong</strong>, <strong style="font-variant: small-caps;">intense</strong>, and <u>underlined</u> text.</p>
+</div>
+
+<p>
+So: <code>/x/</code> is italic, <code>*x*</code> is strong,
+<code>**x**</code> is <em>intense</em> — a heavier grade rendered as
+bold small capitals in reading mode (bold italic in LaTeX and PDF
+export) — and <code>__x__</code> is underline. Note what this
+means for muscle memory from other editors: a single asterisk is
+already bold here, and a double asterisk is something stronger still.
+</p>
+
+<p>
+The italic form is only partly careful about slashes that are not
+emphasis. An italic span needs a closing slash and cannot contain
+<code>.</code>, <code>?</code>, <code>!</code> or another
+<code>/</code> — so a lone mid-word slash like <code>miles/hour</code>
+survives, but <code>/usr/bin</code> renders as an italicised
+<em>usr</em>, and two slashes in one line can pair up unexpectedly.
+Escape a literal slash as <code>\/</code> where it matters.
+</p>
+
+<h3>Highlights and strikethrough</h3>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>A ==highlighted phrase== and a ~deleted~ one.</code></pre>
+</div>
+
+<div class="rendered">
+	<p class="rendered-label">Reading mode shows</p>
+	<p>A <mark>highlighted phrase</mark> and a <del>deleted</del> one.</p>
+</div>
+
+<p>
+<code>==x==</code> is the same highlight syntax Obsidian uses.
+Strikethrough is a <em>single</em> tilde on each side: <code>~x~</code>.
+</p>
+
+<h3>Subscripts and superscripts</h3>
+
+<p>
+These are TeX-style, exactly as in math mode: <code>_</code> for a
+subscript, <code>^</code> for a superscript, braces when the script is
+longer than one character.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Water is H_2O; the area grows as x^2, and beyond x^{10}
+the approximation fails. The total is E_{total}.</code></pre>
+</div>
+
+<div class="rendered">
+	<p class="rendered-label">Reading mode shows</p>
+	<p>Water is H<sub>2</sub>O; the area grows as x<sup>2</sup>, and beyond x<sup>10</sup> the approximation fails. The total is E<sub>total</sub>.</p>
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	There is no <code>^x^</code> paired-caret form — superscripts are the
+	TeX shape only (<code>x^2</code>, <code>x^{10}</code>). And since a
+	bare <code>~</code> means strikethrough, a subscript is written
+	<code>H_2O</code> or <code>_{…}</code>, never with tildes. For real
+	mathematics, prefer <a href="math-and-theorems.html">inline math</a>
+	(<code>$e^{i\pi}$</code>), which brings the full LaTeX repertoire.
+</div>
+
+<h3>Inline footnotes</h3>
+
+<p>
+Footnotes are written where they attach, body and all. Two forms:
+anonymous — <code>[fn: …]</code> — for the common case, and labelled —
+<code>[^label: …]</code> — when you want a stable name. Footnotes
+number themselves in the rendered output: the reader sees a numbered
+mark, and the body is typeset as a proper footnote.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Inline footnotes are a jmarkdown speciality.[fn: This one is anonymous.]
+Labelled ones work too.[^model: Multi-paragraph footnotes stay attached
+to their paragraph.]</code></pre>
+</div>
+
+<p>
+This is the demo vault's Footnotes note verbatim — open it in the app
+to see the result typeset.
+</p>
+
+<h3>Math and citations</h3>
+
+<p>
+Inline math is <code>$…$</code>, display math <code>$$…$$</code>, both
+full LaTeX; citations are the LaTeX commands themselves —
+<code>\cite{key}</code>, <code>\citep{key}</code>,
+<code>\fullcite{key}</code> and family — resolved against the vault's
+BibTeX files. Both are big enough to have chapters of their own:
+<a href="math-and-theorems.html">Math and theorems</a> and
+<a href="citations.html">Citations and bibliographies</a>.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>Inline math $e^{i\pi}+1=0$ and a citation \cite{alexander2023}.</code></pre>
+</div>
+
+<h3>Alignment</h3>
+
+<p>
+Two arrow-like line forms control alignment:
+<code>&gt;&gt; text &lt;&lt;</code> centers a line, and
+<code>&gt;&gt; text</code> (no closer) right-aligns it. Both are
+available as toggling commands in the Format menu.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>&gt;&gt; This line is centered. &lt;&lt;
+&gt;&gt; This one is pushed to the right.</code></pre>
+</div>
+
+<h2 id="standard">What stays standard Markdown</h2>
+
+<p>
+Everything not listed above is ordinary Markdown, and behaves the way
+it does everywhere else:
+</p>
+
+<ul>
+	<li><strong>Headings</strong> — <code>#</code> through
+	<code>######</code>.</li>
+	<li><strong>Lists</strong> — bullets, numbered lists, task lists
+	(<code>- [ ]</code>), and nesting.</li>
+	<li><strong>Tables</strong> — pipe tables with an alignment row.</li>
+	<li><strong>Blockquotes</strong> — <code>&gt;</code>, including
+	GitHub-style alerts: <code>&gt; [!NOTE]</code>,
+	<code>[!TIP]</code>, <code>[!IMPORTANT]</code>,
+	<code>[!WARNING]</code>, <code>[!CAUTION]</code> render as styled
+	callout boxes.</li>
+	<li><strong>Code</strong> — backtick spans and fenced blocks with
+	syntax highlighting.</li>
+	<li><strong>Links</strong> — <code>[text](url)</code> for external
+	links, <code>[[wikilinks]]</code> for internal ones
+	(<a href="links-and-embeds.html">next chapter</a>).</li>
+	<li><strong>Description lists</strong> — a term line followed by
+	<code>: definition</code> lines.</li>
+	<li><strong>Horizontal rules</strong> — <code>---</code>.</li>
+</ul>
+
+<h2 id="blocks">Beyond inline: a glance at the block dialect</h2>
+
+<p>
+The dialect's block-level side appears throughout the reading-mode
+chapters, so here it is only sketched. Container directives fence a
+region between <code>:::name</code> and <code>:::</code>;
+<code>@begin(name) … @end(name)</code> environments do the same job
+with named closers (so they nest without colon-counting). The demo
+vault's Dialect Demo note shows a theorem:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@begin(theorem)
+For all $n$, something profound holds. [fn: With a footnote.]
+@end(theorem)</code></pre>
+</div>
+
+<p>
+Two containers deserve mention because they are how one source file
+serves both web and print: <code>:::TeX … :::</code> emits its content
+verbatim in LaTeX export only (nothing in the app's reading mode), and
+<code>:::HTML … :::</code> is the mirror image — web only, with the
+Markdown inside it processed. Others you will meet:
+<code>:::abstract</code>, <code>:::title-box</code>,
+<code>:::comment</code> (omitted from all output — editorial notes),
+<code>:::mermaid</code> and <code>:::TiKZ</code> for
+<a href="diagrams.html">diagrams</a>, and <code>:::game</code> for
+strategic-form game matrices. Inline directives like
+<code>:label[key]</code> and <code>:ref[key]</code> handle
+cross-references, and <code>{{TOC}}</code> inserts a table of
+contents. The Format menu inserts every one of these, with the
+selection wrapped.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note</span>
+	Mermaid's native jmarkdown forms are <code>:::mermaid</code> and
+	<code>@begin(mermaid)</code>. The Obsidian-style
+	<code>```mermaid</code> fence also works in Clew — because Clew adds
+	it to the engine, precisely so that Obsidian vaults render — see
+	<a href="diagrams.html">Diagrams</a>.
+</div>
+
+<h2 id="normal-syntax">The Standard Markdown switch</h2>
+
+<p>
+The dialect's inline remapping is a per-vault choice. In Settings
+(<kbd>⌘,</kbd>), the <strong>This vault</strong> section carries a
+toggle labelled <strong>"Standard Markdown syntax: disable the
+jmarkdown inline dialect"</strong>. It is stored in the vault's own
+<code>.clew/vault-settings.json</code>, so the choice travels with the
+vault, not with your machine.
+</p>
+
+<p>
+With the switch <strong>on</strong>, the engine stops applying the
+inline dialect — <code>*strong*</code>, <code>**intense**</code>,
+<code>/italic/</code>, <code>==highlight==</code>,
+<code>~strikethrough~</code>, and the TeX-style sub- and superscripts —
+and inline emphasis reverts to standard Markdown:
+<code>*italic*</code> and <code>**bold**</code> mean what they mean
+everywhere else. Everything else survives untouched: math, citations,
+diagrams, theorem environments, footnotes, queries, wikilinks. Both
+reading mode and <a href="export.html">exports</a> honor the switch,
+and any open previews re-render the moment you toggle it.
+</p>
+
+<p>
+This is the switch to flip when you point Clew at an existing vault —
+an Obsidian vault, a folder of notes from any standard-Markdown tool —
+whose emphasis was written as <code>*italics*</code> and
+<code>**bold**</code>. The files themselves are never rewritten; the
+switch only changes how they render, so the vault keeps meaning what
+its author meant.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	The switch governs the <em>engine</em>. The editor's syntax
+	highlighting, and the Format menu's inline-style commands, still
+	assume the dialect for now — so in a standard-syntax vault the editor
+	may color a <code>/slashed/</code> phrase as if it were italic, and
+	the Format italic command still emits slashes. Type standard emphasis
+	by hand in such vaults.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	The dialect never changes what is in your files — it is purely a
+	reading of them. A vault written in the dialect still opens fine in
+	Obsidian; Obsidian will read <code>*strong*</code> as italics and
+	show <code>/italics/</code> as plain slashed text, because it renders
+	standard Markdown. <code>==highlights==</code>, wikilinks, tags,
+	frontmatter, and task lists mean the same thing in both apps. If a
+	vault must read identically in both, keep the Standard Markdown
+	switch on and write standard emphasis.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>The dialect against standard Markdown, form by form:</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You write</th><th>jmarkdown dialect (default)</th><th>Standard Markdown (switch on)</th></tr>
+	<tr><td><code>/x/</code></td><td>Italic</td><td>Plain text with slashes</td></tr>
+	<tr><td><code>*x*</code></td><td>Strong (bold)</td><td>Emphasis (italic)</td></tr>
+	<tr><td><code>**x**</code></td><td>Intense (bold small caps; bold italic in print)</td><td>Strong (bold)</td></tr>
+	<tr><td><code>__x__</code></td><td>Underline</td><td>Strong (bold)</td></tr>
+	<tr><td><code>==x==</code></td><td>Highlight</td><td>Not standard Markdown</td></tr>
+	<tr><td><code>~x~</code></td><td>Strikethrough</td><td>Still strikethrough — single-tilde deletion is GFM behaviour, not part of the dialect</td></tr>
+	<tr><td><code>H_2O</code>, <code>x^2</code>, <code>x^{10}</code></td><td>Sub-/superscript</td><td>Literal characters</td></tr>
+	<tr><td><code>[fn: …]</code>, <code>[^label: …]</code></td><td>Inline footnote</td><td>Not standard Markdown</td></tr>
+	<tr><td><code>$…$</code>, <code>$$…$$</code></td><td>LaTeX math</td><td>LaTeX math (kept)</td></tr>
+	<tr><td><code>\cite{key}</code></td><td>Citation</td><td>Citation (kept)</td></tr>
+	<tr><td><code>&gt;&gt; x &lt;&lt;</code> / <code>&gt;&gt; x</code></td><td>Center / right-align</td><td>Alignment (kept)</td></tr>
+	<tr><td><code>:::name … :::</code>, <code>@begin(name)…@end(name)</code></td><td>Container / environment</td><td>Container / environment (kept)</td></tr>
+</table>
+</div>
+
+<p>
+"Kept" rows are the point of the switch's design: it removes only the
+inline emphasis remapping. The academic machinery — math, citations,
+theorems, diagrams, footnote commands, directives — works in both
+modes.
+</p>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="editing.html">The editor</a> — dialect-aware
+	highlighting, and the Format menu that produces every form on this
+	page.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — the engine
+	that gives the dialect its meaning.</li>
+	<li><a href="math-and-theorems.html">Math and theorems</a> — the
+	<code>$…$</code> world, AMS environments, numbering.</li>
+	<li><a href="citations.html">Citations and bibliographies</a> — the
+	<code>\cite</code> family and BibTeX.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> —
+	where the per-vault switches live.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

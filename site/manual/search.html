@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search — Clew Manual</title>
+<meta name="description" content="Full-text search across a Clew vault: the search panel, the complete operator set (phrases, path:, file:, tag:), in-note find, and when to reach for queries instead.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Workspace</p>
+<h1>Search</h1>
+<p class="lead">
+Full-text search is the blunt instrument of a note vault, and a good
+one: type a few words, land on the line where you wrote them. Clew's
+search reads the files themselves at query time, so results cannot go
+stale, and composes plain terms with a small, sharp set of operators
+for phrases, paths, file names, and tags. This chapter covers the
+search panel, every operator the engine supports, find within a single
+note, and the boundary where search hands over to
+<a href="queries.html">queries</a>.
+</p>
+
+<h2 id="opening">Opening search</h2>
+
+<p>
+Press <kbd>⌘⇧F</kbd> (<em>Search in all files</em>, also under
+Edit&nbsp;→&nbsp;Search&nbsp;in&nbsp;All&nbsp;Files). The left sidebar
+opens on its Search tool with the input focused; results appear as you
+type, after a brief pause. There is no search button and no need for
+one — refine the text and the results follow.
+</p>
+
+<figure class="shot">
+	<img src="images/search-results.png" alt="The search panel with a query typed into the input and results grouped by note below, each with highlighted snippet lines">
+	<figcaption>The search panel (<kbd>⌘⇧F</kbd>) searching the demo
+	vault: a plain-term query, results grouped by note, matches
+	highlighted in their snippets.</figcaption>
+</figure>
+
+<h2 id="results">Reading the results</h2>
+
+<p>
+Results are grouped by note, with a count of matching notes at the top.
+Each group shows the note's name — click it to open the note — followed
+by one snippet per matching line, with the matched text highlighted.
+Clicking a snippet opens the note in source mode <em>at that line</em>,
+cursor placed, so a search is never more than two clicks from the exact
+sentence you were hunting.
+</p>
+
+<p>
+Two ceilings keep giant vaults responsive: search stops after 200
+matching notes, and shows at most 20 matching lines per note. If you hit
+either, the query is too broad to be useful anyway — add a term or an
+operator.
+</p>
+
+<h2 id="operators">The query language</h2>
+
+<p>
+A query is a sequence of terms and operators separated by spaces.
+Everything is case-insensitive, and every part must match — the parts
+are AND-ed together, so each additional term narrows the results. This
+is the complete operator set:
+</p>
+
+<h3 id="terms">Plain terms</h3>
+
+<p>
+A bare word matches notes containing it anywhere in their text, as a
+substring. Several words may match in entirely different parts of the
+note — they are independent conditions, not a phrase.
+</p>
+
+<div class="example">
+	<p class="example-label">You search</p>
+	<pre><code>replicator dynamics</code></pre>
+</div>
+
+<p>
+finds notes containing both <em>replicator</em> and <em>dynamics</em>,
+whether or not they are adjacent. Because matching is by substring,
+<code>graph</code> also matches <em>photograph</em> — quote a phrase or
+add terms when that bites.
+</p>
+
+<h3 id="phrases">"Quoted phrases"</h3>
+
+<p>
+Double quotes turn several words into one condition: the exact sequence,
+spaces and all, still case-insensitive.
+</p>
+
+<div class="example">
+	<p class="example-label">You search</p>
+	<pre><code>"evolutionarily stable strategy"</code></pre>
+</div>
+
+<p>
+matches only notes containing that exact phrase.
+</p>
+
+<h3 id="path">path:</h3>
+
+<p>
+<code>path:</code> keeps only notes whose vault path contains the given
+text — folders and file name both count, so it is the operator for
+scoping a search to a corner of the vault.
+</p>
+
+<div class="example">
+	<p class="example-label">You search</p>
+	<pre><code>deadline path:Projects</code></pre>
+</div>
+
+<p>
+finds <em>deadline</em> only in notes under a path containing
+<em>Projects</em> — <code>Projects/Clew/Notes.md</code> and
+<code>Old Projects/Archive.md</code> alike, since the test is a
+substring of the whole path.
+</p>
+
+<h3 id="file">file:</h3>
+
+<p>
+<code>file:</code> is the same idea applied to the file name alone,
+ignoring the folders above it.
+</p>
+
+<div class="example">
+	<p class="example-label">You search</p>
+	<pre><code>file:meeting agenda</code></pre>
+</div>
+
+<p>
+finds notes whose file name contains <em>meeting</em> and whose text
+contains <em>agenda</em>.
+</p>
+
+<h3 id="tag">tag:</h3>
+
+<p>
+<code>tag:</code> keeps only notes carrying the given tag — from an
+inline <code>#tag</code> or the frontmatter <code>tags</code> property.
+The <code>#</code> is optional: <code>tag:#draft</code> and
+<code>tag:draft</code> are the same query. Nested tags match their
+parents, so <code>tag:project</code> also finds notes tagged
+<code>#project/clew</code>.
+</p>
+
+<div class="example">
+	<p class="example-label">You search</p>
+	<pre><code>theorem tag:#demo path:Features</code></pre>
+</div>
+
+<p>
+finds notes mentioning <em>theorem</em>, tagged <code>#demo</code>,
+under a path containing <em>Features</em> — the demo vault's engine
+stress-tests, as it happens.
+</p>
+
+<h3 id="filters-only">Filters without terms</h3>
+
+<p>
+A query of nothing but filters is legal and useful: with no text terms
+to match, every note passing the filters is listed, without snippets.
+<code>tag:#guide</code> lists every guide note;
+<code>path:Essays file:2026</code> lists this year's essays. The search
+panel doubles as a quick file lister this way.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Search reads a note's raw source — frontmatter, wikilink brackets,
+	code fences and all. That is usually what you want (it finds text
+	inside <code>[[links]]</code> and YAML values), but it means markup can
+	match too: searching <code>tags</code> hits every frontmatter block
+	with a <code>tags:</code> line. Search covers notes — Markdown files —
+	not canvases or attachments. And there is no regular-expression mode,
+	no case-sensitive mode, and no OR or NOT — the language is exactly the
+	operators above, AND-ed.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	The operators are deliberately Obsidian-shaped: <code>"phrases"</code>,
+	<code>path:</code>, <code>file:</code>, and <code>tag:</code> mean what
+	they mean there, so muscle memory transfers. Obsidian's further
+	operators (<code>line:</code>, <code>section:</code>, regex between
+	slashes, and so on) are not supported — a query using them will treat
+	them as plain text.
+</div>
+
+<h2 id="in-note">Find in a note</h2>
+
+<p>
+Within a single note, <kbd>⌘F</kbd> (<em>Find in note</em>, also
+Edit&nbsp;→&nbsp;Find&nbsp;in&nbsp;Note) opens the editor's own search
+panel across the top of the pane — the standard CodeMirror find-and-
+replace, with next/previous, replace, and match options. Press
+<kbd>Enter</kbd> in its field for the next match and <kbd>⇧Enter</kbd> for the
+previous; <kbd>Esc</kbd> closes it. This is an editor feature, so it is
+available in source mode.
+</p>
+
+<h2 id="symlinks">Search and symlinked folders</h2>
+
+<p>
+Clew supports symbolic links inside vaults, and search honours them:
+anything the vault index can see — including notes reached through a
+symlinked folder that physically lives elsewhere on disk — is searched
+like any other note, with cycle-safe walking so a loop of links cannot
+trap the scan. See <a href="vaults-and-files.html">Vaults and files</a>
+for how symlinks behave generally.
+</p>
+
+<h2 id="vs-queries">Search or a query?</h2>
+
+<p>
+Search and <a href="queries.html">queries</a> overlap just enough to
+prompt the question. The rule of thumb: search is for a <em>moment</em>,
+queries are for a <em>view</em>.
+</p>
+
+<ul>
+	<li><strong>Reach for search</strong> when you are hunting something
+	once — a phrase you remember writing, the note where a name came up,
+	every file mentioning a citation key. Ask, click, done.</li>
+	<li><strong>Reach for a query</strong> when the question deserves to
+	live in a note and stay answered: a table of every note tagged
+	<code>#paper</code> with its status field, a task list gathered from a
+	project folder, a kanban board. Query results update on every vault
+	change — and unlike search results, they are editable in place.</li>
+</ul>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	The backlinks panel's <em>unlinked mentions</em> run on the same
+	scanning machinery as search, tuned to one note's name and aliases —
+	if you are searching for a note's title to find stray references,
+	the <a href="panels.html">Links panel</a> already did it, and offers a
+	one-click Link button on each hit.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<p>
+Hotkeys are macOS notation; on Windows and Linux read <kbd>⌘</kbd> as
+<kbd>Ctrl</kbd> and <kbd>⌥</kbd> as <kbd>Alt</kbd>.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Syntax</th><th>Meaning</th><th>Example</th></tr>
+	<tr><td><code>term</code></td><td>Note text contains the term (case-insensitive substring); multiple terms all must match</td><td><code>replicator dynamics</code></td></tr>
+	<tr><td><code>"phrase"</code></td><td>Note text contains the exact phrase</td><td><code>"stable strategy"</code></td></tr>
+	<tr><td><code>path:text</code></td><td>Vault path contains the text</td><td><code>path:Projects</code></td></tr>
+	<tr><td><code>file:text</code></td><td>File name contains the text</td><td><code>file:meeting</code></td></tr>
+	<tr><td><code>tag:name</code> / <code>tag:#name</code></td><td>Note carries the tag; nested tags match their parents</td><td><code>tag:project</code></td></tr>
+	<tr><td>filters only</td><td>Lists every note passing the filters, no snippets</td><td><code>tag:#guide</code></td></tr>
+</table>
+</div>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Hotkey</th><th>Command</th></tr>
+	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files (opens and focuses the search panel)</td></tr>
+	<tr><td><kbd>⌘F</kbd></td><td>Find in note (editor find-and-replace)</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="queries.html">Queries</a> — persistent, editable views
+	over the vault's structured data.</li>
+	<li><a href="panels.html">Panels</a> — the search panel's home, and the
+	unlinked-mentions scanner.</li>
+	<li><a href="properties.html">Properties and metadata</a> — the tags
+	and frontmatter that <code>tag:</code> reads.</li>
+	<li><a href="vaults-and-files.html">Vaults and files</a> — symlinks and
+	what counts as part of the vault.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

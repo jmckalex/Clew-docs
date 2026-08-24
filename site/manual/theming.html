@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theming and CSS snippets — Clew Manual</title>
+<meta name="description" content="Clew's dark and light themes, the CSS custom properties they are built from, per-vault CSS snippets in .clew/snippets/, and how rendered notes are themed.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Extending Clew</p>
+<h1>Theming and CSS snippets</h1>
+<p class="lead">
+Clew ships with a dark theme and a light one, and every colour in both
+is a CSS custom property — one token set, two value sets. That makes
+theme switching instant, and it makes restyling the app a matter of
+overriding variables rather than fighting selectors. This chapter
+covers switching themes, what the themes reach (the whole app
+<em>and</em> rendered notes), the custom-property surface itself, and
+CSS snippets: per-vault stylesheets that travel with the vault.
+</p>
+
+<h2 id="switching">Switching themes</h2>
+
+<p>
+Three routes to the same switch:
+</p>
+
+<ul>
+	<li><strong>Settings</strong> — <kbd>⌘,</kbd>, then
+	Appearance&nbsp;→&nbsp;Theme, a dark/light dropdown.</li>
+	<li><strong>The menu</strong> —
+	View&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;Dark&nbsp;/&nbsp;Light.</li>
+	<li><strong>The palette</strong> — <kbd>⌘P</kbd>, then
+	<em>Toggle light/dark theme</em>, or the explicit <em>Use dark
+	theme</em> and <em>Use light theme</em> commands. Any of the three can
+	be given a hotkey in the
+	<a href="settings-and-hotkeys.html">hotkey editor</a>.</li>
+</ul>
+
+<p>
+The theme is an app-global setting — it is stored with Clew's other
+application settings, not per vault, so every vault you open shares it.
+</p>
+
+<figure class="shot">
+	<img src="images/light-theme.png" alt="The Math and Theorems demo note open in Clew's light theme, with the same layout and panels as the dark screenshots elsewhere in the manual">
+	<figcaption>The demo vault's Math and Theorems note in the light theme.
+	Chrome, panels, and the rendered preview all follow the switch.</figcaption>
+</figure>
+
+<h2 id="reach">What theming covers</h2>
+
+<p>
+A theme switch is not cosmetic trim around the edges; it propagates
+through all three layers of the interface:
+</p>
+
+<ul>
+	<li><strong>The app chrome</strong> — sidebars, tabs, panels, modals,
+	the status bar — restyles instantly, because everything reads the
+	custom properties described below.</li>
+	<li><strong>The editor</strong> — background, text, headings, links,
+	code, quotes — has its own token subset
+	(<code>--clew-heading</code>, <code>--clew-link</code>,
+	<code>--clew-code</code>, <code>--clew-quote</code>, …), so source
+	mode keeps its syntax tinting in both themes.</li>
+	<li><strong>Rendered notes</strong> — reading mode, note embeds on
+	canvases — are told about the change too. The preview document
+	carries a <code>data-theme</code> attribute that the app updates,
+	and the preview stylesheet swaps its own token set
+	(<code>--preview-bg</code>, <code>--preview-text</code>,
+	<code>--preview-accent</code>, …) to match. This matters because the
+	<a href="reading-mode.html">jmarkdown engine</a>'s built-in styles
+	assume a light printed page; Clew's preview stylesheet carries the
+	dark-theme overrides — alerts, <code>==highlights==</code>, TikZ and
+	MetaPost plates — that keep engine output legible on a dark
+	background.</li>
+</ul>
+
+<p>
+Two special cases inside rendered notes are worth knowing.
+<strong>Mermaid diagrams</strong> genuinely re-render on a theme switch:
+the preview keeps each diagram's source, re-initializes mermaid with its
+dark or default (light) theme, and redraws — so diagram text and lines
+follow the app rather than being baked into one look.
+<strong>Code highlighting</strong> does not switch: syntax colours in
+fenced code blocks come from highlight.js's Atom One Dark scheme in both
+themes (the block's background does follow the theme). Interactive maps
+adapt too — in the dark theme, map tiles are filtered to match unless a
+map opts out.
+</p>
+
+<h2 id="tokens">The theming surface: custom properties</h2>
+
+<p>
+Both themes are defined in one place each:
+<code>styles/themes/dark.css</code> and
+<code>styles/themes/light.css</code> in Clew's source, each a single
+rule on <code>body[data-theme='dark']</code> or
+<code>body[data-theme='light']</code> assigning the full token set. The
+important groups, with representative names:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Group</th><th>Tokens (representative)</th><th>Control</th></tr>
+	<tr><td>Surfaces</td><td><code>--clew-bg-primary</code>, <code>--clew-bg-secondary</code>, <code>--clew-bg-tertiary</code>, <code>--clew-border</code></td><td>Window, panel, and control backgrounds; every border</td></tr>
+	<tr><td>Text</td><td><code>--clew-text-normal</code>, <code>--clew-text-muted</code>, <code>--clew-text-faint</code></td><td>The three text emphasis levels used everywhere</td></tr>
+	<tr><td>Accent</td><td><code>--clew-accent</code>, <code>--clew-accent-hover</code>, <code>--clew-selection</code>, <code>--clew-active-item</code></td><td>The purple: active states, selection, links in chrome</td></tr>
+	<tr><td>Feedback</td><td><code>--clew-danger</code>, <code>--clew-search-match</code>, <code>--clew-search-match-selected</code></td><td>Destructive affordances and search highlights</td></tr>
+	<tr><td>Editor content</td><td><code>--clew-heading</code>, <code>--clew-formatting</code>, <code>--clew-link</code>, <code>--clew-code</code>, <code>--clew-quote</code></td><td>Source-mode tinting</td></tr>
+	<tr><td>Canvas</td><td><code>--clew-canvas-bg</code>, <code>--clew-canvas-node-bg</code>, <code>--clew-canvas-edge</code>, <code>--clew-canvas-ink</code>, <code>--clew-canvas-1</code> … <code>--clew-canvas-6</code></td><td>The canvas surface and its six named node/stroke colours</td></tr>
+	<tr><td>Typography</td><td><code>--clew-ui-font</code>, <code>--clew-editor-font</code>, <code>--clew-mono-font</code>, <code>--clew-editor-font-size</code>, <code>--clew-editor-line-width</code></td><td>Font stacks and editor metrics</td></tr>
+</table>
+</div>
+
+<p>
+The last two tokens are also settings: Settings&nbsp;→&nbsp;Appearance's
+<em>Editor font size</em> and <em>Editor line width</em> write
+<code>--clew-editor-font-size</code> and
+<code>--clew-editor-line-width</code> directly, which is why they apply
+without a restart. The same mechanism is available to you — any token
+can be overridden from a snippet.
+</p>
+
+<h2 id="snippets">CSS snippets</h2>
+
+<p>
+Snippets are Clew's user-CSS mechanism, and the mechanism is a folder:
+drop <code>.css</code> files into <code>.clew/snippets/</code> inside
+the vault, and every one of them is injected into the app window when
+the vault opens. There is no manifest and no enable switch — a file
+present in the folder is active, a file removed is gone. Because
+snippets live in the vault's own <code>.clew/</code> folder, they travel
+with it: clone a shared vault and you get its look along with its notes.
+</p>
+
+<p>
+The canonical first snippet overrides the accent colour:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (.clew/snippets/accent.css)</p>
+	<pre><code>/* A calmer blue accent in the dark theme. */
+body[data-theme='dark'] {
+	--clew-accent: #4a9ed8;
+	--clew-accent-hover: #6cb4e4;
+}</code></pre>
+</div>
+
+<p>
+Scoping the rule to <code>body[data-theme='dark']</code> keeps the light
+theme untouched; scope to <code>body[data-theme='light']</code> for the
+reverse, or plain <code>body</code> for both. And snippets are not
+limited to variables — they are ordinary CSS, loaded after Clew's own
+stylesheets, so they can restyle any part of the chrome, the panels, or
+the editor.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution</span>
+	Snippets are read when the vault opens: after editing one, reopen the
+	vault to see the change. And a snippet is arbitrary CSS with the last
+	word — a bad selector can hide the tab bar or collapse the sidebar. If
+	a snippet leaves the app unusable, remove (or rename) the file in
+	<code>.clew/snippets/</code> with any file manager and reopen the
+	vault; nothing else is affected.
+</div>
+
+<h2 id="app-vs-notes">Styling the app versus styling rendered notes</h2>
+
+<p>
+One boundary matters when you start theming in earnest: snippets style
+the <em>app window</em> — chrome, panels, editor, canvas. A rendered
+note is a separate document (reading mode runs in its own preview
+frame), so app snippets do not reach inside it. Its look comes from the
+engine's own styles plus Clew's preview stylesheet, keyed to the same
+theme switch via the frame's <code>data-theme</code> attribute and the
+<code>--preview-*</code> tokens.
+</p>
+
+<p>
+To add styling <em>inside</em> every rendered note, use the JS twin of
+the snippets convention: vault scripts. Files in
+<code>.clew/scripts/*.js</code> are loaded into every rendered note, and
+a one-line script that appends a <code>&lt;style&gt;</code> element
+restyles all previews:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (.clew/scripts/preview-style.js)</p>
+	<pre><code>document.head.insertAdjacentHTML('beforeend', `&lt;style&gt;
+	blockquote { font-style: italic; }
+	h1, h2 { letter-spacing: -0.01em; }
+&lt;/style&gt;`);</code></pre>
+</div>
+
+<p>
+A <a href="plugins.html">vault plugin</a> with a preview surface can do
+the same with more structure. For per-note styling rather than per-vault,
+a note can of course carry its own <code>&lt;style&gt;</code> element —
+see <a href="reading-mode.html">How rendering works</a>.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	When hunting for the right token or selector to override, open the
+	developer tools (View&nbsp;→&nbsp;Toggle&nbsp;Developer&nbsp;Tools) and
+	inspect the element — every colour you see resolves to a
+	<code>--clew-*</code> variable, and the inspector shows which.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Obsidian's themes and CSS snippets live in
+	<code>.obsidian/snippets/</code> and target Obsidian's own class names
+	and variables — they have no effect on Clew, and Clew's snippets in
+	<code>.clew/snippets/</code> have no effect on Obsidian. The two
+	styling systems coexist in one vault without interference. Notes
+	themselves are untouched by any of this: theming never writes to your
+	files.
+</div>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>What</th><th>Where</th><th>Notes</th></tr>
+	<tr><td>Theme setting</td><td>Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;Theme; View&nbsp;→&nbsp;Appearance; palette commands</td><td>App-global; dark is the default</td></tr>
+	<tr><td>Theme definitions</td><td><code>styles/themes/dark.css</code>, <code>styles/themes/light.css</code> (Clew source)</td><td>One rule each on <code>body[data-theme]</code>; identical token sets</td></tr>
+	<tr><td>App theming surface</td><td><code>--clew-*</code> custom properties</td><td>Surfaces, text, accent, editor content, canvas, typography</td></tr>
+	<tr><td>Preview theming surface</td><td><code>--preview-*</code> custom properties on the preview document</td><td>Follows the app theme via <code>data-theme</code></td></tr>
+	<tr><td>CSS snippets</td><td><code>&lt;vault&gt;/.clew/snippets/*.css</code></td><td>All files load at vault open; no manifest; app window only</td></tr>
+	<tr><td>Preview styling</td><td><code>&lt;vault&gt;/.clew/scripts/*.js</code>, or a plugin preview surface</td><td>Scripts load into every rendered note</td></tr>
+	<tr><td>Mermaid diagrams</td><td>Re-rendered on theme switch</td><td>Dark theme in dark mode, default in light</td></tr>
+	<tr><td>Code highlighting</td><td>highlight.js Atom One Dark</td><td>Fixed scheme in both themes; block background follows the theme</td></tr>
+	<tr><td>Editor metrics</td><td>Settings&nbsp;→&nbsp;Appearance</td><td>Font size and line width write the corresponding tokens live</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> — the
+	Appearance section and everything else in the settings tab.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — the preview
+	pipeline that snippets cannot reach and vault scripts can.</li>
+	<li><a href="plugins.html">Vault plugins</a> — the structured way to
+	extend previews and the app.</li>
+	<li><a href="note-api.html">The Note API</a> — scripts inside notes,
+	for behaviour rather than looks.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vault plugins — Clew Manual</title>
+<meta name="description" content="Plugins live inside the vault and travel with it: a manifest plus up to three surfaces — engine syntax, preview decoration, and app commands — each enabled per vault.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<header class="topbar">
+	<button class="nav-toggle" type="button">Menu</button>
+	<a class="brand" href="../index.html"><img src="images/icon.svg" alt="">Clew <span class="sub">Manual</span></a>
+	<nav class="links">
+		<a href="../index.html">Home</a>
+		<a href="../index.html#download">Download</a>
+	</nav>
+</header>
+<div class="layout">
+<nav id="sidebar"></nav>
+<main class="doc">
+
+<p class="eyebrow">Extending Clew</p>
+<h1>Vault plugins</h1>
+<p class="lead">
+Clew's plugins do not live in an app-wide plugin directory, and there
+is no marketplace. A plugin is a folder <em>inside the vault</em> —
+<code>.clew/plugins/&lt;id&gt;/</code> — so it travels with the vault:
+share the folder and you have shared the behaviour, clone the vault and
+the plugin comes along. One manifest file declares up to three
+<em>surfaces</em>, one for each seam Clew already extends itself
+through: new syntax in the engine, decoration in the rendered preview,
+and commands in the app. Every plugin is off until you switch it on,
+per vault.
+</p>
+
+<h2 id="philosophy">Plugins travel with the vault</h2>
+
+<p>
+The design follows from Clew's plain-text commitments. A vault is a
+folder that carries everything about itself — notes, attachments,
+settings — so it should carry its behaviour too. A research group
+sharing a vault can keep the group's custom fence syntax, note
+decorations, and palette commands in the vault itself; a vault synced
+between machines behaves identically on both. There is nothing to
+install, because copying the vault <em>was</em> the installation.
+</p>
+
+<p>
+The counterweight is trust. A plugin is arbitrary code, so discovering
+a plugin in a vault never runs it: every plugin must be explicitly
+enabled in <strong>Settings&nbsp;→&nbsp;This vault</strong>, which
+lists each plugin found in <code>.clew/plugins/</code> with its name,
+version, surfaces, and description, and a checkbox per plugin. The
+enabled set is stored in the vault's
+<code>.clew/vault-settings.json</code> as a <code>"plugins"</code>
+array of ids. Enabling a plugin is a statement of trust in the vault —
+the same posture as the <a href="note-api.html">Note API</a> toggle
+that sits beside it.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — there is no sandbox</span>
+	Engine surfaces run with full Node.js access inside the render
+	worker; app surfaces run inside the app itself. The per-vault enable
+	toggle is the security boundary — there is no other. Enable plugins
+	only in vaults you wrote or trust, and read a plugin's code before
+	enabling it in a vault you received. (The worker being a separate
+	process does mean a crashing engine extension cannot take the app
+	down — but that is robustness, not security.)
+</div>
+
+<h2 id="anatomy">Anatomy of a plugin</h2>
+
+<p>
+A plugin is a folder whose name is its id, containing a
+<code>manifest.json</code> and one file per declared surface:
+</p>
+
+<div class="example">
+	<p class="example-label">Layout</p>
+	<pre><code>.clew/plugins/word-count/
+├── manifest.json
+├── engine.js      (optional)
+├── preview.js     (optional)
+└── app.js         (optional)</code></pre>
+</div>
+
+<div class="example">
+	<p class="example-label">manifest.json</p>
+	<pre><code>{
+	"id": "word-count",
+	"name": "Word Count",
+	"version": "1.0.0",
+	"description": "What it does, for the settings screen.",
+	"apiVersion": 1,
+	"surfaces": {
+		"engine": { "file": "engine.js", "extensions": "myFence" },
+		"preview": "preview.js",
+		"app": "app.js"
+	}
+}</code></pre>
+</div>
+
+<p>
+The rules, all enforced at discovery time: the folder name must equal
+<code>id</code>, and ids are lowercase letters, digits, and hyphens (64
+characters at most). A surface may be declared as a bare filename or as
+an object with a <code>file</code> key; either way the file must sit
+directly in the plugin's folder — no subdirectories, no path tricks —
+and a declared file that does not exist is dropped. A plugin whose
+<code>apiVersion</code> is newer than the running app understands
+(currently&nbsp;1) is skipped entirely rather than half-loaded. A
+folder with a broken or missing manifest is not a plugin.
+</p>
+
+<h2 id="surfaces">The three surfaces</h2>
+
+<h3>engine — extend the language</h3>
+<p>
+The engine surface is a jmarkdown extension module loaded into the
+render worker — the same mechanism Clew itself uses to add
+<code>[[wikilinks]]</code> and the <code>```leaflet</code> fence to the
+engine. It is the surface for <em>syntax</em>: new fences, inline
+directives, block transforms. The module exports marked-style extension
+objects, and the manifest's <code>extensions</code> key names the
+exports to register (comma-separated). When the plugin is enabled, Clew
+adds the module to the engine configuration it generates for the
+vault, and every render — reading mode and
+<a href="publishing.html">website export</a> alike — picks it up.
+Because the worker is a separate process, a broken extension fails a
+render, not the app.
+</p>
+
+<div class="example">
+	<p class="example-label">engine.js — a block extension</p>
+	<pre><code>export const myFence = {
+	name: 'myFence', level: 'block',
+	start(src) { return src.match(/^```my/m)?.index; },
+	tokenizer(src) { /* … */ },
+	renderer(token) { return '&lt;div class="my"&gt;…&lt;/div&gt;'; },
+};</code></pre>
+</div>
+
+<h3>preview — decorate the rendered note</h3>
+<p>
+The preview surface is a plain script injected into every rendered-note
+document, after Clew's own preview client. It works on the rendered
+DOM: restyle it, annotate it, add widgets. Because reading mode patches
+the document in place rather than reloading it, a preview script does
+its work once on load and re-applies it on the <code>clew:render</code>
+event, which fires after every live update. If the vault's
+<a href="note-api.html">Note API</a> gate is also on, preview scripts
+can use <code>window.clew</code> like any note script.
+</p>
+
+<h3>app — add commands to Clew itself</h3>
+<p>
+The app surface runs in the app, against a small, versioned API — a
+deliberate contract, not a door into Clew's internals. The script
+receives a single binding named <code>clew</code> (this is the plugin
+API — unrelated to the Note API object of the same name inside rendered
+notes) with exactly these capabilities: register palette and hotkey
+commands, read and write vault files, list the vault, open notes, read
+the active tab's path, subscribe to vault and workspace events, and
+show notices. The <a href="#reference">reference</a> lists every
+method. Registered commands appear in the command palette and the
+<a href="settings-and-hotkeys.html">hotkey editor</a> automatically,
+namespaced as <code>plugin:&lt;plugin-id&gt;:&lt;command-id&gt;</code>.
+</p>
+
+<p>
+Lifecycle is strict and automatic: everything an app-surface plugin
+registers — commands, event subscriptions — is tracked and unwound
+when the vault closes, when a different vault opens in the window, or
+when the plugin is disabled. A plugin cannot outlive its vault.
+</p>
+
+<div class="callout">
+	<span class="callout-title">Note — why app plugins load through a URL</span>
+	Clew's window forbids runtime code evaluation (its content security
+	policy has no <code>unsafe-eval</code>), so app-surface code is not
+	read-and-evaluated: it loads as a real script from an internal
+	protocol namespace that serves only currently <em>enabled</em>
+	plugins. You will see this as a one-line curiosity in devtools;
+	otherwise it changes nothing about how you write the file.
+</div>
+
+<h2 id="worked-example">The demo vault's own plugins, read closely</h2>
+
+<p>
+The demo vault ships two plugins, one per interesting surface, and both
+are meant to be copied.
+</p>
+
+<h3>Note Headers — a preview surface</h3>
+
+<p>
+The banner across the top of the demo vault's Welcome note — visible in
+the screenshot in the <a href="introduction.html">introduction</a> — is
+not a feature of Clew. It is rendered by the vault's <em>Note
+Headers</em> plugin: a manifest and one preview script, about ninety
+lines with comments. Its manifest declares a single surface:
+</p>
+
+<div class="example">
+	<p class="example-label">.clew/plugins/header/manifest.json</p>
+	<pre><code>{
+	"id": "header",
+	"name": "Note Headers",
+	"version": "1.1.0",
+	"description": "Banner headers for notes: set header-image, header-title, and header-subtitle in a note's frontmatter and reading mode opens with a full-width image banner; header-height, header-position, and header-align tune its size, focal point, and text placement.",
+	"apiVersion": 1,
+	"surfaces": {
+		"preview": "preview.js"
+	}
+}</code></pre>
+</div>
+
+<p>
+The contract it implements is frontmatter-driven — any note in the
+vault can opt into a banner, and tune it — <code>header-height</code>
+sets the banner's height in pixels (170 if unsaid),
+<code>header-position</code> chooses which part of the image shows (any
+CSS background-position), and <code>header-align</code> places the text
+block at the <code>top</code>, <code>center</code>, or (the default)
+<code>bottom</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">In any note's frontmatter</p>
+	<pre><code>---
+header-image: "[[banner.jpg]]"
+header-title: A Grand Title
+header-subtitle: with a subtitle
+header-height: 240
+header-position: center 30%
+header-align: bottom
+---</code></pre>
+</div>
+
+<p>
+The script is a working tour of preview-surface technique. It works out
+which note it is running in from the document's own URL, fetches the
+raw note text over the preview protocol, and parses the
+<code>header-*</code> keys out of the frontmatter:
+</p>
+
+<div class="example">
+	<p class="example-label">.clew/plugins/header/preview.js (excerpts)</p>
+	<pre><code>// /&lt;sid&gt;/&lt;note path&gt;.html → the raw note is the same URL minus ".html".
+const notePath = decodeURIComponent(location.pathname).replace(/\.html$/i, '');
+
+const apply = async () =&gt; {
+	const text = await (await fetch(notePath)).text();
+	const spec = parseHeader(text);
+	document.querySelector('.clew-note-header')?.remove();
+	if (!spec) return;
+	header = document.createElement('div');
+	header.className = 'clew-note-header';
+	// … builds the banner: background image or gradient plate,
+	// title and subtitle with a scrim, then …
+	document.body.prepend(header);
+	// Titles may carry $math$ — MathJax is already in the document.
+	window.MathJax?.typesetPromise?.([header]).catch(() =&gt; {});
+};
+
+document.addEventListener('clew:render', apply);
+apply();</code></pre>
+</div>
+
+<p>
+Three habits here are the ones to copy. First, the last two lines:
+run once on load, and re-run on every <code>clew:render</code> — that
+pair makes the plugin immune to live updates. Second,
+<code>apply()</code> begins by removing its own previous output, so
+re-running is idempotent. Third, it composes with what is already in
+the document: MathJax is there, so a banner title may carry
+mathematics. The rest of the script is ordinary DOM construction with
+inline styles.
+</p>
+
+<h3>Word Count — an app surface</h3>
+
+<p>
+The second plugin is the smallest useful app-surface plugin, and its
+own first line says "copy me". This is the entire code file:
+</p>
+
+<div class="example">
+	<p class="example-label">.clew/plugins/word-count/app.js</p>
+	<pre><code>// Word Count — the smallest useful app-surface plugin; copy me.
+clew.commands.register({
+	id: 'count',
+	name: 'Word count of the active note',
+	hotkeys: ['Mod-Alt-w'],
+	run: async () =&gt; {
+		const path = clew.workspace.activePath();
+		if (!path) { clew.ui.notice('No active note'); return; }
+		const text = await clew.vault.read(path);
+		const words = (text.match(/\S+/g) ?? []).length;
+		const lines = text.split('\n').length;
+		clew.ui.notice(`${words.toLocaleString()} words · ${text.length.toLocaleString()} characters · ${lines.toLocaleString()} lines`);
+	},
+});</code></pre>
+</div>
+
+<p>
+With the plugin enabled, the command appears in the palette as any
+other command does, <kbd>⌘⌥W</kbd> triggers it, and the hotkey can be
+rebound in the hotkey editor — the command system does not distinguish
+plugin commands from built-in ones.
+</p>
+
+<h2 id="first-plugin">Writing your first plugin, step by step</h2>
+
+<ol>
+	<li>In your vault, create the folder
+	<code>.clew/plugins/hello/</code>.</li>
+	<li>Add a <code>manifest.json</code>:
+	<code>{ "id": "hello", "name": "Hello", "version": "0.1.0",
+	"apiVersion": 1, "surfaces": { "app": "app.js" } }</code>. The
+	<code>id</code> must match the folder name.</li>
+	<li>Add an <code>app.js</code> — start by copying Word Count above
+	and changing the <code>run</code> function.</li>
+	<li>Open <strong>Settings&nbsp;→&nbsp;This vault</strong>; your
+	plugin is listed with its surfaces. Tick its checkbox.</li>
+	<li>Close and reopen the vault (or View&nbsp;→&nbsp;Reload) — app
+	surfaces load when a vault opens, so ticking the checkbox alone does
+	not load one. Then open the command palette and run your command.
+	Iterate on <code>app.js</code> the same way: edit, reload, run.</li>
+</ol>
+
+<p>
+For a preview surface, the loop is the same with
+<code>"preview": "preview.js"</code> in the manifest; note that
+toggling a plugin re-renders open previews, but if a preview surface
+does not appear, close and reopen the note's tab. For an engine
+surface, declare <code>"engine": { "file": "engine.js", "extensions":
+"myFence" }</code> and export the named extension objects; the engine's
+own documentation covers the extension format.
+</p>
+
+<h2 id="vault-scripts">Vault scripts — the lighter mechanism</h2>
+
+<p>
+Often you do not need a plugin at all. If all you want is shared
+JavaScript available in every rendered note — a custom element, a few
+helper functions — drop <code>.js</code> files into
+<code>.clew/scripts/</code>. Every rendered note loads them, in
+alphabetical order, with no manifest and no enable step beyond the
+vault's existing trust surface (they are the moral equivalent of the
+inline scripts notes can already carry). They are the JavaScript twin
+of the <code>.clew/snippets/</code> CSS convention described in
+<a href="theming.html">Theming and CSS snippets</a>, and — unlike
+plugin surfaces — they ship with the vault on
+<a href="publishing.html">website export</a> and run on the published
+pages.
+</p>
+
+<p>
+Custom elements are the natural fit: define
+<code>&lt;my-timeline&gt;</code> once in a vault script, use the tag in
+any note. Clew's live updates respect custom elements — a re-render
+keeps your element in place and syncs its attributes (firing
+<code>attributeChangedCallback</code>) rather than wiping its DOM. A
+single note can also pull in one script for itself via jmarkdown's own
+metadata header (<code>Script: ./my-element.js</code>).
+</p>
+
+<h2 id="which">Plugins or the Note API?</h2>
+
+<p>
+The <a href="note-api.html">Note API</a> is the <em>in-note</em>
+story: one note that behaves like an application, its logic living in
+the note itself. Plugins are the <em>vault-wide</em> story: behaviour
+that applies to every note (preview, engine) or to the app around them
+(app surface). Reach for a note script when the behaviour <em>is</em>
+the note's content — a tracker, a dashboard, a game. Reach for a
+plugin when the behaviour should apply everywhere — new syntax, a
+banner convention, a command. They compose: a preview-surface script
+may use <code>window.clew</code>, and a scripted note works in a vault
+full of plugins.
+</p>
+
+<h2 id="reference">Reference</h2>
+
+<h3>Manifest fields</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Field</th><th>Required</th><th>Meaning</th></tr>
+	<tr><td><code>id</code></td><td>yes</td>
+		<td>Must equal the folder name; lowercase letters, digits, hyphens;
+		at most 64 characters.</td></tr>
+	<tr><td><code>name</code></td><td>no</td>
+		<td>Display name for the settings screen (defaults to the id).</td></tr>
+	<tr><td><code>version</code></td><td>no</td>
+		<td>Shown in settings (defaults to <code>0.0.0</code>).</td></tr>
+	<tr><td><code>description</code></td><td>no</td>
+		<td>One or two sentences for the settings screen.</td></tr>
+	<tr><td><code>apiVersion</code></td><td>no</td>
+		<td>Plugin API version the plugin targets (defaults to 1). Plugins
+		targeting a newer version than the app supports are skipped.</td></tr>
+	<tr><td><code>surfaces</code></td><td>yes</td>
+		<td>Any of <code>engine</code>, <code>preview</code>,
+		<code>app</code> — each a filename in the plugin folder, or an
+		object with <code>file</code>. The engine surface's object form
+		takes <code>extensions</code>: a comma-separated list of the
+		module's exports to register.</td></tr>
+</table>
+</div>
+
+<h3>The three surfaces</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Surface</th><th>Runs</th><th>Good for</th><th>Key facts</th></tr>
+	<tr><td><strong>engine</strong></td>
+		<td>In the render worker (separate process, Node available)</td>
+		<td>New syntax: fences, directives, transforms</td>
+		<td>Exports named in <code>extensions</code> are added to the
+		vault's engine configuration; applies to previews and website
+		export.</td></tr>
+	<tr><td><strong>preview</strong></td>
+		<td>In every rendered-note document, after the preview client</td>
+		<td>Decorating rendered output; widgets</td>
+		<td>Re-apply on <code>clew:render</code>; may use the Note API if
+		that gate is on; not shipped on website export.</td></tr>
+	<tr><td><strong>app</strong></td>
+		<td>In the app, against the versioned plugin API</td>
+		<td>Commands, small workflow automations</td>
+		<td>Receives the <code>clew</code> binding below; everything
+		registered unwinds on vault change or disable.</td></tr>
+</table>
+</div>
+
+<h3>The app-surface API (<code>clew</code>, version 1)</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Member</th><th>Behaviour</th></tr>
+	<tr><td><code>clew.apiVersion</code></td>
+		<td>The API version, currently <code>1</code>.</td></tr>
+	<tr><td><code>clew.pluginId</code></td>
+		<td>Your plugin's id.</td></tr>
+	<tr><td><code>clew.vaultName</code></td>
+		<td>The open vault's name.</td></tr>
+	<tr><td><code>clew.commands.register(command)</code></td>
+		<td>Registers a palette/hotkey command
+		(<code>{ id, name, hotkeys?, run }</code>). The id is namespaced to
+		<code>plugin:&lt;plugin-id&gt;:&lt;id&gt;</code>; returns the full
+		id. Unregistered automatically on cleanup.</td></tr>
+	<tr><td><code>clew.vault.read(path)</code></td>
+		<td>Resolves to a vault file's text.</td></tr>
+	<tr><td><code>clew.vault.write(path, content)</code></td>
+		<td>Writes a vault file.</td></tr>
+	<tr><td><code>clew.vault.list()</code></td>
+		<td>Every file path in the vault's tree.</td></tr>
+	<tr><td><code>clew.workspace.open(path, opts?)</code></td>
+		<td>Opens a note in the workspace.</td></tr>
+	<tr><td><code>clew.workspace.activePath()</code></td>
+		<td>The active tab's path, or <code>null</code>.</td></tr>
+	<tr><td><code>clew.events.on(name, fn)</code></td>
+		<td>Subscribes to <code>'vault-changed'</code>,
+		<code>'tree-changed'</code>, <code>'index-changed'</code>,
+		<code>'active-changed'</code>, or <code>'layout-changed'</code>;
+		returns an unsubscribe function and is cleaned up
+		automatically.</td></tr>
+	<tr><td><code>clew.ui.notice(text, ms?)</code></td>
+		<td>A transient toast, three seconds by default.</td></tr>
+</table>
+</div>
+
+<h2 id="see-also">See also</h2>
+
+<ul>
+	<li><a href="note-api.html">The Note API</a> — scripting a single
+	note instead of the whole vault.</li>
+	<li><a href="theming.html">Theming and CSS snippets</a> — the CSS
+	counterpart to vault scripts.</li>
+	<li><a href="publishing.html">Publishing as a website</a> — vault
+	scripts ship with the site; preview-surface plugins do not.</li>
+	<li><a href="reading-mode.html">How rendering works</a> — the render
+	worker that engine surfaces load into.</li>
+	<li><a href="settings-and-hotkeys.html">Settings and hotkeys</a> —
+	where plugin commands and their hotkeys appear.</li>
+</ul>
+
+<nav class="pagenav" id="pagenav"></nav>
+</main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
