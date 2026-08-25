@@ -18,6 +18,7 @@ const MANUAL_NAV = [
 	{ section: 'Writing', items: [
 		{ file: 'editing.html', title: 'The editor' },
 		{ file: 'dialect.html', title: 'The jmarkdown dialect' },
+		{ file: 'callouts.html', title: 'Callouts' },
 		{ file: 'links-and-embeds.html', title: 'Links and embeds' },
 		{ file: 'properties.html', title: 'Properties and metadata' },
 		{ file: 'daily-notes.html', title: 'Daily notes and the diary' },
