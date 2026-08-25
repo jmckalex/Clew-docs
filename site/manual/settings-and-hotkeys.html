@@ -160,7 +160,7 @@ both:
 
 <p>
 The per-vault switches, stored in
-<code>.clew/vault-settings.json</code>. There are seven, plus the
+<code>.clew/vault-settings.json</code>. There are eight, plus the
 plugin list:
 </p>
 
@@ -200,6 +200,13 @@ plugin list:
 	<dd>Adds a <em>Refs</em> tab to the right sidebar showing the active
 	note's formatted references, even while the note is in source
 	mode.</dd>
+	<dt>New drawings are saved as <code>(excalidrawFormat)</code></dt>
+	<dd>Empty or <code>markdown</code> for Obsidian's
+	<code>.excalidraw.md</code>; <code>json</code> for a plain
+	<code>.excalidraw</code>. Clew reads and indexes both identically — the
+	choice only matters to Obsidian, which can index a drawing solely
+	through the markdown wrapper. See
+	<a href="excalidraw.html">Drawings</a>.</dd>
 	<dt>Pandoc citations <code>(pandocCitations)</code></dt>
 	<dd>Reads <code>[@key]</code> and <code>@key</code> as citations
 	alongside the <code>\cite</code> commands — the style Zotero and Better
@@ -396,7 +403,7 @@ daily, give it a key.
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
 </table>
 </div>
 

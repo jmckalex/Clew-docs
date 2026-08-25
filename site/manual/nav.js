@@ -35,6 +35,7 @@ const MANUAL_NAV = [
 	] },
 	{ section: 'Canvas', items: [
 		{ file: 'canvas.html', title: 'The canvas' },
+		{ file: 'excalidraw.html', title: 'Drawings (Excalidraw)' },
 	] },
 	{ section: 'Workspace', items: [
 		{ file: 'navigation.html', title: 'Navigation, tabs and splits' },
