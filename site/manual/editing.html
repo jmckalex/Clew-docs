@@ -253,6 +253,53 @@ The commands behave the way you would hope:
 	See <a href="dialect.html#normal-syntax">the dialect chapter</a>.
 </div>
 
+<h2 id="tables">Tables you can type into</h2>
+
+<p>
+Markdown tables are miserable to hand-align, which is why so many people
+reach for a plugin. Clew's editor does it for you: put the cursor in a
+table and <kbd>Tab</kbd> walks the cells, <kbd>⇧Tab</kbd> walks back, and
+<kbd>Enter</kbd> moves down a row. Either key at the end of the table adds
+a new row, which is how a table actually gets typed.
+</p>
+
+<p>
+The table reflows on every move, so the columns line up as you go rather
+than after a fight:
+</p>
+
+<div class="example">
+	<p class="example-label">You type, pressing Tab between cells</p>
+	<pre><code>| Name | Qty | Cost |
+| :- | --: | :-: |
+| A very long name | 1 | 2 |</code></pre>
+	<p class="example-label">and it becomes</p>
+	<pre><code>| Name             |  Qty | Cost |
+| :--------------- | ---: | :--: |
+| A very long name |    1 |  2   |</code></pre>
+</div>
+
+<p>
+Alignment comes from the delimiter row — <code>:-</code> left,
+<code>-:</code> right, <code>:-:</code> centred — and applies to the header
+too. CJK characters and emoji are counted as two columns wide, so a table
+mixing scripts still lines up when you read it. A row with too few cells is
+padded and one with too many widens the table, because being halfway
+through typing is exactly when the help is wanted.
+</p>
+
+<p>
+<em>Format table at cursor</em> in the command palette reflows without
+moving the cursor, for a table you pasted from somewhere else.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Ordinary Tab still works</span>
+	These keys only do anything when the cursor is actually inside a table.
+	Everywhere else <kbd>Tab</kbd> indents and <kbd>Enter</kbd> makes a new
+	line, exactly as before.
+</div>
+
 <h2 id="autosave">Auto-save: disk is the source of truth</h2>
 
 <p>
