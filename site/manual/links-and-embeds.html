@@ -196,9 +196,10 @@ When the target of an embed is a media file, it renders natively:
 <ul>
 	<li><strong>Images</strong> — <code>![[clew-gradient.png]]</code>
 	shows the image inline.</li>
-	<li><strong>PDFs</strong> — <code>![[sample.pdf]]</code> embeds
-	Chromium's full PDF viewer in a framed box, with a title bar linking
-	to the file's own viewer tab.</li>
+	<li><strong>PDFs</strong> — <code>![[sample.pdf]]</code> embeds Clew's
+	full PDF viewer in a framed box: page, search and annotate in place,
+	with a title bar linking to the file's own viewer tab and a
+	<strong>⟷</strong> button that widens the embed to the window.</li>
 	<li><strong>Audio and video</strong> — <code>![[clip.mp3]]</code> and
 	<code>![[film.mp4]]</code> get playback controls.</li>
 	<li><strong>Canvases</strong> — <code>![[Demo Canvas.canvas]]</code>
@@ -424,7 +425,7 @@ detected and walked once, so a link loop cannot hang the indexer.
 <table>
 	<tr><th>Kind</th><th>Extensions</th><th>Renders as</th></tr>
 	<tr><td>Image</td><td><code>.png .jpg .jpeg .gif .webp .avif .svg .bmp</code></td><td>Inline image (size pipe applies)</td></tr>
-	<tr><td>PDF</td><td><code>.pdf</code></td><td>Embedded Chromium PDF viewer</td></tr>
+	<tr><td>PDF</td><td><code>.pdf</code></td><td>Embedded PDF viewer (annotatable)</td></tr>
 	<tr><td>Audio</td><td><code>.mp3 .m4a .wav .ogg .flac</code></td><td>Audio player</td></tr>
 	<tr><td>Video</td><td><code>.mp4 .webm .mov</code></td><td>Video player (size pipe applies)</td></tr>
 	<tr><td>Canvas</td><td><code>.canvas</code></td><td>Live read-only canvas view</td></tr>

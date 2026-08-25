@@ -157,6 +157,49 @@ anyway still renders inline as usual. See
 <a href="panels.html">Panels</a>.
 </p>
 
+<h2 id="pandoc">Pandoc-style citations</h2>
+
+<p>
+Notes written for pandoc — and anything Zotero or Better BibTeX exported —
+use a different notation: <code>[@key]</code> rather than
+<code>\citep{key}</code>. Clew reads it, if you ask. Turn on
+<em>Pandoc citations</em> in Settings&nbsp;→&nbsp;This vault and both
+notations work, in the same note if you like, resolving against the same
+bibliography and formatting identically.
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You write</th><th>Equivalent</th><th>Renders like</th></tr>
+	<tr><td><code>@key</code></td><td><code>\citet{key}</code></td><td>Knuth (1984)</td></tr>
+	<tr><td><code>[@key]</code></td><td><code>\citep{key}</code></td><td>(Knuth 1984)</td></tr>
+	<tr><td><code>[@key, p. 33]</code></td><td><code>\citep[p. 33]{key}</code></td><td>(Knuth 1984, p. 33)</td></tr>
+	<tr><td><code>[see @key, p. 33]</code></td><td><code>\citep[see][p. 33]{key}</code></td><td>(see Knuth 1984, p. 33)</td></tr>
+	<tr><td><code>[-@key]</code></td><td><code>\citeyearpar{key}</code></td><td>(1984)</td></tr>
+	<tr><td><code>-@key</code></td><td><code>\citeyear{key}</code></td><td>1984</td></tr>
+	<tr><td><code>[@a; @b]</code></td><td><code>\citep{a,b}</code></td><td>(Knuth 1984; Lamport 1986)</td></tr>
+	<tr><td><code>@{key with oddities}</code></td><td>—</td><td>braces let a key contain anything</td></tr>
+</table>
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">Why it is off by default</span>
+	<code>@</code> is jmarkdown's directive sigil. With this on, a bare
+	<code>@word</code> that is not a registered directive is read as a
+	citation key — so <code>mail me @alex</code> stops rendering as written,
+	and an @mention in prose becomes a dangling reference. It is a real
+	change to how an existing document reads, which is why it is a switch
+	you throw for a vault that wants it rather than the default everywhere.
+</div>
+
+<p>
+Nothing else changes. The translation happens at the tokenizer, so all
+three back ends — natbib in LaTeX export, the compile-time CSL pass, and
+the live bibliography in reading mode — see the same commands they always
+did, and <a href="#styles">styles</a>, <a href="#sectional">sectional
+bibliographies</a> and the <em>Refs</em> panel behave identically.
+</p>
+
 <h2 id="commands">The cite commands</h2>
 
 <p>

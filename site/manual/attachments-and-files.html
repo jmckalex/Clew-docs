@@ -145,8 +145,8 @@ one in the file explorer, or click a <code>[[link]]</code> to one in
 reading mode, and it opens in a viewer tab alongside your note tabs. A
 viewer tab behaves like any other: it can be dragged into a split, kept
 open next to the note that discusses it, and reopened from the tab's
-history. PDFs get Chromium's full PDF viewer — page navigation,
-zooming, text search and selection — the same one your browser uses.
+history. PDFs open in Clew's own viewer — page navigation, thumbnails,
+zooming, text search and selection, printing, and annotation.
 </p>
 
 <div class="callout tip">
@@ -200,12 +200,43 @@ ignore it.
 <h3 id="pdfs">PDFs</h3>
 
 <p>
-<code>![[sample.pdf]]</code> embeds the document itself, rendered by
-Chromium's PDF viewer inside a titled box in the note — you can page
-through and search the PDF without leaving reading mode. The box's
-title is a link that opens the same file in a full viewer tab when the
-embedded view is too small for the job.
+<code>![[sample.pdf]]</code> embeds the document itself inside a titled
+box in the note — page through it, search it, and annotate it without
+leaving reading mode. The box's title is a link that opens the same file
+in a full viewer tab, and beside it sits a <strong>⟷</strong> button that
+expands the embed to the width of the window and back: useful when you
+want the page and comment sidebars beside the document rather than
+stacked below it, which is what happens in a narrow column.
 </p>
+
+<h4 id="annotating">Annotating</h4>
+
+<p>
+The viewer's <em>Annotate</em> tab gives you highlighting, ink, shapes,
+notes and stamps. Anything you draw is written <strong>into the PDF
+file itself</strong> a couple of seconds after you stop — there is no
+Save button to miss, and a small chip beside the filename tells you where
+things stand (<em>unsaved</em>, <em>saving…</em>, <em>saved</em>).
+</p>
+
+<p>
+Because the edit lands in the file rather than in a Clew-only sidecar, an
+annotation made here shows up in the viewer tab, on a canvas, in
+Preview.app, and on any other device the vault reaches. The same is true
+in reverse: annotate on an iPad and the marks are there when you open the
+note on your desktop. The three surfaces are three windows onto one file.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Note</span>
+	The viewer is <a href="https://www.embedpdf.com/">EmbedPDF</a>, which
+	Clew also uses on iOS — the same viewer, the same annotations, either
+	end. A PDF that uses Chinese, Japanese or Korean text
+	<em>without embedding its own fonts</em> needs fallback fonts that
+	Clew does not ship, because they are 139&nbsp;MB; download them once
+	from Settings&nbsp;→&nbsp;PDF&nbsp;viewer and they are kept locally
+	from then on. Nothing is fetched from the network while you read.
+</div>
 
 <h3 id="av">Audio and video</h3>
 
@@ -291,7 +322,7 @@ everything you paste from now on.
 		<td>Inline image</td><td>Yes</td><td>Yes</td></tr>
 	<tr><td>PDF</td>
 		<td><code>.pdf</code></td>
-		<td>Chromium PDF viewer in a titled box</td><td>Yes</td><td>—</td></tr>
+		<td>Clew's PDF viewer in a titled box (annotatable)</td><td>Yes</td><td>—</td></tr>
 	<tr><td>Audio</td>
 		<td><code>.mp3</code> <code>.m4a</code> <code>.wav</code> <code>.ogg</code> <code>.flac</code></td>
 		<td>Audio player</td><td>Yes</td><td>—</td></tr>

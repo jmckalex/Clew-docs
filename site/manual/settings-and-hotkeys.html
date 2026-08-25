@@ -131,6 +131,19 @@ both:
 	<dd>A note whose contents seed each new daily note.</dd>
 </dl>
 
+<h3 id="pdf-viewer">PDF viewer</h3>
+
+<dl>
+	<dt>Chinese, Japanese and Korean fonts <code>(pdfCjkFonts)</code></dt>
+	<dd>A PDF that uses CJK text <em>without embedding its own fonts</em>
+	needs the reader to supply them. The four Noto packs are 139&nbsp;MB —
+	too much to put in every installer for the minority who need them, and
+	not something to fetch mid-render — so they are downloaded once, on
+	this button, and kept locally from then on. Nothing is fetched from the
+	network while you read. The button becomes <em>Remove</em> once they
+	are installed, which reclaims the disk.</dd>
+</dl>
+
 <h3 id="files">Files</h3>
 
 <dl>
@@ -147,7 +160,7 @@ both:
 
 <p>
 The per-vault switches, stored in
-<code>.clew/vault-settings.json</code>. There are six, plus the
+<code>.clew/vault-settings.json</code>. There are seven, plus the
 plugin list:
 </p>
 
@@ -187,6 +200,15 @@ plugin list:
 	<dd>Adds a <em>Refs</em> tab to the right sidebar showing the active
 	note's formatted references, even while the note is in source
 	mode.</dd>
+	<dt>Pandoc citations <code>(pandocCitations)</code></dt>
+	<dd>Reads <code>[@key]</code> and <code>@key</code> as citations
+	alongside the <code>\cite</code> commands — the style Zotero and Better
+	BibTeX export, and what a vault written for pandoc will be full of. Off
+	by default, and worth understanding why: <code>@</code> is jmarkdown's
+	directive sigil, so with this on a bare <code>@word</code> that is not a
+	registered directive is read as a citation key — an email address or an
+	@mention in prose will change how it renders. See
+	<a href="citations.html#pandoc">Citations</a>.</dd>
 	<dt>Plugins <code>(plugins)</code></dt>
 	<dd>Below the switches, every plugin discovered in
 	<code>.clew/plugins/</code> is listed with its version and surfaces,
@@ -374,7 +396,7 @@ daily, give it a key.
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
 </table>
 </div>
 
