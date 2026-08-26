@@ -186,6 +186,42 @@ the ticked task then vanishes from every “not done” list at once.
 	context, and ticking it in either place updates both.
 </div>
 
+<h2 id="tasks-plugin">The Tasks <em>plugin's</em> dialect</h2>
+
+<p>
+Obsidian's popular <a href="https://publish.obsidian.md/tasks/">Tasks
+plugin</a> uses the <em>same</em> <code>```tasks</code> fence with a
+different query language — instruction lines such as <code>not
+done</code>, <code>path includes Inbox</code>, <code>heading includes
+todo</code>, <code>due before today</code>, <code>priority is
+high</code>, <code>sort by due</code>, <code>group by heading</code>,
+<code>limit 20</code>, and layout lines like <code>hide backlink</code>
+or <code>short mode</code>. Clew serves both dialects from the one
+fence: a block whose lines are all Clew syntax renders exactly as
+before, and a block using a plugin instruction runs the plugin dialect —
+a flat, vault-wide task list with metadata badges and a backlink to each
+task's note, checkboxes live and writing back to their source lines as
+always.
+</p>
+
+<p>
+The plugin's emoji conventions on the task line are understood and
+hidden from the rendered text, exactly as the plugin hides them:
+<code>📅</code> due, <code>⏳</code> scheduled, <code>🛫</code> start,
+<code>✅</code> done-on, <code>➕</code> created, <code>🔁</code> a
+recurrence rule, and the priority marks
+<code>🔺⏫🔼🔽⏬</code>. Filters like <code>due before
+2025-01-01</code>, <code>has scheduled date</code> and <code>is
+recurring</code> read them.
+</p>
+
+<p>
+An instruction line <em>neither</em> dialect knows refuses the whole
+block by name — a silently dropped filter would show too many tasks,
+which is worse than showing none. <code>filter by function</code> and
+its siblings are JavaScript and are refused as such.
+</p>
+
 <h2 id="kanban">The <code>kanban</code> fence</h2>
 
 <p>
@@ -285,6 +321,29 @@ the same file.
 	snaps back on the next render. Flatten that note's frontmatter and
 	the card becomes draggable like any other.
 </div>
+
+<h2 id="kanban-plugin">Obsidian Kanban-plugin boards</h2>
+
+<p>
+Obsidian's <em>Kanban plugin</em> stores a whole board as an ordinary
+note: <code>kanban-plugin: basic</code> in the frontmatter, one
+<code>## heading</code> per lane, one <code>- [ ]</code> list item per
+card, and a settings block at the bottom that belongs to the plugin
+alone. Clew recognises the frontmatter key and renders such a note
+<strong>as a board</strong> in reading mode — one column per lane, card
+checkboxes live and writing back to their exact source lines, the
+plugin's archive (everything below the <code>***</code> divider) left
+out just as the plugin leaves it out. In source mode the note is the
+markdown it always was, which is the point of the format; and because
+Clew only ever rewrites a checkbox character, a board edited in Clew
+reopens in Obsidian's plugin untouched.
+</p>
+
+<p>
+Rearranging cards between lanes is editing in Obsidian's plugin;
+in Clew (for now) it is a source-mode edit — move the list item under
+another heading and the board follows on the next render.
+</p>
 
 <h2 id="canvas">Boards and task lists on the canvas</h2>
 
