@@ -49,7 +49,9 @@ catalogue — render instantly in the preview and follow the app's
 light and dark themes. TikZ and MetaPost figures go further: the note
 is handed to a real TeX toolchain on your machine, compiled, and the
 resulting vector graphic cached next to the note — publication-grade
-figures, living as plain text in a Markdown file.
+figures, living as plain text in a Markdown file. Compiled figures sit
+on the page like ink: black-on-transparent in the light theme, inverted
+to white-on-transparent in the dark one.
 </p>
 
 <h2 id="mermaid">Mermaid</h2>
@@ -130,13 +132,13 @@ dark page.
 </p>
 
 <figure class="shot">
-	<img src="images/diagrams.png" alt="The Diagrams feature note in reading mode: a three-dimensional TikZ figure from a physics paper — rings of point particles with force arrows converging on the origin — and below it a MetaPost finite-state machine">
+	<img src="images/diagrams.png" alt="The Diagrams feature note in reading mode: a three-dimensional TikZ figure from a physics paper — rings of point particles with force arrows converging on the origin — and below it a MetaPost abacus-machine flowchart">
 	<figcaption>The demo vault's Diagrams note: a genuinely
 	three-dimensional TikZ figure from a real physics paper — rings of
 	point particles spun around the axis by a loop, force arrows and all —
-	and a MetaPost finite-state machine that computes its own layout, both
-	compiled to SVG by the local TeX toolchain and cached beside the
-	note.</figcaption>
+	and a MetaPost abacus-machine flowchart whose layout MetaPost solves
+	from declared equations, both compiled to SVG by the local TeX
+	toolchain and cached beside the note.</figcaption>
 </figure>
 
 <h2 id="tikz">TikZ</h2>
