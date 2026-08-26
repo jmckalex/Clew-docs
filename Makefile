@@ -41,7 +41,7 @@ LOCAL_DIR := site
 # Release binaries: ~640 MB, so they are in neither git nor the ordinary
 # sync. They change only when a release ships. `make stage-downloads` copies
 # them out of the app repo's out/ and `make sync-downloads` uploads them.
-VERSION := 0.8.0
+VERSION := 0.9.0
 OUT_DIR := ../Clew-app/out
 DL_DIR  := $(LOCAL_DIR)/downloads
 
@@ -157,7 +157,7 @@ dry-run: check
 	rsync $(RSYNC_FLAGS) --dry-run --itemize-changes $(LOCAL_DIR)/ $(REMOTE_HOST):$(REMOTE_PATH)/
 
 # The landing page links hyphenated filenames; electron-builder writes the
-# Windows installer with spaces ("Clew Setup 0.8.0.exe"). Rename on the way
+# Windows installer with spaces ("Clew Setup 0.9.0.exe"). Rename on the way
 # in rather than percent-encoding the href — a URL with %20 in it is the kind
 # of thing that gets mangled when someone pastes the link.
 stage-downloads:
