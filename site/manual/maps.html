@@ -113,20 +113,24 @@ your vault.
 <h2 id="cartography">Cartography and tile servers</h2>
 
 <p>
-The default cartography is CARTO <strong>Voyager</strong> — the clean,
-Google-Maps-like look. Five other named styles are built in; pick one
-with <code>tiles:</code> (or its alias <code>style:</code>):
+The default cartography is <strong>OpenStreetMap</strong>'s classic
+rendering. Five other named styles are built in; pick one with
+<code>tiles:</code> (or its alias <code>style:</code>). A caution about
+the CARTO styles: CARTO began watermarking keyless requests with "API
+KEY REQUIRED" tiles, so <code>voyager</code>, <code>light</code> and
+<code>dark</code> are best pointed at your own key-fronting proxy via
+<code>tileServer:</code>.
 </p>
 
 <div class="tablewrap">
 <table>
 	<tr><th>Style</th><th>Source</th><th>Character</th></tr>
-	<tr><td><code>voyager</code></td><td>CARTO</td><td>The default: clear, modern general-purpose cartography.</td></tr>
+	<tr><td><code>osm</code></td><td>OpenStreetMap</td><td>The default: the classic OpenStreetMap rendering.</td></tr>
+	<tr><td><code>voyager</code></td><td>CARTO</td><td>Clear, modern, Google-Maps-like cartography.</td></tr>
 	<tr><td><code>light</code></td><td>CARTO</td><td>Near-white minimal basemap — good under dense marker sets.</td></tr>
 	<tr><td><code>dark</code></td><td>CARTO</td><td>Dark basemap that matches Clew's dark theme natively.</td></tr>
 	<tr><td><code>satellite</code></td><td>Esri</td><td>Aerial imagery.</td></tr>
 	<tr><td><code>terrain</code></td><td>OpenTopoMap</td><td>Topographic style with contour lines and hillshading.</td></tr>
-	<tr><td><code>osm</code></td><td>OpenStreetMap</td><td>The classic OpenStreetMap rendering.</td></tr>
 </table>
 </div>
 

@@ -633,11 +633,17 @@ views:
 Table, list and card views render, with the base's own
 <code>displayName</code> headings, its filters (nested
 <code>and</code>/<code>or</code>/<code>not</code> to any depth), its
-computed <code>formulas</code>, sorting and limits. A view type Clew
-cannot draw — a map view — says so rather than being approximated with a
-table. Base filters query <em>files</em>, not only notes, so a base over
-attachments behaves as it should. Columns over stored fields are editable
-here too.
+computed <code>formulas</code>, sorting and limits. <strong>Map
+views</strong> render too: every row whose <code>coordinates</code>
+property yields a latitude and longitude becomes a marker on the same
+<a href="maps.html">Leaflet map</a> the <code>```leaflet</code> fence
+draws — popups open the note, <code>defaultZoom</code> caps the fit, and
+a <code>markerColor</code> that lands on a named marker color tints the
+pin (<code>markerIcon</code> names Lucide icons Clew does not ship, so
+pins stay pins). A view type Clew cannot draw says so rather than being
+approximated with a table. Base filters query <em>files</em>, not only
+notes, so a base over attachments behaves as it should. Columns over
+stored fields are editable here too.
 </p>
 
 <p>
