@@ -513,12 +513,19 @@ What works: <code>TABLE</code> (with <code>WITHOUT ID</code> and
 <code>[[links]]</code> and <code>outgoing()</code>, combined with
 <code>and</code>/<code>or</code> and negated with <code>!</code> or
 <code>-</code>; <code>WHERE</code> (repeatable, all must hold),
-multi-key <code>SORT</code>, <code>GROUP BY</code> and
-<code>LIMIT</code>; the whole <code>file.*</code> namespace including
-<code>inlinks</code> and <code>outlinks</code>; <code>this</code>, meaning
-the note the query sits in; and around thirty functions. Cells over a
-field the note really stores stay <a href="#editable">editable</a>, just
-as in Clew's own tables.
+multi-key <code>SORT</code>, <code>FLATTEN</code> (with <code>AS</code>,
+including the <code>FLATTEN list(expr) AS name</code> idiom that binds a
+computed value per row), <code>GROUP BY</code> with its real semantics —
+one row per group, exposing <code>key</code> and <code>rows</code>, so
+<code>rows.file.name</code> and <code>FLATTEN rows AS R</code> work —
+and <code>LIMIT</code>, all applied <strong>in written order</strong>,
+as Dataview applies them; lambdas like <code>(x) =&gt; x.done</code>
+with <code>filter</code>, <code>map</code>, <code>any</code>,
+<code>all</code> and <code>none</code>; the whole <code>file.*</code>
+namespace including <code>inlinks</code> and <code>outlinks</code>;
+<code>this</code>, meaning the note the query sits in; and around forty
+functions. Cells over a field the note really stores stay
+<a href="#editable">editable</a>, just as in Clew's own tables.
 </p>
 
 <p>
@@ -529,22 +536,23 @@ in the middle of a sentence renders the value.
 <h3 id="dataview-refusals">What is refused, and why by name</h3>
 
 <p>
-<code>FLATTEN</code>, <code>GROUP BY … rows</code>,
-<code>file.lists</code>, <code>file.day</code>, lambda functions and
-<code>CALENDAR</code> queries are not implemented. A query using one
-renders a box naming it, rather than running the rest — a query that
-silently dropped its <code>FLATTEN</code> would show numbers that are
-wrong, which is worse than showing nothing.
+<code>file.lists</code>, <code>file.day</code>, <code>CALENDAR</code>
+queries, and a few functions (<code>meta</code>, <code>embed</code>)
+are not implemented. A query using one renders a box naming it, rather
+than running the rest — a query that silently dropped a clause would
+show numbers that are wrong, which is worse than showing nothing.
 </p>
 
 <div class="callout tip">
 	<span class="callout-title">Why that particular subset</span>
 	It was chosen by measurement rather than by working down the
-	reference page. Four public vaults were scanned: the subset above
-	covers <strong>every DQL query in three real ones</strong> and 43% of
-	the vault that exists to <em>teach</em> Dataview. The difference is
-	almost entirely <code>FLATTEN</code> and <code>rows</code>, which turn
-	out to be syllabus rather than daily use.
+	reference page. Five public vaults were scanned: the subset covers
+	<strong>every DQL query in three real ones</strong>, five of the six
+	in a fourth (the sixth wants <code>meta()</code> and
+	<code>embed()</code>), and two-thirds of the vault that exists to
+	<em>teach</em> Dataview. <code>FLATTEN</code>, real
+	<code>GROUP BY … rows</code>, and lambdas joined the subset when the
+	fifth vault showed them in genuine daily use.
 </div>
 
 <h3 id="dataviewjs"><code>dataviewjs</code></h3>
