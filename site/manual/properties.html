@@ -382,6 +382,19 @@ and the plugin's button system are refused by name; in a website export
 the widgets render disabled, because a static page has no write path.
 </p>
 
+<p>
+Widgets can also bind to <strong>text</strong>, not only metadata —
+a Clew-native extension. Give a block a
+<a href="reading-mode.html">block reference</a> marker and bind a text
+widget to it: <code>INPUT[text:^motto]</code> holds the text of the
+block <code>^motto</code> names, and typing in the widget rewrites that
+exact block in the file, marker preserved. The widget holds the
+marker's line verbatim, so plain paragraphs are the natural targets;
+only <code>text</code> and <code>textArea</code> bind to blocks, values
+stay one block, and a marker inside a code fence is never a target.
+The demo vault's <em>Widgets</em> guide note has every control live.
+</p>
+
 <div class="callout obsidian">
 	<span class="callout-title">Obsidian compatibility</span>
 	Frontmatter is standard Obsidian properties: the same
