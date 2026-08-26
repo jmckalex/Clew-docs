@@ -159,8 +159,31 @@ and leaves every other byte alone:
 	<li>the <code>## Text Elements</code> section;</li>
 	<li>the compression — a file Obsidian stored compressed stays compressed,
 	a file stored as plain JSON stays plain;</li>
+	<li>the <code>## Embedded Files</code> section — see below;</li>
 	<li>any section Clew has never heard of.</li>
 </ul>
+
+<h3 id="images">Images inside drawings</h3>
+
+<p>
+Obsidian's plugin stores a pasted image as an ordinary vault attachment:
+the drawing keeps only a file id, and the markdown's
+<code>## Embedded Files</code> section maps that id to a wikilink. Clew
+reads that section, resolves each link the way a wikilink click resolves,
+and loads the image into the drawing — so a vault full of illustrated
+drawings looks in Clew the way it looks in Obsidian. Saving reverses the
+trick: the image bytes are <em>never</em> copied into the markdown, the
+section is left as it was, and the attachment stays the single copy.
+</p>
+
+<p>
+Drawings that carry their images <em>inside</em> the scene — the
+<code>files</code> map of dataURLs that excalidraw.com exports and some
+plugin configurations write — work too, and round-trip unchanged. An
+embedded entry that is not an image (the plugin can also transclude
+notes and areas of other drawings this way) shows Excalidraw's own
+missing-image placeholder rather than a wrong rendering.
+</p>
 
 <p>
 An unedited drawing saves back byte-for-byte, and nothing is written
