@@ -209,8 +209,10 @@ when the plugin is disabled. A plugin cannot outlive its vault.
 <h2 id="worked-example">The demo vault's own plugins, read closely</h2>
 
 <p>
-The demo vault ships two plugins, one per interesting surface, and both
-are meant to be copied.
+The demo vault ships three plugins, and all of them are meant to be
+copied: a preview surface (Note Headers), an app surface (Word Count),
+and an engine + preview pair (Charts) — one worked example per way of
+extending Clew.
 </p>
 
 <h3>Note Headers — a preview surface</h3>
@@ -391,6 +393,70 @@ rebound in the hotkey editor — the command system does not distinguish
 plugin commands from built-in ones.
 </p>
 
+<h3 id="charts">Charts — an engine + preview pair</h3>
+
+<p>
+The third plugin adds <em>syntax</em>: the <code>```chart</code> fence
+of Obsidian's Charts plugin, reimplemented for Clew from its documented
+YAML format and drawn with a bundled copy of the MIT-licensed
+<a href="https://www.chartjs.org/">Chart.js</a>. The demo vault's own
+<em>Charts</em> guide note holds a live example of every form; the
+shortest is this:
+</p>
+
+<div class="example">
+	<p class="example-label">In any note</p>
+	<pre><code>```chart
+type: bar
+labels: [Monday, Tuesday, Wednesday]
+series:
+  - title: Grades
+    data: [83, 95, 62]
+```</code></pre>
+</div>
+
+<p>
+<code>type</code> is one of <code>bar</code>, <code>line</code>,
+<code>pie</code>, <code>doughnut</code>, <code>radar</code> or
+<code>polarArea</code>, and the documented modifiers —
+<code>width</code>, <code>stacked</code>, <code>indexAxis</code>,
+<code>tension</code>, <code>fill</code>, <code>bestFit</code>,
+<code>beginAtZero</code>, axis titles and bounds,
+<code>legendPosition</code>, <code>transparency</code>,
+<code>labelColors</code> — do what they do in Obsidian. What the plugin
+does not support it refuses <strong>by name</strong> rather than
+half-drawing: a chart that silently dropped its <code>stacked:</code>
+would be a wrong chart, which is worse than no chart. (The one
+documented modifier refused outright is <code>time:</code> — date axes
+need a date adapter the plugin does not ship.)
+</p>
+
+<p>
+As a plugin to read, Charts is the worked example of a fence that needs
+a <em>browser</em> to finish the job, and of the two surfaces
+cooperating through the document. The engine surface does all the
+thinking in the render worker — parses the YAML, maps the modifiers,
+refuses what it must — and emits only a placeholder
+<code>&lt;div&gt;</code> carrying the finished Chart.js configuration
+as JSON. The preview surface does all the drawing: it loads Chart.js
+from the plugin's own folder on demand (a note without charts never
+pays for it), instantiates a canvas per placeholder, and colors labels
+and grid lines from the document's computed styles so charts follow the
+app theme. The same two habits as the banner keep charts alive across
+live re-renders: the canvas carries <code>data-clew-keep</code>, and
+the script compares each placeholder's configuration against what it
+already drew — an unchanged chart is left exactly where it is, so
+editing the prose around one does not restart its animation.
+</p>
+
+<p>
+With <em>Run dataviewjs blocks</em> also enabled, the plugin supplies
+Obsidian's <code>renderChart(config, element)</code> to
+<code>```dataviewjs</code> scripts — a raw Chart.js configuration in, a
+chart in the output; see
+<a href="queries.html#dataviewjs">the queries chapter</a>.
+</p>
+
 <h2 id="first-plugin">Writing your first plugin, step by step</h2>
 
 <ol>
@@ -505,7 +571,8 @@ full of plugins.
 		<td>In every rendered-note document, after the preview client</td>
 		<td>Decorating rendered output; widgets</td>
 		<td>Re-apply on <code>clew:render</code>; may use the Note API if
-		that gate is on; not shipped on website export.</td></tr>
+		that gate is on; ships with website export (the plugin folder is
+		copied under <code>assets/plugins/</code>).</td></tr>
 	<tr><td><strong>app</strong></td>
 		<td>In the app, against the versioned plugin API</td>
 		<td>Commands, small workflow automations</td>

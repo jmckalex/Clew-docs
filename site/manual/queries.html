@@ -581,6 +581,18 @@ asynchronous: notes render synchronously here, so a block using top-level
 already drawn is kept, above the explanation.
 </p>
 
+<p>
+One bridge crosses that line: with the demo vault's
+<a href="plugins.html#charts">Charts plugin</a> enabled, scripts get
+Obsidian's <code>renderChart(config, element)</code> — also reachable
+as <code>window.renderChart</code>, with <code>this.container</code>
+accepted as the element, the way scripts in the wild call it. The
+configuration is raw Chart.js, and it crosses from the render worker to
+the preview as JSON, so it must be plain data: a config carrying a
+function is refused naming the part that cannot make the trip, and
+without the plugin the call fails by name like everything else.
+</p>
+
 <h2 id="bases">Obsidian Bases</h2>
 
 <p>
