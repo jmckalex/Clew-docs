@@ -435,6 +435,23 @@ edits route back to the source notes exactly as they do in reading
 mode.
 </p>
 
+<h2 id="search-embeds">The other <code>query</code>: embedded searches</h2>
+
+<p>
+Core Obsidian uses the same <code>```query</code> fence for something
+different — an embedded <em>search</em>, whose body is one search
+expression rather than <code>key: value</code> lines. Clew serves both
+from the one fence and tells them apart by the colon: <code>from:
+Projects</code> (a space) is Clew's query language, <code>tag:#project
+path:"Areas"</code> (no space) is a search. A search embed renders the
+matching notes with their matching lines. Terms combine with AND,
+<code>"quotes"</code> make phrases, <code>tag:</code>, <code>path:</code>
+and <code>file:</code> scope it, <code>-</code> negates, <code>OR</code>
+offers alternatives, and <code>[property:value]</code> matches
+frontmatter. Regexes, parentheses, and <code>line:</code>/
+<code>section:</code>/<code>task:</code> scopes are refused by name.
+</p>
+
 <h2 id="vault-api">Scripting: the <code>vault</code> global</h2>
 
 <p>

@@ -144,6 +144,33 @@ note remains readable, and it is obvious what happened rather than
 silently approximated.
 </p>
 
+<h2 id="admonitions">Admonition fences — the older spelling</h2>
+
+<p>
+Before Obsidian had callouts, vaults used the <em>Admonition</em>
+plugin, which writes fenced blocks instead of blockquotes. Clew reads
+those too, and renders them as the callouts they always meant — the
+same types, the same look:
+</p>
+
+<div class="example">
+	<p class="example-label">You write (Admonition's syntax)</p>
+	<pre><code>```ad-warning
+title: Careful now
+collapse: closed
+The body, in ordinary markdown.
+```</code></pre>
+</div>
+
+<p>
+<code>title:</code> and <code>collapse:</code> (<code>open</code> /
+<code>closed</code>) are honoured; <code>icon:</code> and
+<code>color:</code> were the plugin's cosmetic overrides and the
+callout's own type styling applies instead. An <code>ad-</code> type
+Clew's table does not know renders as a note titled with the raw type
+name, which is how the plugin treated user-defined types too.
+</p>
+
 <h2 id="styling">Styling and compatibility</h2>
 
 <p>

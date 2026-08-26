@@ -347,6 +347,26 @@ writes the new value into that note's frontmatter, or onto its inline
 this chapter, safety valve included.
 </p>
 
+<h3 id="meta-bind">Widgets in prose (Meta Bind)</h3>
+
+<p>
+The same write path has one more front end: the Meta Bind plugin's
+input widgets. <code>INPUT[toggle:done]</code> in a sentence renders a
+live toggle two-way bound to the note's <code>done</code> property;
+<code>INPUT[slider(minValue(0), maxValue(10)):rating]</code> is a
+slider; <code>INPUT[inlineSelect(option(draft), option(review)):status]</code>
+a dropdown; <code>text</code> and <code>number</code> inputs work too,
+and a binding can reach another note —
+<code>INPUT[toggle:[[Groceries]]#done]</code>.
+<code>VIEW[{rating}]</code> displays a bound value inline. Flip a
+widget and the property changes in the file — same machinery as
+editable query cells, safety valve included — and every other view of
+that field follows on the next render. Input types beyond those five,
+<code>VIEW</code> expressions, and the plugin's button system are
+refused by name; in a website export the widgets render disabled,
+because a static page has no write path.
+</p>
+
 <div class="callout obsidian">
 	<span class="callout-title">Obsidian compatibility</span>
 	Frontmatter is standard Obsidian properties: the same
