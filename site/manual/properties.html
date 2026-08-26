@@ -351,20 +351,35 @@ this chapter, safety valve included.
 
 <p>
 The same write path has one more front end: the Meta Bind plugin's
-input widgets. <code>INPUT[toggle:done]</code> in a sentence renders a
-live toggle two-way bound to the note's <code>done</code> property;
+input widgets, rendered as
+<a href="https://webawesome.com">Web Awesome</a> components (MIT,
+bundled and self-hosted, loaded lazily only when a note carries one).
+<code>INPUT[toggle:done]</code> in a sentence renders a live switch
+two-way bound to the note's <code>done</code> property;
 <code>INPUT[slider(minValue(0), maxValue(10)):rating]</code> is a
 slider; <code>INPUT[inlineSelect(option(draft), option(review)):status]</code>
-a dropdown; <code>text</code> and <code>number</code> inputs work too,
-and a binding can reach another note —
-<code>INPUT[toggle:[[Groceries]]#done]</code>.
-<code>VIEW[{rating}]</code> displays a bound value inline. Flip a
-widget and the property changes in the file — same machinery as
-editable query cells, safety valve included — and every other view of
-that field follows on the next render. Input types beyond those five,
-<code>VIEW</code> expressions, and the plugin's button system are
-refused by name; in a website export the widgets render disabled,
-because a static page has no write path.
+a dropdown; <code>text</code>, <code>textArea</code>,
+<code>number</code>, <code>datePicker</code> and <code>time</code>
+inputs work too; <code>progressBar</code> renders as a bound read-only
+bar; and a binding can reach another note —
+<code>INPUT[toggle:[[Groceries]]#done]</code>. Two input types are
+<strong>Clew-native additions</strong> (Obsidian's plugin will show its
+unknown-type error for them): <code>rating</code> — star ratings, with
+<code>stepSize(0.5)</code> for half stars — and <code>color</code>, a
+color swatch bound to a hex-string property.
+</p>
+
+<p>
+<code>VIEW[{rating}]</code> displays a bound value inline, and grows
+Clew-native formatter kinds: <code>VIEW[relativeTime:{due}]</code>
+("in 3 weeks"), <code>formatDate</code>, <code>formatNumber</code>,
+<code>formatBytes</code>, <code>badge</code>, and <code>qr</code>,
+which renders a bound URL as a scannable QR code. Flip a widget and the
+property changes in the file — same machinery as editable query cells,
+safety valve included — and every other view of that field follows on
+the next render. Remaining input types, <code>VIEW</code> expressions,
+and the plugin's button system are refused by name; in a website export
+the widgets render disabled, because a static page has no write path.
 </p>
 
 <div class="callout obsidian">
