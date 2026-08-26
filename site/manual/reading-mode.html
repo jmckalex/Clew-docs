@@ -265,8 +265,14 @@ Wikilinks in reading mode are real links. Click one to open the
 target in the current tab — in reading mode, so browsing a chain of
 rendered notes feels like reading a wiki — or <kbd>⌘</kbd>-click to
 open it in a new tab. External <code>http(s)</code> links open in your
-system browser. The rendered page itself never navigates away from
-your note, whatever a link or a script inside it tries to do.
+system browser. <code>obsidian://</code> links get their Clew
+equivalent instead of bouncing off a scheme handler that may not
+exist: <code>open</code> opens the note here (if it is in this vault),
+<code>search</code> runs the search here, <code>show-plugin</code>
+takes you to that plugin's web page, and anything else says by name
+that it has no Clew equivalent. The rendered page itself never
+navigates away from your note, whatever a link or a script inside it
+tries to do.
 </p>
 
 <h3 id="checkboxes">Checkboxes are live</h3>
