@@ -306,6 +306,33 @@ moving the cursor, for a table you pasted from somewhere else.
 	line, exactly as before.
 </div>
 
+<h2 id="filling">Hard-wrapping paragraphs</h2>
+
+<p>
+The editor soft-wraps long lines on screen, but some people — Emacs
+people especially — prefer prose stored as real lines, because a
+paragraph kept on one long line makes a git diff rewrite the whole
+paragraph for a one-word edit. <em>Fill paragraph</em>
+(<kbd>⌘⌥Q</kbd>, Emacs' <kbd>M-q</kbd>) is that workflow: it rewraps
+the paragraph at the cursor to the fill column (default 72, adjustable
+in Settings&nbsp;→&nbsp;Appearance), joining short lines and breaking
+long ones. With a selection, every paragraph the selection touches is
+filled. Rendering is unchanged either way — a single newline inside a
+paragraph reads as a space.
+</p>
+
+<p>
+The command knows what it must not touch. Code fences, frontmatter,
+math blocks, tables, and headings are never joined or rewrapped; each
+list item refills separately with a hanging indent under its marker;
+blockquotes and callout bodies rewrap carrying their <code>&gt;</code>
+prefix. A wikilink, inline code span, inline math, or
+<code>\cite{…}</code> command is treated as a single unbreakable word,
+so a line break can never fall inside one — and a break is never
+placed where the next line would begin with something markdown reads
+as new structure, like a stray <code>-</code>.
+</p>
+
 <h2 id="autosave">Auto-save: disk is the source of truth</h2>
 
 <p>
@@ -435,6 +462,7 @@ Linux read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as
 	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
 	<tr><td><kbd>⌘K</kbd></td><td>Insert wikilink (pops note-name completion)</td></tr>
 	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template</td></tr>
+	<tr><td><kbd>⌘⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column)</td></tr>
 	<tr><td><kbd>⌘N</kbd></td><td>Create new note</td></tr>
 	<tr><td><kbd>⌘O</kbd></td><td>Quick switcher</td></tr>
 	<tr><td><kbd>⌘P</kbd></td><td>Command palette (every Format item lives here too)</td></tr>
