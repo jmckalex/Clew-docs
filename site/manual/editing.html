@@ -313,7 +313,7 @@ The editor soft-wraps long lines on screen, but some people — Emacs
 people especially — prefer prose stored as real lines, because a
 paragraph kept on one long line makes a git diff rewrite the whole
 paragraph for a one-word edit. <em>Fill paragraph</em>
-(<kbd>⌘⌥Q</kbd>, Emacs' <kbd>M-q</kbd>) is that workflow: it rewraps
+(<kbd>⌥Q</kbd>, Emacs' <kbd>M-q</kbd>) is that workflow: it rewraps
 the paragraph at the cursor to the fill column (default 72, adjustable
 in Settings&nbsp;→&nbsp;Appearance), joining short lines and breaking
 long ones. With a selection, every paragraph the selection touches is
@@ -331,6 +331,20 @@ prefix. A wikilink, inline code span, inline math, or
 so a line break can never fall inside one — and a break is never
 placed where the next line would begin with something markdown reads
 as new structure, like a stray <code>-</code>.
+</p>
+
+<p>
+If you would rather never think about it, turn on
+<em>Auto-fill while typing</em> (Settings&nbsp;→&nbsp;Appearance) —
+Emacs' <code>auto-fill-mode</code>. Whenever you type a space with the
+cursor past the fill column, the line breaks behind you at the last
+fitting point and the word you are typing rides onto the next line,
+prefix and all. It follows the same rules as the command — nothing
+happens inside code, math, tables, or frontmatter, atoms stay whole,
+and spacing between words is preserved — and it only ever acts on the
+line you are typing, so pasting and editing elsewhere never reflow
+anything. <kbd>⌥Q</kbd> remains the way to re-fill a paragraph after
+you edit its middle.
 </p>
 
 <h2 id="autosave">Auto-save: disk is the source of truth</h2>
@@ -462,7 +476,7 @@ Linux read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as
 	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
 	<tr><td><kbd>⌘K</kbd></td><td>Insert wikilink (pops note-name completion)</td></tr>
 	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template</td></tr>
-	<tr><td><kbd>⌘⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column)</td></tr>
+	<tr><td><kbd>⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column)</td></tr>
 	<tr><td><kbd>⌘N</kbd></td><td>Create new note</td></tr>
 	<tr><td><kbd>⌘O</kbd></td><td>Quick switcher</td></tr>
 	<tr><td><kbd>⌘P</kbd></td><td>Command palette (every Format item lives here too)</td></tr>
