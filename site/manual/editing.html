@@ -326,7 +326,9 @@ The command knows what it must not touch. Code fences, frontmatter,
 math blocks, tables, and headings are never joined or rewrapped; each
 list item refills separately with a hanging indent under its marker;
 blockquotes and callout bodies rewrap carrying their <code>&gt;</code>
-prefix. A wikilink, inline code span, inline math, or
+prefix; jmarkdown's centred blocks rewrap keeping <em>both</em>
+delimiters, <code>&gt;&gt;</code> opening and <code>&lt;&lt;</code>
+closing every line. A wikilink, inline code span, inline math, or
 <code>\cite{…}</code> command is treated as a single unbreakable word,
 so a line break can never fall inside one — and a break is never
 placed where the next line would begin with something markdown reads
