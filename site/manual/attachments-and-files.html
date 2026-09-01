@@ -313,14 +313,16 @@ PDFs). Audio and video have no meaning on paper and are omitted.
 <h2 id="other-files">Non-media files</h2>
 
 <p>
-Any other file type — an archive, a spreadsheet, a data file — can
-live in the vault and be linked with a plain <code>[[name]]</code>,
-but Clew has no viewer for it: clicking it in the explorer does
-nothing, and the right-click menu's <em>Reveal in Finder</em> hands it
-to the application that owns it. Two non-media types get special
+Any other file type — an archive or a data file, say — can live in
+the vault and be linked with a plain <code>[[name]]</code>, but Clew
+has no viewer for it: clicking it in the explorer does nothing, and
+the right-click menu's <em>Reveal in Finder</em> hands it to the
+application that owns it. Three non-media families get special
 treatment elsewhere: <code>.canvas</code> files open in the
-<a href="canvas.html">canvas</a>, and <code>.bib</code> files feed
-<a href="citations.html">citation completion and bibliographies</a>.
+<a href="canvas.html">canvas</a>, <code>.bib</code> files feed
+<a href="citations.html">citation completion and bibliographies</a>,
+and Word, Excel and PowerPoint documents open — and edit — in
+<a href="office-documents.html">office tabs</a>.
 </p>
 
 <h2 id="organizing">Where attachments live</h2>
@@ -358,6 +360,10 @@ everything you paste from now on.
 	<tr><td>Canvas</td>
 		<td><code>.canvas</code></td>
 		<td>Live read-only canvas scene</td><td>Canvas tab</td><td>—</td></tr>
+	<tr><td>Office</td>
+		<td><code>.docx</code> <code>.xlsx</code> <code>.pptx</code> <code>.odt</code> <code>.ods</code> <code>.odp</code></td>
+		<td>Not embeddable; <code>[[link]]</code> only</td>
+		<td><a href="office-documents.html">Office tab</a> (editable)</td><td>—</td></tr>
 	<tr><td>Anything else</td>
 		<td>—</td>
 		<td>Not embeddable; <code>[[link]]</code> only</td><td>No</td><td>—</td></tr>
