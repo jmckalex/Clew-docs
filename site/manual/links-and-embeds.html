@@ -277,6 +277,12 @@ When the target of an embed is a media file, it renders natively:
 	<li><strong>Canvases</strong> — <code>![[Demo Canvas.canvas]]</code>
 	embeds a live, read-only view of the canvas that you can pan and
 	zoom; see <a href="canvas.html">The canvas</a>.</li>
+	<li><strong>Office documents</strong> —
+	<code>![[Report.docx]]</code> embeds a static thumbnail of the
+	document (rendered once and cached; refreshed when the file
+	changes), and <code>![[Report.docx|live]]</code> embeds a full
+	<em>editable</em> LibreOffice. The details, costs and caveats live in
+	<a href="office-documents.html#embeds">Office documents</a>.</li>
 </ul>
 
 <h3 id="sizes">Sizes and captions</h3>
@@ -507,6 +513,7 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td>Video</td><td><code>.mp4 .webm .mov</code></td><td>Video player (size pipe applies)</td></tr>
 	<tr><td>Canvas</td><td><code>.canvas</code></td><td>Live read-only canvas view</td></tr>
 	<tr><td>Drawing</td><td><code>.excalidraw</code> <code>.excalidraw.md</code></td><td>Read-only Excalidraw view (<a href="excalidraw.html">chapter</a>)</td></tr>
+	<tr><td>Office</td><td><code>.docx .xlsx .pptx .odt .ods .odp</code></td><td>Static thumbnail; <code>|live</code> for an editable LibreOffice (<a href="office-documents.html#embeds">chapter</a>)</td></tr>
 </table>
 </div>
 
