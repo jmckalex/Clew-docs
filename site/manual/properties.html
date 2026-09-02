@@ -383,6 +383,14 @@ the widgets render disabled, because a static page has no write path.
 </p>
 
 <p>
+A widget also honours Meta Bind's <code>class(…)</code> argument:
+<code>INPUT[number(class(narrow)):mark]</code> adds your class to the
+rendered control, so a <a href="theming.html">vault script</a> can
+style or resize an individual widget — the escape hatch for the rare
+case where the default sizing is not what a note wants.
+</p>
+
+<p>
 Widgets can also bind to <strong>text</strong>, not only metadata —
 a Clew-native extension. Give a block a
 <a href="reading-mode.html">block reference</a> marker and bind a text
