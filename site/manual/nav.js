@@ -13,6 +13,7 @@ const MANUAL_NAV = [
 	] },
 	{ section: 'The vault', items: [
 		{ file: 'vaults-and-files.html', title: 'Vaults and files' },
+		{ file: 'note-history.html', title: 'Note history' },
 		{ file: 'attachments-and-files.html', title: 'Attachments and files' },
 		{ file: 'office-documents.html', title: 'Office documents' },
 	] },

@@ -181,11 +181,17 @@ both:
 
 <p>
 The per-vault switches, stored in
-<code>.clew/vault-settings.json</code>. There are eight, plus the
+<code>.clew/vault-settings.json</code>. There are nine, plus the
 plugin list:
 </p>
 
 <dl>
+	<dt>Note history <code>(history)</code></dt>
+	<dd>On by default: before a save displaces an existing note or
+	canvas, the old text is snapshotted into <code>.clew/history/</code>,
+	with sensible rate-limiting and pruning. The switch stores a
+	boolean; finer tuning is a hand-edited object. See
+	<a href="note-history.html">Note history</a>.</dd>
 	<dt>jmarkdown project <code>(jmarkdownProject)</code></dt>
 	<dd>For vaults that are jmarkdown manuscripts — a book folder, say.
 	Re-enables the engine's own-line <code>[[file.md]]</code> inclusion,
@@ -424,7 +430,7 @@ daily, give it a key.
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
 </table>
 </div>
 

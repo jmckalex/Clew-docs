@@ -76,12 +76,14 @@ outright wherever Clew walks the vault: <code>.obsidian</code>,
 <p>
 Clew keeps every piece of its own state in a single subfolder of the
 vault, <code>.clew/</code>, created when the vault is first opened.
-Everything in it falls into two kinds: caches Clew can rebuild from
-your notes at any time, and small settings files recording choices you
-made. Neither kind contains a word of your writing — deleting the
-whole folder loses no content, only convenience (your window layout,
-bookmarks, and per-vault settings go back to defaults, and the first
-re-render after deletion is a little slower while the caches rebuild).
+Everything in it falls into three kinds: caches Clew can rebuild from
+your notes at any time, small settings files recording choices you
+made, and <code>history/</code> — past versions of your notes, kept as
+a safety net. Your <em>current</em> writing lives only in the vault
+itself: deleting the whole folder loses no present content, only
+convenience and that safety net (your window layout, bookmarks, and
+per-vault settings go back to defaults, and the first re-render after
+deletion is a little slower while the caches rebuild).
 </p>
 
 <div class="tablewrap">
@@ -96,6 +98,9 @@ re-render after deletion is a little slower while the caches rebuild).
 		<td>The working directory and generated configuration for the
 		rendering engine — see
 		<a href="reading-mode.html">How rendering works</a>.</td></tr>
+	<tr><td><code>history/</code></td>
+		<td>Snapshots of notes as they change — see
+		<a href="note-history.html">Note history</a>.</td></tr>
 	<tr><td><code>workspace.json</code></td>
 		<td>Your window layout: open tabs, splits, sidebar state.</td></tr>
 	<tr><td><code>bookmarks.json</code></td>
