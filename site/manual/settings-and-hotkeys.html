@@ -245,11 +245,14 @@ plugin list:
 	@mention in prose will change how it renders. See
 	<a href="citations.html#pandoc">Citations</a>.</dd>
 	<dt>Plugins <code>(plugins)</code></dt>
-	<dd>Below the switches, every plugin discovered in
-	<code>.clew/plugins/</code> is listed with its version and surfaces,
-	each with its own enable checkbox; the enabled set is stored as an
-	array of plugin ids. A plugin is arbitrary code — enable only what
-	you trust. See <a href="plugins.html">Vault plugins</a>.</dd>
+	<dd>Below the switches, every plugin available here is listed with
+	its version, surfaces, and whether it came from this vault's
+	<code>.clew/plugins/</code> or the global plugin folder (installed
+	once, offered in every vault — there is a button to open it). Each
+	has its own enable checkbox, and the enabled set is stored as an
+	array of plugin ids in this vault: installing may be global, but
+	enabling never is. A plugin is arbitrary code — enable only what you
+	trust. See <a href="plugins.html">Vault plugins</a>.</dd>
 </dl>
 
 <div class="callout warn">

@@ -90,6 +90,68 @@ that sits beside it.
 	down — but that is robustness, not security.)
 </div>
 
+<h2 id="global">Installing a plugin once, for every vault</h2>
+
+<p>
+A plugin that travels with its vault is right for a plugin <em>about</em>
+that vault. It is the wrong shape for the plugin you wrote and want
+everywhere: copying the folder into each new vault, and re-copying it
+after every fix, is a tax on making vaults. So Clew looks for plugins in
+two places — the vault's own <code>.clew/plugins/</code>, and a
+<strong>global folder</strong> belonging to you rather than to any
+vault:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Platform</th><th>Global plugin folder</th></tr>
+	<tr><td>macOS</td>
+		<td><code>~/Library/Application Support/Clew/plugins/</code></td></tr>
+	<tr><td>Windows</td>
+		<td><code>%APPDATA%\Clew\plugins\</code></td></tr>
+	<tr><td>Linux</td>
+		<td><code>~/.config/Clew/plugins/</code></td></tr>
+</table>
+</div>
+
+<p>
+A plugin folder there has exactly the same shape as a vault plugin —
+<code>manifest.json</code> plus its surfaces — and behaves identically
+once running. <strong>Settings&nbsp;→&nbsp;This vault</strong> has an
+<em>Open global plugin folder</em> button that creates the folder and
+opens it, so there is nothing to look up.
+</p>
+
+<p>
+The split to keep in mind is <strong>installing versus
+enabling</strong>. Installing globally is done once and offers the
+plugin in every vault. <em>Enabling is still per-vault</em>, in the same
+checkbox list and the same <code>"plugins"</code> array as before — so a
+global plugin runs in the vaults you switch it on for, and nowhere else.
+The trust boundary has not moved: opening a vault still runs no plugin
+code you did not enable there.
+</p>
+
+<p>
+Both scopes appear in one list, each row marked
+<em>this&nbsp;vault</em> or <em>global</em>. If a vault contains a
+plugin with the same id as a global one, <strong>the vault's copy
+wins</strong> and the global one is hidden — one id is one plugin, and
+the more specific copy is the one you meant, which is how a vault pins
+its own version of a plugin you also use elsewhere.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Which scope for which plugin?</span>
+	Put it in the <strong>vault</strong> when the plugin is part of what
+	the vault <em>is</em> — a custom fence its notes are written in, a
+	tool a collaborator receiving the vault will need. Put it in the
+	<strong>global folder</strong> when it is part of how <em>you</em>
+	work — a command you reach for everywhere, a decoration you like in
+	every vault. Vault plugins travel; global plugins do not, so a vault
+	sent to someone else silently loses them.
+</div>
+
 <h2 id="anatomy">Anatomy of a plugin</h2>
 
 <p>
@@ -529,6 +591,26 @@ full of plugins.
 </p>
 
 <h2 id="reference">Reference</h2>
+
+<h3>Where plugins live</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Scope</th><th>Folder</th><th>Notes</th></tr>
+	<tr><td>This vault</td>
+		<td><code>&lt;vault&gt;/.clew/plugins/&lt;id&gt;/</code></td>
+		<td>Travels with the vault; wins over a global plugin of the same
+		id.</td></tr>
+	<tr><td>Global</td>
+		<td><code>&lt;app data&gt;/Clew/plugins/&lt;id&gt;/</code> —
+		Settings has an <em>Open global plugin folder</em> button</td>
+		<td>Installed once, offered in every vault; does not travel when
+		you share a vault.</td></tr>
+	<tr><td colspan="3">Either way, enabling is per-vault:
+		<code>"plugins"</code> in
+		<code>&lt;vault&gt;/.clew/vault-settings.json</code>.</td></tr>
+</table>
+</div>
 
 <h3>Manifest fields</h3>
 
