@@ -190,7 +190,8 @@ plugin list:
 	<dd>On by default: before a save displaces an existing note or
 	canvas, the old text is snapshotted into <code>.clew/history/</code>,
 	with sensible rate-limiting and pruning. The switch stores a
-	boolean; finer tuning is a hand-edited object. See
+	boolean; finer tuning is a hand-edited object. Clew for iOS reads the
+	same key, so a synced vault keeps or stops history on every device. See
 	<a href="note-history.html">Note history</a>.</dd>
 	<dt>jmarkdown project <code>(jmarkdownProject)</code></dt>
 	<dd>For vaults that are jmarkdown manuscripts — a book folder, say.
@@ -257,6 +258,16 @@ plugin list:
 	feature toggles. Both are per-vault and off by default, so a vault you
 	downloaded cannot run code in Clew until you explicitly say so — keep
 	it that way for vaults whose contents you have not read.
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	Two sections are absent on the iPad — <em>PDF viewer</em> and
+	<em>Office documents</em> — because each exists to download something
+	the iPad app cannot use yet: the CJK font pack has no iPad download,
+	and there is no office engine (see
+	<a href="office-documents.html#ipad">Office documents</a>). Everything
+	else, every per-vault switch included, is the same.
 </div>
 
 <h2 id="hotkey-editor">The hotkey editor</h2>

@@ -90,7 +90,11 @@ deletion is a little slower while the caches rebuild).
 <table>
 	<tr><th>Path</th><th>What it is</th></tr>
 	<tr><td><code>cache/</code></td>
-		<td>Rendered output from reading mode — rebuilt on demand.</td></tr>
+		<td>Rendered output from reading mode — rebuilt on demand — and
+		<code>office-thumbs/</code>, the thumbnail pictures of embedded
+		<a href="office-documents.html#embeds">office documents</a>, rendered
+		by LibreOffice on the desktop and by Quick Look on the iPad into the
+		same place.</td></tr>
 	<tr><td><code>cache.json</code></td>
 		<td>The note index (links, tags, metadata), validated against file
 		modification times so reopening a large vault is fast.</td></tr>
@@ -235,6 +239,30 @@ sensibly on the receiving machine.
 </p>
 
 <p>
+Every save, on every platform, lands as a whole file. Clew writes the
+new text to a hidden temporary beside the note —
+<code>.Thesis.md.clew-tmp</code> for <code>Thesis.md</code> — flushes
+it to disk, and only then renames it over the original, so a crash or a
+sync pass in mid-write leaves either the old note or the new one, never
+a truncated half. The temporary exists for milliseconds and is invisible
+to the explorer and to Clew's own watcher; if a crash ever strands one,
+the next save of that note sweeps it up. A sync client's activity log is
+the only place you are likely to notice them.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	iPadOS offers apps no file watcher, so Clew for iOS looks for changes
+	itself: whenever it returns to the foreground, and every twenty
+	seconds while it is in front. An edit made on the Mac reaches an open
+	note on the iPad within that window once iCloud has delivered it, and
+	the same conflict banner protects unsaved typing at either end. Saves
+	from the iPad use the same temporary-and-rename step with the same
+	file name, so neither app ever mistakes the other's temporary for a
+	note.
+</div>
+
+<p>
 The interesting case is a genuine conflict: the file changed on disk
 <em>while you have unsaved local edits</em> to it. Clew refuses to
 guess. A banner appears over the editor, auto-save pauses so your
@@ -328,10 +356,12 @@ the current vaultless window or opens a new one.
 		<a href="attachments-and-files.html">Attachments and files</a>).</td></tr>
 	<tr><td>Delete</td>
 		<td>Right-click → Delete</td>
-		<td>Goes to the system Trash.</td></tr>
+		<td>Goes to the system Trash (on the iPad, the Files app's Recently
+		Deleted where the provider keeps one).</td></tr>
 	<tr><td>Reveal on disk</td>
 		<td>Right-click → Reveal in Finder</td>
-		<td>File manager equivalent on Windows/Linux.</td></tr>
+		<td>File manager equivalent on Windows/Linux; on the iPad, find the
+		vault in the Files app instead.</td></tr>
 	<tr><td>Clew's state</td>
 		<td><code>.clew/</code> in the vault root</td>
 		<td>Safe to delete; gitignore it, except what you mean to

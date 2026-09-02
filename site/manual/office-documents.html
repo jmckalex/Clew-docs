@@ -230,6 +230,40 @@ download and from the one-document notice:
 	format on your system.</li>
 </ul>
 
+<h2 id="ipad">On iPad</h2>
+
+<p>
+Clew for iOS does not carry the office engine. A running LibreOffice
+holds about 1.6&nbsp;GB, more than iPadOS lets an app keep, so the
+download would buy nothing — and the iPad app offers none. Office
+documents are still ordinary files in the vault, and every surface
+above is backed by what iPadOS has built in, Quick Look:
+</p>
+
+<ul>
+	<li><strong>Tabs open read-only.</strong> A <code>.docx</code>,
+	<code>.xlsx</code> or <code>.pptx</code> tab shows one button,
+	<strong>Open in Quick Look</strong>, which presents the document in
+	the system viewer — the one the Files app uses — with sharing from
+	its own toolbar. To edit, open the file from the Files app in Pages,
+	Word or any office app; the change lands in the vault like any other
+	<a href="vaults-and-files.html#external-edits">external edit</a>.</li>
+	<li><strong>Embeds and canvas nodes show thumbnails</strong>,
+	rendered by Quick Look's thumbnail service and cached in the same
+	<code>.clew/cache/office-thumbs/</code> the desktop uses, so a vault
+	in iCloud Drive reuses whichever device rendered first. A
+	<code>|live</code> embed has no engine to boot and shows an empty
+	frame; in a vault the iPad shares, prefer the plain embed and open
+	the document from its title.</li>
+	<li><strong>OpenDocument formats have no previewer.</strong> Quick
+	Look cannot display <code>.odt</code>, <code>.ods</code> or
+	<code>.odp</code>: the tab's button opens only a placeholder, and
+	their embeds say why there is no picture rather than showing one.</li>
+	<li><strong>No Settings section.</strong> Settings on the iPad has no
+	<em>Office documents</em> entry, because there is nothing to download
+	or remove.</li>
+</ul>
+
 <h2 id="limitations">Limitations, honestly</h2>
 
 <ul>
@@ -286,6 +320,10 @@ download and from the one-document notice:
 		refreshed); <code>![[x.docx|live]]</code> editable LibreOffice.
 		Canvas nodes: thumbnail by default, <em>Live</em> via the context
 		menu.</td></tr>
+	<tr><td>iPad</td>
+		<td>No engine: tabs open read-only in Quick Look; thumbnails come
+		from Quick Look into the same cache; <code>|live</code> embeds show
+		an empty frame; OpenDocument formats cannot be previewed.</td></tr>
 </table>
 </div>
 

@@ -80,6 +80,20 @@ Design decisions worth not re-litigating:
 
 ## 3. Open items
 
+0. **iPad caveats added 2026-09-02** (from the Clew-iOS session that
+   matched desktop's on-disk contracts and synced to `e64cf06`): "On
+   iPad" callouts in note-history, getting-started, vaults-and-files
+   (plus the atomic temp-and-rename save convention, which was
+   undocumented for the desktop too), settings-and-hotkeys; an
+   `#ipad` section and reference row in office-documents (no engine —
+   Quick Look for tabs and thumbnails); the CJK-font note in
+   attachments-and-files; the keyboard convention in the introduction.
+   `make check-links` clean. **Not touched:** the landing page's iOS
+   section still says "proof of concept … TestFlight are the next
+   milestone" — internal TestFlight is live and the feature list there
+   predates note history and office thumbnails; the wording of a public
+   status line is the owner's call.
+
 1. **The four `downloads/…` links 404 and always have** — the directory
    never existed. `make stage-downloads` (copies from `../Clew-app/out/`,
    ~640 MB) then `make sync-downloads` fixes it. Not run this session:
