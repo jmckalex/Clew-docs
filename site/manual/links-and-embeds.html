@@ -447,6 +447,53 @@ where it stands. The panels have
 <a href="panels.html">a chapter of their own</a>.
 </p>
 
+<h2 id="external-apps">Opening a file in another app</h2>
+
+<p>
+A link to a file normally opens it <em>in Clew</em> — a PDF in the
+built-in viewer, an image or a recording in a viewer tab. Sometimes
+that is not what you want: the PDF belongs in your annotating app, the
+spreadsheet in the real spreadsheet program. Two link forms hand the
+file to the operating system instead, so it opens in whatever
+application owns the type:
+</p>
+
+<div class="example"><pre><code>[[paper.pdf|external]]
+[[paper.pdf|Read the paper|external]]
+[Open the report](file:///Users/you/Documents/report.pdf)</code></pre></div>
+
+<p>
+The first is Clew's own: add <code>external</code> as an alias segment
+and the link opens the file outside Clew. A second segment is still the
+link's caption, so <code>[[paper.pdf|Read the paper|external]]</code>
+reads as prose; <code>external</code> alone is a mode rather than a
+caption, so the file's name is used. It works in reading mode and on a
+<kbd>⌘</kbd>-click in the editor alike, and the file must be in the
+vault.
+</p>
+
+<p>
+The second is the <code>file://</code> URL, which works the same way in
+Obsidian — so notes that came from there keep working. Unlike the
+alias, a <code>file://</code> link may point anywhere on your disk,
+which is the reason it exists: a vault of notes <em>about</em> files
+kept elsewhere. Only local paths are accepted; a
+<code>file://</code> URL naming a remote host is refused.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Documents open; programs do not</span>
+	Handing a file to the OS means the OS decides what to do with it —
+	and for a <code>.app</code>, <code>.exe</code>, or a shell script,
+	that means <em>running</em> it. A note is content, and content you
+	received should never be one click from executing something, so Clew
+	refuses those extensions by name and says so instead. The refusal is
+	a speed bump, not a sandbox: an ordinary document can still be
+	opened by an application you have configured to do surprising
+	things, so treat links in an unfamiliar vault the way you would
+	treat its attachments.
+</div>
+
 <h2 id="symlinks">Links beyond the vault</h2>
 
 <p>
@@ -488,6 +535,9 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td><code>… ^id</code></td><td>Mark the block that ends on this line</td></tr>
 	<tr><td><code>^id</code> (own line)</td><td>Mark the table or code block above</td></tr>
 	<tr><td><code>[[file.pdf]]</code>, <code>[[file.canvas]]</code></td><td>Link to a non-note file (opens viewer / canvas)</td></tr>
+	<tr><td><code>[[file.pdf|external]]</code></td><td>Open the file in the OS default app (<a href="#external-apps">above</a>)</td></tr>
+	<tr><td><code>[[file.pdf|text|external]]</code></td><td>The same, showing <em>text</em></td></tr>
+	<tr><td><code>[…](file:///path)</code></td><td>Obsidian-style: open a file anywhere on disk in its default app</td></tr>
 	<tr><td><code>![[Name]]</code> (own line)</td><td>Embed the note's rendered body</td></tr>
 	<tr><td><code>![[Name#Heading]]</code></td><td>Embed just that section</td></tr>
 	<tr><td><code>![[Name#^id]]</code></td><td>Embed just that block</td></tr>
