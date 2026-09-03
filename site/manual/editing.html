@@ -153,6 +153,27 @@ shown with an arrow to the path they resolve to. After a
 note, so <code>[[Math and Theorems#</code> offers that note's sections:
 </p>
 
+<p>
+What you type is matched against <strong>both the note's name and its
+folder path</strong>, and the letters need not be next to each other —
+any subsequence will do. That is what makes long names cheap to reach:
+<code>[[mkrbrc</code> finds <em>Marking Rubric</em>, and
+<code>[[Teaching/Rubric</code> finds it by where it lives, even though
+the full path runs through a folder you never typed. Folder names with
+spaces are ordinary text here; nothing needs escaping.
+</p>
+
+<div class="callout tip">
+	<span class="callout-title">Typing a folder means you want that file</span>
+	Choosing a match from a query that contains a <code>/</code> inserts
+	the <em>whole vault path</em>, so the link points at the note you
+	picked rather than at whatever the bare name resolves to elsewhere.
+	A query without a slash inserts the plain name, which is the
+	Obsidian-shaped form and lets shortest-path resolution do its work.
+</div>
+
+<p>
+
 <div class="example">
 	<p class="example-label">You write</p>
 	<pre><code>See [[Math and Theorems#Dialect extras]] for the details.</code></pre>
