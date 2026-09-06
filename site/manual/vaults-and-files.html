@@ -106,7 +106,8 @@ deletion is a little slower while the caches rebuild).
 		<td>Snapshots of notes as they change — see
 		<a href="note-history.html">Note history</a>.</td></tr>
 	<tr><td><code>workspace.json</code></td>
-		<td>Your window layout: open tabs, splits, sidebar state.</td></tr>
+		<td>Your window layout: open tabs, splits, sidebar state, and which
+		file-explorer folders you left closed.</td></tr>
 	<tr><td><code>bookmarks.json</code></td>
 		<td>Bookmarked notes.</td></tr>
 	<tr><td><code>vault-settings.json</code></td>
@@ -208,6 +209,18 @@ void, so a slip is recoverable the usual way.
 Moving is dragging: drop a note or folder onto another folder to move
 it there, or onto the empty background of the tree to move it to the
 vault root.
+</p>
+
+<p>
+Clicking a folder's disclosure triangle opens or closes it, and
+<strong>Clew remembers which folders you closed</strong>. The state is
+saved with the rest of the window's layout, in the vault's own
+<code>.clew/workspace.json</code>, so a vault you reopen — tomorrow, or
+after a restart — greets you with the same tree you left rather than
+everything expanded. A vault opened for the first time starts fully
+expanded, and folders you create later start open. Rename or move a
+closed folder and its state follows it, along with any closed folders
+inside it.
 </p>
 
 <h3 id="rename-links">Renames rewrite links</h3>
