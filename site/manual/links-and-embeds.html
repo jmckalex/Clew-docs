@@ -178,6 +178,46 @@ and chains deeper than three levels stop there. An embed whose target
 does not exist renders a "(not found)" box.
 </p>
 
+<p>
+An embed also stays current: change the embedded note and every note
+that embeds it re-renders, including up a chain of nested embeds.
+</p>
+
+<h3 id="collapsible-embeds">Embeds that fold</h3>
+
+<p>
+A long transclusion can bury the note doing the transcluding. Add
+<code>collapsed</code> or <code>open</code> as the last segment of the
+link and the embed gains a disclosure triangle:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[Week 3]]                     a plain embed — no triangle
+![[Week 3|collapsed]]           folds; starts closed
+![[Week 3|open]]                folds; starts open
+![[Week 3|Reading list|open]]   …with "Reading list" as the title</code></pre>
+</div>
+
+<p>
+Clicking the title bar folds or unfolds it — and <strong>Clew writes the
+new state back into your note</strong>, swapping <code>collapsed</code>
+for <code>open</code> on that line. The state therefore lives in the
+file: it travels with the vault, into git, and onto whatever else opens
+the note. Clicking the title <em>text</em> still opens the embedded note,
+as it always did; the rest of the bar is the fold.
+</p>
+
+<p>
+Note that <code>open</code> is not the same as leaving the keyword off.
+A bare <code>![[Week 3]]</code> has no disclosure triangle at all, so
+unfolding writes <code>|open</code> rather than removing the keyword —
+otherwise the fold would vanish the first time you used it. Remove the
+keyword by hand to go back to a plain embed. An embed inside another
+embedded note folds too, but its line belongs to a different file, so
+that one is not written back.
+</p>
+
 <div class="callout warn">
 	<span class="callout-title">Caution</span>
 	Block embeds are recognized only when the <code>![[…]]</code> stands
@@ -541,6 +581,8 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td><code>![[Name]]</code> (own line)</td><td>Embed the note's rendered body</td></tr>
 	<tr><td><code>![[Name#Heading]]</code></td><td>Embed just that section</td></tr>
 	<tr><td><code>![[Name#^id]]</code></td><td>Embed just that block</td></tr>
+	<tr><td><code>![[Name|collapsed]]</code></td><td>Foldable embed, starting closed (<a href="#collapsible-embeds">above</a>)</td></tr>
+	<tr><td><code>![[Name|open]]</code></td><td>Foldable embed, starting open</td></tr>
 	<tr><td><code>![[img.png|300]]</code></td><td>Media embed, width 300&nbsp;px</td></tr>
 	<tr><td><code>![[img.png|300x200]]</code></td><td>Media embed, width × height</td></tr>
 	<tr><td><code>![[img.png|alt text|300]]</code></td><td>Alt text, then size</td></tr>
