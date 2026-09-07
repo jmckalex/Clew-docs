@@ -218,6 +218,52 @@ embedded note folds too, but its line belongs to a different file, so
 that one is not written back.
 </p>
 
+<h3 id="embed-frames">How much frame an embed draws</h3>
+
+<p>
+By default an embed is a framed box: an accent stripe down its left edge,
+a hairline border, rounded corners, and a title bar naming the note.
+That is right when the embed is <em>a quotation of somewhere else</em> —
+and wrong when what you actually want is the other note's words, here, as
+part of this one. Two keywords turn the frame down:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[Week 3]]          the framed box — the default, unchanged
+![[Week 3|quiet]]    the accent stripe alone, still naming the note
+![[Week 3|bare]]     no frame at all, no title</code></pre>
+</div>
+
+<p>
+<strong>Quiet</strong> keeps the stripe and the title and loses the panel
+around them: still visibly a transclusion, but it no longer interrupts
+the page. <strong>Bare</strong> keeps nothing. The transcluded note's
+blocks sit in the host note's own flow, spaced exactly as if you had
+typed them there — no box, no stripe, no filename, and no link back to
+the source. Use it for the composed document: a syllabus assembled from
+week notes, a paper whose sections live in their own files.
+</p>
+
+<p>
+The keywords combine with the fold and with a title, in any order, so
+<code>![[Week 3|Reading list|quiet|collapsed]]</code> is a folded, quietly
+framed embed titled "Reading list". Toggling the fold rewrites them in a
+canonical <code>title|chrome|state</code> order. Bare is the exception:
+it draws no title bar, so there is nothing to fold — a bare embed asked
+to collapse stays bare, since a folded bare embed would render as
+nothing at all.
+</p>
+
+<div class="callout note">
+	<span class="callout-title">Note</span>
+	A bare embed still leaves a wrapper element in the page carrying the
+	<code>internal-embed is-bare</code> class, so a
+	<a href="theming.html#app-vs-notes">vault stylesheet</a> can put its own
+	decoration back — a marker in the margin, a tint, whatever suits the
+	document.
+</div>
+
 <div class="callout warn">
 	<span class="callout-title">Caution</span>
 	Block embeds are recognized only when the <code>![[…]]</code> stands
@@ -581,6 +627,8 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td><code>![[Name]]</code> (own line)</td><td>Embed the note's rendered body</td></tr>
 	<tr><td><code>![[Name#Heading]]</code></td><td>Embed just that section</td></tr>
 	<tr><td><code>![[Name#^id]]</code></td><td>Embed just that block</td></tr>
+	<tr><td><code>![[Name|quiet]]</code></td><td>Embed with the accent stripe only (<a href="#embed-frames">above</a>)</td></tr>
+	<tr><td><code>![[Name|bare]]</code></td><td>Embed with no frame and no title at all</td></tr>
 	<tr><td><code>![[Name|collapsed]]</code></td><td>Foldable embed, starting closed (<a href="#collapsible-embeds">above</a>)</td></tr>
 	<tr><td><code>![[Name|open]]</code></td><td>Foldable embed, starting open</td></tr>
 	<tr><td><code>![[img.png|300]]</code></td><td>Media embed, width 300&nbsp;px</td></tr>
