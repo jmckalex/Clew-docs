@@ -111,6 +111,9 @@ vault:
 		<td><code>%APPDATA%\Clew\plugins\</code></td></tr>
 	<tr><td>Linux</td>
 		<td><code>~/.config/Clew/plugins/</code></td></tr>
+	<tr><td>iPad</td>
+		<td><strong>Clew&nbsp;›&nbsp;Plugins</strong> in the Files app —
+		beside the demo vault, under <em>On My iPad</em></td></tr>
 </table>
 </div>
 
@@ -121,6 +124,26 @@ once running. <strong>Settings&nbsp;→&nbsp;This vault</strong> has an
 <em>Open global plugin folder</em> button that creates the folder and
 opens it, so there is nothing to look up.
 </p>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	The global folder lives inside Clew's own folder in the Files app,
+	next to the demo vault, because that is the one place you can put
+	files into from outside the app. <em>Open global plugin folder</em>
+	creates it and opens the Files app on it; copy a plugin folder in
+	from iCloud Drive, from a Mac, or from another app. The iPad reads
+	that folder when a vault opens, so a plugin added mid-session appears
+	after you reopen the vault (or relaunch the app). Enabling is
+	per-vault here too, in the same Settings list, where each plugin is
+	marked <em>this vault</em> or <em>global</em>.
+</div>
+
+<figure class="shot">
+	<img src="images/ipad-plugins-files.jpg" alt="The Files app on an iPad, open on Clew's Plugins folder, which holds one plugin folder named hello-global">
+	<figcaption><em>Open global plugin folder</em> on the iPad opens the
+	Files app on Clew&nbsp;›&nbsp;Plugins; each plugin is a folder there,
+	as on the desktop.</figcaption>
+</figure>
 
 <p>
 The split to keep in mind is <strong>installing versus
@@ -602,7 +625,8 @@ full of plugins.
 		<td>Travels with the vault; wins over a global plugin of the same
 		id.</td></tr>
 	<tr><td>Global</td>
-		<td><code>&lt;app data&gt;/Clew/plugins/&lt;id&gt;/</code> —
+		<td><code>&lt;app data&gt;/Clew/plugins/&lt;id&gt;/</code> (on iPad,
+		Clew&nbsp;›&nbsp;Plugins in the Files app) —
 		Settings has an <em>Open global plugin folder</em> button</td>
 		<td>Installed once, offered in every vault; does not travel when
 		you share a vault.</td></tr>

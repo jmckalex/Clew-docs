@@ -473,6 +473,26 @@ graph drawing or <code>\directlua</code>, or a note holds a
 <code>```latex</code> or <code>```tex</code> fence.
 </p>
 
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	Clew for iOS carries the same engines and the same bundles, so a
+	figure typesets on the iPad exactly as it does on the desktop —
+	nothing is downloaded, nothing is installed, and the result cache
+	works the same way. The first figure after a fresh install takes a
+	few seconds while the engines load; after that a picture you have
+	seen before is drawn from the cache without an engine starting. What
+	the iPad does not have is the <em>other</em> path: a LaTeX export, or
+	a PDF via LaTeX, needs a TeX installation and stays on the desktop,
+	while <em>Export note as PDF (reading view)</em> prints the figures
+	exactly as you see them (<a href="export.html">Exporting notes</a>).
+</div>
+
+<figure class="shot">
+	<img src="images/ipad-diagrams.jpg" alt="Clew on an iPad showing the demo vault's Diagrams note in reading mode, with a three-dimensional TikZ figure of two rings of point particles typeset in the page">
+	<figcaption>The Diagrams note on an iPad: the TikZ figure is typeset
+	on the device by the same engines, with no TeX installed.</figcaption>
+</figure>
+
 <p>
 What that leaves out is worth knowing, because it is the difference
 between this and a full local installation:

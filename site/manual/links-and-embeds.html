@@ -205,8 +205,16 @@ new state back into your note</strong>, swapping <code>collapsed</code>
 for <code>open</code> on that line. The state therefore lives in the
 file: it travels with the vault, into git, and onto whatever else opens
 the note. Clicking the title <em>text</em> still opens the embedded note,
-as it always did; the rest of the bar is the fold.
+as it always did; the rest of the bar is the fold. On the iPad a tap on
+the bar does the same, and writes the same word back.
 </p>
+
+<figure class="shot">
+	<img src="images/ipad-embed-fold.jpg" alt="Clew on an iPad showing the Links and Embeds guide in reading mode, with a folded embed titled Reading Mode drawn as a bar with a disclosure chevron">
+	<figcaption>The demo vault's <em>Links and Embeds</em> guide on an
+	iPad: the <code>collapsed</code> embed, folded to its title bar. A tap
+	unfolds it and writes <code>open</code> into the note.</figcaption>
+</figure>
 
 <p>
 Note that <code>open</code> is not the same as leaving the keyword off.
@@ -566,6 +574,24 @@ which is the reason it exists: a vault of notes <em>about</em> files
 kept elsewhere. Only local paths are accepted; a
 <code>file://</code> URL naming a remote host is refused.
 </p>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	iPadOS has no "application that owns the type" to hand a file to, so
+	both forms open the file in <strong>Quick Look</strong>, the system
+	viewer the Files app uses, whose share button offers Markup, Print,
+	and every app on the iPad that can take the file. The same guards
+	apply, and one more: a <code>file://</code> link can only reach a
+	file inside the open vault, because nothing outside the app's
+	sandbox is reachable, and a link to a folder is refused with a notice
+	rather than opened.
+</div>
+
+<figure class="shot">
+	<img src="images/ipad-quicklook.jpg" alt="Quick Look on an iPad showing a PDF from the vault, with the Share button and a Done button in its toolbar">
+	<figcaption>An <code>external</code> link on the iPad: the file opens
+	in Quick Look, and its share button is the way into any other app.</figcaption>
+</figure>
 
 <div class="callout warn">
 	<span class="callout-title">Documents open; programs do not</span>
