@@ -343,6 +343,14 @@ TikZ body; on a complete document they mean nothing and are ignored.
 ```</code></pre>
 </div>
 
+<figure class="shot">
+	<img src="images/figures-latex.png" alt="The demo vault's Diagrams note in reading mode: Maxwell's equations as a numbered align environment typeset from a latex fence, and below it a line of plain TeX with a displayed sum">
+	<figcaption>The Diagrams note's LaTeX section: an <code>align</code> of
+	Maxwell's equations from a <code>```latex</code> fence, typeset by
+	LuaLaTeX in the page, and a line of plain TeX from a
+	<code>```tex</code> fence under it.</figcaption>
+</figure>
+
 <p>
 LuaTeX is the engine for both fences — LuaLaTeX for
 <code>```latex</code>, plain LuaTeX for <code>```tex</code> — which
@@ -390,6 +398,13 @@ grammars — TeX for <code>```tikz</code>, <code>```latex</code> and
 figure's code reads the same on both sides of a split; see
 <a href="editing.html#highlighting">Dialect-aware highlighting</a>.
 </p>
+
+<figure class="shot">
+	<img src="images/fence-split.png" alt="The Diagrams note split in two: on the left the source pane with a tikz both fence highlighted as TeX, on the right the same block in reading mode showing the code block and then the typeset triangle">
+	<figcaption>The Diagrams note in a split: the <code>```tikz both</code>
+	fence in source mode, tokenized as TeX, and the same block in reading
+	mode — its code, then the figure it draws.</figcaption>
+</figure>
 
 <h2 id="caching">Typesetting and caching</h2>
 
