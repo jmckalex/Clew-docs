@@ -1,4 +1,4 @@
-# Handover — 2026-09-17 (manual illustrated for the desktop 0.11 features; site still not live)
+# Handover — 2026-09-17 (manual illustrated for the desktop 0.11 features, and `font=note` documented; site still not live)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -7,9 +7,9 @@ rewritten each session; keep it short and current.
 
 ## 0. Where things stand
 
-- Branch `main`, HEAD `6de0df8`, **working tree DIRTY with this
-  session's pass (§1) — not committed; the owner says "commit".** No
-  git remote (§3.5).
+- Branch `main`, working tree clean after this evening's commits (the
+  illustration pass, the `font=note` section, this file). No git remote
+  (§3.5).
 - **The site is still not live.** `clew-app.com` and `clew-app.net`
   resolve to GoDaddy's parking addresses, not the droplet
   (144.126.236.254). Everything below is verified locally only.
@@ -18,9 +18,10 @@ rewritten each session; keep it short and current.
   `site/downloads/`.
 - `VERSION` (Makefile) = 0.9.0 = the landing page = `nav.js`.
 
-## 1. What landed this session (uncommitted)
+## 1. What landed this session
 
-**Desktop screenshots for everything that shipped 09-01 → 09-17**, all
+**Desktop screenshots for everything that shipped 09-01 → 09-17** (one
+commit), all
 taken with the app's smoke harness over a scratch copy of the demo vault
 at 2560×1700 in the dark theme, each eyeballed before it went in
 (`site/manual/images/`):
@@ -48,6 +49,22 @@ page by a WebAssembly TeX with LaTeX and plain TeX alongside; the Vault
 plugins card mentions installing once for every vault; the
 "Everything else" card mentions office documents and note history.
 `editing.html` lost a stray empty `<p>` before the wikilink example.
+
+**`font=note` — figures in the note's own typeface** (Clew-app §2f,
+committed there as 3339969; here as the second commit of the evening): `diagrams.html` gained
+`#note-font` (what it does, which forms take it, what it costs and why
+it is opt-in, the reload when a note gains its first such figure, the
+hand-written fontspec route, where it stops), two reference rows
+(`font=note`, `fonts=`), and a rewritten "fonts" bullet in the
+what-is-in-the-box list; `publishing.html#figures` (new anchor) says such
+figures bake as outlines; `theming.html`'s typeface paragraph links
+across. Every claim was smoke-verified on the desktop — plain TeX
+included, after the library fixed it that evening. **Not yet said
+anywhere: whether the iPad has it** (its engine build is the library's
+too; ask the Clew-iOS session before adding an "On iPad" sentence), and
+that the feature is gated on an unreleased library build (the manual
+describes the behaviour; the app refuses by name on a build without the
+bundle, which the "Where it stops" callout covers).
 
 **The screenshot kit is reusable:** `../Clew-app/smoke/manual/` holds
 one scenario per image, and that repo's `smoke/README.md` has the table
