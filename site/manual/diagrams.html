@@ -419,8 +419,9 @@ ignore it — their labels are set by the TeX named in <code>tex=</code>.
 	<span class="callout-title">What it costs</span>
 	The fontspec machinery is a separate bundle of the wasm TeX, fetched
 	the first time a note on this machine asks for it (about
-	14&nbsp;MB, once, then cached), and the first figure in a new face
-	spends about a second reading the font. There is a running cost too,
+	12&nbsp;MB, once, then cached — most of it Latin Modern's own family,
+	which the engine reads once to build its font database), and the
+	first figure in a new face spends about a second reading the font. There is a running cost too,
 	and it is the reason this is opt-in rather than the default: with
 	that bundle in place every LuaTeX run initialises luaotfload whether
 	the figure uses it or not, roughly 180&nbsp;ms each. Clew therefore
