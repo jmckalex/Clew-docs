@@ -1,4 +1,4 @@
-# Handover — 2026-09-17 (manual current for desktop 0.11 features and the iPad; site still not live)
+# Handover — 2026-09-17 (manual illustrated for the desktop 0.11 features; site still not live)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -7,46 +7,53 @@ rewritten each session; keep it short and current.
 
 ## 0. Where things stand
 
-- Branch `main`, working tree clean, HEAD `6de0df8`. No git remote
-  (§3.5).
+- Branch `main`, HEAD `6de0df8`, **working tree DIRTY with this
+  session's pass (§1) — not committed; the owner says "commit".** No
+  git remote (§3.5).
 - **The site is still not live.** `clew-app.com` and `clew-app.net`
-  resolve to GoDaddy's parking addresses (13.248.243.5 / 76.223.105.230
-  and 3.33.130.190 / 15.197.148.33 on 2026-09-17), not the droplet
-  (144.126.236.254); an HTTPS fetch of the apex answers 200 with a page
-  that is not ours. Everything below is verified locally only.
-- `make check-links` → all local links resolve (the two `../index.html`
-  anchors it lists resolve at `/manual/` on the site). The 0.9.0
-  binaries ARE staged in `site/downloads/` now (dmg, exe, AppImage,
-  deb), so the download links no longer 404 locally.
-- `VERSION` (Makefile) = 0.9.0 = the landing page = `nav.js`. The
-  old "v0.8.0 tag collision" question is settled.
+  resolve to GoDaddy's parking addresses, not the droplet
+  (144.126.236.254). Everything below is verified locally only.
+- `make check-links` → clean (the two `../index.html` anchors it lists
+  resolve at `/manual/` on the site). The 0.9.0 binaries are staged in
+  `site/downloads/`.
+- `VERSION` (Makefile) = 0.9.0 = the landing page = `nav.js`.
 
-## 1. What landed since the last handover (all committed here)
+## 1. What landed this session (uncommitted)
 
-The Clew-app sessions of 2026-09-02 → 09-17 wrote the manual for each
-desktop feature as it shipped: figures typeset in the page by a wasm
-TeX (`92320d9`), no inline fields (`bb875b1`), fence highlighting +
-the LaTeX and plain TeX fences + `show=` (`ea02cb7`), three Dataview
-facts (`b5a65a9`), plain TeX on LuaTeX (`dc79747`), page numbers kept
-(`80dad8b`, `47634d7`). Global plugins, foldable / quiet / bare
-embeds, `|external` and `file://` links, the reading-view PDF and
-Meta Bind `class()` are all in their chapters too.
+**Desktop screenshots for everything that shipped 09-01 → 09-17**, all
+taken with the app's smoke harness over a scratch copy of the demo vault
+at 2560×1700 in the dark theme, each eyeballed before it went in
+(`site/manual/images/`):
 
-**The iPad pass (`6de0df8`, from the Clew-iOS 0.11 sync session):**
-"On iPad" callouts where the iPad does it differently — figures ship
-in the app with no download (`diagrams.html#toolchain`); the global
-plugin folder is Clew › Plugins in the Files app (`plugins.html`,
-table row + callout + summary table); external links open Quick Look,
-`file://` reaches only the open vault (`links-and-embeds.html
-#external-apps`); two of the four export commands, share sheet instead
-of a save dialog (`export.html#where`). Five iPad screenshots in
-`site/manual/images/ipad-*.jpg` (1000 px wide, from the simulator; the
-Files-app and Quick Look ones cropped to their top 640 px). Earlier
-iPad callouts (getting-started, note-history, vaults-and-files,
-settings-and-hotkeys, office-documents `#ipad`, attachments-and-files)
-were already there from the 09-02 session. The Clew-iOS build with all
-of this went to TestFlight on 2026-09-17 (its own `HANDOVER.md` has
-the state).
+| Image | Chapter | Shows |
+|---|---|---|
+| `welcome-screen.png` | getting-started `#first-launch` | The welcome window: Open / Create / Explore the demo vault (cropped to its centre 1600×1000) |
+| `welcome.jpg` (retaken, also `site/images/`) | introduction, getting-started, landing page | The Welcome note as it is now (the 08-24 shot showed an older vault tree) |
+| `embed-frames.png` | links-and-embeds `#embed-frames` | The `quiet` and `bare` embeds; the fold is the iPad figure above it |
+| `figures-latex.png` | diagrams `#latex` | Maxwell's equations from a ```latex fence, the plain TeX line under it |
+| `fence-split.png` | diagrams `#show` | Source (```tikz both, TeX-highlighted) beside reading mode (code, then figure) |
+| `wikilink-completion.png` | editing (Wikilinks) | `[[Guide/Link` matching Links and Embeds by folder |
+| `palette-export.png` | export `#where` | The palette filtered to the five export commands |
+| `plugins-settings.png` | plugins `#global` | Settings → This vault: three vault plugins and a `global` one, the Open global plugin folder button |
+| `office-tab.png` (retaken) | office-documents | A .docx in Writer with the **Colibre** icons — the 09-01 shot showed Sifr, which Clew-app reverted (`9ef4375`) |
+| `office-embed.png` | office-documents `#embeds` | A .docx embedded as a thumbnail |
+
+**Text:** `theming.html#reach` gained the typeface paragraph (Avenir
+Next in editor and preview, the humanist fallback tail, the
+`--clew-editor-font` token) — the second half of the old open item 2;
+the first half (leaving reading mode lands the editor where the reader
+was) turned out to be in `reading-mode.html#toggling` already. The
+landing page's Diagrams bullet now says the figures are typeset in the
+page by a WebAssembly TeX with LaTeX and plain TeX alongside; the Vault
+plugins card mentions installing once for every vault; the
+"Everything else" card mentions office documents and note history.
+`editing.html` lost a stray empty `<p>` before the wikilink example.
+
+**The screenshot kit is reusable:** `../Clew-app/smoke/manual/` holds
+one scenario per image, and that repo's `smoke/README.md` has the table
+(vault copy, `CLEW_USER_DATA`, the Word file recipe, what each frame
+script waits for). A retake is one command; the office pair needs the
+engine and a couple of minutes.
 
 ## 2. Hosting — done except for DNS (unchanged)
 
@@ -64,33 +71,28 @@ from wiping 640 MB of binaries — do not "tidy" it.
 
 ## 3. Open items
 
-1. **Landing page is stale about the iPad** (`site/index.html:551`):
-   "Status: a working proof of concept … TestFlight are the next
-   milestone." Internal TestFlight has been live since 2026-08-24 and
-   the 0.11 build (figures, plugins, exports) shipped 2026-09-17. The
-   wording of a public status line is the owner's; the feature list
-   beside it predates note history, office thumbnails and figures.
-2. **Two desktop 0.11 features have no manual sentence yet**: leaving
-   reading mode lands the editor where the reader was (Clew-app
-   `d417f9f`; `reading-mode.html` / `editing.html` say nothing about
-   it), and Avenir Next as the reading face (`7775cb0`; no chapter
-   names the typeface — `theming.html` would be the place, with the
-   `--clew-editor-font` override it documents). The owner intends the
-   app agent to do these.
-3. `site/index.html:417` says the demo vault exports to "37 pages";
-   `publishing.html:90` says "roughly forty". The manual is the later
+1. **Landing page is stale about the iPad** (`site/index.html`, the
+   "Status: a working proof of concept …" paragraph). Internal
+   TestFlight has been live since 2026-08-24 and the 0.11 build shipped
+   2026-09-17. The wording of a public status line is the owner's; the
+   feature sentences around it were left alone this session.
+2. `site/index.html` says the demo vault exports to "37 pages";
+   `publishing.html` says "roughly forty". The manual is the later
    number.
-4. `site/images/kanban.jpg` shows 3 of 4 columns (the horizontal-clip
+3. `site/images/kanban.jpg` shows 3 of 4 columns (the horizontal-clip
    bug, documented honestly). Re-shoot if that bug is fixed.
-5. **Neither this repo nor `../Clew-app` has a git remote.** ~50k words
+4. **Neither this repo nor `../Clew-app` has a git remote.** ~50k words
    of manual exist on one machine, in git only. (`../Clew-iOS` does
    have one, on GitHub.)
-6. The manual no longer appears in the app repo's `git status`, so
+5. The manual no longer appears in the app repo's `git status`, so
    nothing reminds anyone when it goes stale — both `CLAUDE.md` files
-   say so. The 09-02 → 09-17 sessions kept the rule; keep keeping it.
-7. Social previews cannot be verified against Facebook's or Twitter's
-   debuggers until DNS resolves (they fetch the live URL). The card
-   (`make og-card`) must be re-rendered on a Mac — Avenir Next.
+   say so. Every session since 09-02 kept the rule; keep keeping it.
+6. Social previews cannot be verified against Facebook's or Twitter's
+   debuggers until DNS resolves. The card (`make og-card`) must be
+   re-rendered on a Mac — Avenir Next.
+7. `reading-mode.png` and `editor-split.png` are from 08-24 and still
+   accurate (the reading face was already Avenir Next by accident, as
+   Clew-app `7775cb0` records); no retake needed.
 
 ## 4. Verification kit
 
@@ -99,11 +101,12 @@ from wiping 640 MB of binaries — do not "tidy" it.
 - `make check` — the `--delete` guard, run before any sync.
 - `make dry-run` — exactly what would change on the server.
 - `make serve` — `site/` over http at :8000 (`file://` hides path
-  bugs). A `python3 -m http.server 8000 --directory site` from the
-  09-17 session may still be running; `kill $(lsof -t -iTCP:8000)`.
+  bugs); `kill $(lsof -t -iTCP:8000)` if a stale one is running.
 - `make nginx-diff` — the droplet's drift from the copy here.
 - Headless Chrome renders any page without Electron (recipe in
-  CLAUDE.md). iPad screenshots come from the Clew-iOS simulator
+  CLAUDE.md) — add `--virtual-time-budget=8000`, or the screenshot can
+  come back before the page has painted (a blank dark PNG, seen this
+  session). iPad screenshots come from the Clew-iOS simulator
   (`xcrun simctl io <sim> screenshot`), driven by that repo's
   `-ClewSmokeJS` hook; `sips` crops from the CENTRE and ignores
   `--cropOffset` — a top-anchored crop needs a ten-line CoreGraphics
@@ -114,8 +117,8 @@ from wiping 640 MB of binaries — do not "tidy" it.
 - **Nothing outside `site/` is ever published.**
 - **Keep the manual's image duplication** (`site/manual/images/`
   repeats files from `site/images/` so `manual/` works as its own web
-  root; `check-links` enforces it). New iPad images live only in
-  `site/manual/images/`.
+  root; `check-links` enforces it). `welcome.jpg` was retaken into BOTH
+  places this session, as it must be.
 - The app is the arbiter of fact. Hotkeys come from
   `../Clew-app/src/renderer/commands/builtin.js`; iPad behaviour from
   `../Clew-iOS` (its `src/shim/ipc.js` is the channel-by-channel
@@ -124,5 +127,4 @@ from wiping 640 MB of binaries — do not "tidy" it.
 - Re-run `make og-tags` after adding a chapter; never hand-edit the
   generated block.
 - Stage explicit paths; the working tree has carried another session's
-  pending hunk before (two authors in one file — split the commits, as
-  `47634d7` / `6de0df8` were).
+  pending hunk before (two authors in one file — split the commits).

@@ -287,7 +287,7 @@
 					<li><strong>LaTeX math</strong> via MathJax — inline, display, AMS numbering and cross-references</li>
 					<li><strong>Theorem environments</strong> — theorem, lemma, proof, numbered and referenceable</li>
 					<li><strong>Citations from BibTeX</strong> — <code>\cite{lewis1969}</code> with real bibliography styles, and cite-key autocompletion in the editor</li>
-					<li><strong>Diagrams</strong> — mermaid fences, TikZ, MetaPost</li>
+					<li><strong>Diagrams</strong> — mermaid fences; TikZ, MetaPost, LaTeX and plain TeX typeset in the page by a WebAssembly TeX, with nothing to install</li>
 					<li><strong>Footnotes, alerts, tables, tags,</strong> GitHub-style callouts</li>
 				</ul>
 				<p>Export any note to HTML, LaTeX, or PDF from the File menu — same source, print-grade output.</p>
@@ -477,7 +477,8 @@
 					seams: <strong>engine</strong> (new syntax — fences, directives),
 					<strong>preview</strong> (decorate rendered notes), and
 					<strong>app</strong> (commands, vault IO, notices, against a small
-					versioned API). Off until enabled, per vault.
+					versioned API). Install one inside a vault or once for all of them; off
+					until enabled, per vault.
 				</p>
 				<pre><code>clew.commands.register({
   id: 'count',
@@ -495,7 +496,10 @@
 					Command palette, editable hotkeys, native menus, tabs and splits
 					with per-tab history, pinned tabs, multiple windows (one vault
 					each), properties panel, bookmarks, attachment paste, vault-wide
-					rename with link rewriting, dark and light themes, CSS snippets.
+					rename with link rewriting, dark and light themes, CSS snippets. Word,
+					Excel and PowerPoint files edit in tabs — LibreOffice, in
+					WebAssembly — and every note keeps a history you can browse and
+					restore.
 				</p>
 			</div>
 		</div>
@@ -548,13 +552,18 @@
 					can carry them.
 				</p>
 				<p>
-					<strong>Status: a working proof of concept.</strong> It runs on
-					real hardware and it is not released yet — device QA and
-					TestFlight are the next milestone. Features that shell out to
-					external toolchains cannot cross: Mathematica blocks and
-					LaTeX/PDF export stay desktop-only. TikZ and MetaPost no longer
-					shell out — the desktop typesets them in WebAssembly — so those
-					are a port away rather than out of reach.
+					<strong>Status: in beta on TestFlight.</strong> Clew for iPad
+					runs on real hardware and is being tested through Apple's
+					TestFlight. The diagrams cross with it: TikZ, MetaPost, LaTeX
+					and plain TeX typeset on the iPad by the same WebAssembly
+					engines, with nothing to install — and note history, foldable
+					embeds, global plugins and the reading-view PDF export are all
+					there. Two things stay desktop-only because they shell out to
+					external toolchains: Mathematica blocks and the LaTeX/PDF
+					export. To try the beta,
+					<a href="mailto:jmckalex@gmail.com?subject=Clew%20for%20iPad%20beta">ask
+					for an invitation</a>; a public TestFlight link will appear
+					here when the open beta starts.
 				</p>
 			</div>
 			<div>
