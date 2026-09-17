@@ -44,8 +44,7 @@
 <h1>Queries</h1>
 <p class="lead">
 Your notes already carry data — <a href="properties.html">frontmatter
-properties and inline fields</a> record what each note knows about
-itself. A <code>query</code> fence collects that data across the whole
+properties</a> record what each note knows about itself. A <code>query</code> fence collects that data across the whole
 vault into a live table or list: every paper and its status, every book
 and its rating, everything due this month. And because Clew's query
 views are <em>writable</em>, the table is not a report you look at but
@@ -57,17 +56,16 @@ rewritten.
 
 <p>
 Think of the vault as a database whose rows are notes. Each note
-contributes its fields from three places:
+contributes its fields from two places:
 </p>
 
 <ul>
 	<li><strong>Frontmatter</strong> — every key in the
 	<code>---</code> block: <code>status</code>, <code>due</code>,
-	<code>rating</code>, whatever you have defined.</li>
-	<li><strong>Inline fields</strong> — Dataview-style
-	<code>Key:: value</code> lines and bracketed <code>[key:: value]</code>
-	fields in the body. To a query these are indistinguishable from
-	frontmatter; when the same key exists in both, frontmatter wins.</li>
+	<code>rating</code>, whatever you have defined. Not Dataview's
+	inline <code>Key:: value</code> fields: in this dialect those are
+	description lists, and a query never sees them
+	(<a href="properties.html#inline-fields">why</a>).</li>
 	<li><strong>Built-ins</strong> — three fields every note has:
 	<code>name</code> (the file name without its extension),
 	<code>path</code> (vault-relative), and <code>modified</code> (the
@@ -383,10 +381,6 @@ the row came from:
 	value is re-typed to match what it replaces — numbers stay numbers,
 	booleans stay booleans, and a list field re-splits your
 	comma-separated input back into a list.</li>
-	<li>If the field is an <strong>inline field</strong>, Clew rewrites
-	the <code>Key:: value</code> text on the exact line it came from —
-	mid-sentence bracketed fields included. The prose around it is
-	untouched.</li>
 	<li>If the note <strong>does not have the field at all</strong> — an
 	empty cell — committing a value creates the property in that note's
 	frontmatter. Typing into the blank <code>rating</code> cell of
@@ -400,8 +394,8 @@ it, so they are not editable. And the write respects the
 <a href="properties.html#subset">frontmatter safety valve</a>: a note
 whose frontmatter is outside the editable subset refuses the edit with
 a notice instead of risking the block. An edit can also fail cleanly if
-the note changed underneath it — say, the inline field's line moved —
-in which case Clew reports it rather than guessing.
+the note changed underneath it — say, its frontmatter left the subset
+meanwhile — in which case Clew reports it rather than guessing.
 </p>
 
 <div class="callout tip">
@@ -493,7 +487,7 @@ const open = vault.tasks();</code></pre>
 Each returned note is an object carrying <code>path</code>,
 <code>name</code>, <code>modified</code> (a millisecond timestamp
 here, not the ISO date), <code>text</code> (the full source), and
-<code>fm</code> — the merged frontmatter-plus-inline-fields record.
+<code>fm</code> — the frontmatter record.
 From there you can build any report the engine can render. This is the
 programmable tier of the query system, the counterpart of Dataview's
 <code>dataviewjs</code>.
@@ -741,7 +735,7 @@ fences are not evaluated there.
 	<tr><td><code>name</code></td><td>File name without extension</td><td>No</td></tr>
 	<tr><td><code>path</code></td><td>Vault-relative path</td><td>No</td></tr>
 	<tr><td><code>modified</code></td><td>Last-modified date, ISO form</td><td>No</td></tr>
-	<tr><td>anything else</td><td>Frontmatter or inline field</td><td>Yes — writes back to the source note</td></tr>
+	<tr><td>anything else</td><td>Frontmatter</td><td>Yes — writes back to the source note</td></tr>
 </table>
 </div>
 
