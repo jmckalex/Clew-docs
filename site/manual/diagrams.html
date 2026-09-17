@@ -430,6 +430,19 @@ ignore it — their labels are set by the TeX named in <code>tex=</code>.
 	pick the bundle up — you will see the page redraw.
 </div>
 
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	<code>font=note</code> works the same on the iPad, in Avenir Next —
+	the face the iPad reads notes in too — with one difference in how the
+	face is found: the app never reads Apple's font file, it asks the
+	system for each style's tables and writes the four files itself, once,
+	the first time a figure asks. The fontspec bundle is part of the app
+	rather than fetched, so the first such figure costs only the second or
+	so of reading the font. What the iPad build carries is decided when it
+	is made: a build without that bundle refuses <code>font=note</code>
+	figures by name in their own place and typesets everything else.
+</div>
+
 <p>
 A complete document that loads <code>fontspec</code> itself is
 recognised too and gets the same bundle and the same font files; name
