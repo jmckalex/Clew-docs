@@ -540,6 +540,26 @@ functions. Cells over a field the note really stores stay
 </p>
 
 <p>
+Three Dataview facts that are easy to get wrong, verified here:
+</p>
+
+<ul>
+	<li><code>FROM</code> takes a path <strong>relative to the vault
+	root</strong>, so the vault's own name never appears in a query. A
+	vault whose notes live at the root wants no <code>FROM</code> at all
+	(or <code>FROM ""</code>).</li>
+	<li><code>WHERE field</code> on its own is a <strong>truthiness</strong>
+	test, so a note whose field is a legitimate <code>0</code> is skipped.
+	<code>WHERE isnotempty(field)</code> is the existence test.</li>
+	<li>A missing field <strong>is</strong> <code>null</code>:
+	<code>WHERE field != null</code> drops the notes that have no such
+	field, <code>WHERE field = null</code> finds them, and
+	<code>typeof(field)</code> says <code>null</code> for both an absent
+	field and one set to null — the three agree, as they do in
+	Dataview.</li>
+</ul>
+
+<p>
 An <strong>inline query</strong> works too: <code>`= this.file.name`</code>
 in the middle of a sentence renders the value.
 </p>
