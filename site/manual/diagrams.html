@@ -323,7 +323,10 @@ The quadratic formula, for reference:
 
 <p>
 A <code>```tex</code> fence is plain TeX — Knuth's, with the e-TeX
-extensions — and gets its <code>\bye</code> if it forgot one. A
+extensions — and gets its <code>\bye</code> if it forgot one. Like a
+LaTeX document it keeps its page number, which plain TeX sets at the
+foot of the page: a one-line snippet without <code>\nopagenumbers</code>
+comes out as tall as its page. A
 <code>```tex</code> body that turns out to say
 <code>\documentclass</code> is treated as the LaTeX it is rather than
 failing on an undefined command. The <code>packages=</code>,
@@ -335,6 +338,7 @@ TikZ body; on a complete document they mean nothing and are ignored.
 <div class="example">
 	<p class="example-label">You write</p>
 	<pre><code>```tex
+\nopagenumbers
 \centerline{\bf Plain \TeX, $\sqrt{2}$ and all.}
 ```</code></pre>
 </div>
