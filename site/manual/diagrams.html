@@ -362,6 +362,102 @@ pdfTeX instead, and <code>engine=plain</code> on a <code>```tex</code>
 fence for the e-TeX format.
 </p>
 
+<h2 id="note-font">In the note's own typeface</h2>
+
+<p>
+A figure's text is Latin Modern, TeX's own face, and for a diagram that
+is usually right. When it is not — a labelled picture that should read
+as part of the prose around it, a paragraph typeset for its layout
+rather than for TeX's look — <code>font=note</code> on the opening
+line sets the figure in the face the note itself is read in:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```tikz font=note
+\node[draw,rounded corners] (a) at (0,0) {a labelled node};
+\node[draw,rounded corners] (b) at (4,0) {in the note's face};
+\draw[-&gt;,thick] (a) -- node[above] {\textit{as the prose}} (b);
+```
+
+```latex font=note
+A paragraph in the note's face: regular, \textbf{bold}, \textit{italic}
+--- with maths, $e^{i\pi} + 1 = 0$, still in Latin Modern.
+```</code></pre>
+</div>
+
+<p>
+Three things happen behind that word. The figure moves to LuaTeX, the
+one engine here that loads OpenType fonts, and its preamble gains a
+<code>fontspec</code> block naming the face's files. The face is the
+one your platform gave the app — Avenir Next on a Mac, Segoe UI on
+Windows, Cantarell where GNOME has its static build installed — read
+from the system's own font folder when Clew starts, one file per style
+(regular, bold, italic, bold italic), never shipped, and handed to the
+engine as bytes. And the SVG comes out as <em>text</em>: rather than
+tracing each glyph as an outline, dvisvgm embeds a subset of the same
+font file and emits real text runs, so the figure is drawn by the
+browser's own text renderer in the same face as the paragraph above
+it — selectable, and crisp at any size. Mathematics stays in Latin
+Modern, as it should; <code>font=note</code> is about the words.
+</p>
+
+<p>
+It works on <code>```tikz</code>, on <code>```latex</code>, on
+<code>:::TiKZ</code> and the <code>@begin(TiKZ)</code> environment, on a
+complete document (the block goes in after its
+<code>\documentclass</code>), and on <code>```tex</code>. Plain TeX has
+no fontspec, so there the face is loaded the plain way — luaotfload's
+own <code>\font</code> lines — and put where plain TeX keeps its
+fonts: <code>{\bf …}</code> and <code>{\it …}</code> switch to the bold
+and italic faces, <code>--</code> and <code>---</code> still make their
+dashes, and mathematics stays in Computer Modern. MetaPost figures
+ignore it — their labels are set by the TeX named in <code>tex=</code>.
+</p>
+
+<div class="callout note">
+	<span class="callout-title">What it costs</span>
+	The fontspec machinery is a separate bundle of the wasm TeX, fetched
+	the first time a note on this machine asks for it (about
+	14&nbsp;MB, once, then cached), and the first figure in a new face
+	spends about a second reading the font. There is a running cost too,
+	and it is the reason this is opt-in rather than the default: with
+	that bundle in place every LuaTeX run initialises luaotfload whether
+	the figure uses it or not, roughly 180&nbsp;ms each. Clew therefore
+	loads the bundle only for a note that has such a figure on it when
+	the note opens. A note that gains its first <code>font=note</code>
+	figure while you are editing it re-renders once, from the top, to
+	pick the bundle up — you will see the page redraw.
+</div>
+
+<p>
+A complete document that loads <code>fontspec</code> itself is
+recognised too and gets the same bundle and the same font files; name
+them as Clew does, <code>NoteFont-Regular.ttf</code>,
+<code>NoteFont-Bold.ttf</code>, <code>NoteFont-Italic.ttf</code> and
+<code>NoteFont-BoldItalic.ttf</code>, with <code>Path=./</code>, and add
+<code>fonts=woff2</code> on the fence for text rather than outlines.
+Any face can be asked for by file name that way, but only those four
+files are there to find: luaotfload's font database knows the bundled
+fonts alone, so a system face cannot be named by family. To have a
+<code>font=note</code> figure drawn as outlines after all, add
+<code>fonts=paths</code> beside it.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Where it stops</span>
+	A machine with no listed face — Linux without Cantarell's static
+	fonts, say — still typesets the figure: a LaTeX one in fontspec's own
+	default, Latin Modern's OpenType build, a plain one in Computer Modern
+	as if the word were not there. A build of the TeX engines without the
+	OpenType bundle refuses such a figure by name in its own place, and
+	typesets the rest of the note's figures as usual. And a
+	<a href="publishing.html#figures">website export</a> bakes these
+	figures as outlines whatever the note says: a published page must
+	not carry a subset of Apple's or Microsoft's font, and outlines look
+	the same on a visitor's machine that does not have the face.
+</div>
+
 <h2 id="show">Showing the source instead</h2>
 
 <p>
@@ -443,6 +539,8 @@ two are the presentation; the rest are handed to the engine:
 	<tr><td><code>packages="booktabs"</code></td><td>TikZ and LaTeX snippets: <code>\usepackage</code> for these</td></tr>
 	<tr><td><code>preamble="…"</code></td><td>TikZ and LaTeX snippets: extra preamble lines, verbatim (options and all)</td></tr>
 	<tr><td><code>border=4pt</code></td><td>TikZ and LaTeX snippets: the <code>standalone</code> border (default <code>2pt</code>) — the white space around the picture, which the SVG keeps for a picture and crops for a snippet</td></tr>
+	<tr><td><code>font=note</code></td><td>TikZ and LaTeX: set the figure's text in the note's own typeface — LuaTeX, fontspec, real text in an embedded subset (<a href="#note-font">above</a>)</td></tr>
+	<tr><td><code>fonts="paths"</code></td><td>TikZ and LaTeX: <code>paths</code> (the default: glyph outlines) or <code>woff2</code> (text in an embedded font subset — what <code>font=note</code> chooses)</td></tr>
 	<tr><td><code>gdlibraries="layered"</code></td><td>TikZ: <code>\usegdlibrary</code> — graph drawing, which selects LuaTeX</td></tr>
 	<tr><td><code>engine="lualatex"</code></td><td>TikZ and LaTeX: force the engine (<code>latex</code>, <code>lualatex</code>, <code>plain</code>, <code>luatex</code>; TikZ defaults to auto, <code>```latex</code> to <code>lualatex</code>, <code>```tex</code> to <code>luatex</code>)</td></tr>
 	<tr><td><code>tex="latex"</code></td><td>MetaPost: which TeX sets <code>btex … etex</code> labels (<code>latex</code>, <code>plain</code>, <code>none</code>)</td></tr>
@@ -514,10 +612,13 @@ between this and a full local installation:
 </p>
 
 <ul>
-	<li><strong>No OpenType or system fonts.</strong>
-	<code>fontspec</code> and <code>unicode-math</code> are out; text in
-	figures is set in the Type&nbsp;1 faces above. In practice this
-	matters for labels, not for drawings.</li>
+	<li><strong>Fonts: the bundled ones, plus the note's.</strong> Text
+	in figures is set in the Type&nbsp;1 faces above, and a figure can
+	ask for the note's own face with <a href="#note-font"><code>font=note</code></a>,
+	or load <code>fontspec</code> in a complete document. What it cannot
+	do is name an arbitrary installed font by family: only the note's
+	face is handed over, as files. <code>unicode-math</code>'s maths font
+	is not bundled.</li>
 	<li><strong>The bundled packages, not all of CTAN.</strong> A figure
 	needing something outside the bundle fails with TeX's own "file not
 	found" in its error box rather than silently dropping it.</li>

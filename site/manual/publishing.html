@@ -132,7 +132,7 @@ on every page initialises them against the exported assets. Map
 in the app.
 </p>
 
-<h3>Figures bake to SVG</h3>
+<h3 id="figures">Figures bake to SVG</h3>
 <p>
 <a href="diagrams.html">TikZ and MetaPost figures</a> are typeset
 during the export and written into the pages as vector SVG, so a
@@ -140,7 +140,10 @@ published site carries no engine at all: a visitor loads a few
 kilobytes of graphics rather than the 74&nbsp;MB of wasm TeX the app
 ships, and the server needs no TeX either. Identical figures across
 pages are typeset once. A figure that fails shows its error log on the
-page, and the export reports how many did.
+page, and the export reports how many did. A figure set in the
+<a href="diagrams.html#note-font">note's own typeface</a> is baked as
+glyph outlines rather than text, so the page carries no copy of that
+font — and looks the same to a visitor who does not have it.
 </p>
 
 <h3>Queries bake to snapshots</h3>
