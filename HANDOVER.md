@@ -71,11 +71,14 @@ from wiping 640 MB of binaries — do not "tidy" it.
 
 ## 3. Open items
 
-1. **Landing page is stale about the iPad** (`site/index.html`, the
-   "Status: a working proof of concept …" paragraph). Internal
-   TestFlight has been live since 2026-08-24 and the 0.11 build shipped
-   2026-09-17. The wording of a public status line is the owner's; the
-   feature sentences around it were left alone this session.
+1. **Landing page iPad status updated 2026-09-17** (`site/index.html`,
+   the Pencil feature's last paragraph, commit cef2e0f): "in beta on
+   TestFlight", the figures and the 0.11 features named, the two
+   desktop-only losses kept, and "ask for an invitation" on the site's
+   mailto. **When the external TestFlight group exists, replace that
+   sentence with the public link** (`testflight.apple.com/join/…`);
+   until then the page promises the link "when the open beta starts",
+   which is true.
 2. `site/index.html` says the demo vault exports to "37 pages";
    `publishing.html` says "roughly forty". The manual is the later
    number.
