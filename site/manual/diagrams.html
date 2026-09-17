@@ -331,15 +331,14 @@ TikZ body; on a complete document they mean nothing and are ignored.
 </div>
 
 <p>
-LuaLaTeX is the engine for <code>```latex</code>, which means the
-first such snippet on a machine fetches LuaTeX (about 12&nbsp;MB, once)
-and costs a little more per run than pdfTeX — a short snippet is a
-quarter of a second against pdfTeX's eighth. <code>engine=latex</code>
-on the fence asks for pdfTeX instead. Plain TeX runs on the e-TeX
-format rather than plain LuaTeX: in the current engine build, plain
-LuaTeX fails on any mathematics, and a fence that cannot set
-<code>$\sqrt{2}$</code> is no use; <code>engine=luatex</code> still
-selects it for a body that wants it.
+LuaTeX is the engine for both fences — LuaLaTeX for
+<code>```latex</code>, plain LuaTeX for <code>```tex</code> — which
+means the first such snippet on a machine fetches LuaTeX (about
+12&nbsp;MB, once) and costs a little more per run than pdfTeX: a short
+snippet is a quarter of a second against pdfTeX's eighth.
+<code>engine=latex</code> on a <code>```latex</code> fence asks for
+pdfTeX instead, and <code>engine=plain</code> on a <code>```tex</code>
+fence for the e-TeX format.
 </p>
 
 <h2 id="show">Showing the source instead</h2>
@@ -417,7 +416,7 @@ two are the presentation; the rest are handed to the engine:
 	<tr><td><code>preamble="…"</code></td><td>TikZ and LaTeX snippets: extra preamble lines, verbatim (options and all)</td></tr>
 	<tr><td><code>border=4pt</code></td><td>TikZ and LaTeX snippets: the <code>standalone</code> border (default <code>2pt</code>) — the white space around the picture, which the SVG keeps for a picture and crops for a snippet</td></tr>
 	<tr><td><code>gdlibraries="layered"</code></td><td>TikZ: <code>\usegdlibrary</code> — graph drawing, which selects LuaTeX</td></tr>
-	<tr><td><code>engine="lualatex"</code></td><td>TikZ and LaTeX: force the engine (<code>latex</code>, <code>lualatex</code>, <code>plain</code>, <code>luatex</code>; TikZ defaults to auto, <code>```latex</code> to <code>lualatex</code>, <code>```tex</code> to <code>plain</code>)</td></tr>
+	<tr><td><code>engine="lualatex"</code></td><td>TikZ and LaTeX: force the engine (<code>latex</code>, <code>lualatex</code>, <code>plain</code>, <code>luatex</code>; TikZ defaults to auto, <code>```latex</code> to <code>lualatex</code>, <code>```tex</code> to <code>luatex</code>)</td></tr>
 	<tr><td><code>tex="latex"</code></td><td>MetaPost: which TeX sets <code>btex … etex</code> labels (<code>latex</code>, <code>plain</code>, <code>none</code>)</td></tr>
 	<tr><td><code>prologues=3</code></td><td>MetaPost: the <code>prologues</code> value (default 3)</td></tr>
 	<tr><td><code>alt="…"</code></td><td>An accessible label for the figure</td></tr>
@@ -458,7 +457,7 @@ nothing on your <code>PATH</code> to find, on any of the three
 platforms; a figure renders the same on a machine that has never seen
 TeX. LuaTeX is the one piece loaded on demand, when a figure asks for
 graph drawing or <code>\directlua</code>, or a note holds a
-<code>```latex</code> fence.
+<code>```latex</code> or <code>```tex</code> fence.
 </p>
 
 <p>
@@ -557,7 +556,7 @@ no TeX on the server either.
 	<tr><td>MetaPost (native)</td><td><code>@begin(metapost) … @end(metapost)</code></td><td>Bundled MetaPost 2.11 → SVG, in the preview</td><td>Nothing</td></tr>
 	<tr><td>MetaPost (fence)</td><td><code>```metapost … ```</code></td><td>The same engine; Clew's own spelling</td><td>Nothing</td></tr>
 	<tr><td>LaTeX snippet or document</td><td><code>```latex … ```</code></td><td>Bundled LuaLaTeX + dvisvgm, in the preview; a snippet wrapped in <code>standalone</code>, a document as written; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
-	<tr><td>Plain TeX</td><td><code>```tex … ```</code></td><td>Bundled e-TeX + dvisvgm, in the preview; a code block in LaTeX export</td><td>Nothing</td></tr>
+	<tr><td>Plain TeX</td><td><code>```tex … ```</code></td><td>Bundled LuaTeX + dvisvgm, in the preview; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
 </table>
 </div>
 
