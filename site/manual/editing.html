@@ -111,6 +111,14 @@ Markdown grammar. What gets a face of its own:
 	mermaid diagram source, <code>&lt;script&gt;</code> and
 	<code>&lt;style&gt;</code> blocks — are styled as embedded code rather
 	than mis-read as prose.</li>
+	<li><strong>The fences Clew typesets</strong> — the bodies of
+	<code>```tikz</code>, <code>```latex</code> and <code>```tex</code>
+	fences are tokenized as TeX (control sequences, environment names,
+	comments, lengths, TikZ's path operators), and <code>```metapost</code>
+	as MetaPost (its statements, types, constants and word operators, with
+	the TeX of a <code>btex … etex</code> label highlighted as TeX), in the
+	same palette as the mermaid bodies above. Every other fence is left as
+	plain code. See <a href="diagrams.html#show">Diagrams</a>.</li>
 	<li><strong>Standard Markdown</strong> — headings, lists, quotes, code,
 	and the emphasis forms <code>*strong*</code>, <code>**intense**</code>,
 	and <code>__underline__</code> come from the base Markdown grammar,
