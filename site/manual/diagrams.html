@@ -299,7 +299,16 @@ gets a page its own size), loads <code>amsmath</code> and
 <code>amssymb</code>, typesets it with LuaLaTeX, and shows the result
 cropped to the ink. A fence that says <code>\documentclass</code> is a
 complete document and is typeset exactly as written, one SVG per page,
-the pages stacked.
+the pages stacked — page numbers included, since a document that wants
+its pages as pages must get them. That has one consequence worth knowing
+before it looks like a bug: each SVG is cropped to the ink, and an
+article's folio sits at the foot of the page, so a nine-line document
+with the default page style comes out as tall as the paper — the text at
+the top, the page number at the bottom, and the note's next paragraph
+below all that empty space. A document meant as a snippet wants
+<code>\pagestyle{empty}</code> in its preamble (and
+<code>\thispagestyle{empty}</code> after <code>\maketitle</code>,
+which puts a folio back on the title page).
 </p>
 
 <div class="example">
