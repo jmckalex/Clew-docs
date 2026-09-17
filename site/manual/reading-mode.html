@@ -344,8 +344,10 @@ complete re-renders cheap enough to run on every save.
 	Reading mode changes nothing about your files: they remain plain
 	Markdown that Obsidian opens and renders with its own preview. Features
 	the jmarkdown engine adds — theorem environments, <code>\cite</code>
-	commands, dialect emphasis, TikZ — appear in Obsidian as the literal
-	text you typed, not as errors. Checkbox write-back is fully compatible:
+	commands, dialect emphasis, <code>@begin(TiKZ)</code> figures — appear
+	in Obsidian as the literal text you typed, not as errors. (The
+	<code>```tikz</code> fence is the exception: Obsidian renders it too,
+	with the TikZJax plugin.) Checkbox write-back is fully compatible:
 	a task ticked in Clew is ticked in Obsidian, because both apps read the
 	same <code>[x]</code>.
 </div>

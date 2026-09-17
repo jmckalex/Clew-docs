@@ -551,8 +551,10 @@
 					<strong>Status: a working proof of concept.</strong> It runs on
 					real hardware and it is not released yet — device QA and
 					TestFlight are the next milestone. Features that shell out to
-					external toolchains cannot cross: TikZ, MetaPost and Mathematica
-					blocks, and LaTeX/PDF export, stay desktop-only.
+					external toolchains cannot cross: Mathematica blocks and
+					LaTeX/PDF export stay desktop-only. TikZ and MetaPost no longer
+					shell out — the desktop typesets them in WebAssembly — so those
+					are a port away rather than out of reach.
 				</p>
 			</div>
 			<div>

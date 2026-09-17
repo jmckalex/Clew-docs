@@ -253,11 +253,13 @@ the app" is such a common failure elsewhere. Clew sidesteps it by
 extending the <code>PATH</code> it hands to every engine process with
 the common TeX and Homebrew locations
 (<code>/Library/TeX/texbin</code>, <code>/opt/homebrew/bin</code>,
-<code>/usr/local/bin</code>). This matters beyond PDF export: TikZ,
-MetaPost, and similar diagram tools shell out to <code>latex</code>,
-<code>dvisvgm</code>, and <code>mpost</code> by name even when
-rendering the preview. On Windows, TeX installers put themselves on the
-<code>PATH</code>, so no extension is needed.
+<code>/usr/local/bin</code>). This matters for anything that shells out
+to a TeX program by name: the <code>latex</code> run behind this
+export, and jmarkdown's own diagram tools when an export uses them.
+(<a href="diagrams.html">TikZ and MetaPost figures in the preview</a>
+need none of it — those engines ship with Clew, as WebAssembly.) On
+Windows, TeX installers put themselves on the <code>PATH</code>, so no
+extension is needed.
 </p>
 
 <p>
