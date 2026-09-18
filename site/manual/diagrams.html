@@ -472,6 +472,116 @@ fonts alone, so a system face cannot be named by family. To have a
 	the same on a visitor's machine that does not have the face.
 </div>
 
+<h2 id="fragments">Fragments: preamble text by name</h2>
+
+<p>
+A note's figures usually want the same preamble — the macros you write
+maths with, a colour or two, a package the pictures share. Rather than
+copy that block into every fence, write it once in
+<strong>Settings&nbsp;→&nbsp;TeX fragments</strong>, give it a name, and
+ask for it by name on a figure's opening line:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```latex clew-fragments='math macros'
+$\R \subseteq \C$ for every $\R$ in sight.
+```
+
+```tikz clew-fragments='math macros, colours'
+\fill[accent] (0,0) circle (0.4) node[right=6pt] {$\R$};
+```</code></pre>
+</div>
+
+<p>
+Names are separated by commas and inserted in the order you write them,
+so a fragment may build on one listed before it. A name is matched
+loosely — <code>Math Macros</code> and <code>math  macros</code> are the
+same fragment — because you type it in two places and neither should
+have to be exact about capitals or spaces.
+</p>
+
+<p>
+The text always lands in the figure's <em>preamble</em>, though where
+that is depends on the block: for a snippet, after the
+<code>\documentclass</code> Clew wraps it in and after the packages Clew
+adds; for a complete document, one that carries its own
+<code>\documentclass</code>, straight after that line; for a plain
+<code>```tex</code> block, which has no preamble at all, at the top of
+the source. A <code>preamble=</code> written on the block itself still
+comes last of all, so a figure can always override a fragment it named,
+and so can anything the fragment itself defines twice — TeX's own rule,
+that the last definition wins, is the one to think with here.
+</p>
+
+<p>
+A fragment can carry the packages it needs, and often has to: Clew wraps
+a <code>```latex</code> snippet in a <code>standalone</code> document with
+<code>amsmath</code> and <code>amssymb</code> already loaded, but a
+<code>```tikz</code> picture is wrapped by the figure library instead and
+gets neither. A fragment shared by both wants its own
+<code>\usepackage</code> line — otherwise a macro that expands to
+<code>\mathbb{R}</code> works in the snippet and is an undefined control
+sequence in the picture, which is a puzzling way to meet the difference.
+</p>
+
+<h3 id="fragment-scopes">Two places to keep them</h3>
+
+<p>
+The settings section has two lists, and the difference between them is
+what happens when the vault goes somewhere else:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>List</th><th>Kept in</th><th>Reaches</th></tr>
+	<tr><td>Global</td><td>Clew's own settings, on this machine</td><td>Every vault you open here — your own macros, always to hand</td></tr>
+	<tr><td>This vault</td><td>The vault's <code>.clew/</code> folder</td><td>This vault only — and it travels with it, so a figure renders the same on your other machine or for whoever you share the vault with</td></tr>
+</table>
+</div>
+
+<p>
+A vault fragment <strong>shadows</strong> a global one of the same name.
+That is the arrangement <a href="plugins.html">plugins</a> use, for the
+same reason: the vault is the more specific place, and a vault that
+carries its own macros should render by them wherever it is opened. The
+row says so in the settings section when it happens, so a name you
+forgot you had used twice is not a mystery.
+</p>
+
+<p>
+Editing a fragment re-typesets every figure that uses it, in every note
+open at the time — the figures that do not use it are not touched,
+because a figure is identified by the text it was given rather than by
+the name it asked by. Renaming one therefore typesets nothing at all;
+what it does do is leave any figure still asking for the old name
+saying so, in place of itself, until you write the new name there.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">A name nothing defines is refused</span>
+	If a figure asks for a fragment neither list has — a typo, or a vault
+	opened on a machine without your global ones — Clew does not typeset
+	it without: it says which name it could not find, in the figure's
+	place. That is deliberate. The figure would otherwise fail deep
+	inside TeX with an undefined control sequence and a console to read
+	backwards, and the fix (a name, in Settings) would be nowhere in
+	sight. A <code>```metapost</code> block is refused the same way and
+	for a plainer reason: MetaPost has no preamble, and the TeX a
+	MetaPost file needs goes in its own <code>verbatimtex … etex</code>
+	block.
+</div>
+
+<p>
+Fragments are part of how Clew <em>displays</em> a figure, like
+<code>show=</code> and the typesetting itself: a
+<a href="export.html">LaTeX or PDF export</a> runs your own TeX with
+your own configuration and knows nothing about them, so a note meant
+for that route wants its preamble written where TeX will find it. A
+<a href="publishing.html#figures">website export</a> does use them —
+the pages it bakes are the pages you were reading.
+</p>
+
 <h2 id="show">Showing the source instead</h2>
 
 <p>
@@ -562,6 +672,7 @@ two are the presentation; the rest are handed to the engine:
 	<tr><td><code>alt="…"</code></td><td>An accessible label for the figure</td></tr>
 	<tr><td><code>show-console</code></td><td>Keep the engine's log visible under the figure</td></tr>
 	<tr><td><code>cache="off"</code></td><td>Typeset this figure every time, cache nothing</td></tr>
+	<tr><td><code>clew-fragments="math macros, colours"</code></td><td>TikZ, LaTeX and plain TeX: insert these named fragments' preamble text, written in Settings → TeX fragments (<a href="#fragments">above</a>)</td></tr>
 	<tr><td><code>show=code</code> <code>show=both</code></td><td>Show the source instead of the figure, or before it (<a href="#show">above</a>)</td></tr>
 </table>
 </div>

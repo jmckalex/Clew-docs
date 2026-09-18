@@ -90,6 +90,12 @@ both:
 	its behaviour comes along.</li>
 </ul>
 
+<p>
+One section, <a href="#tex-fragments">TeX fragments</a>, has a list in
+each scope: fragments you keep on this machine and fragments a vault
+carries with it, with the vault's winning where both use a name.
+</p>
+
 <h2 id="sections">The settings sections</h2>
 
 <h3 id="appearance">Appearance</h3>
@@ -181,6 +187,25 @@ both:
 	<dd>Where <em>Insert template…</em> (<kbd>⌘⌥T</kbd>) looks for
 	templates; default <code>Templates</code>.</dd>
 </dl>
+
+<h3 id="tex-fragments">TeX fragments</h3>
+
+<p>
+Named preamble text for the figures Clew typesets — the macros, colours
+and packages your <code>```latex</code>, <code>```tex</code> and
+<code>```tikz</code> blocks share. Each row is a name and an editor;
+a figure asks for what it needs by name on its opening line
+(<code>clew-fragments='math macros, colours'</code>), and the text is
+inserted into that figure's preamble. There are two lists: <strong>
+Global</strong>, kept in <code>clew-settings.json</code> and offered in
+every vault on this machine, and <strong>This vault</strong>, kept in
+the vault's <code>.clew/vault-settings.json</code> and travelling with
+it. A vault fragment shadows a global one of the same name, and the row
+says so. Editing a fragment re-typesets the figures that use it. The
+full account, including where the text lands in each kind of block and
+what happens to a name nothing defines, is in
+<a href="diagrams.html#fragments">Diagrams</a>.
+</p>
 
 <h3 id="this-vault">This vault</h3>
 
@@ -450,8 +475,8 @@ daily, give it a key.
 <div class="tablewrap">
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
-	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>texFragments</code> (this vault's TeX fragments), <code>plugins</code> (array of enabled plugin ids)</td></tr>
 </table>
 </div>
 
