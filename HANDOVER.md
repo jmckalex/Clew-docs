@@ -1,4 +1,4 @@
-# Handover — 2026-09-17 (manual illustrated for the desktop 0.11 features, and `font=note` documented; site still not live)
+# Handover — 2026-09-18 (tree CLEAN: the app's sixth-session chapters and the TeX-fragments section are committed, `1c8d3bc` and `57a61ea`; nothing pushed, site still not live)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -7,9 +7,24 @@ rewritten each session; keep it short and current.
 
 ## 0. Where things stand
 
-- Branch `main`, working tree clean after this evening's commits (the
-  illustration pass, the `font=note` section, this file). No git remote
-  (§3.5).
+- Branch `main`, **clean**. Two commits this round, both unpushed:
+
+  | Commit | Chapters | What |
+  |---|---|---|
+  | `1c8d3bc` | `dialect.html`, `editing.html`, `settings-and-hotkeys.html`, `math-and-theorems.html` | The app's sixth session (Clew-app `90a4d95`…`b9de21c`): multi-paragraph inline footnotes; description lists as two columns, and a list inside a definition wanting two spaces of indent; the face list saying a footnote's opener, body AND closer are painted and each formula is taken whole; ⌥Q as Edit → Fill Paragraph (Reflow) and ⌥D, in the Editor chapter and both hotkey tables; the Caution callout's money case (`$5 and $10` is a pair of delimiters; escape `\$5`) |
+  | `57a61ea` | `diagrams.html`, `settings-and-hotkeys.html` | **TeX fragments** (Clew-app `3a180c2`): `clew-fragments='math macros, colours'` on a ```latex/```tex/```tikz block inserts named preamble text written in Settings → TeX fragments. The new `#fragments` section covers the syntax, where the text lands per kind of block, the two scopes and why a vault fragment shadows a global one, the two refusals by name, the export line (a website export uses them, a LaTeX export never sees them), and the packages paragraph the demo vault earned — Clew wraps a ```latex snippet with amsmath and amssymb, the figure library wraps a ```tikz picture with neither. Plus the attribute-table row, the settings section, and `texFragments` in both reference rows |
+
+  The math chapter needed no correction for the app's own fix: it already
+  promised that inside `$…$` you are in TeX and the dialect's remappings
+  do not apply. The editor was the thing out of step.
+
+  **Offered, not written** (Clew-app's sixth session, §2e): a line saying
+  `\[ \begin{align*} … \end{align*} \]` renders in the preview but is
+  an error in real LaTeX (`Erroneous nesting of equation structures`), so
+  a note that looks right can fail a LaTeX or PDF-via-LaTeX export; and
+  that `\Box` wants `amssymb` on that route. Waiting on the owner.
+
+  No git remote (§3.5).
 - **The site is still not live.** `clew-app.com` and `clew-app.net`
   resolve to GoDaddy's parking addresses, not the droplet
   (144.126.236.254). Everything below is verified locally only.
@@ -19,6 +34,10 @@ rewritten each session; keep it short and current.
 - `VERSION` (Makefile) = 0.9.0 = the landing page = `nav.js`.
 
 ## 1. What landed this session
+
+(The two commits above are this round; everything below is the 09-17
+evening's work, kept because its screenshot kit and its `font=note`
+notes are still the reference for the next pass.)
 
 **Desktop screenshots for everything that shipped 09-01 → 09-17** (one
 commit), all
@@ -50,8 +69,9 @@ plugins card mentions installing once for every vault; the
 "Everything else" card mentions office documents and note history.
 `editing.html` lost a stray empty `<p>` before the wikilink example.
 
-**`font=note` — figures in the note's own typeface** (Clew-app §2f,
-committed there as 3339969; here as the second commit of the evening): `diagrams.html` gained
+**`font=note` — figures in the note's own typeface** (Clew-app `3339969`
+— its handover no longer carries that section, the commit does; here as
+the second commit of the evening): `diagrams.html` gained
 `#note-font` (what it does, which forms take it, what it costs and why
 it is opt-in, the reload when a note gains its first such figure, the
 hand-written fontspec route, where it stops), two reference rows
