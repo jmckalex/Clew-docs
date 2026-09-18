@@ -94,9 +94,14 @@ Markdown grammar. What gets a face of its own:
 <ul>
 	<li><strong>Inline dialect spans</strong> — <code>/italics/</code>,
 	<code>==highlights==</code>, inline and display math
-	(<code>$…$</code>, <code>$$…$$</code>), <code>\cite{…}</code>-family
-	citations with their keys picked out, and the footnote openers
-	<code>[fn:</code> and <code>[^label:</code>.</li>
+	(<code>$…$</code>, <code>$$…$$</code>, <code>\(…\)</code>,
+	<code>\[…\]</code>) — each formula taken whole, so the <code>*</code>
+	of <code>$R^*$</code> is TeX rather than an emphasis delimiter looking
+	for a partner — <code>\cite{…}</code>-family
+	citations with their keys picked out, and inline footnotes —
+	<code>[fn: …]</code> and <code>[^label: …]</code>, opener, body and
+	closing bracket, the body carrying its colour over the blank lines
+	of a multi-paragraph note.</li>
 	<li><strong>Wikilinks and tags</strong> — <code>[[Target]]</code>,
 	<code>[[Target|alias]]</code>, <code>[[Target#Heading]]</code>, and
 	<code>![[…]]</code> embeds, with brackets, target, and alias each
@@ -352,7 +357,17 @@ the paragraph at the cursor to the fill column (default 72, adjustable
 in Settings&nbsp;→&nbsp;Appearance), joining short lines and breaking
 long ones. With a selection, every paragraph the selection touches is
 filled. Rendering is unchanged either way — a single newline inside a
-paragraph reads as a space.
+paragraph reads as a space. It is also
+<strong>Edit&nbsp;→&nbsp;Fill Paragraph (Reflow)</strong>, which is how
+you find it without knowing the key.
+</p>
+
+<p>
+The forward twin of the Mac's own <kbd>⌥⌫</kbd> is
+<kbd>⌥D</kbd>, <em>Delete word forward</em>: it eats the word ahead of
+the cursor and leaves the space before the next one, the way the system
+binding does backwards. Like every other shortcut here it is a command,
+so the palette lists it and Settings&nbsp;→&nbsp;Hotkeys can rebind it.
 </p>
 
 <p>
@@ -512,7 +527,8 @@ Linux read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as
 	<tr><td><kbd>⌘⇧F</kbd></td><td>Search in all files</td></tr>
 	<tr><td><kbd>⌘K</kbd></td><td>Insert wikilink (pops note-name completion)</td></tr>
 	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template</td></tr>
-	<tr><td><kbd>⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column)</td></tr>
+	<tr><td><kbd>⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column); also Edit&nbsp;→&nbsp;Fill Paragraph (Reflow)</td></tr>
+	<tr><td><kbd>⌥D</kbd></td><td>Delete word forward</td></tr>
 	<tr><td><kbd>⌘N</kbd></td><td>Create new note</td></tr>
 	<tr><td><kbd>⌘O</kbd></td><td>Quick switcher</td></tr>
 	<tr><td><kbd>⌘P</kbd></td><td>Command palette (every Format item lives here too)</td></tr>

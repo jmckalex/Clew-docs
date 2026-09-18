@@ -194,8 +194,30 @@ to their paragraph.]</code></pre>
 </div>
 
 <p>
-This is the demo vault's Footnotes note verbatim — open it in the app
-to see the result typeset.
+A note is not confined to one paragraph. Leave a blank line, indent the
+continuation, and close the bracket at the end: everything between the
+brackets is one note, and the engine sets it as its own block at the
+foot of the page.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>A note may run to several paragraphs: indent the continuation and keep
+the closing bracket for the end.[^long: The first paragraph of a long
+note.
+
+	The second. Everything inside the brackets is one note.]</code></pre>
+</div>
+
+<p>
+The source pane colours the whole body, break and all, so you can always
+see how far a note reaches — and the two brackets highlight as a pair
+even when several paragraphs separate them.
+</p>
+
+<p>
+Both examples are the demo vault's Footnotes note verbatim — open it in
+the app to see the result typeset.
 </p>
 
 <h3>Math and citations</h3>
@@ -255,9 +277,14 @@ it does everywhere else:
 	(<a href="links-and-embeds.html">next chapter</a>).</li>
 	<li><strong>Description lists</strong> — <code>Term:: definition</code>,
 	the definition on the same line or indented beneath the term, several
-	paragraphs if you like. (This is why Dataview's inline
+	paragraphs if you like. Reading mode sets the list as two columns, so
+	the definition sits <em>beside</em> its term and every term in one list
+	shares a column width; a definition may hold paragraphs, lists and
+	blocks, which stack in the second column. (Indent a list inside a
+	definition by two spaces — four, or a tab, makes it part of the
+	paragraph above it instead.) This is also why Dataview's inline
 	<code>Key:: value</code> fields are not data in Clew: see
-	<a href="properties.html#inline-fields">Properties</a>.)</li>
+	<a href="properties.html#inline-fields">Properties</a>.</li>
 	<li><strong>Horizontal rules</strong> — <code>---</code>.</li>
 </ul>
 
