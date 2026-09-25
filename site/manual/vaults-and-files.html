@@ -332,6 +332,52 @@ design.
 	must behave identically in both apps, prefer real files.
 </div>
 
+<h2 id="watching">Very large vaults, and what Clew watches</h2>
+
+<p>
+Clew watches the files in a vault so the explorer, previews and
+backlinks keep up with changes made anywhere — by you, by another app,
+by a sync client. Watching a file costs the operating system a small
+handle, and every window watches its own vault, so the cost is shared
+and finite. Clew therefore watches up to a few thousand files at a time
+across all open vaults, and when a vault would take it past that it
+stops adding and tells you so:
+</p>
+
+<div class="example">
+	<p class="example-label">You see</p>
+	<pre><code>Watching 8,000 files in this vault; 12,445+ more are not
+watched (from econ-and-id/libs/fontawesome6/svgs/thin/desktop.svg).
+Changes there will not refresh on their own.</code></pre>
+</div>
+
+<p>
+Your own notes are reached first, so in practice what goes unwatched is
+the tail of something enormous — a library folder, a build directory, a
+font collection. Nothing is hidden: the files are still listed, still
+opened, still searched and still indexed. The only thing you lose is the
+automatic refresh, so a file changed <em>by another program</em> in the
+unwatched part may show its old contents until you reopen it.
+</p>
+
+<p>
+If you see that message and you would rather not, the folder causing it
+is usually not note material at all. <code>node_modules</code>,
+<code>.git</code> and <code>.obsidian</code> are skipped already; a
+library or asset folder can be moved out of the vault, or linked to from
+a note rather than kept inside it. A vault of ordinary notes — even tens
+of thousands of them — never meets this limit.
+</p>
+
+<div class="callout note">
+	<span class="callout-title">Why there is a limit at all</span>
+	Past a certain number of open handles a process cannot start
+	subprocesses, and Clew renders your notes in one. Without the limit a
+	single folder full of small files — a reveal.js library reached
+	through five symbolic links, in the case that prompted this — could
+	leave the app unable to render anything at all.
+</div>
+
 <h2 id="recent">Recent vaults, and opening another</h2>
 
 <p>
