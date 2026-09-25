@@ -210,9 +210,10 @@ what happens to a name nothing defines, is in
 <h3 id="this-vault">This vault</h3>
 
 <p>
-The per-vault switches, stored in
-<code>.clew/vault-settings.json</code>. There are nine, plus the
-plugin list:
+The per-vault settings, stored in
+<code>.clew/vault-settings.json</code> — eleven switches and fields,
+plus three lists (plugins, TeX fragments, and the two exclusion
+lists):
 </p>
 
 <dl>
@@ -274,6 +275,27 @@ plugin list:
 	registered directive is read as a citation key — an email address or an
 	@mention in prose will change how it renders. See
 	<a href="citations.html#pandoc">Citations</a>.</dd>
+	<dt>Run dataviewjs blocks <code>(dataviewJs)</code></dt>
+	<dd>Off by default. Obsidian's <code>```dataviewjs</code> blocks are
+	JavaScript rather than queries, so this is per-vault and off until
+	you turn it on for a vault you wrote or trust; plain
+	<code>```dataview</code> queries always run. See
+	<a href="queries.html">Queries</a>.</dd>
+	<dt>TeX fragments <code>(texFragments)</code></dt>
+	<dd>Named preamble text this vault's figures can ask for by name,
+	travelling with the vault — <a href="diagrams.html#fragments">Diagrams
+	→ Fragments</a>.</dd>
+	<dt>Listed but not indexed <code>(unindexed)</code></dt>
+	<dd>Folders that stay in the explorer and open normally, but are not
+	indexed and not watched: no backlinks, tags, search hits or
+	quick-switcher entries, and no automatic refresh when another program
+	writes to them. One pattern per line —
+	<a href="vaults-and-files.html#excluding">Telling Clew to leave a
+	folder alone</a>.</dd>
+	<dt>Hidden entirely <code>(hidden)</code></dt>
+	<dd>Folders treated as though they were not in the vault at all: not
+	listed, not indexed, not watched, not published by a website export.
+	Same patterns.</dd>
 	<dt>Plugins <code>(plugins)</code></dt>
 	<dd>Below the switches, every plugin available here is listed with
 	its version, surfaces, and whether it came from this vault's
@@ -476,7 +498,7 @@ daily, give it a key.
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>texFragments</code> (this vault's TeX fragments), <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
 </table>
 </div>
 
