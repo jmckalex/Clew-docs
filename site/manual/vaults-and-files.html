@@ -355,7 +355,7 @@ different things:
 <div class="example">
 	<p class="example-label">In <code>.clew/vault-settings.json</code></p>
 	<pre><code>{
-  "unindexed": ["*/libs"],
+  "unindexed": ["**/libs"],
   "hidden": ["Archive/2019", "**/build"]
 }</code></pre>
 </div>
@@ -370,13 +370,32 @@ the new rules without reopening the vault.
 <p>
 The patterns are relative to the vault root, and the dialect is
 deliberately small: a plain path means that folder (or file) and
-everything under it; <code>*</code> matches within a single folder name,
-so <code>*/libs</code> catches <code>econ-and-id/libs</code> and its
-siblings in one line; <code>**</code> matches any number of folders
-including none, so <code>**/node_modules</code> catches one at the top
-just as well as one buried five deep. A line that is empty, absolute, or
-climbs out of the vault with <code>..</code> is ignored rather than
-obeyed.
+everything under it; <code>*</code> matches within a single folder name;
+<code>**</code> matches any number of folders including none, so
+<code>**/node_modules</code> catches one at the top just as well as one
+buried five deep. A line that is empty, absolute, or climbs out of the
+vault with <code>..</code> is ignored rather than obeyed.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Reach for <code>**</code>, not <code>*</code></span>
+	<code>*/libs</code> means <em>exactly one folder deep</em>: it catches
+	<code>econ-and-id/libs</code> but not
+	<code>yr/2025-26/econ-and-id/libs</code>. A vault that has grown a
+	level since the line was written goes on watching the folders you
+	believe you excluded, and nothing complains —
+	<code>**/libs</code> catches both. The same goes for the other lists:
+	when in doubt, write <code>**</code>.
+</div>
+
+<p>
+And if those library folders are <strong>symlinks to one shared copy</strong>
+— a common arrangement for presentation frameworks — there is a second
+thing to know. Clew follows symlinks, which Obsidian does not, and counts
+a tree once no matter how many links lead to it. So excluding <em>one</em>
+route to a shared folder excludes nothing at all: the walk simply reaches
+the same files through another link, and the total does not move. Exclude
+every route — which is what one <code>**</code> line does.
 </p>
 
 <div class="callout note">
@@ -407,12 +426,24 @@ Changes there will not refresh on their own.</code></pre>
 </div>
 
 <p>
-Your own notes are reached first, so in practice what goes unwatched is
-the tail of something enormous — a library folder, a build directory, a
-font collection. Nothing is hidden: the files are still listed, still
-opened, still searched and still indexed. The only thing you lose is the
+Nothing is hidden when this happens: the files are still listed, still
+opened, still searched and still indexed. The only thing lost is the
 automatic refresh, so a file changed <em>by another program</em> in the
 unwatched part may show its old contents until you reopen it.
+</p>
+
+<p>
+Which files go unwatched, though, is not up to you, and it is worth
+being plain about it: Clew walks the vault folder by folder and takes
+them in the order it meets them, so a large non-note folder that sorts
+early takes the budget before your notes are reached. In one real course
+vault — ten presentation folders, each symlinked to the same 41,000-file
+library — the walk had spent the whole budget inside a font icon set by
+the time it had seen <strong>six of the vault's eighty-one notes</strong>.
+The limit had done its job, the app worked, and the notes were still
+listed, searched and indexed; but the automatic refresh that vault
+actually wanted was the part it lost. This is the case to fix with an
+exclusion, not to live with.
 </p>
 
 <p>
@@ -423,12 +454,14 @@ waiting to be told about it.
 </p>
 
 <p>
-If you see that message and you would rather not, the folder causing it
-is usually not note material at all. <code>node_modules</code>,
-<code>.git</code> and <code>.obsidian</code> are skipped already; a
-library or asset folder can be moved out of the vault, or linked to from
-a note rather than kept inside it. A vault of ordinary notes — even tens
-of thousands of them — never meets this limit.
+If you see that message, the folder causing it is usually not note
+material at all, and the message names a file inside it — which tells you
+what to put in <a href="#excluding"><code>hidden</code> or
+<code>unindexed</code></a>. <code>node_modules</code>, <code>.git</code>
+and <code>.obsidian</code> are skipped already; anything else you can
+exclude in a line, move out of the vault, or link to from a note rather
+than keep inside it. A vault of ordinary notes — even tens of thousands
+of them — never meets this limit.
 </p>
 
 <div class="callout note">
