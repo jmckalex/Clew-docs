@@ -253,6 +253,38 @@ scoped down to the note at hand — a quick visual answer to "what is
 around this note?" without leaving the sidebar.
 </p>
 
+<h2 id="shell">The shell panel</h2>
+
+<p>
+<kbd>⌃`</kbd> — or View&nbsp;→&nbsp;Shell&nbsp;Panel — opens a terminal
+along the bottom of the middle pane, under the tabs and above the status
+bar. Drag its top edge to resize it; the height is remembered per vault,
+like a sidebar's width. It is your own login shell (whatever
+<code>$SHELL</code> says), started in the vault's root folder, with no
+wrapper and nothing filtered: <code>git status</code>, a build, a
+<code>grep</code> across the notes, <code>pandoc</code> — whatever you
+would run in Terminal, run where the notes are.
+</p>
+
+<p>
+One shell per window, and it keeps running while the panel is hidden.
+Closing the panel is not closing the shell, which is the point: start a
+build, press <kbd>⌃`</kbd>, go back to writing, and press it again to see
+how the build got on. The shell ends when its window does. Pressing
+<kbd>⌃`</kbd> while the caret is in the terminal closes the panel rather
+than typing a backtick.
+</p>
+
+<p>
+It is a real terminal, not a log pane — it runs under a pty, so prompts,
+colour, progress bars and full-screen programs (<code>vim</code>,
+<code>htop</code>, <code>less</code>) all behave. Resizing the panel
+reflows them. The one thing it needs is a <code>python3</code> on the
+machine, which macOS and every Linux distribution ship; without one Clew
+falls back to a plain pipe — commands still run, but there is no prompt
+and no colour, and the panel says so when it opens.
+</p>
+
 <h2 id="status-bar">The status bar</h2>
 
 <p>
@@ -297,6 +329,7 @@ The full panel set. Hotkeys shown are macOS; on Windows and Linux read
 	<tr><td><strong>Refs</strong></td><td>Right</td><td>The active note's formatted bibliography (vaults that enable it)</td><td>Tool tab · Settings&nbsp;→&nbsp;This vault</td></tr>
 	<tr><td><strong>Props</strong></td><td>Right</td><td>Frontmatter properties, editable</td><td>Tool tab or View&nbsp;→&nbsp;Properties&nbsp;Panel</td></tr>
 	<tr><td><strong>Graph</strong></td><td>Right</td><td>Local graph, one link deep</td><td>Tool tab</td></tr>
+	<tr><td><strong>Shell</strong></td><td>Bottom</td><td>A terminal at the vault root</td><td><kbd>⌃`</kbd> or View&nbsp;→&nbsp;Shell&nbsp;Panel</td></tr>
 </table>
 </div>
 
