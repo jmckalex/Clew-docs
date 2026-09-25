@@ -433,17 +433,34 @@ unwatched part may show its old contents until you reopen it.
 </p>
 
 <p>
-Which files go unwatched, though, is not up to you, and it is worth
-being plain about it: Clew walks the vault folder by folder and takes
-them in the order it meets them, so a large non-note folder that sorts
-early takes the budget before your notes are reached. In one real course
-vault — ten presentation folders, each symlinked to the same 41,000-file
-library — the walk had spent the whole budget inside a font icon set by
-the time it had seen <strong>six of the vault's eighty-one notes</strong>.
-The limit had done its job, the app worked, and the notes were still
-listed, searched and indexed; but the automatic refresh that vault
-actually wanted was the part it lost. This is the case to fix with an
-exclusion, not to live with.
+Which files go unwatched is not left to chance. Clew decides the order
+before it starts watching, and it spends the budget like this:
+</p>
+
+<ol>
+	<li><strong>Every note first.</strong> All your <code>.md</code> and
+	<code>.jmd</code> files, however deep they sit and whatever else is in
+	the vault. In practice this means a vault's notes are always watched:
+	tens of thousands of them fit inside the limit on their own.</li>
+	<li><strong>Then the documents Clew edits</strong> — canvases,
+	<code>.base</code> files, <code>.bib</code> bibliographies, PDFs,
+	office documents, drawings. A change to one of these always has a tab
+	or a render waiting for it, and there are never many.</li>
+	<li><strong>Then everything else, nearest first</strong> — breadth
+	first, so files beside your notes are reached before files buried
+	deep in a vendored library.</li>
+</ol>
+
+<p>
+That last rule is why attachments look after themselves without being a
+category: a vault's own images and media sit beside or just below its
+notes, while a downloaded framework is five or six folders down. The
+measurement that produced this policy: in one real course vault — ten
+presentation folders, each symlinked to the same 41,000-file library —
+watching in plain directory order reached <strong>six of the vault's
+eighty-one notes</strong> before the budget was gone, all of it spent
+inside a font icon set. Ordering it this way watches all eighty-one, and
+all 288 of its documents.
 </p>
 
 <p>
