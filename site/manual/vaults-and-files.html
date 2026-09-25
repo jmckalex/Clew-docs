@@ -332,6 +332,59 @@ design.
 	must behave identically in both apps, prefer real files.
 </div>
 
+<h2 id="excluding">Telling Clew to leave a folder alone</h2>
+
+<p>
+A vault is whatever folder you point Clew at, and folders collect things
+that are not notes: a presentation library, a build directory, a font
+pack, a decade of archived material you never open. Two lists in the
+vault's own options file say what to do about them, and they mean
+different things:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>List</th><th>What happens to it</th></tr>
+	<tr><td><code>unindexed</code></td><td><strong>Listed, but inert.</strong> The folder stays in the file explorer and its files open and edit normally — but Clew does not index or watch them. No backlinks, tags, search hits or quick-switcher entries, and a change made by another program will not refresh by itself.</td></tr>
+	<tr><td><code>hidden</code></td><td><strong>Not there at all.</strong> Not listed, not indexed, not watched, not published by a website export, and not rewritten when a rename moves a link.</td></tr>
+</table>
+</div>
+
+<div class="example">
+	<p class="example-label">In <code>.clew/vault-settings.json</code></p>
+	<pre><code>{
+  "unindexed": ["*/libs"],
+  "hidden": ["Archive/2019", "**/build"]
+}</code></pre>
+</div>
+
+<p>
+You can write them there by hand, or fill them in at <strong>Settings →
+This vault</strong>, one pattern per line. Either way they take effect
+at once: the explorer, the watcher and the index are all rebuilt under
+the new rules without reopening the vault.
+</p>
+
+<p>
+The patterns are relative to the vault root, and the dialect is
+deliberately small: a plain path means that folder (or file) and
+everything under it; <code>*</code> matches within a single folder name,
+so <code>*/libs</code> catches <code>econ-and-id/libs</code> and its
+siblings in one line; <code>**</code> matches any number of folders
+including none, so <code>**/node_modules</code> catches one at the top
+just as well as one buried five deep. A line that is empty, absolute, or
+climbs out of the vault with <code>..</code> is ignored rather than
+obeyed.
+</p>
+
+<div class="callout note">
+	<span class="callout-title">Always left alone</span>
+	<code>.clew</code>, <code>.git</code>, <code>.obsidian</code>,
+	<code>node_modules</code>, <code>.trash</code> and anything beginning
+	with a dot are skipped whatever the lists say — the first is Clew's
+	own state, the rest were never note material.
+</div>
+
 <h2 id="watching">Very large vaults, and what Clew watches</h2>
 
 <p>
