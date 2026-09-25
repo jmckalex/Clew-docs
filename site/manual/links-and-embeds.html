@@ -499,6 +499,69 @@ for <code>@begin(figure)</code> when you want a numbered caption too — the
 two compose.
 </p>
 
+<h2 id="reveal">Embedding a presentation</h2>
+
+<p>
+A slide deck can live inside a note, running, with
+<code>@reveal[…]</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>@reveal[Talks/intro]
+
+@reveal[Talks/intro/index.html]{height=420px}
+
+@reveal[http://localhost:8888/prez/teaching/voting-theory/]{aspect=4:3}</code></pre>
+</div>
+
+<p>
+The target is either a <strong>path inside the vault</strong> — an HTML
+file, or a folder holding an <code>index.html</code>, which is what a
+reveal.js export looks like — or an <strong>http(s) URL</strong>. The URL
+form is the one that matters for a deck your web server builds rather
+than stores: a <code>.php</code> file served straight out of the vault
+would be its source code, not a presentation, and Clew says so rather
+than showing you the source.
+</p>
+
+<p>
+The frame is interactive: arrow keys, the deck's own controls, its
+fullscreen button. It loads only when scrolled into view, so a note can
+hold several decks without starting all of them at once.
+</p>
+
+<h3 id="reveal-sizing">Size and style</h3>
+
+<div class="tablewrap">
+<table>
+	<tr><th>Attribute</th><th>Effect</th></tr>
+	<tr><td><code>width=80%</code></td><td>Frame width; the default is the full width of the note column. A bare number means pixels.</td></tr>
+	<tr><td><code>height=420px</code></td><td>A fixed height. Without one the frame keeps an aspect ratio instead, so it reflows with the column.</td></tr>
+	<tr><td><code>aspect=4:3</code></td><td>The shape to keep when no height is given; the default is <code>16:9</code>.</td></tr>
+	<tr><td><code>style="…"</code></td><td>Any further CSS, verbatim — a border, a margin, a shadow.</td></tr>
+	<tr><td><code>class="…"</code></td><td>An extra class, for a vault stylesheet to hook.</td></tr>
+	<tr><td><code>title="…"</code></td><td>The frame's accessible name; the default is “Embedded presentation”.</td></tr>
+</table>
+</div>
+
+<div class="callout note">
+	<span class="callout-title">Quote a value with a slash in it</span>
+	The dialect's attribute syntax ends an unquoted value at the first
+	character that is not a letter or digit, so write
+	<code>aspect=4:3</code> or <code>aspect="4/3"</code> — a bare
+	<code>4/3</code> is a syntax error, and the whole attribute set is lost
+	when one attribute fails to parse. Quoting always works:
+	<code>{height="420px" width="80%"}</code>.
+</div>
+
+<p>
+Two other spellings of the same directive come free with the dialect:
+<code>@reveal+[…]</code> on its own line is the block form, and
+<code>@begin(reveal)…@end(reveal)</code> the environment form. They take
+the same attributes and produce the same frame.
+</p>
+
 <h2 id="renames">Renames and moves rewrite links</h2>
 
 <p>
