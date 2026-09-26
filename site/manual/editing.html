@@ -49,19 +49,24 @@ links, tags, citations, math, directives, and footnotes all get faces of
 their own. The editor saves for you, remembers your undo history even
 after you navigate away, and refuses to lose your work when the same
 file changes under it. One keystroke, <kbd>⌘E</kbd>, flips between the
-source and the typeset result.
+source and the typeset result; another, <kbd>⌘⇧E</kbd>, puts the markup
+away while you write (<a href="live-edit.html">live edit</a>).
 </p>
 
-<h2 id="modes">Source mode and reading mode</h2>
+<h2 id="modes">Source mode, live edit and reading mode</h2>
 
 <p>
-Every note tab is in one of two modes. <strong>Source mode</strong> shows
-the Markdown as you typed it; <strong>reading mode</strong> shows the
-same file rendered by the jmarkdown engine (the subject of
-<a href="reading-mode.html">its own chapter</a>). <kbd>⌘E</kbd> toggles
-between them, and each tab remembers its mode independently, so a
-reference note can sit rendered in one tab while you draft in another.
-A setting controls which mode newly opened notes start in.
+Every note tab is in one of three modes. <strong>Source mode</strong>
+shows the Markdown as you typed it; <strong>live edit</strong> is the same
+editor with the markup concealed until the cursor touches it (the
+subject of <a href="live-edit.html">its own chapter</a>);
+<strong>reading mode</strong> shows the file rendered by the jmarkdown
+engine (<a href="reading-mode.html">its own chapter</a> too).
+<kbd>⌘E</kbd> toggles reading mode and comes back to whichever editing
+mode the tab last used; <kbd>⌘⇧E</kbd> flips source and live edit. Each
+tab remembers its mode independently, so a reference note can sit
+rendered in one tab while you draft in another. A setting controls which
+mode newly opened notes start in.
 </p>
 
 <p>

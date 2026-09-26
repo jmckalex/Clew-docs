@@ -106,9 +106,10 @@ carries with it, with the vault's winning where both use a name.
 	snippets</a> for what the switch reaches and how to restyle
 	further.</dd>
 	<dt>New note tabs open in</dt>
-	<dd>Whether a freshly opened note tab starts in source (edit) mode or
-	reading mode. Navigating an existing tab keeps that tab's current
-	mode; this setting governs new tabs only.</dd>
+	<dd>Whether a freshly opened note tab starts in source mode,
+	<a href="live-edit.html">live edit</a>, or reading mode. Navigating an
+	existing tab keeps that tab's current mode; this setting governs new
+	tabs only.</dd>
 	<dt>Explorer click opens files</dt>
 	<dd>Whether clicking a file in the explorer opens it in a new tab, or
 	in the current tab, Obsidian-style.</dd>
@@ -129,6 +130,54 @@ carries with it, with the vault's winning where both use a name.
 	<a href="export.html#two-pdfs">Export as PDF (reading view)</a>
 	prints onto. The LaTeX PDF takes its page size from the document's own
 	class instead, and is not affected.</dd>
+</dl>
+
+<h3 id="live-edit">Live edit</h3>
+
+<p>App-global; see <a href="live-edit.html">Live edit and the
+toolbar</a>. Changes apply to open notes at once.</p>
+
+<dl>
+	<dt>⌘E returns from reading mode to</dt>
+	<dd>Source mode (default) or live edit — for a tab that has not been
+	edited yet. A tab that has remembers its own
+	(<code>defaultEditMode</code>).</dd>
+	<dt>Reveal syntax for</dt>
+	<dd>The construct under the cursor (default) or the whole line
+	(<code>liveReveal</code>: <code>construct</code> |
+	<code>line</code>).</dd>
+	<dt>Typeset math in place</dt>
+	<dd>On by default (<code>liveRenderMath</code>); off leaves maths as
+	source.</dd>
+	<dt>Render diagram and query fences in place</dt>
+	<dd>On by default (<code>liveRenderFences</code>): mermaid, the TeX
+	figures, maps, queries, Dataview, Bases and rich directives as engine
+	frames. Off leaves them as code.</dd>
+	<dt>Render embeds and media in place</dt>
+	<dd>On by default (<code>liveRenderEmbeds</code>): note, PDF, office,
+	canvas and media embeds, <code>@reveal</code>, and HTML blocks with
+	custom elements.</dd>
+	<dt>Rendered blocks kept alive (advanced)</dt>
+	<dd>4–64, default 16 (<code>liveFrameCap</code>) — how many engine
+	frames one note keeps at once. Each costs memory (roughly
+	20&nbsp;MB).</dd>
+</dl>
+
+<h3 id="editor-toolbar">Editor toolbar</h3>
+
+<dl>
+	<dt>Show the toolbar</dt>
+	<dd>In live edit (default), in live edit and source mode, or never
+	(<code>editorToolbar</code>: <code>live</code> | <code>always</code> |
+	<code>never</code>). View&nbsp;→&nbsp;Editor Toolbar toggles it and
+	remembers which of the first two it was
+	(<code>editorToolbarPrev</code>).</dd>
+	<dt>Selection bubble over selected text</dt>
+	<dd>On by default (<code>selectionBubble</code>).</dd>
+	<dt>Groups, in order</dt>
+	<dd>Tick the groups to show and order them with ▲▼; <em>Reset</em>
+	restores the default (<code>editorToolbarGroups</code>, null meaning
+	the default). The mode switch is always shown, last.</dd>
 </dl>
 
 <h3 id="diary">Diary</h3>
@@ -426,7 +475,9 @@ shown in macOS notation — on Windows and Linux, read <kbd>⌘</kbd> as
 <div class="tablewrap">
 <table>
 	<tr><th>Hotkey</th><th>Command</th></tr>
-	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode</td></tr>
+	<tr><td><kbd>⌘E</kbd></td><td>Toggle reading mode (returns to the tab's editing mode)</td></tr>
+	<tr><td><kbd>⌘⇧E</kbd></td><td>Toggle live edit / source</td></tr>
+	<tr><td><kbd>⌥⇧T</kbd></td><td>Focus the editor toolbar</td></tr>
 	<tr><td><kbd>⌘B</kbd></td><td>Toggle left sidebar</td></tr>
 	<tr><td><kbd>⌘⇧B</kbd></td><td>Toggle right sidebar</td></tr>
 	<tr><td><kbd>⌃`</kbd></td><td>Toggle the shell panel (and put the caret in it)</td></tr>
@@ -444,6 +495,7 @@ shown in macOS notation — on Windows and Linux, read <kbd>⌘</kbd> as
 	<tr><td><kbd>⌘⌥T</kbd></td><td>Insert template…</td></tr>
 	<tr><td><kbd>⌥Q</kbd></td><td>Fill paragraph (hard-wrap to the fill column); also Edit&nbsp;→&nbsp;Fill Paragraph (Reflow)</td></tr>
 	<tr><td><kbd>⌥D</kbd></td><td>Delete word forward — the forward twin of the Mac's own <kbd>⌥⌫</kbd></td></tr>
+	<tr><td><kbd>⌘Enter</kbd></td><td>Toggle the task on the cursor's line (elsewhere: CodeMirror's own blank line below)</td></tr>
 </table>
 </div>
 
@@ -470,8 +522,11 @@ folders and canvases, opening another vault, revealing the note in the
 file manager, bookmarking, pinning tabs, the diary calendar, the
 properties panel, the theme commands, all four exports, and the entire
 Format family — inline styles, headings, lists, alignment, alerts,
-tables, and block inserts, each a rebindable command. If you use one
-daily, give it a key.
+tables, and block inserts, each a rebindable command — and live edit's
+own: the three <em>View mode</em> commands, <em>Toggle editor
+toolbar</em>, indent and outdent, and the toolbar's inserts (link,
+attachment, table, callout, code fence, maths environment, figure,
+environment). If you use one daily, give it a key.
 </p>
 
 <div class="callout tip">
