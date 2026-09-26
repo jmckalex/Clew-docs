@@ -483,6 +483,45 @@ change that Clew itself just wrote never triggers the banner.
 	clean, and guarded by the conflict banner when it is not.
 </div>
 
+<h2 id="link-previews">Link previews on hover</h2>
+
+<figure class="shot">
+	<img src="images/link-preview.png" alt="A note in live edit with the pointer over a link to the Welcome note's section The guide; a popover below the link, headed Welcome › The guide with an Open button, shows that section rendered: its heading and a bulleted list of guide notes">
+	<figcaption>Hovering a link to a heading shows that section — only
+	that section — rendered as reading mode would.</figcaption>
+</figure>
+
+<p>
+Rest the pointer on a link for half a second and a popover shows what it
+points to, rendered by the engine exactly as reading mode would: a whole
+note for <code>[[Note]]</code>, just the section for
+<code>[[Note#Heading]]</code>, just the block for
+<code>[[Note#^id]]</code>, the image for an image, and a PDF, a drawing or
+an office document as its embed. Markdown links to notes
+(<code>[text](Note.md)</code>, <code>[text](#Heading)</code>) preview the
+same way. It works in source mode, live edit and reading mode.
+</p>
+
+<ul>
+	<li>Move the pointer into the popover to scroll it or click a link in
+	it — that link opens in the window. <strong>Open</strong> in its
+	header follows the link (<kbd>⌘</kbd>-click: a new tab).</li>
+	<li>Moving from one link straight to another while a popover is open
+	switches at once, with no second wait.</li>
+	<li>A link to a note that does not exist yet shows <em>No note called
+	…</em>; clicking that creates it, as clicking the link does.</li>
+	<li>Web links, <code>mailto:</code> links and
+	<code>[[file|external]]</code> links show no popover — a web link's
+	address is in its tooltip.</li>
+	<li>It closes when the pointer leaves the link and the popover, on
+	<kbd>Esc</kbd>, on any key you type, and when the note scrolls. It
+	never takes the cursor: you can keep typing.</li>
+	<li>Settings → Appearance → <em>Link previews on hover</em>:
+	<em>Always</em> (the default), <em>With ⌘ held</em> (Obsidian's
+	default — pressing <kbd>⌘</kbd> over a link shows it at once), or
+	<em>Off</em>. Not yet inside a table cell being edited in place.</li>
+</ul>
+
 <h2 id="attachments">Attachments by paste and drag</h2>
 
 <p>
