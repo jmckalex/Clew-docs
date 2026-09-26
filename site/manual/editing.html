@@ -483,6 +483,49 @@ change that Clew itself just wrote never triggers the banner.
 	clean, and guarded by the conflict banner when it is not.
 </div>
 
+<h2 id="preview-pane">A live rendering while you edit maths and diagrams</h2>
+
+<figure class="shot">
+	<img src="images/live-preview-pane.png" alt="A display formula's source between two double-dollar lines, with the cursor at its end; directly below, a pane shows the formula typeset: the integral from 0 to 1 of x squared equals x cubed over three evaluated from 0 to 1, equals one third">
+	<figcaption>The cursor is in a <code>$$</code> block, so its source shows
+	— and the pane below it shows what that source typesets to, updated as
+	you type.</figcaption>
+</figure>
+
+<p>
+Put the cursor inside a formula or a diagram and a pane beside it shows
+what the source renders to — the <em>current</em> source, updated each
+time you pause. In source mode this is the only place you see the result
+without switching to reading mode; in live edit it stands in for the
+rendering the formula or diagram shows until you step into it.
+</p>
+
+<ul>
+	<li><strong>Maths</strong> — <code>$…$</code>, <code>\(…\)</code>,
+	<code>$$…$$</code>, <code>\[…\]</code>, <code>\begin{align}</code> and the
+	other maths environments, <code>@begin(align)</code> — typeset as you
+	pause (about a sixth of a second). An inline formula's pane sits above
+	its line; a display formula's below it. If the TeX has an error, the
+	pane keeps the last picture that worked and shows MathJax's message
+	under it.</li>
+	<li><strong>Diagrams</strong> — ```mermaid, ```tikz, ```latex,
+	```tex, ```metapost, <code>:::TiKZ</code>, <code>:::mermaid</code> and
+	the <code>@begin(…)</code> forms — rendered by the engine exactly as
+	reading mode would, a TeX error's console included, below the block.
+	Mermaid redraws after a short pause; a TeX figure after a longer one,
+	since each run takes about a second.</li>
+	<li>Only a finished construct previews: a <code>$$</code> with no
+	closing <code>$$</code> yet, or a fence with no closing line, is not
+	yet anything to render. Queries, Dataview and Bases blocks are not
+	previewed — each render would rescan the vault.</li>
+	<li><kbd>Esc</kbd> puts the pane away until the cursor leaves that
+	formula or block. It never takes the cursor, and clicking it does
+	nothing; scroll it if a diagram is tall.</li>
+	<li>Settings → Appearance → <em>Live preview of maths and diagrams
+	while editing</em> turns it off. Not yet inside a table cell being
+	edited in place.</li>
+</ul>
+
 <h2 id="link-previews">Link previews on hover</h2>
 
 <figure class="shot">
