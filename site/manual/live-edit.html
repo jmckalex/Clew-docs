@@ -128,8 +128,8 @@ maths is typeset in place by MathJax in the app window. A footnote
 becomes its number (hover it to read the note); a <code>\cite{…}</code>
 becomes a chip reading <em>Author Year</em> from the vault's
 <code>.bib</code> files; a <code>{{variable}}</code>, a
-<code>:label[…]</code>, <code>:today</code> and a <code>^block-id</code>
-become small chips. A <code>:TeX[…]</code> span is shown dimmed — it
+<code>@label[…]</code>, <code>:today</code> and a <code>^block-id</code>
+become small chips; an <code>@ref[…]</code> shows the number it will print. A <code>:TeX[…]</code> span is shown dimmed — it
 renders only in a LaTeX export.
 </p>
 
@@ -148,11 +148,14 @@ as the engine does.
 	the cursor in it instead, to edit it. An unresolved wikilink is drawn
 	dimmed and dashed. Resting the pointer on a link previews it
 	(<a href="editing.html#link-previews">link previews</a>).</li>
+	<li>A <strong>cross-reference</strong> — <code>@ref[key]</code>,
+	<code>@cref</code>, <code>@Cref</code> — shows the number the rendered
+	note will print; a click jumps to its label (<kbd>⌘[</kbd> returns),
+	and hovering previews it (<a href="math-and-theorems.html#crossrefs-live">cross-references</a>).</li>
 	<li>A <strong>tag</strong> opens the search panel on that tag.</li>
 	<li>A <strong>task</strong>'s checkbox ticks it — the <code>[x]</code>
 	is written to the file like any keystroke.</li>
 	<li>A <strong>block-id badge</strong> copies a link to its block.</li>
-	<li>A <code>:ref[…]</code> jumps to its <code>:label[…]</code>.</li>
 	<li>A <strong>table cell</strong> is edited in place
 	(<a href="#tables">Tables</a>); <kbd>⌥</kbd>-click shows the table's
 	source at that cell.</li>

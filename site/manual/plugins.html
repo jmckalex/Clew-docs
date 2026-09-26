@@ -207,7 +207,7 @@ A plugin is a folder whose name is its id, containing a
 	"description": "What it does, for the settings screen.",
 	"apiVersion": 1,
 	"surfaces": {
-		"engine": { "file": "engine.js", "extensions": "myFence" },
+		"engine": { "file": "engine.js", "extensions": "myFence", "fences": ["myfence"] },
 		"preview": "preview.js",
 		"app": "app.js"
 	}
@@ -242,6 +242,18 @@ vault, and every render — reading mode and
 <a href="publishing.html">website export</a> alike — picks it up.
 Because the worker is a separate process, a broken extension fails a
 render, not the app.
+</p>
+
+<p>
+Two optional keys on the engine surface tell the <em>editor</em> what the
+engine code does, since it cannot look inside: <code>"fences"</code> lists
+fence languages the plugin renders (<code>"fences": ["chart"]</code> —
+live edit then draws those blocks rendered, not as code), and
+<code>"numbered"</code> lists environments it numbers
+(<code>"numbered": ["exercise"]</code>, or
+<code>{"name": "exercise", "counter": "problems", "refname": "exercise"}</code>),
+so live edit's <a href="math-and-theorems.html#crossrefs-live">cross-reference
+numbers</a> count them.
 </p>
 
 <div class="example">
