@@ -149,8 +149,8 @@ only supplies what the note does not say itself.
 
 <p>
 The same settings section can enable the <strong>References
-panel</strong>: a <em>Refs</em> tab in the right sidebar showing the
-active note's formatted references, updated as you write, whether the
+panel</strong>'s <em>This note</em> mode: the <em>Refs</em> tab in the right
+sidebar showing the active note's formatted references, updated as you write, whether the
 note is in reading or source mode. Notes never need an inline
 <code>@bibliography</code> block for the panel — and authoring one
 anyway still renders inline as usual. See
@@ -389,6 +389,51 @@ changes on disk.
 	be a link to wherever your reference manager actually writes it.
 </div>
 
+<h2 id="library">The library</h2>
+
+<figure class="shot">
+	<img src="images/citations-library.png" alt="Clew with a note in live edit whose citations read as chips — citep Knuth 1984, Lamport 1994 — a PDF open in the middle pane, and the Refs panel on the right in Library mode listing three entries, each with its author and year, title, how many notes cite it, and Insert, Copy key, PDF and DOI or URL buttons">
+	<figcaption>The Refs panel's Library: every entry in the vault's
+	<code>.bib</code> files, who cites it, and what you can do with it.</figcaption>
+</figure>
+
+<p>
+The <strong>Refs</strong> panel in the right sidebar has two modes. <em>This
+note</em> is the active note's formatted bibliography (switched on per
+vault — below). <em>Library</em> is every entry in every <code>.bib</code>
+file in the vault, always available:
+</p>
+
+<ul>
+	<li>Search it by key, author, title or year — every word you type must
+	appear — and show all entries, only the cited ones, or only the
+	uncited.</li>
+	<li><strong>Cited by</strong>: each entry says how many notes cite it;
+	click that to list them, and a note to open it at the citation. Pandoc
+	forms (<code>[@key]</code>) count only when the vault turns
+	<a href="#pandoc">pandoc citations</a> on.</li>
+	<li><strong>Insert</strong> puts <code>\cite{key}</code> at the caret of
+	the note you are editing (<code>[@key]</code> under pandoc citations);
+	<strong>Copy key</strong> copies it.</li>
+	<li><strong>PDF</strong> opens the file an entry's <code>file</code> field
+	names — Zotero's and JabRef's <code>:papers/x.pdf:PDF</code> or a plain
+	path, relative to the <code>.bib</code>'s folder, then the vault — in a
+	Clew tab when it is inside the vault, in your PDF app when it is not,
+	and says so when it is missing. <strong>DOI</strong> or
+	<strong>URL</strong> opens the entry's link in the browser.</li>
+</ul>
+
+<p>
+In live edit a citation is a chip reading <em>Author Year</em>: click it to
+open the Library at its entry, hover it to see the reference — formatted
+in the vault's style when the vault names a bibliography, else its
+author, year and title from the <code>.bib</code> — and
+<kbd>⌥</kbd>-click it to edit. The same hover works on a citation in
+reading mode. The <a href="graph-view.html">graph</a>'s
+<strong>References</strong> switch adds one square node per cited work,
+joined to every note that cites it; click one to open its entry.
+</p>
+
 <h2 id="export">Exporting citations</h2>
 
 <p>
@@ -447,7 +492,7 @@ the way a hand-written manuscript would.
 	<tr><th>Vault setting (Settings → This vault)</th><th>Meaning</th></tr>
 	<tr><td>Bibliography file <code>(bibliography)</code></td><td>A <code>.bib</code> path from the vault root (or absolute); switches on citation resolution vault-wide</td></tr>
 	<tr><td>Bibliography style <code>(bibliographyStyle)</code></td><td>A named style — apa, chicago, harvard1, vancouver, bjps, ajp, econometrica, ergo — or a path to a custom <code>.csl</code> file</td></tr>
-	<tr><td>References panel <code>(bibliographyPanel)</code></td><td>Shows the active note's formatted references in a right-sidebar Refs tab</td></tr>
+	<tr><td>References panel <code>(bibliographyPanel)</code></td><td>The Refs panel's <em>This note</em> mode: the active note's formatted references (the Library is always there)</td></tr>
 </table>
 </div>
 
