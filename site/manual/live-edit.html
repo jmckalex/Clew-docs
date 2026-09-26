@@ -124,8 +124,10 @@ Every style of the dialect — <code>*strong*</code>,
 <code>__underline__</code>, <code>==highlight==</code>,
 <code>~strike~</code>, <code>H_2O</code> and <code>x^{10}</code>,
 <code>`code`</code> — shows styled with its delimiters hidden. Inline
-maths is typeset in place by MathJax in the app window. A footnote
-becomes its number (hover it to read the note); a <code>\cite{…}</code>
+maths is typeset in place by MathJax in the app window. A footnote —
+one line or several paragraphs, lists and maths included — becomes its
+number (hover it to read the note's first paragraph; click it to open the
+whole note); a <code>\cite{…}</code>
 becomes a chip reading <em>Author Year</em> from the vault's
 <code>.bib</code> files; a <code>{{variable}}</code>, a
 <code>@label[…]</code>, <code>:today</code> and a <code>^block-id</code>
@@ -344,7 +346,6 @@ toolbar turns it off.
 	window keeps <code>\newcommand</code> definitions for the session, so a
 	macro one note defines is visible in another opened later. Reading
 	mode is the truth for macros.</li>
-	<li>A footnote whose body runs over several lines stays source.</li>
 	<li>In a table, you edit one cell at a time: a selection cannot span
 	cells, and pasting a grid does not fill several cells.</li>
 	<li>A <code>|live</code> office embed shows as its thumbnail; the live
