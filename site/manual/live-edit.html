@@ -152,9 +152,12 @@ as the engine does.
 	is written to the file like any keystroke.</li>
 	<li>A <strong>block-id badge</strong> copies a link to its block.</li>
 	<li>A <code>:ref[…]</code> jumps to its <code>:label[…]</code>.</li>
-	<li>Anything rendered — maths, a footnote number, a citation chip, a
-	table cell, a diagram's edge strip — puts the cursor there, revealing
-	the source.</li>
+	<li>A <strong>table cell</strong> is edited in place
+	(<a href="#tables">Tables</a>); <kbd>⌥</kbd>-click shows the table's
+	source at that cell.</li>
+	<li>Anything else rendered — maths, a footnote number, a citation chip,
+	a diagram's edge strip — puts the cursor there, revealing the
+	source.</li>
 </ul>
 
 <h3 id="lines">Lines</h3>
@@ -179,9 +182,8 @@ highlighted, with its fence lines turned into a language label and a
 <p>
 Display maths, a horizontal rule, <code>{{TOC}}</code> (click an entry to
 go there), images (sized as <code>![[image.png|300]]</code> asks) and
-tables (click a cell to edit the table as source, where
-<kbd>Tab</kbd> and <kbd>Enter</kbd> walk the cells) are drawn by the
-editor itself. The <a href="properties.html">properties</a> at the top of
+tables (<a href="#tables">edited in place</a>) are drawn by the editor
+itself. The <a href="properties.html">properties</a> at the top of
 a note become rows you can edit in place — text, numbers, dates and
 checkboxes — written back through the editor, so <kbd>⌘Z</kbd> undoes
 them; <em>Edit as YAML</em> shows the source.
@@ -206,6 +208,46 @@ query lists) and when a setting that changes rendering does.
 	you would lose — is kept while it is within about three screens. Each
 	costs memory (roughly 20&nbsp;MB), which is what the cap is for.
 </div>
+
+<h2 id="tables">Tables</h2>
+
+<figure class="shot">
+	<img src="images/live-edit-table.png" alt="A table in live edit with one cell outlined for editing and the table menu open beside it: insert and delete rows and columns, alignment, moving rows and columns, format, edit as source">
+	<figcaption>Editing a table in place: the outlined cell is being typed
+	in, and a right-click has opened the table menu.</figcaption>
+</figure>
+
+<p>
+A table stays a table while you edit it. Click a cell and type: the text
+goes into the note as you write, the table stays drawn, and
+<kbd>⌘Z</kbd> undoes it with the rest of the note's history.
+<kbd>Tab</kbd> and <kbd>⇧Tab</kbd> move between cells (across rows),
+<kbd>Enter</kbd> moves down a column, and either adds a row when you go
+past the end. The arrow keys leave a cell at its edges, and the table at
+its top and bottom. <kbd>⇧Enter</kbd> breaks a line inside a cell (written
+<code>&lt;br&gt;</code>, since a Markdown cell is one line), and a
+<code>|</code> you type is written <code>\|</code>, so it cannot split the
+cell — including the one in a wikilink's alias.
+</p>
+
+<p>
+The toolbar's <strong>Table</strong> group, and a right-click on any cell,
+insert and delete rows and columns, move them, and set a column's
+alignment. While you type, the pipes in the source are left where they
+fall; when you leave the table they are lined up again, in one step you can
+undo on its own. <kbd>Esc</kbd>, <kbd>⌥</kbd>-click on a cell, or
+<em>Edit table as source</em> shows the Markdown, with the cursor where it
+was.
+</p>
+
+<p>
+A table using the engine's <em>extended</em> syntax — merged cells
+(<code>| a || b |</code>, or a cell ending in <code>^</code>) or column
+widths (<code>|---30%---|</code>) — is drawn but edited as source (a line
+above it says so): lining its pipes up would undo the merges. So is a table
+larger than 200 rows or 40 columns. Formatting inside a cell is limited to
+inline styles and links; a heading or a list cannot live in one.
+</p>
 
 <h2 id="toolbar">The toolbar</h2>
 
@@ -262,8 +304,8 @@ groups it holds, in what order.
 	macro one note defines is visible in another opened later. Reading
 	mode is the truth for macros.</li>
 	<li>A footnote whose body runs over several lines stays source.</li>
-	<li>Tables are edited as source: click a cell and the table reveals.
-	Editing inside the rendered table is not supported.</li>
+	<li>In a table, you edit one cell at a time: a selection cannot span
+	cells, and pasting a grid does not fill several cells.</li>
 	<li>A <code>|live</code> office embed shows as its thumbnail; the live
 	LibreOffice editor opens in reading mode.</li>
 	<li>Remote (<code>https://</code>) images are not loaded in the editor
@@ -284,6 +326,10 @@ groups it holds, in what order.
 	<tr><td>Toggle reading mode</td><td><kbd>⌘E</kbd> (returns to the tab's editing mode)</td></tr>
 	<tr><td>Any of the three modes</td><td>View&nbsp;→&nbsp;Mode, the toolbar's mode switch, the palette</td></tr>
 	<tr><td>Follow a concealed link / edit it</td><td>Click / <kbd>⌥</kbd>-click</td></tr>
+	<tr><td>Edit a table cell / the table's source</td><td>Click / <kbd>Esc</kbd> or <kbd>⌥</kbd>-click</td></tr>
+	<tr><td>Next / previous cell; down a column</td><td><kbd>Tab</kbd> / <kbd>⇧Tab</kbd>; <kbd>Enter</kbd> (adds a row at the end)</td></tr>
+	<tr><td>A line break in a cell</td><td><kbd>⇧Enter</kbd></td></tr>
+	<tr><td>Rows, columns, alignment</td><td>The toolbar's Table group, or right-click a cell</td></tr>
 	<tr><td>Tick the task on the cursor's line</td><td><kbd>⌘Enter</kbd> (elsewhere: a blank line below)</td></tr>
 	<tr><td>Indent / outdent a list item</td><td><kbd>Tab</kbd> / <kbd>⇧Tab</kbd></td></tr>
 	<tr><td>Into the toolbar</td><td><kbd>⌥⇧T</kbd>; <kbd>Esc</kbd> back</td></tr>
