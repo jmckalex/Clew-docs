@@ -312,6 +312,39 @@ embedded PDF is included the same way (which works for single-page
 PDFs). Audio and video have no meaning on paper and are omitted.
 </p>
 
+<h2 id="pdf-annotations">PDF annotations as a note</h2>
+
+<figure class="shot">
+	<img src="images/pdf-annotations.png" alt="On the left a note titled Paper — Annotations in live edit, with a Page 1 heading and two quoted highlights, one with a comment, each ending in a page link; a Page 3 heading with a sticky note and another highlight. On the right the PDF, its two highlighted lines on page 1 in yellow">
+	<figcaption>The highlights and notes of a PDF, written beside it as a
+	note — quoted, with their comments and page links.</figcaption>
+</figure>
+
+<p>
+What you highlight and note in a PDF can become a note you link to and
+quote from. With the PDF's tab active, run <em>PDF: extract annotations to
+a note</em> from the palette, or right-click the PDF in the file explorer
+and choose <em>Extract annotations to a note</em>. Clew writes
+<code>&lt;name&gt; — Annotations.md</code> beside the PDF: a
+<code>## Page N</code> heading per page, and for each annotation a quote of
+the text under it (read from the page itself), your comment, and a link
+back to its page.
+</p>
+
+<ul>
+	<li>Each entry ends in a block id, <code>^pdf-…</code>, so another note
+	can quote a single highlight: <code>![[paper — Annotations#^pdf-…]]</code>.</li>
+	<li>Run it again after more reading: annotations already in the note are
+	left exactly as they are (write around them freely), new ones are added
+	under their page, and nothing is ever removed.</li>
+	<li>A link to a page, <code>[[paper.pdf#page=12]]</code>, opens the PDF
+	at that page — from a note, from reading mode, or from the annotations
+	note itself.</li>
+	<li>Highlights, underlines, strike-outs and squiggles quote their text;
+	sticky notes and free text bring their comment; ink says it has no
+	text.</li>
+</ul>
+
 <h2 id="other-files">Non-media files</h2>
 
 <p>
