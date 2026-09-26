@@ -296,6 +296,35 @@ source mode, or never — View → Editor Toolbar toggles it), and which
 groups it holds, in what order.
 </p>
 
+<h2 id="slash-menu">The <code>//</code> menu</h2>
+
+<figure class="shot">
+	<img src="images/live-edit-slash.png" alt="Two slashes typed on an empty line, with a menu below them listing the Format menu's text styles — Strong *text*, Intense **text**, Italic /text/ and more — under the heading Text Style">
+	<figcaption>Two slashes on a new line open the Format menu at the
+	cursor.</figcaption>
+</figure>
+
+<p>
+Type <code>//</code> at the start of a line, or after a space, and the
+Format menu drops down at the cursor, section by section, each item showing
+the syntax it writes. Keep typing to filter it — <code>//head 2</code>
+narrows it to <em>Heading 2</em> — and press <kbd>Enter</kbd> to apply:
+the slashes and what you typed disappear and the item runs, exactly as if
+you had chosen it from the Format menu. <kbd>Esc</kbd> closes the menu and
+leaves the slashes as text.
+</p>
+
+<p>
+It is Obsidian's slash menu with one more slash, because in this dialect a
+single slash starts an italic (<code>/text/</code>); two slashes never can.
+It stays out of the way where <code>//</code> is ordinary text: in a URL
+(<code>https://</code>), in the middle of a word, when a space follows the
+slashes (<code>// a comment</code>), and inside code, maths or the
+metadata header. It works in source mode as well, and in a table cell,
+where it offers only the inline styles and inserts. Settings → Editor
+toolbar turns it off.
+</p>
+
 <h2 id="limits">What live edit does not do</h2>
 
 <ul>
@@ -332,6 +361,7 @@ groups it holds, in what order.
 	<tr><td>Rows, columns, alignment</td><td>The toolbar's Table group, or right-click a cell</td></tr>
 	<tr><td>Tick the task on the cursor's line</td><td><kbd>⌘Enter</kbd> (elsewhere: a blank line below)</td></tr>
 	<tr><td>Indent / outdent a list item</td><td><kbd>Tab</kbd> / <kbd>⇧Tab</kbd></td></tr>
+	<tr><td>The Format menu at the cursor</td><td>Type <code>//</code> at a line start or after a space; <kbd>Enter</kbd> applies, <kbd>Esc</kbd> keeps the slashes</td></tr>
 	<tr><td>Into the toolbar</td><td><kbd>⌥⇧T</kbd>; <kbd>Esc</kbd> back</td></tr>
 	<tr><td>Show or hide the toolbar</td><td>View&nbsp;→&nbsp;Editor Toolbar</td></tr>
 	<tr><td>Settings</td><td>Settings&nbsp;→&nbsp;Live edit, Settings&nbsp;→&nbsp;Editor toolbar (<a href="settings-and-hotkeys.html#live-edit">every key</a>)</td></tr>
