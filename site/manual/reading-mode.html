@@ -54,6 +54,17 @@ navigate, checkboxes that write to your files, and an inverse search
 that jumps you to the exact source line of anything you see.
 </p>
 
+<div class="callout tip">
+	<span class="callout-title">Tip</span>
+	Reading mode is one of three modes a note tab can be in; the others
+	are source mode and <a href="live-edit.html">live edit</a>, where these
+	same engine renderings — diagrams, queries, embeds — appear in small
+	frames among the text you are editing. <kbd>⌘E</kbd> comes back from
+	reading mode to whichever of the two the tab last used, and ⌘-click
+	(inverse search) lands there at the clicked line. A slim bar above the
+	page holds the mode switch.
+</div>
+
 <h2 id="toggling">Toggling between editing and reading</h2>
 
 <p>
@@ -352,6 +363,25 @@ complete re-renders cheap enough to run on every save.
 	same <code>[x]</code>.
 </div>
 
+<h2 id="sidenotes">Sidenotes</h2>
+
+<figure class="shot">
+	<img src="images/sidenotes-reading.png" alt="Reading mode on a wide pane: a short note with three footnote numbers in its text, and the three notes set in the right margin, each beside the line that cites it, the third pushed down below the long second one">
+	<figcaption>On a wide pane, footnotes sit in the margin beside the
+	text that cites them.</figcaption>
+</figure>
+
+<p>
+When the pane is wide enough — at least 960 pixels, with room to the
+right of the text — each footnote appears in the margin at the height of
+its number, and the list at the end is hidden. Two notes cited on one line
+stack rather than overlap. Printing and exporting still put the notes at
+the end. Live edit does the same beside each footnote's badge (see
+<a href="live-edit.html">Live edit</a>). Settings → Appearance →
+<em>Footnotes in the margin</em>: when the pane is wide enough (the
+default), always, or never.
+</p>
+
 <h2 id="reference">Reference</h2>
 
 <div class="tablewrap">
@@ -361,6 +391,7 @@ complete re-renders cheap enough to run on every save.
 	<tr><td>Split the pane right / down</td><td><kbd>⌘\</kbd> / <kbd>⌘⇧\</kbd></td></tr>
 	<tr><td>Follow a wikilink</td><td>Click</td></tr>
 	<tr><td>Open a wikilink in a new tab</td><td><kbd>⌘</kbd>-click the link</td></tr>
+	<tr><td>Preview a wikilink</td><td>Rest the pointer on it (<a href="editing.html#link-previews">link previews</a>)</td></tr>
 	<tr><td>Inverse search (jump to the source line)</td><td><kbd>⌘</kbd>-click any non-link block</td></tr>
 	<tr><td>Toggle a task in the source file</td><td>Click its checkbox</td></tr>
 	<tr><td>Open an external link in the browser</td><td>Click</td></tr>

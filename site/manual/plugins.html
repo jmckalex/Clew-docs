@@ -207,7 +207,7 @@ A plugin is a folder whose name is its id, containing a
 	"description": "What it does, for the settings screen.",
 	"apiVersion": 1,
 	"surfaces": {
-		"engine": { "file": "engine.js", "extensions": "myFence" },
+		"engine": { "file": "engine.js", "extensions": "myFence", "fences": ["myfence"] },
 		"preview": "preview.js",
 		"app": "app.js"
 	}
@@ -222,7 +222,7 @@ an object with a <code>file</code> key; either way the file must sit
 directly in the plugin's folder — no subdirectories, no path tricks —
 and a declared file that does not exist is dropped. A plugin whose
 <code>apiVersion</code> is newer than the running app understands
-(currently&nbsp;1) is skipped entirely rather than half-loaded. A
+(currently&nbsp;2) is skipped entirely rather than half-loaded. A
 folder with a broken or missing manifest is not a plugin.
 </p>
 
@@ -242,6 +242,18 @@ vault, and every render — reading mode and
 <a href="publishing.html">website export</a> alike — picks it up.
 Because the worker is a separate process, a broken extension fails a
 render, not the app.
+</p>
+
+<p>
+Two optional keys on the engine surface tell the <em>editor</em> what the
+engine code does, since it cannot look inside: <code>"fences"</code> lists
+fence languages the plugin renders (<code>"fences": ["chart"]</code> —
+live edit then draws those blocks rendered, not as code), and
+<code>"numbered"</code> lists environments it numbers
+(<code>"numbered": ["exercise"]</code>, or
+<code>{"name": "exercise", "counter": "problems", "refname": "exercise"}</code>),
+so live edit's <a href="math-and-theorems.html#crossrefs-live">cross-reference
+numbers</a> count them.
 </p>
 
 <div class="example">
@@ -694,13 +706,14 @@ full of plugins.
 </table>
 </div>
 
-<h3>The app-surface API (<code>clew</code>, version 1)</h3>
+<h3>The app-surface API (<code>clew</code>, version 2)</h3>
 
 <div class="tablewrap">
 <table>
 	<tr><th>Member</th><th>Behaviour</th></tr>
 	<tr><td><code>clew.apiVersion</code></td>
-		<td>The API version, currently <code>1</code>.</td></tr>
+		<td>The API version, currently <code>2</code>. Version 2 added
+		<code>clew.toolbar</code>; a version-1 plugin runs unchanged.</td></tr>
 	<tr><td><code>clew.pluginId</code></td>
 		<td>Your plugin's id.</td></tr>
 	<tr><td><code>clew.vaultName</code></td>
@@ -728,6 +741,14 @@ full of plugins.
 		automatically.</td></tr>
 	<tr><td><code>clew.ui.notice(text, ms?)</code></td>
 		<td>A transient toast, three seconds by default.</td></tr>
+	<tr><td><code>clew.toolbar.addButton(spec)</code></td>
+		<td>A button on the <a href="live-edit.html#toolbar">editor
+		toolbar</a> (version 2): <code>{ command, label, icon, group? }</code>
+		— <code>command</code> a command id (usually one registered with
+		<code>clew.commands.register</code>), <code>icon</code> an
+		<code>&lt;svg&gt;</code> string, <code>group</code> a toolbar group
+		(<code>insert</code> by default). Returns a remover; removed
+		automatically on cleanup.</td></tr>
 </table>
 </div>
 

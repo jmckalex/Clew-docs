@@ -19,6 +19,7 @@ const MANUAL_NAV = [
 	] },
 	{ section: 'Writing', items: [
 		{ file: 'editing.html', title: 'The editor' },
+		{ file: 'live-edit.html', title: 'Live edit and the toolbar' },
 		{ file: 'dialect.html', title: 'The jmarkdown dialect' },
 		{ file: 'callouts.html', title: 'Callouts' },
 		{ file: 'links-and-embeds.html', title: 'Links and embeds' },

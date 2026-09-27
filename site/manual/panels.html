@@ -62,12 +62,12 @@ swaps the panel below. The left sidebar offers <strong>Files</strong>,
 (backlinks), <strong>Out</strong> (outgoing links),
 <strong>Tags</strong>, <strong>Outline</strong>, <strong>Props</strong>
 (properties), and <strong>Graph</strong> (a local graph) — plus
-<strong>Refs</strong> (the active note's bibliography) in vaults that
-enable it.
+<strong>Refs</strong> (the vault's library of references, and the active
+note's bibliography in vaults that enable it).
 </p>
 
 <p>
-<kbd>⌘B</kbd> toggles the left sidebar and <kbd>⌘⇧B</kbd> the right one
+<kbd>⌘⌥B</kbd> toggles the left sidebar and <kbd>⌘⌥⇧B</kbd> the right one
 (also View&nbsp;→&nbsp;Left/Right&nbsp;Sidebar). Drag a sidebar's inner
 edge to resize it. Which tool is selected, whether each sidebar is open,
 and both widths are saved with the rest of the workspace layout, per
@@ -232,8 +232,11 @@ has its own chapter — see
 <h2 id="refs">Refs: the References panel</h2>
 
 <p>
-In vaults with a bibliography configured, an optional <strong>Refs</strong>
-tab shows the active note's formatted references — every work the note
+The <strong>Refs</strong> tab has two modes. <em>Library</em> — always
+there — lists every entry in the vault's <code>.bib</code> files with the
+notes that cite each and its actions (<a href="citations.html#library">the
+library</a>). <em>This note</em>, in vaults that switch it on, shows the
+active note's formatted references — every work the note
 cites, set in the vault's citation style (or the note's own, when its
 properties override it). The list updates as the note re-renders, and it
 works in source mode too, so you can watch the reference list grow while
@@ -325,15 +328,15 @@ The full panel set. Hotkeys shown are macOS; on Windows and Linux read
 <div class="tablewrap">
 <table>
 	<tr><th>Panel</th><th>Sidebar</th><th>Shows</th><th>Reached by</th></tr>
-	<tr><td><strong>Files</strong></td><td>Left</td><td>The vault's folder tree</td><td>Tool tab · <kbd>⌘B</kbd> toggles the sidebar</td></tr>
+	<tr><td><strong>Files</strong></td><td>Left</td><td>The vault's folder tree</td><td>Tool tab · <kbd>⌘⌥B</kbd> toggles the sidebar</td></tr>
 	<tr><td><strong>Search</strong></td><td>Left</td><td>Full-text search results</td><td><kbd>⌘⇧F</kbd> or the tool tab</td></tr>
 	<tr><td><strong>Marks</strong></td><td>Left</td><td>Bookmarked notes</td><td>Tool tab; bookmark via palette or File menu</td></tr>
 	<tr><td><strong>Diary</strong></td><td>Left</td><td>Month calendar with entry dots</td><td>Tool tab or Go&nbsp;→&nbsp;Diary&nbsp;Calendar</td></tr>
-	<tr><td><strong>Links</strong></td><td>Right</td><td>Backlinks and unlinked mentions</td><td>Tool tab · <kbd>⌘⇧B</kbd> toggles the sidebar</td></tr>
+	<tr><td><strong>Links</strong></td><td>Right</td><td>Backlinks and unlinked mentions</td><td>Tool tab · <kbd>⌘⌥⇧B</kbd> toggles the sidebar</td></tr>
 	<tr><td><strong>Out</strong></td><td>Right</td><td>Outgoing links, resolved and unresolved</td><td>Tool tab</td></tr>
 	<tr><td><strong>Tags</strong></td><td>Right</td><td>All tags with counts; expandable note lists</td><td>Tool tab</td></tr>
 	<tr><td><strong>Outline</strong></td><td>Right</td><td>The active note's heading tree</td><td>Tool tab</td></tr>
-	<tr><td><strong>Refs</strong></td><td>Right</td><td>The active note's formatted bibliography (vaults that enable it)</td><td>Tool tab · Settings&nbsp;→&nbsp;This vault</td></tr>
+	<tr><td><strong>Refs</strong></td><td>Right</td><td>The vault's library of references; the active note's formatted bibliography (vaults that enable it)</td><td>Tool tab · a citation chip's click</td></tr>
 	<tr><td><strong>Props</strong></td><td>Right</td><td>Frontmatter properties, editable</td><td>Tool tab or View&nbsp;→&nbsp;Properties&nbsp;Panel</td></tr>
 	<tr><td><strong>Graph</strong></td><td>Right</td><td>Local graph, one link deep</td><td>Tool tab</td></tr>
 	<tr><td><strong>Shell</strong></td><td>Bottom</td><td>A terminal at the vault root</td><td><kbd>⌃`</kbd> or View&nbsp;→&nbsp;Shell&nbsp;Panel</td></tr>

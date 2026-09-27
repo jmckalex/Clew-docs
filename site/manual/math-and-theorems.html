@@ -165,8 +165,8 @@ labels of their own):
 <dl>
 	<dt><code>@ref[key]</code></dt>
 	<dd>The bare number, as a hyperlink to the target — LaTeX's
-	<code>\ref</code>. For an equation the number reads with its
-	parentheses.</dd>
+	<code>\ref</code>. An equation's is bare too ("2"); write the
+	parentheses yourself, or use <code>@cref</code>.</dd>
 	<dt><code>@cref[key]</code></dt>
 	<dd>A typed reference: the kind word plus the number — "equation (1)",
 	"theorem 2", "lemma 3" — LaTeX's cleveref <code>\cref</code>. The
@@ -193,6 +193,65 @@ the print document resolves them with the real machinery.
 	manual writes the <code>@</code> forms throughout, matching the demo
 	vault.
 </div>
+
+<h3 id="what-numbers">What gets a number</h3>
+
+<ul>
+	<li><strong>Equations</strong> from <code>@begin(equation)</code> —
+	<code>$$…$$</code> and <code>\[…\]</code> are never numbered.</li>
+	<li><strong>Theorems</strong> — theorem, lemma, corollary, proposition,
+	definition, example, remark — share <em>one</em> counter: Theorem 1,
+	Lemma 2, Corollary 3. A proof is unnumbered.</li>
+	<li><strong>Figures</strong> (subfigures 1a, 1b), <strong>tables</strong>
+	and <strong>listings</strong> each count on their own.</li>
+	<li><strong>Headings</strong>, only when the note's header says
+	<code>Headings: numeric</code>: every heading, the title included, 1.,
+	1.1., 1.2. A reference to one says "section" or "subsection" by its
+	depth.</li>
+	<li>A target takes its key from <code>{#key}</code> or
+	<code>{id=key}</code> on its opening line (<code>{id=eq:mass}</code> when
+	the key has a colon, which the <code>#</code> form cannot carry), or from
+	an <code>@label[key]</code> inside it. An <code>@label</code> in a
+	heading takes the heading's number; anywhere else — a footnote included,
+	for now — it has none, and a reference to it prints
+	<code>??</code>.</li>
+</ul>
+
+<h3 id="crossrefs-live">While you write</h3>
+
+<figure class="shot">
+	<img src="images/crossref-preview.png" alt="Live edit showing a numbered heading, 1.1 Cross-references, with its label shown as an anchor chip; below it prose whose references read 1, theorem 1, Lemma 2 and subsection 1.1 as links; the pointer rests on theorem 1 and a popover headed Theorem 1 — Fundamental Triviality shows the theorem's text">
+	<figcaption>In live edit each reference shows the number reading mode
+	will print; hovering one previews what it names.</figcaption>
+</figure>
+
+<p>
+In live edit, every <code>@ref</code>, <code>@cref</code> and
+<code>@Cref</code> shows the number the rendered note will print, a
+numbered environment's heading says "Theorem 2" or "Figure 1", an
+<code>@begin(equation)</code> carries its "(n)", and numbered headings their
+"1.2.". Click a reference to jump to what it names (<kbd>⌘[</kbd> comes
+back); <kbd>⌥</kbd>-click edits it; hover it to preview the target. A
+reference to a key this note does not define shows <code>??</code> in red,
+as the engine prints it. Typing <code>@ref[</code> (or <code>@cref[</code>,
+<code>@Cref[</code>) lists the note's labels with their numbers, and the
+palette's <em>Jump to label…</em> lists them to go to.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Numbered within the note</span>
+	Clew numbers each note on its own. A project that includes chapters from
+	other notes (the vault's <code>jmarkdownProject</code> option) is
+	numbered as a whole by its export, and a reference to a label in another
+	note shows <code>??</code> while you write.
+</div>
+
+<p>
+An environment a <a href="plugins.html#surfaces">plugin</a> defines as
+numbered is counted only when the plugin's manifest declares it; any
+other environment with a label shows <code>?</code> — Clew will not guess
+what the export will print.
+</p>
 
 <h2 id="theorems">Theorem environments</h2>
 
