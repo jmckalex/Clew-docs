@@ -265,6 +265,20 @@ was.
 </p>
 
 <p>
+Tables <em>without a header</em> are edited the same way. The engine
+accepts two forms GFM does not: rows of pipes with no separator line at all,
+and a separator line first (which sets the columns' alignment) followed by
+the rows. Neither has a header row, so every row is an ordinary row you can
+delete or move. Setting a column's alignment on a table of bare pipe rows
+adds a separator line at its top — the separator-first form, still without
+a header.
+</p>
+
+<pre><code>| Apples  | 12 |          | :---    | ---: |
+| Bananas |  8 |          | Apples  |   12 |
+                          | Bananas |    8 |</code></pre>
+
+<p>
 A table using the engine's <em>extended</em> syntax — merged cells
 (<code>| a || b |</code>, or a cell ending in <code>^</code>) or column
 widths (<code>|---30%---|</code>) — is drawn but edited as source (a line

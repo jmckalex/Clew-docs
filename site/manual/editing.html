@@ -140,8 +140,10 @@ The same scan feeds the fold gutter: <code>:::</code> directive blocks
 and <code>@begin(…)</code>/<code>@end(…)</code> environments fold away,
 which keeps a note full of large TikZ pictures or long proofs
 navigable. The scanner is careful about context — a wikilink inside a
-code fence, a <code>#word</code> inside a math span, or a slash in
-<code>/usr/bin</code> never lights up.
+code fence or a <code>#word</code> inside a math span never lights up —
+and it reads slashes exactly as the engine does, so <code>/usr/bin</code>
+shows an italic <em>usr</em> here because that is how it will render.
+Write <code>\/usr\/bin</code> to keep the slashes.
 </p>
 
 <figure class="shot">
