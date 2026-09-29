@@ -68,7 +68,7 @@ const MANUAL_NAV = [
 	const sidebar = document.getElementById('sidebar');
 	if (sidebar) {
 		const parts = [];
-		parts.push('<p class="nav-head"><a href="index.html">Clew Manual</a> <span class="nav-version">v0.9.0</span></p>');
+		parts.push('<p class="nav-head"><a href="index.html">Clew Manual</a> <span class="nav-version">v0.11.1</span></p>');
 		for (const group of MANUAL_NAV) {
 			parts.push(`<p class="nav-section">${group.section}</p><ul>`);
 			for (const item of group.items) {

@@ -41,7 +41,7 @@ LOCAL_DIR := site
 # Release binaries: ~640 MB, so they are in neither git nor the ordinary
 # sync. They change only when a release ships. `make stage-downloads` copies
 # them out of the app repo's out/ and `make sync-downloads` uploads them.
-VERSION := 0.9.0
+VERSION := 0.11.1
 OUT_DIR := ../Clew-app/out
 DL_DIR  := $(LOCAL_DIR)/downloads
 
@@ -164,7 +164,8 @@ stage-downloads:
 	@[ -d "$(OUT_DIR)" ] || { echo "ERROR: $(OUT_DIR) not found."; exit 1; }
 	@mkdir -p $(DL_DIR)
 	@set -e; \
-	 cp -v "$(OUT_DIR)/Clew-$(VERSION)-universal.dmg" "$(DL_DIR)/Clew-$(VERSION)-universal.dmg"; \
+	 cp -v "$(OUT_DIR)/Clew-$(VERSION)-arm64.dmg"     "$(DL_DIR)/Clew-$(VERSION)-arm64.dmg"; \
+	 cp -v "$(OUT_DIR)/Clew-$(VERSION)-x64.dmg"       "$(DL_DIR)/Clew-$(VERSION)-x64.dmg"; \
 	 cp -v "$(OUT_DIR)/Clew Setup $(VERSION).exe"     "$(DL_DIR)/Clew-Setup-$(VERSION).exe"; \
 	 cp -v "$(OUT_DIR)/Clew-$(VERSION).AppImage"      "$(DL_DIR)/Clew-$(VERSION).AppImage"; \
 	 cp -v "$(OUT_DIR)/clew_$(VERSION)_amd64.deb"     "$(DL_DIR)/clew_$(VERSION)_amd64.deb"

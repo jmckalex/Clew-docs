@@ -102,14 +102,14 @@ wire on every ordinary deploy and protects the remote copy from `--delete`.
 ### Publishing a release
 
 ```sh
-make stage-downloads   # copies v0.9.0 binaries from ../Clew-app/out/
-make check-links       # confirms the landing page's four hrefs now resolve
+make stage-downloads   # copies v0.11.1 binaries from ../Clew-app/out/
+make check-links       # confirms the landing page's five hrefs now resolve
 make sync-downloads    # ~640 MB, uploaded once per release
 ```
 
 `VERSION` at the top of the Makefile must match the version the landing page
 links to. `stage-downloads` renames the Windows installer from
-`Clew Setup 0.9.0.exe` to `Clew-Setup-0.9.0.exe`, because electron-builder
+`Clew Setup 0.11.1.exe` to `Clew-Setup-0.11.1.exe`, because electron-builder
 writes spaces and a URL with `%20` in it is the kind of thing that gets
 mangled when someone pastes the link.
 
