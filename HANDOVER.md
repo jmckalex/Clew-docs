@@ -27,7 +27,7 @@ rewritten each session; keep it short and current.
   No git remote (§3.5).
 - **The site is still not live.** `clew-app.com` and `clew-app.net`
   resolve to GoDaddy's parking addresses, not the droplet
-  (144.126.236.254). Everything below is verified locally only.
+  (`jmck-web`, 139.59.191.156 — moved from `do` on 2026-09-23). Everything below is verified locally only.
 - `make check-links` → clean (the two `../index.html` anchors it lists
   resolve at `/manual/` on the site). The 0.9.0 binaries are staged in
   `site/downloads/`.
@@ -94,9 +94,11 @@ engine and a couple of minutes.
 
 ## 2. Hosting — done except for DNS (unchanged)
 
-Deploys to the owner's droplet (`ssh do` → 144.126.236.254, nginx +
-certbot), house pattern in `~/Sites/digital_ocean/`. Nothing on the
-droplet has been touched by any session. **The blocker is the two apex
+Deploys to the owner's droplet (`ssh jmck-web` → 139.59.191.156, nginx +
+certbot — the jmckalex.org / fishhooksoftware.com droplet; retargeted from
+`do` → 144.126.236.254 on 2026-09-23), house pattern in
+`~/Sites/digital_ocean/`. An earlier, unserved copy of the site sits in
+`/var/www/clew-app.com` on `do` and can be deleted once this is live. **The blocker is the two apex
 A records at GoDaddy**, which need registrar access. Then, in order:
 `make dns-check` (gate) → `make provision` → `make nginx-install` →
 `make sync` → `make tls`. Decisions not to re-litigate: `.com` is

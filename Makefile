@@ -17,7 +17,7 @@
 #
 # First time, in order: dns-check, provision, nginx-install, sync, tls.
 
-REMOTE_HOST  := do
+REMOTE_HOST  := jmck-web
 REMOTE_PATH  := /var/www/clew-app.com
 REMOTE_OWNER := web:web
 SITE_URL     := https://clew-app.com
@@ -28,7 +28,7 @@ NGINX_CONF   := clew-app.com.nginx.conf
 # on one certificate — an alternate domain without one fails outright in a
 # browser that tries https first, instead of redirecting.
 CERT_DOMAINS := clew-app.com www.clew-app.com clew-app.net www.clew-app.net
-DROPLET_IP   := 144.126.236.254
+DROPLET_IP   := 139.59.191.156
 
 # The published tree. The other sites in ~/Sites/digital_ocean list their
 # files explicitly; this one cannot — the manual alone is 28 pages and 24

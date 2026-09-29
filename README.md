@@ -118,9 +118,11 @@ use `--delete`, so a link that has been posted somewhere keeps working.
 
 ## First-time server setup
 
-The droplet (`do` → 144.126.236.254, Ubuntu 24.04, nginx 1.24) already hosts
-several sites in this pattern; this adds one more. Nothing on it has been
-touched yet.
+The droplet is `jmck-web` (→ 139.59.191.156, Ubuntu, nginx 1.24), the one
+that serves jmckalex.org and fishhooksoftware.com; this adds one more site in
+the same pattern. (Until 2026-09-23 this targeted the TROCP droplet, `do` →
+144.126.236.254, which still holds an unserved August copy in
+`/var/www/clew-app.com` — safe to delete once this one is live.)
 
 In order:
 
@@ -135,7 +137,7 @@ make tls              # certificate for all four names
 **1. DNS — the only step that cannot be done from here.** Both domains are
 registered with GoDaddy (`ns75`/`ns76.domaincontrol.com`) and still resolve to
 its parking IPs. In the GoDaddy DNS panel, point the A record for each apex at
-`144.126.236.254`. `www` is already a CNAME to the apex on both, so it
+`139.59.191.156`. `www` is already a CNAME to the apex on both, so it
 follows automatically.
 
 `make dns-check` verifies all four names and refuses to go on until they
