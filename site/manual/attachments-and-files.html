@@ -217,7 +217,20 @@ notes and stamps. Anything you draw is written <strong>into the PDF
 file itself</strong> a couple of seconds after you stop — there is no
 Save button to miss, and a small chip beside the filename tells you where
 things stand (<em>unsaved</em>, <em>saving…</em>, <em>saved</em>).
+Switch away before then — another tab, closing the tab or the window, a
+note re-rendering over an embed — and the edit is written at once, the
+viewer kept alive out of sight until it lands. The one thing that does
+not wait is reloading the window (View&nbsp;→&nbsp;Reload), which
+discards an edit still pending.
 </p>
+
+<div class="callout warn">
+	<span class="callout-title">In 0.11.1</span>
+	0.11.1 does not wait: a highlight or note made in the couple of
+	seconds before you switch tabs, close the tab or window, or re-render
+	the note around an embed is lost. Let the chip read <em>saved</em>
+	first. The next release fixes it.
+</div>
 
 <p>
 Because the edit lands in the file rather than in a Clew-only sidecar, an
