@@ -1,4 +1,4 @@
-# Handover — 2026-09-18 (tree CLEAN: the app's sixth-session chapters and the TeX-fragments section are committed, `1c8d3bc` and `57a61ea`; nothing pushed, site still not live)
+# Handover — 2026-09-29 (the site is LIVE at https://clew-app.com; 0.11.1 committed; its publish waits on the owner's direct go)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -7,136 +7,109 @@ rewritten each session; keep it short and current.
 
 ## 0. Where things stand
 
-- Branch `main`, **clean**. Two commits this round, both unpushed:
-
-  | Commit | Chapters | What |
-  |---|---|---|
-  | `1c8d3bc` | `dialect.html`, `editing.html`, `settings-and-hotkeys.html`, `math-and-theorems.html` | The app's sixth session (Clew-app `90a4d95`…`b9de21c`): multi-paragraph inline footnotes; description lists as two columns, and a list inside a definition wanting two spaces of indent; the face list saying a footnote's opener, body AND closer are painted and each formula is taken whole; ⌥Q as Edit → Fill Paragraph (Reflow) and ⌥D, in the Editor chapter and both hotkey tables; the Caution callout's money case (`$5 and $10` is a pair of delimiters; escape `\$5`) |
-  | `57a61ea` | `diagrams.html`, `settings-and-hotkeys.html` | **TeX fragments** (Clew-app `3a180c2`): `clew-fragments='math macros, colours'` on a ```latex/```tex/```tikz block inserts named preamble text written in Settings → TeX fragments. The new `#fragments` section covers the syntax, where the text lands per kind of block, the two scopes and why a vault fragment shadows a global one, the two refusals by name, the export line (a website export uses them, a LaTeX export never sees them), and the packages paragraph the demo vault earned — Clew wraps a ```latex snippet with amsmath and amssymb, the figure library wraps a ```tikz picture with neither. Plus the attribute-table row, the settings section, and `texFragments` in both reference rows |
-
-  The math chapter needed no correction for the app's own fix: it already
-  promised that inside `$…$` you are in TeX and the dialect's remappings
-  do not apply. The editor was the thing out of step.
-
-  **Offered, not written** (Clew-app's sixth session, §2e): a line saying
-  `\[ \begin{align*} … \end{align*} \]` renders in the preview but is
-  an error in real LaTeX (`Erroneous nesting of equation structures`), so
-  a note that looks right can fail a LaTeX or PDF-via-LaTeX export; and
-  that `\Box` wants `amssymb` on that route. Waiting on the owner.
-
-  No git remote (§3.5).
-- **The site is still not live.** `clew-app.com` and `clew-app.net`
-  resolve to GoDaddy's parking addresses, not the droplet
-  (`jmck-web`, 139.59.191.156 — moved from `do` on 2026-09-23). Everything below is verified locally only.
-- `make check-links` → clean (the two `../index.html` anchors it lists
-  resolve at `/manual/` on the site). The 0.9.0 binaries are staged in
-  `site/downloads/`.
-- `VERSION` (Makefile) = 0.9.0 = the landing page = `nav.js`.
+- Branch `main`, clean, **no git remote** (nothing to push). The manual
+  reflects Clew-app up to **`6c63132`** — the base hash for the next
+  docs notice.
+- **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
+  to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
+  all four, expires 2026-12-28, renewed by `certbot.timer`. http → https
+  everywhere; both `.net` names 301 to `clew-app.com` with the path
+  kept.
+- **What the droplet serves:** the 09-29 `make sync` of eff4e7f plus
+  the diagrams / canvas-engaged / panels edits — i.e. **0.9.0** pages and
+  the 0.9.0 binaries (uploaded 09-23). The 0.11.1 commit below is not on
+  it yet. Publish, in this order so no link 404s: `make sync-downloads`
+  (the five 0.11.1 files, already staged in `site/downloads/`, ~1 GB, no
+  `--delete`), then `make sync`. Then check live: 0.11.1 and "Untested"
+  on the landing page, the five files 200, the "In 0.11.1" callout in
+  `manual/canvas.html`.
+- `VERSION` (Makefile) = landing page = manual index = `nav.js` =
+  getting-started = **0.11.1**. `make check-links` clean.
 
 ## 1. What landed this session
 
-(The two commits above are this round; everything below is the 09-17
-evening's work, kept because its screenshot kit and its `font=note`
-notes are still the reference for the next pass.)
+| Commit | What |
+|---|---|
+| `3b4f396` | The owner's retarget from `do` to `jmck-web`, committed on their behalf |
+| `84de0b1` | diagrams: a ```tikz body that begins with `\begin{tikzcd}`, `\begin{circuitikz}`, `\chemfig` or `\schemestart` is not nested in a second picture (mp-tikz-wasm 0.3.0, Clew-app `368bfd7`); circuitikz, chemfig, tikz-3dplot in the toolchain list |
+| `298761c` | canvas: an engaged node draws no handles or anchor dots, and its ring shows on coloured nodes (`45dffd7`); an edge from it costs a click outside — the owner keeps that trade |
+| `504715e` | panels: the shell is a login shell on macOS, an interactive one on Linux (`5516844`) |
+| `47ffe0b` | canvas + note-api: Esc goes to the innermost owner first, then leaves an engaged note card (`7a0cb6f`, **after** 0.11.1) — with an "In 0.11.1" callout saying it does nothing in that release; scripts that answer Esc call `preventDefault` |
+| `0f80272` | Release 0.11.1: two signed Mac images (arm64, x64) in place of the universal one, the version everywhere, `stage-downloads` for both; Windows/Linux tagged "Untested" (owner's decision) |
 
-**Desktop screenshots for everything that shipped 09-01 → 09-17** (one
-commit), all
-taken with the app's smoke harness over a scratch copy of the demo vault
-at 2560×1700 in the dark theme, each eyeballed before it went in
-(`site/manual/images/`):
+Every behavioural claim was smoke-measured against Clew-app's source
+over a scratch vault. **A timing lesson from this session:** a smoke
+watcher that polls up to 8 s for a condition can log the effect of a
+LATER queued input — `esc.js` blamed Esc for a deselection that the
+next click on empty canvas caused. Log only after the input that
+matters, or check the queue's own timings.
 
-| Image | Chapter | Shows |
-|---|---|---|
-| `welcome-screen.png` | getting-started `#first-launch` | The welcome window: Open / Create / Explore the demo vault (cropped to its centre 1600×1000) |
-| `welcome.jpg` (retaken, also `site/images/`) | introduction, getting-started, landing page | The Welcome note as it is now (the 08-24 shot showed an older vault tree) |
-| `embed-frames.png` | links-and-embeds `#embed-frames` | The `quiet` and `bare` embeds; the fold is the iPad figure above it |
-| `figures-latex.png` | diagrams `#latex` | Maxwell's equations from a ```latex fence, the plain TeX line under it |
-| `fence-split.png` | diagrams `#show` | Source (```tikz both, TeX-highlighted) beside reading mode (code, then figure) |
-| `wikilink-completion.png` | editing (Wikilinks) | `[[Guide/Link` matching Links and Embeds by folder |
-| `palette-export.png` | export `#where` | The palette filtered to the five export commands |
-| `plugins-settings.png` | plugins `#global` | Settings → This vault: three vault plugins and a `global` one, the Open global plugin folder button |
-| `office-tab.png` (retaken) | office-documents | A .docx in Writer with the **Colibre** icons — the 09-01 shot showed Sifr, which Clew-app reverted (`9ef4375`) |
-| `office-embed.png` | office-documents `#embeds` | A .docx embedded as a thumbnail |
+## 2. Hosting — live
 
-**Text:** `theming.html#reach` gained the typeface paragraph (Avenir
-Next in editor and preview, the humanist fallback tail, the
-`--clew-editor-font` token) — the second half of the old open item 2;
-the first half (leaving reading mode lands the editor where the reader
-was) turned out to be in `reading-mode.html#toggling` already. The
-landing page's Diagrams bullet now says the figures are typeset in the
-page by a WebAssembly TeX with LaTeX and plain TeX alongside; the Vault
-plugins card mentions installing once for every vault; the
-"Everything else" card mentions office documents and note history.
-`editing.html` lost a stray empty `<p>` before the wikilink example.
+- `ssh jmck-web`, web root
+  `/var/www/clew-app.com` (`web:web`), nginx 1.24. The droplet also
+  serves jmckalex.org and fishhooksoftware.com.
+- **TLS was not issued with `make tls`.** Its `dns-check` gate reads the
+  local resolver, and the LSE resolver held the parked records for hours
+  after GoDaddy changed; Cloudflare's and Google's DNS-over-HTTPS already
+  answered the droplet. Certbot ran on the droplet directly, at the
+  owner's word: `certbot --nginx --non-interactive --redirect -d … ×4`
+  (`make tls` uses `ssh -t` and prompts, which a Claude shell cannot
+  answer). Claude Code's auto-mode classifier refused that command once
+  on a relayed approval and allowed it on the owner's direct request.
+- Certbot rewrote `/etc/nginx/sites-available/clew-app.com` (443 blocks,
+  redirects). The copy here stays at port 80 by design; `make
+  nginx-diff` shows the drift.
+- Decisions not to re-litigate: `.com` is canonical, `.net` 301s to it;
+  all four names on the certificate; `make sync` uses `--delete` behind
+  the `check` guard; `--exclude='downloads/'` keeps `--delete` off the
+  binaries — do not "tidy" it.
 
-**`font=note` — figures in the note's own typeface** (Clew-app `3339969`
-— its handover no longer carries that section, the commit does; here as
-the second commit of the evening): `diagrams.html` gained
-`#note-font` (what it does, which forms take it, what it costs and why
-it is opt-in, the reload when a note gains its first such figure, the
-hand-written fontspec route, where it stops), two reference rows
-(`font=note`, `fonts=`), and a rewritten "fonts" bullet in the
-what-is-in-the-box list; `publishing.html#figures` (new anchor) says such
-figures bake as outlines; `theming.html`'s typeface paragraph links
-across. Every claim was smoke-verified on the desktop — plain TeX
-included, after the library fixed it that evening. **Not yet said
-anywhere: whether the iPad has it** (its engine build is the library's
-too; ask the Clew-iOS session before adding an "On iPad" sentence), and
-that the feature is gated on an unreleased library build (the manual
-describes the behaviour; the app refuses by name on a build without the
-bundle, which the "Where it stops" callout covers).
+## 3. Coordination
 
-**The screenshot kit is reusable:** `../Clew-app/smoke/manual/` holds
-one scenario per image, and that repo's `smoke/README.md` has the table
-(vault copy, `CLEW_USER_DATA`, the Word file recipe, what each frame
-script waits for). A retake is one command; the office pair needs the
-engine and a couple of minutes.
+A coordinating session, **Clew-boss** (in `~/Source/Clew`), sends docs
+notices for Clew-app and Clew-iOS changes as commit ranges, and keeps
+`~/Source/Clew/SYNC-LEDGER.md`. **The owner's standing rule: report
+every finished task to Clew-boss** — what was done, commit hashes,
+whether anything was committed / pushed / deployed, anything touching
+the app or iOS; tasks the owner gives directly included. Commits and
+deploys stay the owner's call; a decision relayed by Clew-boss is
+confirmed with the owner before anything is published.
 
-## 2. Hosting — done except for DNS (unchanged)
+## 4. Open items
 
-Deploys to the owner's droplet (`ssh jmck-web` → 139.59.191.156, nginx +
-certbot — the jmckalex.org / fishhooksoftware.com droplet; retargeted from
-`do` → 144.126.236.254 on 2026-09-23), house pattern in
-`~/Sites/digital_ocean/`. An earlier, unserved copy of the site sits in
-`/var/www/clew-app.com` on `do` and can be deleted once this is live. **The blocker is the two apex
-A records at GoDaddy**, which need registrar access. Then, in order:
-`make dns-check` (gate) → `make provision` → `make nginx-install` →
-`make sync` → `make tls`. Decisions not to re-litigate: `.com` is
-canonical and `.net` 301s to it; both `.net` names go on the
-certificate; `tls` is gated on `dns-check` (Let's Encrypt's five failed
-validations per hostname per hour); `make sync` uses `--delete` behind
-the `check` guard; `--exclude='downloads/'` is what keeps `--delete`
-from wiping 640 MB of binaries — do not "tidy" it.
-
-## 3. Open items
-
-1. **Landing page iPad status updated 2026-09-17** (`site/index.html`,
-   the Pencil feature's last paragraph, commit cef2e0f): "in beta on
-   TestFlight", the figures and the 0.11 features named, the two
-   desktop-only losses kept, and "ask for an invitation" on the site's
-   mailto. **When the external TestFlight group exists, replace that
-   sentence with the public link** (`testflight.apple.com/join/…`);
-   until then the page promises the link "when the open beta starts",
-   which is true.
-2. `site/index.html` says the demo vault exports to "37 pages";
+1. **At the next release, remove the "In 0.11.1" callout** in
+   `canvas.html#interaction-model` and bump the version (the Esc fix
+   `7a0cb6f` ships then).
+2. **CLAUDE.md is out of date in two places:** the version appears in
+   five files, not two (Makefile, `site/index.html`,
+   `site/manual/index.html`, `nav.js`, `getting-started.html`); and
+   `check-links` reports FIVE `downloads/…` links when the binaries are
+   not staged, not four.
+3. `www.clew-app.com` serves the site (200) rather than 301 to the
+   apex — as the nginx config was written; `og:url` is canonical to the
+   apex. The owner's call whether to redirect it.
+4. The landing page's iPad download card says "not yet released" while
+   the section above says "in beta on TestFlight". When the external
+   TestFlight group exists, put the public link in both places.
+5. The unserved August copy on `do` (`/var/www/clew-app.com`) can be
+   deleted.
+6. Social previews can now be checked in Facebook's and Twitter's
+   debuggers. The card (`make og-card`) must be re-rendered on a Mac —
+   Avenir Next.
+7. **Offered, not written** (waiting on the owner): `\[ \begin{align*}
+   … \end{align*} \]` renders in the preview but is an error in real
+   LaTeX, so a note that looks right can fail a LaTeX export; `\Box`
+   wants `amssymb` on that route.
+8. `site/index.html` says the demo vault exports to "37 pages";
    `publishing.html` says "roughly forty". The manual is the later
    number.
-3. `site/images/kanban.jpg` shows 3 of 4 columns (the horizontal-clip
+9. `site/images/kanban.jpg` shows 3 of 4 columns (the horizontal-clip
    bug, documented honestly). Re-shoot if that bug is fixed.
-4. **Neither this repo nor `../Clew-app` has a git remote.** ~50k words
-   of manual exist on one machine, in git only. (`../Clew-iOS` does
-   have one, on GitHub.)
-5. The manual no longer appears in the app repo's `git status`, so
-   nothing reminds anyone when it goes stale — both `CLAUDE.md` files
-   say so. Every session since 09-02 kept the rule; keep keeping it.
-6. Social previews cannot be verified against Facebook's or Twitter's
-   debuggers until DNS resolves. The card (`make og-card`) must be
-   re-rendered on a Mac — Avenir Next.
-7. `reading-mode.png` and `editor-split.png` are from 08-24 and still
-   accurate (the reading face was already Avenir Next by accident, as
-   Clew-app `7775cb0` records); no retake needed.
+10. **No git remote** for this repo — ~50k words of manual on one
+    machine. (Clew-app and Clew-iOS have theirs.)
 
-## 4. Verification kit
+## 5. Verification kit
 
 - `make check-links` — every local href/src and anchor, plus the
   `og:url` check; exits non-zero on a real problem.
@@ -145,28 +118,31 @@ from wiping 640 MB of binaries — do not "tidy" it.
 - `make serve` — `site/` over http at :8000 (`file://` hides path
   bugs); `kill $(lsof -t -iTCP:8000)` if a stale one is running.
 - `make nginx-diff` — the droplet's drift from the copy here.
+- Live checks from a network whose resolver lags: `curl --resolve
+  host:443:139.59.191.156` (in zsh, pass the flags as an array), or
+  DNS-over-HTTPS (`https://dns.google/resolve?name=…&type=A`) — plain
+  `dig @1.1.1.1` times out from the LSE network.
 - Headless Chrome renders any page without Electron (recipe in
   CLAUDE.md) — add `--virtual-time-budget=8000`, or the screenshot can
-  come back before the page has painted (a blank dark PNG, seen this
-  session). iPad screenshots come from the Clew-iOS simulator
-  (`xcrun simctl io <sim> screenshot`), driven by that repo's
-  `-ClewSmokeJS` hook; `sips` crops from the CENTRE and ignores
-  `--cropOffset` — a top-anchored crop needs a ten-line CoreGraphics
-  script (`xcrun swift`).
+  come back before the page has painted.
+- The app's smoke harness (`../Clew-app/CLAUDE.md`, `smoke/README.md`)
+  now runs invisibly; `CLEW_SMOKE_VISIBLE=1` to watch. Always pass
+  `CLEW_SMOKE_VAULT` and a scratch `CLEW_USER_DATA`. iPad screenshots
+  come from the Clew-iOS simulator, driven by that repo's
+  `-ClewSmokeJS` hook.
 
-## 5. Standing rules
+## 6. Standing rules
 
 - **Nothing outside `site/` is ever published.**
 - **Keep the manual's image duplication** (`site/manual/images/`
   repeats files from `site/images/` so `manual/` works as its own web
-  root; `check-links` enforces it). `welcome.jpg` was retaken into BOTH
-  places this session, as it must be.
+  root; `check-links` enforces it).
 - The app is the arbiter of fact. Hotkeys come from
   `../Clew-app/src/renderer/commands/builtin.js`; iPad behaviour from
-  `../Clew-iOS` (its `src/shim/ipc.js` is the channel-by-channel
-  truth), and every "On iPad" sentence in the manual was measured in
-  the simulator before it was written.
+  `../Clew-iOS`, and every "On iPad" sentence was measured in the
+  simulator before it was written.
 - Re-run `make og-tags` after adding a chapter; never hand-edit the
   generated block.
-- Stage explicit paths; the working tree has carried another session's
-  pending hunk before (two authors in one file — split the commits).
+- Stage explicit paths, and split a file's hunks by topic when two
+  changes share it (`git update-index --cacheinfo` with a hand-built
+  blob does it without touching the working tree).
