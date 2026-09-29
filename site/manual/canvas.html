@@ -606,7 +606,11 @@ opens the real thing. The embedded scene handles like the canvas proper:
 scroll to pan, pinch or ⌘-scroll to zoom at the cursor, drag empty
 background to pan by hand, double-click the background to re-fit. Note
 previews inside the scene scroll and follow clicks, media plays, and web
-nodes load live where the site allows itself to be framed. Embeds do not
+nodes load live where the site allows itself to be framed. A PDF in the
+scene opens in the same viewer as a PDF tab — page through it, search
+it, annotate it — and the marks are saved into the PDF, as everywhere
+else. (In 0.11.1 a scene's PDF is the browser's own viewer: you can read
+it there, but not annotate it.) Embeds do not
 recurse indefinitely: a canvas inside a note inside that same canvas
 bottoms out in a placeholder rather than a hall of mirrors. (In a vault
 <a href="publishing.html">published as a website</a>, a canvas embed
