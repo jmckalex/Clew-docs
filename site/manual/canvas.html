@@ -186,7 +186,10 @@ return to canvas mode.
 <p>
 All the manipulation affordances — resize handles, connection anchors,
 the selection marquee — are drawn by the canvas itself in an overlay, so
-they work identically over every kind of node.
+they work identically over every kind of node. An engaged node draws
+none of them: its content has the pointer, so the resize handles and
+anchor dots go, and a ring in the accent colour marks it instead,
+whatever colour the node is. Leave it and they come back.
 </p>
 
 <h3 id="selection">Selecting</h3>
@@ -364,6 +367,12 @@ creates the edge with an arrowhead at the destination. When you later
 move a node, its connections re-pick their sides automatically so they
 keep facing the other endpoint — but a side you chose deliberately is
 kept as long as it still makes geometric sense.
+</p>
+
+<p>
+An <a href="#interaction-model">engaged</a> node shows no dots, so a
+connection from the note or page you are working in costs one click
+outside it first, to hand the pointer back to the canvas.
 </p>
 
 <p>
