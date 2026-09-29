@@ -233,7 +233,9 @@ vault written in ordinary Markdown exports as ordinary Markdown.
 	not expanded, and the <code>```mermaid</code>, <code>```leaflet</code>,
 	<code>```query</code> and <code>```tabbing</code> fences render as plain
 	code blocks (a <code>@begin(tabbing)</code> environment loses its
-	<a href="tabbing.html">tab commands</a>). The
+	<a href="tabbing.html">tab commands</a>) — and in a PDF via LaTeX, such
+	a block currently stops the compile (see
+	<a href="#troubleshooting">Troubleshooting</a>). The
 	engine's native forms still work — <code>:::mermaid</code> or
 	<code>@begin(mermaid)</code> blocks export fine, and everything in
 	<a href="math-and-theorems.html">math</a>,
@@ -327,6 +329,19 @@ actually materialised.
 	error messages will name the offending line. Common causes are a
 	missing LaTeX package and raw HTML in the note, which has no LaTeX
 	equivalent.</dd>
+
+	<dt>PDF via LaTeX fails on a note with a Clew fence</dt>
+	<dd>A LaTeX export sets each fenced block as a <code>minted</code>
+	listing named after its language, and the Pygments highlighter behind
+	<code>minted</code> knows none of Clew's own fence languages —
+	<code>```query</code>, <code>```mermaid</code>, <code>```kanban</code>,
+	<code>```dataview</code>, <code>```tabbing</code> and the like — so the
+	compile stops at the first one (<em>Pygments lexer … is unknown</em>).
+	This is a current limitation. Until it is lifted, export such a note as
+	<em>PDF (reading view)</em>, which prints what reading mode shows, fences
+	and all (see <a href="#two-pdfs">Two PDFs</a>), or as a
+	<a href="publishing.html">website</a>; or export the LaTeX and change
+	or remove the block by hand.</dd>
 
 	<dt>Citations show as question marks in the PDF</dt>
 	<dd>The bibliography did not resolve. Check that the note's

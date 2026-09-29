@@ -253,7 +253,9 @@ bar.
 	configuration, which does not load Clew's extensions (see
 	<a href="export.html#config-cascade">Exports use your jmarkdown
 	configuration</a>), and tabbing is one of them. A
-	<code>```tabbing</code> fence exports as a code block, and a
+	<code>```tabbing</code> fence exports as a code block — one that
+	currently stops a PDF-via-LaTeX compile (see
+	<a href="export.html#troubleshooting">Troubleshooting</a>) — and a
 	<code>@begin(tabbing)</code> environment loses its commands. Tabbing is
 	written to move into the jmarkdown engine itself; until it does, a note
 	that must keep its tabbing is best shared as a
