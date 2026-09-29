@@ -425,10 +425,9 @@ The mechanics, in order:
 <p>
 Every map carries a measuring tool: hold <kbd>Shift</kbd> and click
 two points, and the map draws a dashed line between them and reports
-the distance in the corner. <kbd>Esc</kbd> clears the current
-measurement, and another <kbd>Shift</kbd>-click starts a new one —
-though the previous line and readout currently remain on the map until
-the note re-renders. Two options tune the
+the distance in its bottom-left corner. <kbd>Shift</kbd>-click again to
+start a new measurement — the old line and distance go — or press
+<kbd>Esc</kbd> to clear it. Two options tune the
 readout: <code>unit:</code> selects <code>m</code>, <code>km</code>,
 <code>mi</code>, or <code>ft</code> (kilometres by default), and
 <code>scale:</code> multiplies the measured distance before display —
@@ -436,6 +435,13 @@ useful on <a href="#image-maps">image maps</a>, where the underlying
 units are pixels and only you know how many leagues the kingdom map
 spans.
 </p>
+
+<div class="callout warn">
+	<span class="callout-title">In 0.11.1</span>
+	The measuring tool does not work in 0.11.1: the second
+	<kbd>Shift</kbd>-click starts over instead of finishing, so no distance
+	is ever shown. The next release fixes it.
+</div>
 
 <h2 id="framing">Framing and behaviour</h2>
 
