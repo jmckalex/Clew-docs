@@ -141,7 +141,12 @@ citation resolution switches on with it.
 The precedence is what you would hope: the vault settings are the
 default, and a note's own <code>Bibliography</code> or
 <code>Bibliography style</code> properties override them for that note
-alone. Everything in this chapter — sectional
+alone. A note's file <strong>replaces</strong> the vault's rather than
+adding to it: the engine reads one <code>.bib</code> per note, so a note
+that names its own file resolves only what is in that file, and a work
+that lives only in the vault-wide one stays an unresolved
+<code>\cite</code> there. To keep the vault's file and change only the
+look, set <code>Bibliography style</code> alone. Everything in this chapter — sectional
 <code>@bibliography</code> blocks, scopes, per-bibliography styles —
 keeps working on top of a vault-wide file, because the vault setting
 only supplies what the note does not say itself.
