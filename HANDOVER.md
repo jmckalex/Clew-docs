@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`a65395c`** — the base hash for the next
+  reflects Clew-app up to **`693c4fe`** — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -52,10 +52,11 @@ each smoke-measured on the Clew-app commit it documents:
 | `ba88a08` + `d215c8d` | attachments: with a pen, a finger pans a PDF while a drawing tool is armed (`12b1734`). `ba88a08` was committed here directly by the Clew-app session; reviewed, kept, moved and dated in `d215c8d` |
 | `566ebff` | canvas: a PDF in a canvas embedded in a note opens in the full viewer, annotations saved (`71180c6`); the portal miniature and a note's own `<iframe src="x.pdf">` still use Chromium's plugin — not described, the owner's open question |
 | `c94e302` | kanban: a wide board widens to the pane, one wider than the pane scrolls with a visible bar (`a65395c`); `kanban-board.png` retaken — all four columns (scenario in the session scratchpad, offered to Clew-app for `smoke/manual/`) |
+| `91dcd53` | maps: the measuring tool measures — two Shift-clicks, a third starts over, Esc clears (`693c4fe`); it NEVER completed a measurement before, so an "In 0.11.1" Caution says it does not work there |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
-annotations), a parenthesis where it merely behaves differently (toolbar,
+annotations, map measuring), a parenthesis where it merely behaves differently (toolbar,
 preview-pane scroll, frame citations, pen, scene PDFs, kanban width).
 
 Every behavioural claim was smoke-measured against Clew-app's source
@@ -102,10 +103,11 @@ stay with the owner.
 
 ## 4. Open items
 
-1. **At the next release, remove both "In 0.11.1" callouts** —
-   `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`) and
+1. **At the next release, remove the three "In 0.11.1" callouts** —
+   `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`),
    `attachments-and-files.html#annotating` (annotations flushed when the
-   viewer goes, `1956d89`) — turn the six "(In 0.11.1 …)" / "(On the
+   viewer goes, `1956d89`) and `maps.html#distance` (the measuring tool,
+   `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
    statements (live-edit ×2, editing, attachments, canvas,
    tasks-and-kanban), and bump the version.
@@ -136,7 +138,9 @@ stay with the owner.
    3 of 4 columns. The bug is fixed in `a65395c`, after 0.11.1; the
    manual's own `kanban-board.png` is retaken. Re-shooting the landing
    image is not a manual-only deploy, and shows behaviour 0.11.1 lacks —
-   the owner's call, likely at the next release.
+   the owner's call, likely at the next release. Likewise the landing
+   page's Maps bullet lists "distance measuring", which 0.11.1 does not
+   deliver (`693c4fe`) — true again from the next release.
 10. **No git remote** for this repo — ~50k words of manual on one
     machine. (Clew-app and Clew-iOS have theirs.)
 
