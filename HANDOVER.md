@@ -74,15 +74,20 @@ notices for Clew-app and Clew-iOS changes as commit ranges, and keeps
 `~/Source/Clew/SYNC-LEDGER.md`. **The owner's standing rule: report
 every finished task to Clew-boss** — what was done, commit hashes,
 whether anything was committed / pushed / deployed, anything touching
-the app or iOS; tasks the owner gives directly included. Commits and
-deploys stay the owner's call; a decision relayed by Clew-boss is
-confirmed with the owner before anything is published.
+the app or iOS; tasks the owner gives directly included. **Delegation
+(the owner confirmed it directly, 2026-09-29):** Clew-boss may approve
+manual-only deploys (`make sync` of manual text — check `make dry-run`
+lists only manual pages), small low-risk fixes, and the order of work.
+Anything that touches downloads or the version, and design questions,
+stay with the owner.
 
 ## 4. Open items
 
-1. **At the next release, remove the "In 0.11.1" callout** in
-   `canvas.html#interaction-model` and bump the version (the Esc fix
-   `7a0cb6f` ships then).
+1. **At the next release, remove both "In 0.11.1" callouts** —
+   `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`) and
+   `attachments-and-files.html#annotating` (annotations flushed when the
+   viewer goes, `1956d89`) — and bump the version. The manual reflects
+   Clew-app up to `1956d89`; `f4392f4` is live.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
    `site/manual/index.html`, `nav.js`, `getting-started.html`); and
