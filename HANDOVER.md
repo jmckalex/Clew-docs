@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`693c4fe`** — the base hash for the next
+  reflects Clew-app up to **`cd8c311`** — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -53,11 +53,12 @@ each smoke-measured on the Clew-app commit it documents:
 | `566ebff` | canvas: a PDF in a canvas embedded in a note opens in the full viewer, annotations saved (`71180c6`); the portal miniature and a note's own `<iframe src="x.pdf">` still use Chromium's plugin — not described, the owner's open question |
 | `c94e302` | kanban: a wide board widens to the pane, one wider than the pane scrolls with a visible bar (`a65395c`); `kanban-board.png` retaken — all four columns (scenario in the session scratchpad, offered to Clew-app for `smoke/manual/`) |
 | `91dcd53` | maps: the measuring tool measures — two Shift-clicks, a third starts over, Esc clears (`693c4fe`); it NEVER completed a measurement before, so an "In 0.11.1" Caution says it does not work there |
+| `a62bed2` | **New chapter `tabbing.html`** (Writing, after Callouts): LaTeX's tabbing, fence and `@begin` forms (`cd8c311`). Nav, manual index card, dialect see-also, live-edit frame list, export caution. A Caution: single-note HTML/LaTeX exports do not carry it (measured by running the export worker). Every example rendered in the app, none overprinting. `tabbing.png` from the demo vault |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
 annotations, map measuring), a parenthesis where it merely behaves differently (toolbar,
-preview-pane scroll, frame citations, pen, scene PDFs, kanban width).
+preview-pane scroll, frame citations, pen, scene PDFs, kanban width, the tabbing chapter's lead).
 
 Every behavioural claim was smoke-measured against Clew-app's source
 over a scratch vault. **A timing lesson from this session:** a smoke
@@ -110,7 +111,7 @@ stay with the owner.
    `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
    statements (live-edit ×2, editing, attachments, canvas,
-   tasks-and-kanban), and bump the version.
+   tasks-and-kanban, tabbing), and bump the version.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
    `site/manual/index.html`, `nav.js`, `getting-started.html`); and
@@ -141,7 +142,15 @@ stay with the owner.
    the owner's call, likely at the next release. Likewise the landing
    page's Maps bullet lists "distance measuring", which 0.11.1 does not
    deliver (`693c4fe`) — true again from the next release.
-10. **No git remote** for this repo — ~50k words of manual on one
+10. **`nav.js` is served with a 7-day cache** (`max-age=604800`; pages
+    are `no-cache`). A chapter added to the nav — Tabbing, 09-30 — or the
+    version badge changed at a release reaches a returning visitor's
+    sidebar up to a week late. Fix is the owner's call: a location for
+    `manual/nav.js` in the nginx config (mind the `add_header` gotcha) or
+    a `?v=` on every page's `<script>`.
+11. `callouts.html` (and `excalidraw.html`) have no Reference table,
+    against CLAUDE.md's "no exceptions".
+12. **No git remote** for this repo — ~50k words of manual on one
     machine. (Clew-app and Clew-iOS have theirs.)
 
 ## 5. Verification kit
