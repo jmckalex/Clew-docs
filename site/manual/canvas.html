@@ -180,8 +180,19 @@ matter what is on it. When you want to interact with a node's content,
 <strong>double-click</strong> it — the node is now <em>engaged</em>, and
 you can scroll the note, click its links, tick its checkboxes, or browse
 the web page. Press <kbd>Esc</kbd> or click outside the node to
-return to canvas mode.
+return to canvas mode. <kbd>Esc</kbd> goes to the innermost thing that
+wants it first: with the caret in a text field, inside a PDF viewer,
+with a dialog open, or on a widget that uses the key itself — a map
+clearing its measurement, say — that thing keeps it, and a click
+outside is the way out.
 </p>
+
+<div class="callout warn">
+	<span class="callout-title">In 0.11.1</span>
+	<kbd>Esc</kbd> inside an engaged <em>note</em> card does nothing in
+	0.11.1: the key never leaves the note, so click outside the card
+	instead. The next release fixes it.
+</div>
 
 <p>
 All the manipulation affordances — resize handles, connection anchors,

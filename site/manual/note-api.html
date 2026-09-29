@@ -408,7 +408,9 @@ its rooms.
 	<li><strong>Canvas note embeds</strong> — a note dropped onto a
 	<a href="canvas.html">canvas</a> is a live preview with the same API
 	and the same events, which makes a canvas of scripted notes a
-	dashboard.</li>
+	dashboard. A script that answers <kbd>Esc</kbd> itself should call
+	<code>e.preventDefault()</code>: an <kbd>Esc</kbd> nothing in the note
+	claims goes on to the canvas, and leaves the engaged card.</li>
 	<li><strong>The published website</strong> — the scripts ship with
 	their pages, but there is no app behind them:
 	<code>window.clew</code> does not exist on a
