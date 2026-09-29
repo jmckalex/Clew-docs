@@ -54,6 +54,7 @@ each smoke-measured on the Clew-app commit it documents:
 | `c94e302` | kanban: a wide board widens to the pane, one wider than the pane scrolls with a visible bar (`a65395c`); `kanban-board.png` retaken — all four columns (scenario in the session scratchpad, offered to Clew-app for `smoke/manual/`) |
 | `91dcd53` | maps: the measuring tool measures — two Shift-clicks, a third starts over, Esc clears (`693c4fe`); it NEVER completed a measurement before, so an "In 0.11.1" Caution says it does not work there |
 | `a62bed2` | **New chapter `tabbing.html`** (Writing, after Callouts): LaTeX's tabbing, fence and `@begin` forms (`cd8c311`). Nav, manual index card, dialect see-also, live-edit frame list, export caution. A Caution: single-note HTML/LaTeX exports do not carry it (measured by running the export worker). Every example rendered in the app, none overprinting. `tabbing.png` from the demo vault |
+| `52e2b98` | export: a Clew fence (query, mermaid, kanban, dataview, tabbing…) stops a PDF-via-LaTeX compile — `minted` gets a language Pygments does not know. A Troubleshooting entry, pointed at from the export caution and the tabbing caution. **When the jmarkdown unknown-lexer fallback lands, rewrite all three** |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
