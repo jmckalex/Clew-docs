@@ -210,6 +210,17 @@ re-renders when a file it reads changes (an embedded note, the notes a
 query lists) and when a setting that changes rendering does.
 </p>
 
+<p>
+A frame renders under the citation settings in the header of the note
+you are editing — its <code>Bibliography</code>, style and the rest of
+the <a href="citations.html">citation keys</a>, and nothing else from
+the header — so a <code>\cite</code> in an embedded note resolves as it
+does in reading mode, and changing those keys re-renders the frames.
+(In 0.11.1 a frame does not see the header, and such a citation stays a
+raw <code>\cite{…}</code> unless the bibliography is set for the
+<a href="citations.html#vault-wide">whole vault</a>.)
+</p>
+
 <div class="callout tip">
 	<span class="callout-title">Tip</span>
 	Frames are bounded: they are made only for blocks near the screen, at
