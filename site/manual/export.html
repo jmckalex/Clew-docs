@@ -231,7 +231,9 @@ vault written in ordinary Markdown exports as ordinary Markdown.
 	them. Concretely: inline <code>[[wikilinks]]</code> are not turned
 	into links (they come out as written), <code>![[…]]</code> embeds are
 	not expanded, and the <code>```mermaid</code>, <code>```leaflet</code>,
-	and <code>```query</code> fences render as plain code blocks. The
+	<code>```query</code> and <code>```tabbing</code> fences render as plain
+	code blocks (a <code>@begin(tabbing)</code> environment loses its
+	<a href="tabbing.html">tab commands</a>). The
 	engine's native forms still work — <code>:::mermaid</code> or
 	<code>@begin(mermaid)</code> blocks export fine, and everything in
 	<a href="math-and-theorems.html">math</a>,

@@ -22,6 +22,7 @@ const MANUAL_NAV = [
 		{ file: 'live-edit.html', title: 'Live edit and the toolbar' },
 		{ file: 'dialect.html', title: 'The jmarkdown dialect' },
 		{ file: 'callouts.html', title: 'Callouts' },
+		{ file: 'tabbing.html', title: 'Tabbing' },
 		{ file: 'links-and-embeds.html', title: 'Links and embeds' },
 		{ file: 'properties.html', title: 'Properties and metadata' },
 		{ file: 'daily-notes.html', title: 'Daily notes and the diary' },
