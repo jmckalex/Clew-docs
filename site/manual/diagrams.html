@@ -231,6 +231,27 @@ wrapped in one for you.
 </p>
 
 <p>
+The exceptions are the packages that draw a picture of their own. A
+body that begins with <code>\begin{tikzcd}</code>,
+<code>\begin{circuitikz}</code>, <code>\chemfig</code> or
+<code>\schemestart</code> is typeset as it stands, because inside a
+second <code>tikzpicture</code> such a drawing collapses to its edge or
+vanishes. The package is still yours to name — without
+<code>packages=</code> the figure fails in its place with
+<code>Environment circuitikz undefined</code>:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```tikz packages="circuitikz"
+\begin{circuitikz}
+\draw (0,0) to[battery1, l=$V$] (0,2) to[R, l=$R$] (3,2)
+            to[C, l=$C$] (3,0) -- (0,0);
+\end{circuitikz}
+```</code></pre>
+</div>
+
+<p>
 A generous set of TikZ libraries is preloaded —
 <code>positioning</code>, <code>shapes</code>, <code>calc</code>,
 <code>fit</code>, <code>matrix</code>, <code>trees</code>,
@@ -710,8 +731,8 @@ The engines ship with Clew: MetaPost 2.11, pdfTeX, LuaTeX and
 dvisvgm, all from TeX&nbsp;Live&nbsp;2025 and compiled to WebAssembly,
 together with the fonts and macro packages they read — Computer
 Modern, Latin Modern, the 35 PostScript fonts, PGF/TikZ with every
-library it ships, pgfplots, tikz-cd, amsmath, xcolor,
-<code>standalone</code>, and more. There is nothing to install and
+library it ships, pgfplots, tikz-cd, circuitikz, chemfig,
+tikz-3dplot, amsmath, xcolor, <code>standalone</code>, and more. There is nothing to install and
 nothing on your <code>PATH</code> to find, on any of the three
 platforms; a figure renders the same on a machine that has never seen
 TeX. LuaTeX is the one piece loaded on demand, when a figure asks for
