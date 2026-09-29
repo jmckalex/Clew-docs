@@ -8,8 +8,8 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`6c63132`** — the base hash for the next
-  docs notice.
+  reflects Clew-app up to **`12b1734`** — the base hash for the next
+  docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
   all four, expires 2026-12-28, renewed by `certbot.timer`. http → https
@@ -38,6 +38,23 @@ rewritten each session; keep it short and current.
 | `504715e` | panels: the shell is a login shell on macOS, an interactive one on Linux (`5516844`) |
 | `47ffe0b` | canvas + note-api: Esc goes to the innermost owner first, then leaves an engaged note card (`7a0cb6f`, **after** 0.11.1) — with an "In 0.11.1" callout saying it does nothing in that release; scripts that answer Esc call `preventDefault` |
 | `0f80272` | Release 0.11.1: two signed Mac images (arm64, x64) in place of the universal one, the version everywhere, `stage-downloads` for both; Windows/Linux tagged "Untested" (owner's decision) |
+
+After the release, each deployed manual-only under the delegation (§3),
+each smoke-measured on the Clew-app commit it documents:
+
+| Commit | What |
+|---|---|
+| `f4392f4` | attachments: annotations written at once when the viewer goes (`1956d89`); "In 0.11.1" caution — an edit in those seconds is lost |
+| `61e66a6` | live-edit: the toolbar wraps onto a second row before anything goes into … (`c386829`) |
+| `64aa6a7` | editing: a wheel over the live preview pane scrolls the note (`83532b2`) |
+| `b2b84f0` | live-edit: a frame resolves citations under the host note's header (`707ed87`) |
+| `a3716ae` | citations: a note's `Bibliography` REPLACES the vault's, one `.bib` per note (from the engine's config-manager) |
+| `ba88a08` + `d215c8d` | attachments: with a pen, a finger pans a PDF while a drawing tool is armed (`12b1734`). `ba88a08` was committed here directly by the Clew-app session; reviewed, kept, moved and dated in `d215c8d` |
+
+Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
+"In 0.11.1" where the release loses work or breaks a promise (Esc,
+annotations), a parenthesis where it merely behaves differently (toolbar,
+preview-pane scroll, frame citations, pen).
 
 Every behavioural claim was smoke-measured against Clew-app's source
 over a scratch vault. **A timing lesson from this session:** a smoke
@@ -86,8 +103,10 @@ stay with the owner.
 1. **At the next release, remove both "In 0.11.1" callouts** —
    `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`) and
    `attachments-and-files.html#annotating` (annotations flushed when the
-   viewer goes, `1956d89`) — and bump the version. The manual reflects
-   Clew-app up to `1956d89`; `f4392f4` is live.
+   viewer goes, `1956d89`) — turn the four "(In 0.11.1 …)" / "(On the
+   desktop this arrives after 0.11.1 …)" parentheses into plain
+   statements (live-edit ×2, editing, attachments), and bump the
+   version.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
    `site/manual/index.html`, `nav.js`, `getting-started.html`); and
