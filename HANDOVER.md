@@ -1,4 +1,4 @@
-# Handover — 2026-09-29 (the site is LIVE at https://clew-app.com; 0.11.1 committed; its publish waits on the owner's direct go)
+# Handover — 2026-09-29 (the site is LIVE at https://clew-app.com, serving 0.11.1; tree clean; no remote)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -15,14 +15,16 @@ rewritten each session; keep it short and current.
   all four, expires 2026-12-28, renewed by `certbot.timer`. http → https
   everywhere; both `.net` names 301 to `clew-app.com` with the path
   kept.
-- **What the droplet serves:** the 09-29 `make sync` of eff4e7f plus
-  the diagrams / canvas-engaged / panels edits — i.e. **0.9.0** pages and
-  the 0.9.0 binaries (uploaded 09-23). The 0.11.1 commit below is not on
-  it yet. Publish, in this order so no link 404s: `make sync-downloads`
-  (the five 0.11.1 files, already staged in `site/downloads/`, ~1 GB, no
-  `--delete`), then `make sync`. Then check live: 0.11.1 and "Untested"
-  on the landing page, the five files 200, the "In 0.11.1" callout in
-  `manual/canvas.html`.
+- **What the droplet serves: 0.11.1**, published 09-29 at the owner's
+  direct go — `make sync-downloads` (the five 0.11.1 files, ~1 GB; the
+  0.9.0 files stay, since that target has no `--delete`), then `make
+  sync` of `86385b2`. Verified live: the landing page is byte-identical
+  to the committed one (0.11.1, "Untested", no universal image), all
+  five files answer 200 at their committed sizes, the "In 0.11.1"
+  callout and the `preventDefault` line are on the manual pages, https
+  and the redirects hold, and `make dry-run` has nothing left to send.
+  Release order next time too: downloads first, then pages, so no link
+  404s in between.
 - `VERSION` (Makefile) = landing page = manual index = `nav.js` =
   getting-started = **0.11.1**. `make check-links` clean.
 
