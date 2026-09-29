@@ -243,13 +243,13 @@ show: venue, due
 </div>
 
 <figure class="shot">
-	<img src="images/kanban-board.png" alt="A kanban board of papers grouped by status, each card showing the paper's venue and due date, with column headers carrying card counts; the fourth column continues past the right edge of the note column">
+	<img src="images/kanban-board.png" alt="A kanban board of papers grouped by status, each card showing the paper's venue and due date, with column headers carrying card counts; all four columns show, the board wider than the text above it and centred in the pane">
 	<figcaption>The Pipeline board from <code>study-vault</code>: columns
 	are the values of the <code>status</code> field, cards are the notes
 	in <code>Papers/</code>, and each card shows its
-	<code>venue</code> and <code>due</code> metadata. The fourth column
-	continues past the edge of the note column — a wide board scrolls
-	horizontally.</figcaption>
+	<code>venue</code> and <code>due</code> metadata. A board wider than
+	the note column widens to fill the pane; one wider than the pane
+	scrolls sideways.</figcaption>
 </figure>
 
 <p>
@@ -273,9 +273,12 @@ The options, all of them:
 	whose field value is not one of the listed columns are not shown.
 	Without <code>columns:</code>, the board grows one column per
 	distinct value, ordered alphabetically, plus a “—” column for notes
-	where the field is missing or empty. A board wider than the note
-	column does not wrap — it scrolls horizontally, so trailing columns
-	sit just past the edge of the pane.</dd>
+	where the field is missing or empty. A board never wraps: one wider
+	than the note column widens to fill the pane, centred on the text,
+	and one wider than the pane scrolls sideways, its scrollbar kept in
+	view on the desktop. (In 0.11.1 a board stays the width of the note
+	column, and from four columns up the rest sit past its edge behind a
+	hidden scrollbar a mouse wheel cannot reach.)</dd>
 
 	<dt><code>show: f1, f2, …</code></dt>
 	<dd>Fields to display on each card beneath its title, as
