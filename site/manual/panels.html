@@ -262,11 +262,23 @@ around this note?" without leaving the sidebar.
 <kbd>⌃`</kbd> — or View&nbsp;→&nbsp;Shell&nbsp;Panel — opens a terminal
 along the bottom of the middle pane, under the tabs and above the status
 bar. Drag its top edge to resize it; the height is remembered per vault,
-like a sidebar's width. It is your own login shell (whatever
+like a sidebar's width. It is your own shell (whatever
 <code>$SHELL</code> says), started in the vault's root folder, with no
 wrapper and nothing filtered: <code>git status</code>, a build, a
 <code>grep</code> across the notes, <code>pandoc</code> — whatever you
 would run in Terminal, run where the notes are.
+</p>
+
+<p>
+On macOS it starts as a login shell, the way Terminal starts one, so it
+reads your login profile — <code>~/.zprofile</code> for zsh, the
+default — as well as <code>~/.zshrc</code>. That is where Homebrew puts
+itself on the <code>PATH</code>, and it matters because an app opened
+from the Dock is handed only the system's bare <code>PATH</code>;
+without the profile, an alias in <code>~/.zshrc</code> can name a
+command the shell cannot find. On Linux it is an ordinary interactive
+shell, which inherits the <code>PATH</code> your desktop session has
+already set up.
 </p>
 
 <p>
