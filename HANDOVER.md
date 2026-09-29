@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`12b1734`** — the base hash for the next
+  reflects Clew-app up to **`71180c6`** — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -50,11 +50,12 @@ each smoke-measured on the Clew-app commit it documents:
 | `b2b84f0` | live-edit: a frame resolves citations under the host note's header (`707ed87`) |
 | `a3716ae` | citations: a note's `Bibliography` REPLACES the vault's, one `.bib` per note (from the engine's config-manager) |
 | `ba88a08` + `d215c8d` | attachments: with a pen, a finger pans a PDF while a drawing tool is armed (`12b1734`). `ba88a08` was committed here directly by the Clew-app session; reviewed, kept, moved and dated in `d215c8d` |
+| `566ebff` | canvas: a PDF in a canvas embedded in a note opens in the full viewer, annotations saved (`71180c6`); the portal miniature and a note's own `<iframe src="x.pdf">` still use Chromium's plugin — not described, the owner's open question |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
 annotations), a parenthesis where it merely behaves differently (toolbar,
-preview-pane scroll, frame citations, pen).
+preview-pane scroll, frame citations, pen, scene PDFs).
 
 Every behavioural claim was smoke-measured against Clew-app's source
 over a scratch vault. **A timing lesson from this session:** a smoke
@@ -103,9 +104,9 @@ stay with the owner.
 1. **At the next release, remove both "In 0.11.1" callouts** —
    `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`) and
    `attachments-and-files.html#annotating` (annotations flushed when the
-   viewer goes, `1956d89`) — turn the four "(In 0.11.1 …)" / "(On the
+   viewer goes, `1956d89`) — turn the five "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
-   statements (live-edit ×2, editing, attachments), and bump the
+   statements (live-edit ×2, editing, attachments, canvas), and bump the
    version.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
