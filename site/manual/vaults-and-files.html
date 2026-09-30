@@ -436,9 +436,7 @@ unwatched part may show its old contents until you reopen it.
 The first window's vault may use about six thousand of those handles;
 each window opened after it gets a smaller share — about a thousand, then
 five hundred — so no window is left blind: with two large vaults open,
-both keep seeing the new files that appear in them. (In 0.11.1 one window
-could watch about eight thousand, and a second large vault could leave
-neither window seeing new files.)
+both keep seeing the new files that appear in them.
 </p>
 
 <p>
@@ -478,9 +476,7 @@ limit says: a note or folder you create, rename or delete updates the file
 explorer immediately, and so does every new file Clew writes for you — an
 export saved into the vault, a pasted attachment, a canvas drawing's PNG —
 because Clew knows it made the change rather than waiting to be told about
-it. (In 0.11.1 that held for creating, renaming and deleting only: an
-export or attachment written into a vault past the limit could stay out of
-the explorer.)
+it.
 </p>
 
 <p>
@@ -574,13 +570,6 @@ vault's trust, and a note's header cannot set it.
 	scripts run in the rendered page as before, with no switch at all.
 	Trusting a vault turns none of those on, and leaving it untrusted
 	turns none of them off.
-</div>
-
-<div class="callout warn">
-	<span class="callout-title">In 0.11.1</span>
-	There is no guard in 0.11.1: a vault's note code runs the first time
-	its notes render. In 0.11.1, open a vault from someone else only when
-	you know where it came from or have read its notes.
 </div>
 
 <h2 id="reference">Reference</h2>

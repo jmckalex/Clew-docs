@@ -378,8 +378,7 @@ A <code>text</code> or <code>number</code> field saves when you press
 <kbd>Enter</kbd> or move away from it; a <code>textArea</code> keeps
 <kbd>Enter</kbd> for new lines and saves when you move away, its line
 breaks stored as <code>\n</code> in a quoted value
-(<a href="#direct-editing">above</a>). (In 0.11.1 <kbd>Enter</kbd> does not
-save a field: move away from it.)
+(<a href="#direct-editing">above</a>).
 </p>
 
 <p>
@@ -402,19 +401,8 @@ always starts locked. Every input that holds a value takes it
 button you can reach and press from the keyboard. In Obsidian, Meta Bind
 skips an argument it does not know, so the note still works there,
 unlocked; a website export draws no padlock, since its widgets are
-disabled anyway. (Not in 0.11.1.)
+disabled anyway.
 </p>
-
-<div class="callout warn">
-	<span class="callout-title">In 0.11.1</span>
-	A line break typed into a <code>textArea</code> widget is written into
-	the properties bare in 0.11.1, which leaves the block outside what Clew
-	can read back — so from then on every widget edit, query-cell edit or
-	kanban drag that would write into that note is refused (the
-	<a href="#subset">safety valve</a>). Keep a <code>textArea</code> to one
-	line there; to recover a note, open it in the editor and put the value
-	back on one line. The next release fixes it.
-</div>
 
 <p>
 Widgets can also bind to <strong>text</strong>, not only metadata —

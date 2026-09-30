@@ -187,13 +187,6 @@ clearing its measurement, say — that thing keeps it, and a click
 outside is the way out.
 </p>
 
-<div class="callout warn">
-	<span class="callout-title">In 0.11.1</span>
-	<kbd>Esc</kbd> inside an engaged <em>note</em> card does nothing in
-	0.11.1: the key never leaves the note, so click outside the card
-	instead. The next release fixes it.
-</div>
-
 <p>
 All the manipulation affordances — resize handles, connection anchors,
 the selection marquee — are drawn by the canvas itself in an overlay, so
@@ -371,8 +364,7 @@ another miniature.
 A PDF in a portal shows its first page as a picture — a page-shaped
 plate with the file's name stands in until the picture is ready, the
 picture is kept and reused, and it is redrawn when the PDF changes. To
-read or annotate the PDF, open the canvas it belongs to. (In 0.11.1 a
-portal's PDF is the browser's own PDF viewer, shrunk to fit.)
+read or annotate the PDF, open the canvas it belongs to.
 </p>
 
 <h2 id="connections">Connections</h2>
@@ -617,8 +609,7 @@ previews inside the scene scroll and follow clicks, media plays, and web
 nodes load live where the site allows itself to be framed. A PDF in the
 scene opens in the same viewer as a PDF tab — page through it, search
 it, annotate it — and the marks are saved into the PDF, as everywhere
-else. (In 0.11.1 a scene's PDF is the browser's own viewer: you can read
-it there, but not annotate it.) Embeds do not
+else. Embeds do not
 recurse indefinitely: a canvas inside a note inside that same canvas
 bottoms out in a placeholder rather than a hall of mirrors. (In a vault
 <a href="publishing.html">published as a website</a>, a canvas embed
