@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`cd8c311`** — the base hash for the next
+  reflects Clew-app up to **`bf5d212`** — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -55,6 +55,7 @@ each smoke-measured on the Clew-app commit it documents:
 | `91dcd53` | maps: the measuring tool measures — two Shift-clicks, a third starts over, Esc clears (`693c4fe`); it NEVER completed a measurement before, so an "In 0.11.1" Caution says it does not work there |
 | `a62bed2` | **New chapter `tabbing.html`** (Writing, after Callouts): LaTeX's tabbing, fence and `@begin` forms (`cd8c311`). Nav, manual index card, dialect see-also, live-edit frame list, export caution. A Caution: single-note HTML/LaTeX exports do not carry it (measured by running the export worker). Every example rendered in the app, none overprinting. `tabbing.png` from the demo vault |
 | `52e2b98` | export: a Clew fence (query, mermaid, kanban, dataview, tabbing…) stops a PDF-via-LaTeX compile — `minted` gets a language Pygments does not know. A Troubleshooting entry, pointed at from the export caution and the tabbing caution. **When the jmarkdown unknown-lexer fallback lands, rewrite all three** |
+| `02478f7` | canvas: a PDF in a portal is a cached first-page picture (`bf5d212`) — phase 1 of 4 of retiring Chromium's PDF plugin (`docs/dev/pdf-unification.md` in Clew-app). Next: a note's own `<iframe src="x.pdf">` in the standard viewer; web PDFs fetched and opened read-only; then the plugin goes — expect a notice for each |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
@@ -111,7 +112,7 @@ stay with the owner.
    viewer goes, `1956d89`) and `maps.html#distance` (the measuring tool,
    `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
-   statements (live-edit ×2, editing, attachments, canvas,
+   statements (live-edit ×2, editing, attachments, canvas ×2,
    tasks-and-kanban, tabbing), and bump the version.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
