@@ -98,7 +98,10 @@ values are typed:
 	the text would otherwise read as another type — <code>version:
 	"1.0"</code> stays the string <code>1.0</code> rather than becoming
 	the number. Both <code>"double"</code> and <code>'single'</code>
-	quotes work.</dd>
+	quotes work. Inside double quotes YAML's escapes apply —
+	<code>\n</code> is a line break, <code>\t</code> a tab,
+	<code>\"</code> a quote and <code>\\</code> a backslash — while
+	single quotes take the text as written.</dd>
 
 	<dt>Numbers</dt>
 	<dd><code>priority: 2</code>, <code>rating: 4.5</code>. Integers and
@@ -218,7 +221,9 @@ form:
 	line); an empty list is written inline as <code>[]</code>.</li>
 	<li>Strings are quoted only when they need to be — when they would
 	otherwise parse as a number or boolean, start or end with a space,
-	begin like a list item, or contain characters YAML could misread.</li>
+	begin like a list item, or contain characters YAML could misread. A
+	value holding a line break or a tab is written double-quoted, the
+	break as <code>\n</code>: <code>body: "one\ntwo"</code>.</li>
 	<li>Removing the last property removes the <code>---</code> fences
 	entirely; adding a property to a note without frontmatter creates
 	the block.</li>
@@ -369,6 +374,15 @@ the widgets render disabled, because a static page has no write path.
 </p>
 
 <p>
+A <code>text</code> or <code>number</code> field saves when you press
+<kbd>Enter</kbd> or move away from it; a <code>textArea</code> keeps
+<kbd>Enter</kbd> for new lines and saves when you move away, its line
+breaks stored as <code>\n</code> in a quoted value
+(<a href="#direct-editing">above</a>). (In 0.11.1 <kbd>Enter</kbd> does not
+save a field: move away from it.)
+</p>
+
+<p>
 A widget also honours Meta Bind's <code>class(…)</code> argument:
 <code>INPUT[number(class(narrow)):mark]</code> adds your class to the
 rendered control, so a <a href="theming.html">vault script</a> can
@@ -381,7 +395,7 @@ A value that must not change by accident — a grade, a signed-off date —
 takes Clew's <code>locked</code> argument:
 <code>INPUT[number(locked):grade]</code> shows its value but ignores
 clicks and typing until you press the padlock beside it. It locks again
-once the edit is committed, when you move away from it, and whenever the
+once the edit is saved, when you move away from it, and whenever the
 note re-renders; nothing is stored, so a <code>locked</code> widget
 always starts locked. Every input that holds a value takes it
 (<code>progressBar</code> is read-only already), and the padlock is a
@@ -390,6 +404,17 @@ skips an argument it does not know, so the note still works there,
 unlocked; a website export draws no padlock, since its widgets are
 disabled anyway. (Not in 0.11.1.)
 </p>
+
+<div class="callout warn">
+	<span class="callout-title">In 0.11.1</span>
+	A line break typed into a <code>textArea</code> widget is written into
+	the properties bare in 0.11.1, which leaves the block outside what Clew
+	can read back — so from then on every widget edit, query-cell edit or
+	kanban drag that would write into that note is refused (the
+	<a href="#subset">safety valve</a>). Keep a <code>textArea</code> to one
+	line there; to recover a note, open it in the editor and put the value
+	back on one line. The next release fixes it.
+</div>
 
 <p>
 Widgets can also bind to <strong>text</strong>, not only metadata —
