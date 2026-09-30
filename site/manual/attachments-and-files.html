@@ -209,6 +209,18 @@ want the page and comment sidebars beside the document rather than
 stacked below it, which is what happens in a narrow column.
 </p>
 
+<p>
+A PDF a note embeds itself in raw HTML — an <code>&lt;iframe&gt;</code>,
+<code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> pointing at a PDF
+in the vault — opens in the same viewer, at the page a
+<code>#page=N</code> asks for and at the size the HTML gives it. A
+relative path is read from the note's own folder and one starting with
+<code>/</code> from the vault's root; anything outside the vault, or not a
+PDF, is left as written. A <a href="publishing.html">website export</a>
+keeps your HTML exactly as you wrote it. (In 0.11.1 such a frame is the
+browser's own PDF viewer.)
+</p>
+
 <h4 id="annotating">Annotating</h4>
 
 <p>
