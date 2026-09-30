@@ -1,8 +1,10 @@
-# Handover — 2026-09-30 (paused for a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
+# Handover — 2026-09-30 (resumed after a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
 
 **Resume here.** Nothing is in flight. Wait for Clew-boss's next docs
-notice (base hash `08299a0`). The 0.11.2 release — the version bump and
-the 15 release markers in §4 item 1 — is ON HOLD until the owner's
+notice (base hash `5fa98b8`; expected next: Enter-commits for Meta Bind
+number/text fields — which changes how the lock paragraph's "committed"
+happens — and PDF phases 3–4). The 0.11.2 release — the version bump and
+the 17 release markers in §4 item 1 — is ON HOLD until the owner's
 current projects are done; do not start it until Clew-boss says the
 release is done. Standing rules for working with Clew-boss (report every
 finished task; what it may approve) are in this project's memory and in
@@ -17,7 +19,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`08299a0`** (the 0.11.2 version commit — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
+  reflects Clew-app up to **`5fa98b8`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -69,6 +71,8 @@ each smoke-measured on the Clew-app commit it documents:
 | `5428131` | **Vault trust** (`e8d32e6`, the interim guard): `vaults-and-files.html#trust`, the settings trust row + corrected Caution + `vault-trust.json` reference row, export's untrusted exception. SCOPE: engine note code ONLY — plugins, dataviewjs, Note API, vault scripts and inline scripts are not gated; the full vault-trust design (Clew-app `docs/dev/frame-bridge.md` §4) will change this section when it lands. "In 0.11.1" Caution: no guard |
 | `7da5082` | panels + settings: Powerline/Nerd Font prompt symbols draw, Unicode 11 widths fix the cursor after `$`, new `shellFont` setting (`06f5e70`) |
 | `c7deb5d` | vaults-and-files: every new file Clew writes appears in the explorer at once, watcher or not (`5077207`) |
+| `accad6f` | vaults-and-files: each window gets a share of the watch budget (6,000 / 1,000 / 500); the example message now says 6,000 (`b9e5416`) |
+| `1c87568` | properties: Meta Bind `locked` argument, a padlock for one edit (`ac6e9cc`) |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
@@ -126,8 +130,9 @@ stay with the owner.
    `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
    statements (live-edit ×2, editing, attachments ×2, canvas ×2,
-   tasks-and-kanban, tabbing, panels, vaults-and-files), and bump the
-   version. The next release is **0.11.2**: grep the manual for
+   tasks-and-kanban, tabbing, panels, vaults-and-files ×2, properties),
+   and bump the version — 17 markers in all: 4 callouts, 13
+   parentheses. The next release is **0.11.2**: grep the manual for
    `0.11.1` — every hit is either the version or one of these.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
