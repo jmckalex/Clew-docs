@@ -420,7 +420,7 @@ stops adding and tells you so:
 
 <div class="example">
 	<p class="example-label">You see</p>
-	<pre><code>Watching 8,000 files in this vault; 12,445+ more are not
+	<pre><code>Watching 6,000 files in this vault; 12,445+ more are not
 watched (from econ-and-id/libs/fontawesome6/svgs/thin/desktop.svg).
 Changes there will not refresh on their own.</code></pre>
 </div>
@@ -430,6 +430,15 @@ Nothing is hidden when this happens: the files are still listed, still
 opened, still searched and still indexed. The only thing lost is the
 automatic refresh, so a file changed <em>by another program</em> in the
 unwatched part may show its old contents until you reopen it.
+</p>
+
+<p>
+The first window's vault may use about six thousand of those handles;
+each window opened after it gets a smaller share — about a thousand, then
+five hundred — so no window is left blind: with two large vaults open,
+both keep seeing the new files that appear in them. (In 0.11.1 one window
+could watch about eight thousand, and a second large vault could leave
+neither window seeing new files.)
 </p>
 
 <p>
