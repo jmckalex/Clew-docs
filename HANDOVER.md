@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`e8d32e6`** — the base hash for the next
+  reflects Clew-app up to **`08299a0`** (the 0.11.2 version commit — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -58,6 +58,8 @@ each smoke-measured on the Clew-app commit it documents:
 | `02478f7` | canvas: a PDF in a portal is a cached first-page picture (`bf5d212`) — phase 1 of 4 of retiring Chromium's PDF plugin (`docs/dev/pdf-unification.md` in Clew-app). Next: a note's own `<iframe src="x.pdf">` in the standard viewer; web PDFs fetched and opened read-only; then the plugin goes — expect a notice for each |
 | `f245e91` | attachments: a note's own `<iframe>`/`<embed>`/`<object>` at a vault PDF opens in Clew's viewer, `#page=N` and size kept (`b9f21c6`, phase 2). Web PDFs (phase 3) not described yet. Pending, no manual line until it ships: the "Run note code" engine switch's interim trust guard |
 | `5428131` | **Vault trust** (`e8d32e6`, the interim guard): `vaults-and-files.html#trust`, the settings trust row + corrected Caution + `vault-trust.json` reference row, export's untrusted exception. SCOPE: engine note code ONLY — plugins, dataviewjs, Note API, vault scripts and inline scripts are not gated; the full vault-trust design (Clew-app `docs/dev/frame-bridge.md` §4) will change this section when it lands. "In 0.11.1" Caution: no guard |
+| `7da5082` | panels + settings: Powerline/Nerd Font prompt symbols draw, Unicode 11 widths fix the cursor after `$`, new `shellFont` setting (`06f5e70`) |
+| `c7deb5d` | vaults-and-files: every new file Clew writes appears in the explorer at once, watcher or not (`5077207`) |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
@@ -115,7 +117,9 @@ stay with the owner.
    `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
    desktop this arrives after 0.11.1 …)" parentheses into plain
    statements (live-edit ×2, editing, attachments ×2, canvas ×2,
-   tasks-and-kanban, tabbing), and bump the version.
+   tasks-and-kanban, tabbing, panels, vaults-and-files), and bump the
+   version. The next release is **0.11.2**: grep the manual for
+   `0.11.1` — every hit is either the version or one of these.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
    `site/manual/index.html`, `nav.js`, `getting-started.html`); and
