@@ -148,6 +148,12 @@ carries with it, with the vault's winning where both use a name.
 	<a href="export.html#two-pdfs">Export as PDF (reading view)</a>
 	prints onto. The LaTeX PDF takes its page size from the document's own
 	class instead, and is not affected.</dd>
+	<dt>Shell panel font <code>(shellFont)</code></dt>
+	<dd>Blank by default, which uses Clew's monospace font. A family —
+	or a CSS list of them — for the <a href="panels.html#shell">shell
+	panel</a>, placed before Clew's own; applies at once. Powerline and
+	Nerd Font prompt symbols come from such a font either way, if one is
+	installed.</dd>
 </dl>
 
 <h3 id="live-edit">Live edit</h3>
@@ -601,7 +607,7 @@ source. If you use one daily, give it a key.
 <div class="tablewrap">
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
-	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
+	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
 	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
 	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults are trusted to run note code, keyed by the vault folder itself — never written into the vault (see <a href="vaults-and-files.html#trust">Trusting a vault</a>)</td></tr>
 </table>
