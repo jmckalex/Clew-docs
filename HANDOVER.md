@@ -1,8 +1,8 @@
 # Handover — 2026-09-30 (resumed after a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
 
 **Resume here.** Nothing is in flight. Wait for Clew-boss's next docs
-notice (base hash `03c06f3`; expected next: PDF phase 4, Chromium's viewer
-switched off — probably no manual change). The 0.11.2 release — the version bump and
+notice (base hash `29fa2ae`; the PDF unification is complete — all four
+phases documented). The 0.11.2 release — the version bump and
 the 20 release markers in §4 item 1 — is ON HOLD until the owner's
 current projects are done; do not start it until Clew-boss says the
 release is done. Standing rules for working with Clew-boss (report every
@@ -18,7 +18,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`03c06f3`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
+  reflects Clew-app up to **`29fa2ae`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -74,6 +74,7 @@ each smoke-measured on the Clew-app commit it documents:
 | `1c87568` | properties: Meta Bind `locked` argument, a padlock for one edit (`ac6e9cc`) |
 | `3b94070` | properties: Enter saves a text/number widget, a textArea saves on leaving; line breaks stored `"one\ntwo"`, double-quoted escapes read as YAML's (`e80e583`). "In 0.11.1" Caution: a textArea newline left the block unwritable |
 | `15c9be3` | attachments: web PDFs a note embeds open read-only, fetched by Clew and cached on the device; Save a copy / Open in browser / Reload; no cookies; private addresses refused (PDF phase 3: `ffb7290`, `8bab972`, `03c06f3`) |
+| `01eda7f` | attachments: a vault PDF a note's script adds after render also reaches the viewer; an unrecognised web PDF stays in the browser's own viewer (PDF phase 4: `b5325cc`, `29fa2ae`) |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
