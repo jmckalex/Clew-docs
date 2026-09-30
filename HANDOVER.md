@@ -1,4 +1,13 @@
-# Handover — 2026-09-29 (the site is LIVE at https://clew-app.com, serving 0.11.1; tree clean; no remote)
+# Handover — 2026-09-30 (paused for a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
+
+**Resume here.** Nothing is in flight. Wait for Clew-boss's next docs
+notice (base hash `08299a0`). The 0.11.2 release — the version bump and
+the 15 release markers in §4 item 1 — is ON HOLD until the owner's
+current projects are done; do not start it until Clew-boss says the
+release is done. Standing rules for working with Clew-boss (report every
+finished task; what it may approve) are in this project's memory and in
+§3. Session scratch (`/private/tmp/…/scratchpad`) does not survive the
+reboot: the screenshot recipes that mattered are in §5.
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -162,6 +171,26 @@ stay with the owner.
     machine. (Clew-app and Clew-iOS have theirs.)
 
 ## 5. Verification kit
+
+- **Screenshot recipes from this session** (their scripts lived in
+  `/tmp`): every one runs over a scratch copy of the vault
+  (`rsync -a --exclude .clew/cache --exclude .clew/history`, then delete
+  `.clew/workspace.json`), a fresh `CLEW_USER_DATA`, 2560×1700 dark. The
+  scenario waits for `vaultStore.vault?.sessionId`, closes both sidebars
+  (`workspaceStore.setSidebar('left'|'right', { open: false })`), opens
+  the note with `openNote(path, { defaultMode: 'reading' })` AND calls
+  `setTabMode(tab.id, 'reading')` — `defaultMode` alone opened the demo
+  vault's Tabbing note in SOURCE mode — then sleeps ~7 s.
+  `kanban-board.png` is now Clew-app's `smoke/manual/kanban-board.js`
+  (vault folder named `study-vault` so the title bar says so);
+  `tabbing.png` is `Guide/Tabbing.md` with a frame script
+  (`CLEW_SMOKE_FRAME_MATCH=vault/`) that scrolls the `h2` "Indenting, and
+  stepping back" to the top, minus 24 px.
+- **Checking a new chapter's examples**: extract every `<pre><code>` of
+  the page, `html.unescape` them into one note, render it in reading
+  mode, and have a frame script report per block `tb-laid` and any
+  horizontally overlapping pieces in a row — how the tabbing chapter was
+  proved to hold no overprinting example.
 
 - `make check-links` — every local href/src and anchor, plus the
   `og:url` check; exits non-zero on a real problem.
