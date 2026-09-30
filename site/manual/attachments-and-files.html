@@ -221,6 +221,36 @@ keeps your HTML exactly as you wrote it. (In 0.11.1 such a frame is the
 browser's own PDF viewer.)
 </p>
 
+<p>
+A PDF a note embeds <strong>from the web</strong> — an
+<code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or
+<code>&lt;object&gt;</code> whose address ends in <code>.pdf</code>, or
+that says <code>type="application/pdf"</code> (an address like arXiv's
+<code>…/pdf/2401.01234</code> needs the <code>type</code>) — opens in the
+same viewer, <strong>read-only</strong>. Clew fetches the file itself,
+once, and keeps a copy on this device rather than in the vault, checking
+it for changes at most once a day; a copy fetched before still opens
+offline. A strip above the document offers <em>Save a copy to the
+vault</em>, which puts it in your attachment folder as a file of your own
+to annotate (a notice gives you the <code>![[…]]</code> to embed it
+instead), <em>Open in browser</em>, and <em>Reload</em>, which fetches it
+again now.
+</p>
+
+<p>
+Clew fetches as a stranger would: no cookies, no logins, nothing that
+says where the link was found. A PDF behind a sign-in therefore shows
+<em>The site answered with a web page, not a PDF — it may need you to
+sign in</em>; open it in your browser instead, and save it into the vault
+from there if you want it here. Local and private network addresses are
+never fetched, nor is a file over 100&nbsp;MB, and the copies together
+are kept to about 1&nbsp;GB, the least recently used going first. A web
+PDF opens the same way in a vault this device has not
+<a href="vaults-and-files.html#trust">trusted</a>, since it runs no code,
+and a website export keeps the note's original link. (In 0.11.1 a web
+PDF is the browser's own viewer.)
+</p>
+
 <h4 id="annotating">Annotating</h4>
 
 <p>
