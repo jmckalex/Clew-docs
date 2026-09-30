@@ -1,9 +1,9 @@
 # Handover — 2026-09-30 (resumed after a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
 
 **Resume here.** Nothing is in flight. Wait for Clew-boss's next docs
-notice (base hash `e80e583`; expected next: PDF phases 3–4 — Clew-app has
-phase 3 as a WIP commit). The 0.11.2 release — the version bump and
-the 19 release markers in §4 item 1 — is ON HOLD until the owner's
+notice (base hash `03c06f3`; expected next: PDF phase 4, Chromium's viewer
+switched off — probably no manual change). The 0.11.2 release — the version bump and
+the 20 release markers in §4 item 1 — is ON HOLD until the owner's
 current projects are done; do not start it until Clew-boss says the
 release is done. Standing rules for working with Clew-boss (report every
 finished task; what it may approve) are in this project's memory and in
@@ -18,7 +18,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`e80e583`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
+  reflects Clew-app up to **`03c06f3`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -73,6 +73,7 @@ each smoke-measured on the Clew-app commit it documents:
 | `accad6f` | vaults-and-files: each window gets a share of the watch budget (6,000 / 1,000 / 500); the example message now says 6,000 (`b9e5416`) |
 | `1c87568` | properties: Meta Bind `locked` argument, a padlock for one edit (`ac6e9cc`) |
 | `3b94070` | properties: Enter saves a text/number widget, a textArea saves on leaving; line breaks stored `"one\ntwo"`, double-quoted escapes read as YAML's (`e80e583`). "In 0.11.1" Caution: a textArea newline left the block unwritable |
+| `15c9be3` | attachments: web PDFs a note embeds open read-only, fetched by Clew and cached on the device; Save a copy / Open in browser / Reload; no cookies; private addresses refused (PDF phase 3: `ffb7290`, `8bab972`, `03c06f3`) |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
@@ -132,7 +133,7 @@ stay with the owner.
    statements (live-edit ×2, editing, attachments ×2, canvas ×2,
    tasks-and-kanban, tabbing, panels, vaults-and-files ×2, properties ×2),
    plus the `properties.html#meta-bind` Caution, and bump the version —
-   19 markers in all: 5 callouts, 14 parentheses. The next release is **0.11.2**: grep the manual for
+   20 markers in all: 5 callouts, 15 parentheses (attachments now ×3). The next release is **0.11.2**: grep the manual for
    `0.11.1` — every hit is either the version or one of these.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
