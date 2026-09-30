@@ -41,7 +41,7 @@ LOCAL_DIR := site
 # Release binaries: ~640 MB, so they are in neither git nor the ordinary
 # sync. They change only when a release ships. `make stage-downloads` copies
 # them out of the app repo's out/ and `make sync-downloads` uploads them.
-VERSION := 0.11.1
+VERSION := 0.12.0
 OUT_DIR := ../Clew-app/out
 DL_DIR  := $(LOCAL_DIR)/downloads
 
