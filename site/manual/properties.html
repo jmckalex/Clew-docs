@@ -377,6 +377,21 @@ case where the default sizing is not what a note wants.
 </p>
 
 <p>
+A value that must not change by accident — a grade, a signed-off date —
+takes Clew's <code>locked</code> argument:
+<code>INPUT[number(locked):grade]</code> shows its value but ignores
+clicks and typing until you press the padlock beside it. It locks again
+once the edit is committed, when you move away from it, and whenever the
+note re-renders; nothing is stored, so a <code>locked</code> widget
+always starts locked. Every input that holds a value takes it
+(<code>progressBar</code> is read-only already), and the padlock is a
+button you can reach and press from the keyboard. In Obsidian, Meta Bind
+skips an argument it does not know, so the note still works there,
+unlocked; a website export draws no padlock, since its widgets are
+disabled anyway. (Not in 0.11.1.)
+</p>
+
+<p>
 Widgets can also bind to <strong>text</strong>, not only metadata —
 a Clew-native extension. Give a block a
 <a href="reading-mode.html">block reference</a> marker and bind a text
