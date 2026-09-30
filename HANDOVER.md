@@ -8,7 +8,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, **no git remote** (nothing to push). The manual
-  reflects Clew-app up to **`b9f21c6`** — the base hash for the next
+  reflects Clew-app up to **`e8d32e6`** — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -57,6 +57,7 @@ each smoke-measured on the Clew-app commit it documents:
 | `52e2b98` | export: a Clew fence (query, mermaid, kanban, dataview, tabbing…) stops a PDF-via-LaTeX compile — `minted` gets a language Pygments does not know. A Troubleshooting entry, pointed at from the export caution and the tabbing caution. **When the jmarkdown unknown-lexer fallback lands, rewrite all three** |
 | `02478f7` | canvas: a PDF in a portal is a cached first-page picture (`bf5d212`) — phase 1 of 4 of retiring Chromium's PDF plugin (`docs/dev/pdf-unification.md` in Clew-app). Next: a note's own `<iframe src="x.pdf">` in the standard viewer; web PDFs fetched and opened read-only; then the plugin goes — expect a notice for each |
 | `f245e91` | attachments: a note's own `<iframe>`/`<embed>`/`<object>` at a vault PDF opens in Clew's viewer, `#page=N` and size kept (`b9f21c6`, phase 2). Web PDFs (phase 3) not described yet. Pending, no manual line until it ships: the "Run note code" engine switch's interim trust guard |
+| `5428131` | **Vault trust** (`e8d32e6`, the interim guard): `vaults-and-files.html#trust`, the settings trust row + corrected Caution + `vault-trust.json` reference row, export's untrusted exception. SCOPE: engine note code ONLY — plugins, dataviewjs, Note API, vault scripts and inline scripts are not gated; the full vault-trust design (Clew-app `docs/dev/frame-bridge.md` §4) will change this section when it lands. "In 0.11.1" Caution: no guard |
 
 Post-0.11.1 behaviour is marked in the prose: a Caution callout titled
 "In 0.11.1" where the release loses work or breaks a promise (Esc,
@@ -107,7 +108,7 @@ stay with the owner.
 
 ## 4. Open items
 
-1. **At the next release, remove the three "In 0.11.1" callouts** —
+1. **At the next release, remove the four "In 0.11.1" callouts** — `vaults-and-files.html#trust` (no guard),
    `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`),
    `attachments-and-files.html#annotating` (annotations flushed when the
    viewer goes, `1956d89`) and `maps.html#distance` (the measuring tool,
