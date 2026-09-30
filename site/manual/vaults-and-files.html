@@ -502,6 +502,74 @@ above: an already-open vault focuses its window; anything else fills
 the current vaultless window or opens a new one.
 </p>
 
+<h2 id="trust">Trusting a vault on this device</h2>
+
+<p>
+A note can ask the engine to run code while it renders: a
+<code>&lt;script data-type="jmarkdown"&gt;</code> block, a
+<code>function() { … }</code> block, <code>Math.…</code> or
+<code>calc(…)</code> in prose, a <code>math.…(…)</code> expression, a
+<code>:::Mathematica</code> block, and the header keys that load or
+define code — <code>Load javascript</code>, <code>Load extensions</code>,
+<code>Load directives</code>, <code>Load environments</code> and
+<code>Extension …</code>. That code runs in the engine's own process, with
+the same access to your files as any program you run. A vault someone
+sends you should not be able to run it before you have said so.
+</p>
+
+<p>
+So a vault you open for the first time <strong>on this device</strong>
+renders without running its notes' code. Each such construct shows a
+placeholder where it stands — <em>[Load javascript not run: note code is
+off]</em>, <em>[Mathematica not run: note code is off]</em> — and a
+banner at the foot of the window names what was held back and offers
+<strong>Trust this vault</strong>. The banner appears only when something
+was actually held back, so a vault with no note code never sees it; its
+<strong>×</strong> puts it away, and the vault can still be trusted from
+Settings.
+</p>
+
+<p>
+<strong>Settings&nbsp;→&nbsp;This vault&nbsp;→ <em>Trusted on this device:
+notes may run code</em></strong> switches it either way, and the notes
+re-render at once. The choice is kept by Clew on this device, never in
+the vault — a vault cannot arrive trusting itself — and it belongs to the
+folder, not to its path: a different vault unpacked where a trusted one
+used to be is asked about afresh. Already trusted: the vaults you had
+open or on your recent list when you first ran a Clew with this guard,
+the demo vault, and vaults you create from the welcome screen.
+</p>
+
+<p>
+An untrusted vault's HTML and LaTeX exports hold the same code back,
+and read only your own global <code>~/.jmarkdown</code> configuration: a
+<code>.jmarkdown/</code> folder inside the vault is not read (see
+<a href="export.html#config-cascade">Exports use your jmarkdown
+configuration</a>). For command-line use, the engine's switch is the
+<code>Run note code</code> configuration key; Clew sets it from the
+vault's trust, and a note's header cannot set it.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — what trust covers, and what it does not</span>
+	The guard covers code the engine runs from a note, and nothing else.
+	<a href="plugins.html">Vault plugins</a>,
+	<a href="queries.html#dataviewjs"><code>dataviewjs</code> blocks</a> and
+	<a href="note-api.html">the Note API</a> keep their own per-vault
+	switches, off by default; <a href="plugins.html#vault-scripts">vault
+	scripts</a> in <code>.clew/scripts/</code> and a note's own inline
+	scripts run in the rendered page as before, with no switch at all.
+	Trusting a vault turns none of those on, and leaving it untrusted
+	turns none of them off.
+</div>
+
+<div class="callout warn">
+	<span class="callout-title">In 0.11.1</span>
+	There is no guard in 0.11.1: a vault's note code runs the first time
+	its notes render. In 0.11.1, open a vault from someone else only when
+	you know where it came from or have read its notes.
+</div>
+
 <h2 id="reference">Reference</h2>
 
 <div class="tablewrap">
@@ -540,6 +608,11 @@ the current vaultless window or opens a new one.
 	<tr><td>Obsidian's state</td>
 		<td><code>.obsidian/</code></td>
 		<td>Never touched by Clew.</td></tr>
+	<tr><td>Trust a vault's note code</td>
+		<td>The banner's <strong>Trust this vault</strong>, or Settings →
+		This vault → <em>Trusted on this device</em></td>
+		<td>Kept on this device, never in the vault; covers the engine's
+		note code only (<a href="#trust">above</a>).</td></tr>
 </table>
 </div>
 

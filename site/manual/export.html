@@ -224,6 +224,14 @@ Settings&nbsp;→&nbsp;This vault, described in
 vault written in ordinary Markdown exports as ordinary Markdown.
 </p>
 
+<p>
+And one exception runs the other way: a vault this device has not
+<a href="vaults-and-files.html#trust">trusted</a> exports without
+running its notes' code, and from your global <code>~/.jmarkdown</code>
+alone — a <code>.jmarkdown/</code> folder inside the vault is not read,
+since it too could carry code.
+</p>
+
 <div class="callout warn">
 	<span class="callout-title">Caution — Clew's preview extensions do not apply</span>
 	Clew's Obsidian-flavoured additions are extensions loaded by the

@@ -379,12 +379,27 @@ lists):
 	trust. See <a href="plugins.html">Vault plugins</a>.</dd>
 </dl>
 
+<p>
+One row on this page is not stored in the vault at all:
+<strong>Trusted on this device: notes may run code</strong>. It says
+whether the engine may run the code a note asks it to — script and
+function blocks, <code>Math.…</code> and <code>calc(…)</code> in prose,
+Mathematica, the <code>Load …</code> and <code>Extension …</code> header
+keys — and Clew keeps it in its own data on this device, so a vault
+cannot arrive trusting itself. A vault new to this device starts
+untrusted. See <a href="vaults-and-files.html#trust">Trusting a vault on
+this device</a>.
+</p>
+
 <div class="callout warn">
 	<span class="callout-title">Caution</span>
-	The Note API switch and the plugin checkboxes are trust decisions, not
-	feature toggles. Both are per-vault and off by default, so a vault you
-	downloaded cannot run code in Clew until you explicitly say so — keep
-	it that way for vaults whose contents you have not read.
+	The trust row, the Note API switch, <em>Run dataviewjs blocks</em> and
+	the plugin checkboxes are trust decisions, not feature toggles, and
+	each covers only its own kind of code: trusting a vault does not enable
+	its plugins, and enabling a plugin does not trust the vault. Vault
+	scripts in <code>.clew/scripts/</code> and a note's own inline scripts
+	run in the rendered page with no switch at all. Read a vault you
+	downloaded before you trust it with anything.
 </div>
 
 <div class="callout tip">
@@ -588,6 +603,7 @@ source. If you use one daily, give it a key.
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
 	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults are trusted to run note code, keyed by the vault folder itself — never written into the vault (see <a href="vaults-and-files.html#trust">Trusting a vault</a>)</td></tr>
 </table>
 </div>
 
