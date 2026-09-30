@@ -213,7 +213,8 @@ stacked below it, which is what happens in a narrow column.
 A PDF a note embeds itself in raw HTML — an <code>&lt;iframe&gt;</code>,
 <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> pointing at a PDF
 in the vault — opens in the same viewer, at the page a
-<code>#page=N</code> asks for and at the size the HTML gives it. A
+<code>#page=N</code> asks for and at the size the HTML gives it, and so
+does one that a note's own script adds after the page is drawn. A
 relative path is read from the note's own folder and one starting with
 <code>/</code> from the vault's root; anything outside the vault, or not a
 PDF, is left as written. A <a href="publishing.html">website export</a>
@@ -226,8 +227,9 @@ A PDF a note embeds <strong>from the web</strong> — an
 <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or
 <code>&lt;object&gt;</code> whose address ends in <code>.pdf</code>, or
 that says <code>type="application/pdf"</code> (an address like arXiv's
-<code>…/pdf/2401.01234</code> needs the <code>type</code>) — opens in the
-same viewer, <strong>read-only</strong>. Clew fetches the file itself,
+<code>…/pdf/2401.01234</code> needs the <code>type</code>; without it the
+browser's own PDF viewer shows it, with none of Clew's tools) — opens in
+the same viewer, <strong>read-only</strong>. Clew fetches the file itself,
 once, and keeps a copy on this device rather than in the vault, checking
 it for changes at most once a day; a copy fetched before still opens
 offline. A strip above the document offers <em>Save a copy to the
