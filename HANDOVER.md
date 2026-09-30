@@ -1,6 +1,18 @@
 # Handover — 2026-09-30 (resumed after a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
 
-**Resume here.** Nothing is in flight. Wait for Clew-boss's next docs
+**Release 0.12.0 is PREPARED on branch `release-0.12.0`** (3 commits over
+`main` at `0839d61`: the 20 markers removed, the version in every place,
+the landing page — kanban.jpg retaken with 4 columns, tabbing, PDFs and
+the padlock). NOT merged, NOT deployed. On Clew-boss's "release done":
+confirm the five file names in `../Clew-app/out/`, merge the branch into
+`main` (rebase it first if `main` has moved), `make stage-downloads`,
+`make check-links` (clean once staged), then — versions and downloads are
+the OWNER's call, so confirm with them directly — `make sync-downloads`
+first, then `make sync`, and verify live. Its worktree lived in
+`/tmp/…/scratchpad/rel012`; if that is gone, `git worktree prune` and
+work on the branch directly.
+
+**Resume here.** Nothing else is in flight. Wait for Clew-boss's next docs
 notice (base hash `29fa2ae`; the PDF unification is complete — all four
 phases documented). The 0.11.2 release — the version bump and
 the 20 release markers in §4 item 1 — is ON HOLD until the owner's
