@@ -134,10 +134,110 @@ merely tolerated: they resolve to the same callout, so
 </table>
 </div>
 
+<h2 id="custom">Your own callout types</h2>
+
+<p>
+The fourteen are a starting set. <strong>Settings&nbsp;→&nbsp;Callouts</strong>
+defines more — a <code>[!remark]</code>, a <code>[!definition]</code>, a
+<code>[!homework]</code> — and changes the built-in ones. It has two
+lists. <strong>Global</strong> types are kept in Clew's own
+<code>clew-settings.json</code> and work in every vault on this machine;
+<strong>This vault</strong>'s are kept in
+<code>.clew/vault-settings.json</code> and travel with the vault. Each
+row is one type:
+</p>
+
+<dl>
+	<dt>Name</dt>
+	<dd>What you write between <code>[!</code> and <code>]</code>: a
+	letter, then letters, digits, <code>-</code> or <code>_</code>. Case
+	does not matter, as with the built-in types.</dd>
+	<dt>Title</dt>
+	<dd>The heading a callout shows when it is not given one of its own;
+	left blank, the name with a capital letter.</dd>
+	<dt>Icon</dt>
+	<dd>Any icon in Font Awesome Free, by name, chosen from a picker you
+	can search. A plain name is looked for among the solid icons, then the
+	regular ones, then the brands; <code>regular:</code> or
+	<code>brands:</code> before the name picks the family.</dd>
+	<dt>Colour</dt>
+	<dd>A swatch, or typed: a hex value, <code>rgb()</code>,
+	<code>hsl()</code> or a CSS colour name.</dd>
+	<dt>Aliases</dt>
+	<dd>Other names that open the same type, as <code>[!tldr]</code> opens
+	an abstract — up to eight, separated by commas or spaces.</dd>
+</dl>
+
+<div class="example">
+	<p class="example-label">In <code>.clew/vault-settings.json</code></p>
+	<pre><code>"callouts": [
+  { "name": "remark", "title": "Remark", "icon": "flask",
+    "color": "#2e8b57", "aliases": ["rem"] }
+]</code></pre>
+</div>
+
+<p>
+The lists merge <strong>field by field</strong>: a built-in type, then
+a global definition, then this vault's, each overriding only the fields
+it sets. So a row named <code>warning</code> with nothing but a colour
+recolours the built-in warning and keeps its title and icon, and a vault
+can change a global type's colour without repeating its icon. Aliases
+add to a type's own. An alias that is itself a type's name is ignored;
+one that another type already has moves to this one, and a new type
+named like an existing alias takes the name — the row says so in each
+case.
+</p>
+
+<p>
+As with the built-in types, one colour drives a custom callout's
+border, icon, title and tint, and Clew keeps it readable: a pale colour
+is darkened on the light theme and a very dark one lightened on the
+dark, so the same definition reads in both. Each row previews its
+callout in both themes. A row Clew cannot use — a name that is not a
+name, a colour that is not a colour, an icon Font Awesome does not have —
+says why and is <strong>skipped whole</strong>, never applied in part;
+that holds for a hand-edited file too, and a vault someone sent you can
+put nothing on the page but a title, a colour and an icon. Deleting a
+row takes two clicks.
+</p>
+
+<p>
+Changes apply at once: the notes open in reading mode, live edit and
+embeds redraw, including after a hand edit of
+<code>.clew/vault-settings.json</code>. Each custom type gets a command in the
+<a href="navigation.html">command palette</a> — <em>Insert remark
+callout</em> for the example above — and the editor toolbar's callout
+menu lists it. Custom types show in reading mode, live edit, a
+<a href="publishing.html">website export</a> and the reading-view PDF —
+not in a single-note HTML or LaTeX export (see
+<a href="export.html#config-cascade">Exporting notes</a>). (Not in 0.12.0.)
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Caution — where a type travels</span>
+	A type in the <strong>Global</strong> list exists only on this
+	machine: the same note opened on another computer shows an ordinary
+	quote with <code>[!name]</code> as text, so put a type the vault's
+	notes depend on in <strong>This vault</strong>. And a vault kept in
+	git carries its types only if <code>.clew/vault-settings.json</code>
+	is committed — if your repository ignores <code>.clew/</code>, as the
+	<a href="vaults-and-files.html#reference">vaults chapter</a> suggests
+	for Clew's state, add that one file back. A synced folder (iCloud,
+	Dropbox) carries it as it is.
+</div>
+
+<div class="callout obsidian">
+	<span class="callout-title">Obsidian compatibility</span>
+	Obsidian defines extra callout types in CSS snippets; Clew does not
+	read those definitions, and Obsidian does not read Clew's. A note
+	using a custom type works in both only where both have it defined.
+</div>
+
 <h2 id="unknown">An unknown type</h2>
 
 <p>
-A type Clew does not recognise is <strong>not</strong> turned into a
+A type Clew does not recognise — neither built in nor one of
+<a href="#custom">your own</a> — is <strong>not</strong> turned into a
 callout with a guessed colour. It stays an ordinary blockquote, with the
 <code>[!whatever]</code> visible as text. That is the honest failure: the
 note remains readable, and it is obvious what happened rather than
@@ -195,6 +295,21 @@ Icons are Font Awesome Free, embedded as inline SVG rather than fetched
 at render time, so they appear in reading mode, in an exported site, and
 on paper alike.
 </p>
+
+<h2 id="reference">Reference</h2>
+
+<div class="tablewrap">
+<table>
+	<tr><th>You write</th><th>Result</th></tr>
+	<tr><td><code>&gt; [!type]</code></td><td>A callout of that type, titled with the type's name</td></tr>
+	<tr><td><code>&gt; [!type] Title</code></td><td>The same, with your title (markdown allowed)</td></tr>
+	<tr><td><code>&gt; [!type]-</code> / <code>&gt; [!type]+</code></td><td>Collapsible, starting collapsed / expanded</td></tr>
+	<tr><td><code>&gt; [!unknown]</code></td><td>An ordinary quote, the marker shown as text</td></tr>
+	<tr><td><code>```ad-type</code></td><td>The Admonition plugin's spelling of the same callout</td></tr>
+	<tr><td>Settings → Callouts</td><td>Your own types, global or this vault's: name, title, icon, colour, aliases (not in 0.12.0)</td></tr>
+	<tr><td><code>callouts</code> in <code>clew-settings.json</code> / <code>.clew/vault-settings.json</code></td><td>Where those lists are kept; built-in &lt; global &lt; vault, field by field</td></tr>
+</table>
+</div>
 
 <h2 id="see-also">See also</h2>
 

@@ -268,6 +268,23 @@ toolbar</a>. Changes apply to open notes at once.</p>
 	templates; default <code>Templates</code>.</dd>
 </dl>
 
+<h3 id="callouts">Callouts</h3>
+
+<p>
+Callout types of your own, used as <code>&gt; [!name]</code> like the
+built-in ones — each a name, a title, a Font Awesome icon, a colour and
+aliases, with a preview in both themes. There are two lists:
+<strong>Global</strong>, kept in <code>clew-settings.json</code>
+(<code>callouts</code>) and offered in every vault on this machine, and
+<strong>This vault</strong>, kept in the vault's
+<code>.clew/vault-settings.json</code> (<code>callouts</code>) and
+travelling with it. They merge field by field over the built-in types —
+built-in, then global, then vault — so a row named like a built-in
+changes that one. A row Clew cannot use says why and is skipped. The full
+account is in <a href="callouts.html#custom">Callouts</a>. (Not in
+0.12.0.)
+</p>
+
 <h3 id="tex-fragments">TeX fragments</h3>
 
 <p>
@@ -292,8 +309,8 @@ what happens to a name nothing defines, is in
 <p>
 The per-vault settings, stored in
 <code>.clew/vault-settings.json</code> — eleven switches and fields,
-plus three lists (plugins, TeX fragments, and the two exclusion
-lists):
+plus lists: plugins, TeX fragments, callout types (not in 0.12.0) and the
+two exclusion lists:
 </p>
 
 <dl>
@@ -612,8 +629,8 @@ source. If you use one daily, give it a key.
 <div class="tablewrap">
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
-	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments) — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
+	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments), <code>callouts</code> (the global callout types; not in 0.12.0) — plus recent vaults and the windows to restore at launch</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>callouts</code> (this vault's callout types; not in 0.12.0), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
 	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults are trusted to run note code, keyed by the vault folder itself — never written into the vault (see <a href="vaults-and-files.html#trust">Trusting a vault</a>)</td></tr>
 </table>
 </div>
