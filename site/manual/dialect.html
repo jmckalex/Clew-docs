@@ -127,7 +127,11 @@ emphasis. An italic span needs a closing slash and cannot contain
 <code>/</code> — so a lone mid-word slash like <code>miles/hour</code>
 survives, but <code>/usr/bin</code> renders as an italicised
 <em>usr</em>, and two slashes in one line can pair up unexpectedly.
-Escape a literal slash as <code>\/</code> where it matters. The editor
+Escape a literal slash as <code>\/</code> where it matters. A bare web
+address in prose is the commonest casualty, for now: <code>see
+http://host/a/b/c/</code> comes out as http:/<em>host</em>a<em>b</em>c/,
+its slashes eaten in pairs, so write it as <code>&lt;http://host/a/b/c/&gt;</code>,
+which also makes it a link, or in backticks. The editor
 reads slashes by the same rule, in source mode and live edit, so what it
 shows in italics is what will render in italics.
 </p>
