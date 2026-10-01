@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`63c5ade`** — the base hash. **Committed but NOT deployed:** `342615a` (`\fullcite` in live edit) — that notice said "No deploy"; awaiting Clew-boss's word, so `make dry-run` lists `manual/citations.html` until then.
+  manual reflects Clew-app up to **`63c5ade`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
