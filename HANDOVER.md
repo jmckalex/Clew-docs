@@ -1,4 +1,4 @@
-# Handover — 2026-10-01 (site LIVE, serving 0.12.0; `main` ahead of `origin`, unpushed)
+# Handover — 2026-10-02 (site LIVE, serving 0.12.0; `main` ahead of `origin`, unpushed)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -9,13 +9,16 @@ names.
 
 ## 0. Resume here
 
-- **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`80b8b44`** — the base hash.
+- **In flight: `bbffa4d`** (live-edit.html: the table tools push undo
+  and redo into `…`) is committed but **not deployed** — a manual-only
+  deploy, waiting for Clew-boss's go. Otherwise wait for the next docs
+  notice. The manual reflects Clew-app up to **`80b8b44`** — the base
+  hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
-  left in the prose. Everything committed on `main` is deployed
-  (`make dry-run` clean).
+  left in the prose. Everything committed on `main` up to `af6fdbd` is
+  deployed; `bbffa4d` is not (above).
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. `main` is **ahead of `origin`,
   unpushed** — pushing needs the owner's explicit OK (§1).
@@ -56,7 +59,12 @@ names.
   `link-preview`, `live-preview-pane`, `crossref-preview`. Older full
   shots merely lack the switch in the tab strip. Also fold in:
   `math.jpg`'s Note title colour (§4), the landing `kanban.jpg`.
-  Recipes: `shots/README.md`.
+  **Recipes for all twelve are in `shots/`** (`c268db2`), each run into
+  scratch against Clew-app HEAD on 2026-10-02 — none installed.
+  `shots/README.md` has the command, fixture, env and expected log line
+  per image; the retake is: run each, read its `shot-…` line, look,
+  copy into `site/manual/images/` (and `site/images/` for the two
+  JPEGs), `make check-links`, deploy with the release.
 
 ## 1. Rules (also in this project's memory)
 
@@ -131,26 +139,33 @@ Rewrite when upstream changes:
    "[undefined]" in reading mode (an engine issue on the jmarkdown
    list); `citations.html` states it as a current rough edge — remove
    that clause when the engine is fixed.
-8. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
+8. **Reported to Clew-boss, 2026-10-02, not ours to fix:** with
+   `Headings: numeric` the engine wraps each heading in `<a
+   href="#toc">` (link purple, underlined) even in a note with no TOC
+   (the demo's Math and Theorems — it will show in the retaken
+   `math.jpg`); and opening a note in live edit, then a PDF and a split
+   in the same tick, left live edit undrawn (a RangeError in the
+   sidenotes plugin's measure; `shots/pdf-annotations.js` waits).
+9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
 
 Tidy-ups:
-9. CLAUDE.md is stale in two places: the version appears in more than
+10. CLAUDE.md is stale in two places: the version appears in more than
    two files (list in §0), and `check-links` reports FIVE `downloads/…`
    links when the binaries are not staged.
-10. `excalidraw.html` has no Reference table, against CLAUDE.md's
+11. `excalidraw.html` has no Reference table, against CLAUDE.md's
     "no exceptions" (`callouts.html` gained one with custom types).
-11. `math.jpg` (landing page and math chapter) shows the Note callout's
+12. `math.jpg` (landing page and math chapter) shows the Note callout's
     title in GitHub's blue (#4493f8); since `95750a5` it is #5b8def. Too
     slight to retake alone — fold it into the next retake of that image.
-12. `site/index.html` says the demo vault exports to "37 pages";
+13. `site/index.html` says the demo vault exports to "37 pages";
     `publishing.html` says "roughly forty".
-13. Social previews can be checked in Facebook's and Twitter's
+14. Social previews can be checked in Facebook's and Twitter's
     debuggers; `make og-card` must run on a Mac (Avenir Next).
-14. The old, unserved copy on the previous droplet (`do`) can be
+15. The old, unserved copy on the previous droplet (`do`) can be
     deleted.
-15. Local branches: `backup/pre-scrub` (the history before the public
+16. Local branches: `backup/pre-scrub` (the history before the public
     push — **never push it**), `release-0.12.0` and `feat/live-edit`
     (both merged). Delete at the owner's leisure.
 
@@ -167,16 +182,12 @@ Tidy-ups:
 - The app's smoke harness runs invisibly (`CLEW_SMOKE_VISIBLE=1` to
   watch); always pass `CLEW_SMOKE_VAULT` and a scratch `CLEW_USER_DATA`;
   an env value with spaces needs `env "K=v w"` in zsh.
-- **Screenshots**: a scratch copy of the vault (`rsync -a --exclude
-  .clew/cache --exclude .clew/history`, then delete
-  `.clew/workspace.json`), fresh user data, 2560×1700 dark. Wait for
+- **Screenshots**: `shots/README.md` — one recipe per image, a fresh
+  fixture and fresh user data per run. For a new one: wait for
   `vaultStore.vault?.sessionId`, set the sidebars, open with
-  `openNote(path, { defaultMode: 'reading' })` AND
-  `setTabMode(tab.id, 'reading')`, sleep ~7 s. `kanban-board.png` is
-  Clew-app's `smoke/manual/kanban-board.js`; the landing `kanban.jpg` is
-  the same with the explorer open and the right sidebar closed, scaled to
-  1400 wide; `tabbing.png` is the demo vault's `Guide/Tabbing.md` scrolled
-  to "Indenting, and stepping back".
+  `openNote(path, { defaultMode })` AND `setTabMode`, and log a
+  `shot-…` line that proves the state. The harness plays
+  `__clewSmokeInput` only after the script returns.
 - **A new chapter's examples**: extract every `<pre><code>`,
   `html.unescape` them into one note, render it, and have a frame script
   check each block — how the tabbing chapter was proved free of
