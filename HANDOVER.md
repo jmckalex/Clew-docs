@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`b0fe140`** — the base hash.
+  manual reflects Clew-app up to **`0f797eb`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -21,8 +21,8 @@ names.
   unpushed** — pushing needs the owner's explicit OK (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, seventeen
-  in six files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
+  the version or a marker to turn into plain prose. Markers so far, nineteen
+  in eight files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
   (the Window menu, `5119d93`); `navigation.html` sentence and table row
   for ⌘1–⌘9 (`a3bb88c`); two rows in
   `settings-and-hotkeys.html#default-hotkeys`; the citation chip
@@ -34,7 +34,8 @@ names.
   as reading mode (`95750a5`) in `live-edit.html#lines`; a literal
   directive's bracket (`914c3f8`) and the slim mode bar (`b0fe140`) in
   `live-edit.html`, and the mode buttons in
-  `settings-and-hotkeys.html#editor-toolbar`. Then the version in its
+  `settings-and-hotkeys.html#editor-toolbar`; the slash rule and bare
+  links (`0f797eb`) in `dialect.html` and `editing.html`. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
@@ -113,34 +114,30 @@ Rewrite when upstream changes:
    "[undefined]" in reading mode (an engine issue on the jmarkdown
    list); `citations.html` states it as a current rough edge — remove
    that clause when the engine is fixed.
-8. **A bare web address in prose loses its slashes to italics** (an
-   engine issue, fix in progress in jmarkdown): `dialect.html`'s slash
-   paragraph names it and the `<…>` / backtick ways round it — remove
-   that sentence when the fix reaches Clew.
-9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
+8. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
 
 Tidy-ups:
-10. CLAUDE.md is stale in two places: the version appears in more than
+9. CLAUDE.md is stale in two places: the version appears in more than
    two files (list in §0), and `check-links` reports FIVE `downloads/…`
    links when the binaries are not staged.
-11. `callouts.html` and `excalidraw.html` have no Reference table,
+10. `callouts.html` and `excalidraw.html` have no Reference table,
    against CLAUDE.md's "no exceptions".
-12. `math.jpg` (landing page and math chapter) shows the Note callout's
+11. `math.jpg` (landing page and math chapter) shows the Note callout's
     title in GitHub's blue (#4493f8); since `95750a5` it is #5b8def. Too
     slight to retake alone — fold it into the next retake of that image.
-13. **Source-mode screenshots lack the slim mode bar** shown since
+12. **Source-mode screenshots lack the slim mode bar** shown since
     `b0fe140` (cosmetic): `editor-split.png`, `editor-editing.png`,
     `wikilink-completion.png`, `live-preview-pane.png`, `fence-split.png`.
     Retake when one is retaken for another reason.
-14. `site/index.html` says the demo vault exports to "37 pages";
+13. `site/index.html` says the demo vault exports to "37 pages";
     `publishing.html` says "roughly forty".
-15. Social previews can be checked in Facebook's and Twitter's
+14. Social previews can be checked in Facebook's and Twitter's
     debuggers; `make og-card` must run on a Mac (Avenir Next).
-16. The old, unserved copy on the previous droplet (`do`) can be
+15. The old, unserved copy on the previous droplet (`do`) can be
     deleted.
-17. Local branches: `backup/pre-scrub` (the history before the public
+16. Local branches: `backup/pre-scrub` (the history before the public
     push — **never push it**), `release-0.12.0` and `feat/live-edit`
     (both merged). Delete at the owner's leisure.
 
