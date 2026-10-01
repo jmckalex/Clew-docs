@@ -45,15 +45,18 @@ names.
   worktree so `main` stays deployable — that is how 0.12.0 was done.
 - **Release checklist — the screenshot pass** (Clew-boss, 2026-10-02:
   at the release, not before, so the shots match what people download).
-  Fourteen images show the pre-`80b8b44` UI: the toolbar with the mode
-  switch at its end — `live-edit`, `live-edit-toolbar`, `live-edit-table`,
-  `live-edit-slash`, `link-preview`, `live-preview-pane`,
-  `crossref-preview`, `pdf-annotations`, `sidenotes-live`, `shell-panel`;
-  the slim bar — `sidenotes-reading`, `kanban-board`, `tabbing`; and
-  `citations-library`, whose split shows a live pane WITHOUT its toolbar
-  (the bug `80b8b44` fixed). Older shots merely lack the switch in the
-  tab strip. Also fold in: `math.jpg`'s Note title colour (§4), the
-  landing `kanban.jpg`. Recipes: see §5 and `shots/` (once written).
+  Ten manual images show the pre-`80b8b44` UI (checked image by image,
+  2026-10-02): the toolbar with the mode switch at its end —
+  `live-edit`, `live-edit-toolbar`, `live-edit-table`, `pdf-annotations`,
+  `sidenotes-live`; the slim bar — `sidenotes-reading`, `kanban-board`,
+  `tabbing`; `citations-library`, whose split shows a live pane WITHOUT
+  its toolbar (the bug `80b8b44` fixed); and `shell-panel`, which also
+  shows the prompt bug `06f5e70` fixed (`$wc`, typing against the `$`).
+  Not affected — crops of the note area: `live-edit-slash`,
+  `link-preview`, `live-preview-pane`, `crossref-preview`. Older full
+  shots merely lack the switch in the tab strip. Also fold in:
+  `math.jpg`'s Note title colour (§4), the landing `kanban.jpg`.
+  Recipes: `shots/README.md`.
 
 ## 1. Rules (also in this project's memory)
 
