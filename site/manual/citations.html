@@ -397,7 +397,7 @@ changes on disk.
 <h2 id="library">The library</h2>
 
 <figure class="shot">
-	<img src="images/citations-library.png" alt="Clew with a note in live edit whose citations read as chips — citep Knuth 1984, Lamport 1994 — a PDF open in the middle pane, and the Refs panel on the right in Library mode listing three entries, each with its author and year, title, how many notes cite it, and Insert, Copy key, PDF and DOI or URL buttons">
+	<img src="images/citations-library.png" alt="Clew with a note in live edit whose citations read as chips — (Knuth 1984), Lamport 1994 — a PDF open in the middle pane, and the Refs panel on the right in Library mode listing three entries, each with its author and year, title, how many notes cite it, and Insert, Copy key, PDF and DOI or URL buttons">
 	<figcaption>The Refs panel's Library: every entry in the vault's
 	<code>.bib</code> files, who cites it, and what you can do with it.</figcaption>
 </figure>
@@ -429,11 +429,20 @@ file in the vault, always available:
 </ul>
 
 <p>
-In live edit a citation is a chip reading <em>Author Year</em>: click it to
-open the Library at its entry, hover it to see the reference — formatted
-in the vault's style when the vault names a bibliography, else its
-author, year and title from the <code>.bib</code> — and
-<kbd>⌥</kbd>-click it to edit. The same hover works on a citation in
+In live edit a citation is a chip reading what reading mode shows for it,
+in the vault's style — <em>Akerlof and Kranton (2000)</em>, <em>(see
+Smith et al. 2001, p. 7)</em>, <em>[1,3]</em> in a numeric style. Until
+that text arrives, a moment after the note opens, or where there is no
+bibliography to format from, the chip reads a short author-and-year
+label; a key no <code>.bib</code> defines is shown in red. Click a chip
+to open the Library at its entry, hover it to see the reference —
+formatted in the vault's style when the vault names a bibliography, else
+its author, year and title from the <code>.bib</code> — whose
+<strong>Show in Library</strong> button does what the click does
+(<kbd>⌘</kbd>-click it to open the entry's PDF, if it has one), and
+<kbd>⌥</kbd>-click the chip to edit it. (In 0.12.0 the chip reads a
+plain <em>Author Year</em>, and the hover's button does nothing for a
+citation.) The same hover works on a citation in
 reading mode. The <a href="graph-view.html">graph</a>'s
 <strong>References</strong> switch adds one square node per cited work,
 joined to every note that cites it; click one to open its entry.
