@@ -196,9 +196,9 @@ toolbar</a>. Changes apply to open notes at once.</p>
 	<code>never</code>). View&nbsp;→&nbsp;Editor Toolbar toggles it and
 	remembers which of the first two it was
 	(<code>editorToolbarPrev</code>). It governs the formatting toolbar
-	only: the three mode buttons show in every mode whatever it says,
-	alone in a slim bar where the toolbar is hidden. (In 0.12.0 source
-	mode with the toolbar hidden had no mode buttons.)</dd>
+	only: the mode switch sits in each pane's tab strip whatever it says.
+	(In 0.12.0 the switch was part of the toolbar, and source mode with the
+	toolbar hidden had none.)</dd>
 	<dt>Selection bubble over selected text</dt>
 	<dd>On by default (<code>selectionBubble</code>).</dd>
 	<dt>// menu: type // for the Format menu</dt>
@@ -208,7 +208,8 @@ toolbar</a>. Changes apply to open notes at once.</p>
 	<dt>Groups, in order</dt>
 	<dd>Tick the groups to show and order them with ▲▼; <em>Reset</em>
 	restores the default (<code>editorToolbarGroups</code>, null meaning
-	the default). The mode switch is always shown, last.</dd>
+	the default). The mode switch is not one of the groups: it is in the
+	tab strip.</dd>
 </dl>
 
 <h3 id="diary">Diary</h3>
