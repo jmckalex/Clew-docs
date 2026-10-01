@@ -1,16 +1,26 @@
-# Handover — 2026-09-30 (resumed after a reboot: site LIVE, serving 0.11.1; tree clean; everything committed is deployed; no remote)
+# Handover — 2026-10-01 (0.12.0 merged into main and staged, deploy awaiting the owner; site LIVE, still serving 0.11.1; remote: github.com/jmckalex/Clew-docs)
 
-**Release 0.12.0 is PREPARED on branch `release-0.12.0`** (3 commits over
-`main` at `0839d61`: the 20 markers removed, the version in every place,
-the landing page — kanban.jpg retaken with 4 columns, tabbing, PDFs and
-the padlock). NOT merged, NOT deployed. On Clew-boss's "release done":
-confirm the five file names in `../Clew-app/out/`, merge the branch into
-`main` (rebase it first if `main` has moved), `make stage-downloads`,
-`make check-links` (clean once staged), then — versions and downloads are
-the OWNER's call, so confirm with them directly — `make sync-downloads`
-first, then `make sync`, and verify live. Its worktree lived in
-`/tmp/…/scratchpad/rel012`; if that is gone, `git worktree prune` and
-work on the branch directly.
+**Release 0.12.0 is MERGED into `main` and STAGED, not deployed.** Clew-boss
+said "release done" (Clew-app `9268aa3`; files verified in `out/`); the
+`release-0.12.0` commits (the 20 markers removed, the version in every
+place, the landing page — kanban.jpg with 4 columns, tabbing, PDFs, the
+padlock) were rebased onto the scrubbed `main` and fast-forwarded in, and
+`make stage-downloads` copied the five 0.12.0 files (byte-identical to
+`out/`); `make check-links` is clean. Still to do, on the OWNER's direct
+go (versions and downloads are theirs): `make sync-downloads` first, then
+`make sync`, then verify live — 0.12.0 everywhere, the five files 200 at
+their sizes, no "0.11.1" left in the manual's prose.
+
+**The repo is on GitHub**: `origin` = https://github.com/jmckalex/Clew-docs
+(public; homepage clew-app.com), `main` only — `release-0.12.0` and
+`feat/live-edit` stay local. Before the first push the history was
+rewritten at the owner's direct choice ("scrub, then push"): every
+`Claude-Session:` trailer removed from the messages, and HANDOVER's
+root/key-file aside removed from every version. The pre-scrub `main` is
+the local branch `backup/pre-scrub` (and `refs/original/`); never push
+either. **Pushing needs the owner's explicit OK, relayed by Clew-boss or
+given directly.** Do not put credentials, login accounts or key names in
+tracked files — this repository is public.
 
 **Resume here.** Nothing else is in flight. Wait for Clew-boss's next docs
 notice (base hash `29fa2ae`; the PDF unification is complete — all four
@@ -29,7 +39,7 @@ rewritten each session; keep it short and current.
 
 ## 0. Where things stand
 
-- Branch `main`, clean, **no git remote** (nothing to push). The manual
+- Branch `main`, clean, remote `origin` on GitHub (public). The manual
   reflects Clew-app up to **`29fa2ae`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
@@ -186,8 +196,8 @@ stay with the owner.
     a `?v=` on every page's `<script>`.
 11. `callouts.html` (and `excalidraw.html`) have no Reference table,
     against CLAUDE.md's "no exceptions".
-12. **No git remote** for this repo — ~50k words of manual on one
-    machine. (Clew-app and Clew-iOS have theirs.)
+12. The repository is now public on GitHub (2026-10-01); what is
+    tracked is published, including HANDOVER and the commit messages.
 
 ## 5. Verification kit
 
