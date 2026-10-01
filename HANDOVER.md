@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`1b98e07`** — the base hash.
+  manual reflects Clew-app up to **`3ef9c4f`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -21,14 +21,15 @@ names.
   unpushed** — pushing needs the owner's explicit OK (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, eleven
+  the version or a marker to turn into plain prose. Markers so far, twelve
   in six files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
   (the Window menu, `5119d93`); `navigation.html` sentence and table row
   for ⌘1–⌘9 (`a3bb88c`); two rows in
   `settings-and-hotkeys.html#default-hotkeys`; the citation chip
   (`f17c531`) in `citations.html#library` and `live-edit.html`; Open in
   Default App (`1b98e07`) — `vaults-and-files.html` right-click sentence
-  and Reference row, and two in `links-and-embeds.html#external-apps`. Then the version in its
+  and Reference row, and two in `links-and-embeds.html#external-apps`;
+  a `.bib` edit reaching reading mode (`a1d8de0`) in `citations.html`. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
@@ -103,23 +104,27 @@ Rewrite when upstream changes:
 6. **PDF via LaTeX and Clew fences**: when the jmarkdown unknown-lexer
    fallback lands, rewrite `export.html#troubleshooting`'s entry, the
    export caution's pointer, and `tabbing.html`'s caution.
-7. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
+7. **An unknown citation key under a numeric style** prints
+   "[undefined]" in reading mode (an engine issue on the jmarkdown
+   list); `citations.html` states it as a current rough edge — remove
+   that clause when the engine is fixed.
+8. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
 
 Tidy-ups:
-8. CLAUDE.md is stale in two places: the version appears in more than
+9. CLAUDE.md is stale in two places: the version appears in more than
    two files (list in §0), and `check-links` reports FIVE `downloads/…`
    links when the binaries are not staged.
-9. `callouts.html` and `excalidraw.html` have no Reference table,
+10. `callouts.html` and `excalidraw.html` have no Reference table,
    against CLAUDE.md's "no exceptions".
-10. `site/index.html` says the demo vault exports to "37 pages";
+11. `site/index.html` says the demo vault exports to "37 pages";
     `publishing.html` says "roughly forty".
-11. Social previews can be checked in Facebook's and Twitter's
+12. Social previews can be checked in Facebook's and Twitter's
     debuggers; `make og-card` must run on a Mac (Avenir Next).
-12. The old, unserved copy on the previous droplet (`do`) can be
+13. The old, unserved copy on the previous droplet (`do`) can be
     deleted.
-13. Local branches: `backup/pre-scrub` (the history before the public
+14. Local branches: `backup/pre-scrub` (the history before the public
     push — **never push it**), `release-0.12.0` and `feat/live-edit`
     (both merged). Delete at the owner's leisure.
 
