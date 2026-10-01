@@ -25,11 +25,9 @@ given directly.** Do not put credentials, login accounts or key names in
 tracked files — this repository is public.
 
 **Resume here.** Nothing else is in flight. Wait for Clew-boss's next docs
-notice (base hash `29fa2ae`; the PDF unification is complete — all four
-phases documented). The 0.11.2 release — the version bump and
-the 20 release markers in §4 item 1 — is ON HOLD until the owner's
-current projects are done; do not start it until Clew-boss says the
-release is done. Standing rules for working with Clew-boss (report every
+notice (base hash `5119d93`). 0.12.0 is released and live; the next
+release starts its markers afresh (§4 item 1) and is not scheduled — do
+not bump the site until Clew-boss says a release is done. Standing rules for working with Clew-boss (report every
 finished task; what it may approve) are in this project's memory and in
 §3. Session scratch (`/private/tmp/…/scratchpad`) does not survive the
 reboot: the screenshot recipes that mattered are in §5.
@@ -42,7 +40,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, remote `origin` on GitHub (public). The manual
-  reflects Clew-app up to **`29fa2ae`** (after the 0.11.2 version commit `08299a0` — built, not yet released: the owner said "not now"; do NOT bump the site until Clew-boss says the release is done) — the base hash for the next
+  reflects Clew-app up to **`5119d93`** (0.12.0 = Clew-app `9268aa3`, live) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -149,17 +147,14 @@ stay with the owner.
 
 ## 4. Open items
 
-1. **At the next release, remove the four "In 0.11.1" callouts** — `vaults-and-files.html#trust` (no guard),
-   `canvas.html#interaction-model` (the Esc fix, `7a0cb6f`),
-   `attachments-and-files.html#annotating` (annotations flushed when the
-   viewer goes, `1956d89`) and `maps.html#distance` (the measuring tool,
-   `693c4fe`) — turn the six "(In 0.11.1 …)" / "(On the
-   desktop this arrives after 0.11.1 …)" parentheses into plain
-   statements (live-edit ×2, editing, attachments ×2, canvas ×2,
-   tasks-and-kanban, tabbing, panels, vaults-and-files ×2, properties ×2),
-   plus the `properties.html#meta-bind` Caution, and bump the version —
-   20 markers in all: 5 callouts, 15 parentheses (attachments now ×3). The next release is **0.11.2**: grep the manual for
-   `0.11.1` — every hit is either the version or one of these.
+1. **At the next release** (after 0.12.0): grep the manual for
+   `0.12.0` — every hit is either the version or a release marker to turn
+   into a plain statement. Markers so far: `vaults-and-files.html#windows`
+   "(Not in 0.12.0.)" (the Window menu, Clew-app `5119d93`). Then the
+   version in its five places plus the README, the downloads, and the
+   landing page (still owed: a live-edit section — a design question with
+   the owner). The 0.12.0 release did this for twenty 0.11.1 markers:
+   prepare it on a branch in its own worktree so `main` stays deployable.
 2. **CLAUDE.md is out of date in two places:** the version appears in
    five files, not two (Makefile, `site/index.html`,
    `site/manual/index.html`, `nav.js`, `getting-started.html`); and
