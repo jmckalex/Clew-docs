@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`63c5ade`** — the base hash.
+  manual reflects Clew-app up to **`95750a5`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -21,7 +21,7 @@ names.
   unpushed** — pushing needs the owner's explicit OK (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, thirteen
+  the version or a marker to turn into plain prose. Markers so far, fourteen
   in six files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
   (the Window menu, `5119d93`); `navigation.html` sentence and table row
   for ⌘1–⌘9 (`a3bb88c`); two rows in
@@ -30,7 +30,8 @@ names.
   Default App (`1b98e07`) — `vaults-and-files.html` right-click sentence
   and Reference row, and two in `links-and-embeds.html#external-apps`;
   a `.bib` edit reaching reading mode (`a1d8de0`) and `\fullcite` in live
-  edit (`f504e57`), both in `citations.html`. Then the version in its
+  edit (`f504e57`), both in `citations.html`; live-edit callouts drawn
+  as reading mode (`95750a5`) in `live-edit.html#lines`. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
@@ -119,13 +120,16 @@ Tidy-ups:
    links when the binaries are not staged.
 10. `callouts.html` and `excalidraw.html` have no Reference table,
    against CLAUDE.md's "no exceptions".
-11. `site/index.html` says the demo vault exports to "37 pages";
+11. `math.jpg` (landing page and math chapter) shows the Note callout's
+    title in GitHub's blue (#4493f8); since `95750a5` it is #5b8def. Too
+    slight to retake alone — fold it into the next retake of that image.
+12. `site/index.html` says the demo vault exports to "37 pages";
     `publishing.html` says "roughly forty".
-12. Social previews can be checked in Facebook's and Twitter's
+13. Social previews can be checked in Facebook's and Twitter's
     debuggers; `make og-card` must run on a Mac (Avenir Next).
-13. The old, unserved copy on the previous droplet (`do`) can be
+14. The old, unserved copy on the previous droplet (`do`) can be
     deleted.
-14. Local branches: `backup/pre-scrub` (the history before the public
+15. Local branches: `backup/pre-scrub` (the history before the public
     push — **never push it**), `release-0.12.0` and `feat/live-edit`
     (both merged). Delete at the owner's leisure.
 
