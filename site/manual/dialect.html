@@ -121,19 +121,21 @@ already bold here, and a double asterisk is something stronger still.
 </p>
 
 <p>
-The italic form is only partly careful about slashes that are not
-emphasis. An italic span needs a closing slash and cannot contain
-<code>.</code>, <code>?</code>, <code>!</code> or another
-<code>/</code> — so a lone mid-word slash like <code>miles/hour</code>
-survives, but <code>/usr/bin</code> renders as an italicised
-<em>usr</em>, and two slashes in one line can pair up unexpectedly.
-Escape a literal slash as <code>\/</code> where it matters. A bare web
-address in prose is the commonest casualty, for now: <code>see
-http://host/a/b/c/</code> comes out as http:/<em>host</em>a<em>b</em>c/,
-its slashes eaten in pairs, so write it as <code>&lt;http://host/a/b/c/&gt;</code>,
-which also makes it a link, or in backticks. The editor
-reads slashes by the same rule, in source mode and live edit, so what it
-shows in italics is what will render in italics.
+A slash starts italics only at the start of a word and ends them only
+at the end of one, so a slash that belongs to something else stays a
+slash: <code>/italic/</code>, <code>(/aside/)</code> and
+<code>"/quoted/"</code> are italic, while <code>and/or</code>,
+<code>1/2/3</code>, <code>/usr/local/bin/</code>, <code>~/notes/</code>,
+<code>./src/</code> and <code>C:/Users/x/</code> stay as written. Bare
+web and email addresses — <code>https://…</code>, <code>ftp://…</code>,
+<code>www.…</code>, <code>name@example.org</code> — become links. One
+limit: a single path segment with a slash either side, as in <code>see
+/tmp/ here</code>, still reads as italics; write <code>\/tmp/</code> to
+keep it literal. The editor reads slashes by the same rule, in source
+mode and live edit, so what it shows in italics is what will render in
+italics. (0.12.0 read slashes more eagerly — <code>/usr/bin</code>
+became an italic <em>usr</em> and a bare web address lost its slashes in
+pairs — and linked no bare addresses.)
 </p>
 
 <h3>Highlights and strikethrough</h3>

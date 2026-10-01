@@ -141,9 +141,12 @@ and <code>@begin(…)</code>/<code>@end(…)</code> environments fold away,
 which keeps a note full of large TikZ pictures or long proofs
 navigable. The scanner is careful about context — a wikilink inside a
 code fence or a <code>#word</code> inside a math span never lights up —
-and it reads slashes exactly as the engine does, so <code>/usr/bin</code>
-shows an italic <em>usr</em> here because that is how it will render.
-Write <code>\/usr\/bin</code> to keep the slashes.
+and it reads slashes exactly as the engine does: a slash opens italics
+only at the start of a word, so <code>and/or</code>,
+<code>/usr/bin</code> and a web address stay as written, and what the
+editor shows in italics is what will render in italics (see
+<a href="dialect.html">the dialect</a>; in 0.12.0 <code>/usr/bin</code>
+read as an italic <em>usr</em>).
 </p>
 
 <figure class="shot">
