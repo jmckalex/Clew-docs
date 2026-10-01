@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`096f129`** — the base hash.
+  manual reflects Clew-app up to **`80b8b44`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -130,10 +130,19 @@ Tidy-ups:
 11. `math.jpg` (landing page and math chapter) shows the Note callout's
     title in GitHub's blue (#4493f8); since `95750a5` it is #5b8def. Too
     slight to retake alone — fold it into the next retake of that image.
-12. **Source-mode screenshots lack the slim mode bar** shown since
-    `b0fe140` (cosmetic): `editor-split.png`, `editor-editing.png`,
-    `wikilink-completion.png`, `live-preview-pane.png`, `fence-split.png`.
-    Retake when one is retaken for another reason.
+12. **Screenshots predate the tab-strip mode switch** (`80b8b44`; the
+    slim bar is gone, the switch left the toolbar). Showing the OLD place:
+    the toolbar with the switch at its end — `live-edit`,
+    `live-edit-toolbar`, `live-edit-table`, `live-edit-slash`,
+    `link-preview`, `live-preview-pane`, `crossref-preview`,
+    `pdf-annotations`, `sidenotes-live`, `shell-panel`; the slim bar —
+    `sidenotes-reading`, `kanban-board`, `tabbing`; a split's live pane
+    WITHOUT its toolbar (the bug `80b8b44` fixed) — `citations-library`.
+    Every older shot simply lacks the switch in its tab strip (cosmetic).
+    A retake pass is Clew-boss's call on ordering (asked 2026-10-02);
+    recipes: `kanban-board` and `citations-library` in Clew-app's smoke
+    kit, `tabbing` in §5, the rest to rebuild from the scenarios that
+    produced them.
 13. `site/index.html` says the demo vault exports to "37 pages";
     `publishing.html` says "roughly forty".
 14. Social previews can be checked in Facebook's and Twitter's
