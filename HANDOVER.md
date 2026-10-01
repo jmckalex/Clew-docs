@@ -1,15 +1,17 @@
-# Handover — 2026-10-01 (0.12.0 merged into main and staged, deploy awaiting the owner; site LIVE, still serving 0.11.1; remote: github.com/jmckalex/Clew-docs)
+# Handover — 2026-10-01 (site LIVE, serving 0.12.0; tree clean; remote: github.com/jmckalex/Clew-docs)
 
-**Release 0.12.0 is MERGED into `main` and STAGED, not deployed.** Clew-boss
+**Release 0.12.0 is LIVE** (deployed 2026-10-01 on the owner's direct go:
+`make sync-downloads`, then `make sync`; verified — landing 0.12.0 ×12 and
+no 0.11.1, the five files 200 at their exact sizes, no 0.11.1 left in the
+manual's prose, the sidebar badge v0.12.0, dry-run clean). Returning
+visitors may see the old v0.11.1 badge for up to a week: `nav.js` is
+cached 7 days (§4 item 10). How it got there: Clew-boss
 said "release done" (Clew-app `9268aa3`; files verified in `out/`); the
 `release-0.12.0` commits (the 20 markers removed, the version in every
 place, the landing page — kanban.jpg with 4 columns, tabbing, PDFs, the
 padlock) were rebased onto the scrubbed `main` and fast-forwarded in, and
 `make stage-downloads` copied the five 0.12.0 files (byte-identical to
-`out/`); `make check-links` is clean. Still to do, on the OWNER's direct
-go (versions and downloads are theirs): `make sync-downloads` first, then
-`make sync`, then verify live — 0.12.0 everywhere, the five files 200 at
-their sizes, no "0.11.1" left in the manual's prose.
+`out/`); `make check-links` is clean.
 
 **The repo is on GitHub**: `origin` = https://github.com/jmckalex/Clew-docs
 (public; homepage clew-app.com), `main` only — `release-0.12.0` and
