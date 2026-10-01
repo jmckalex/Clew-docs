@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`3ef9c4f`** — the base hash.
+  manual reflects Clew-app up to **`63c5ade`** — the base hash. **Committed but NOT deployed:** `342615a` (`\fullcite` in live edit) — that notice said "No deploy"; awaiting Clew-boss's word, so `make dry-run` lists `manual/citations.html` until then.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -21,7 +21,7 @@ names.
   unpushed** — pushing needs the owner's explicit OK (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, twelve
+  the version or a marker to turn into plain prose. Markers so far, thirteen
   in six files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
   (the Window menu, `5119d93`); `navigation.html` sentence and table row
   for ⌘1–⌘9 (`a3bb88c`); two rows in
@@ -29,7 +29,8 @@ names.
   (`f17c531`) in `citations.html#library` and `live-edit.html`; Open in
   Default App (`1b98e07`) — `vaults-and-files.html` right-click sentence
   and Reference row, and two in `links-and-embeds.html#external-apps`;
-  a `.bib` edit reaching reading mode (`a1d8de0`) in `citations.html`. Then the version in its
+  a `.bib` edit reaching reading mode (`a1d8de0`) and `\fullcite` in live
+  edit (`f504e57`), both in `citations.html`. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
