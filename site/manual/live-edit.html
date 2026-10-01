@@ -134,7 +134,13 @@ becomes a chip reading the citation exactly as reading mode formats it
 <em>Author Year</em>); a <code>{{variable}}</code>, a
 <code>@label[…]</code>, <code>:today</code> and a <code>^block-id</code>
 become small chips; an <code>@ref[…]</code> shows the number it will print. A <code>:TeX[…]</code> span is shown dimmed — it
-renders only in a LaTeX export.
+renders only in a LaTeX export. The bracket of a directive the engine
+takes literally — <code>@reveal[…]</code>, <code>@image[…]</code>,
+<code>@label[…]</code> and <code>@ref[…]</code>, the figure and
+<code>TeX</code> environments — reads exactly as written while the cursor
+is in it, so every slash of a URL stays a slash; a directive whose text
+the engine formats, such as <code>@note[…]</code>, still formats. (In
+0.12.0 a URL there lost its slashes to italics while you edited it.)
 </p>
 
 <p>
