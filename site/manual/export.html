@@ -238,7 +238,11 @@ since it too could carry code.
 	<em>preview</em> configuration, and single-note exports do not load
 	them. Concretely: inline <code>[[wikilinks]]</code> are not turned
 	into links (they come out as written), <code>![[…]]</code> embeds are
-	not expanded, and the <code>```mermaid</code>, <code>```leaflet</code>,
+	not expanded, callouts come out as ordinary quotes with the
+	<code>[!type]</code> written out — only GitHub's five upper-case
+	alerts, <code>&gt; [!NOTE]</code> to <code>&gt; [!CAUTION]</code>,
+	become boxes, without a custom title or folding — and the
+	<code>```mermaid</code>, <code>```leaflet</code>,
 	<code>```query</code> and <code>```tabbing</code> fences render as plain
 	code blocks (a <code>@begin(tabbing)</code> environment loses its
 	<a href="tabbing.html">tab commands</a>) — and in a PDF via LaTeX, such
