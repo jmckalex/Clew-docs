@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`a3bb88c`** — the base hash.
+  manual reflects Clew-app up to **`f17c531`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -21,11 +21,12 @@ names.
   unpushed** — pushing needs the owner's explicit OK (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, five
-  in three files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
+  the version or a marker to turn into plain prose. Markers so far, seven
+  in five files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
   (the Window menu, `5119d93`); `navigation.html` sentence and table row
   for ⌘1–⌘9 (`a3bb88c`); two rows in
-  `settings-and-hotkeys.html#default-hotkeys`. Then the version in its
+  `settings-and-hotkeys.html#default-hotkeys`; the citation chip
+  (`f17c531`) in `citations.html#library` and `live-edit.html`. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
