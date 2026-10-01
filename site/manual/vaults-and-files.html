@@ -206,7 +206,10 @@ clicking a <code>.canvas</code> file opens the
 
 <p>
 Right-clicking brings up the file operations. On a file: open in a new
-tab, in the current tab, or to the right in a split. On anything: new
+tab, in the current tab, or to the right in a split — or, with
+<strong>Open in Default App</strong>, in the application your system uses
+for its type (<a href="links-and-embeds.html#external-apps">programs and
+scripts are refused</a>; not in 0.12.0). On anything: new
 note, new folder, rename, reveal in Finder (or your platform's file
 manager), and delete — deletions go to the system Trash, not into the
 void, so a slip is recoverable the usual way.
@@ -608,6 +611,11 @@ vault's trust, and a note's header cannot set it.
 		<td>Right-click → Reveal in Finder</td>
 		<td>File manager equivalent on Windows/Linux; on the iPad, find the
 		vault in the Files app instead.</td></tr>
+	<tr><td>Open in another app</td>
+		<td>Right-click a file → Open in Default App</td>
+		<td>The application your system uses for that type; programs and
+		scripts are refused, and a type with none says so (not in
+		0.12.0).</td></tr>
 	<tr><td>Clew's state</td>
 		<td><code>.clew/</code> in the vault root</td>
 		<td>Safe to delete; gitignore it, except what you mean to

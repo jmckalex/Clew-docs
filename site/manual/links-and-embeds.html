@@ -647,6 +647,16 @@ kept elsewhere. Only local paths are accepted; a
 <code>file://</code> URL naming a remote host is refused.
 </p>
 
+<p>
+Either way, a program or a script is never handed over: Clew refuses it
+by name, because opening one could run it, and a note is content — a
+vault someone sent you must not be one click from running something. A
+file type with no application to open it says so in a notice. (In 0.12.0
+that last case fails silently.) The file explorer offers the same
+hand-off for any file in the vault: right-click it and choose
+<strong>Open in Default App</strong> (not in 0.12.0).
+</p>
+
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
 	iPadOS has no "application that owns the type" to hand a file to, so
