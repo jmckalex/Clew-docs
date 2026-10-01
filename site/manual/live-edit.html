@@ -339,7 +339,9 @@ is in a table. The mode switch is not on it: it sits in the
 	<strong>wraps onto a second</strong>, keeping its order; only when two
 	rows are not enough do the lowest-priority groups move into a
 	<strong>…</strong> menu. The table tools never add a row of their own: they
-	fit into the rows there are, or go into <strong>…</strong>. In a very
+	take their place in the rows there are, ahead of undo and redo — which
+	go into <strong>…</strong> first to make room — and go into
+	<strong>…</strong> themselves only when there is still none. In a very
 	short window the toolbar stays on one row.</li>
 	<li><kbd>⌥⇧T</kbd> puts the keyboard in the toolbar; the arrows move
 	in the order you see, <kbd>↑</kbd> and <kbd>↓</kbd> cross to the other
