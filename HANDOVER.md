@@ -9,16 +9,14 @@ names.
 
 ## 0. Resume here
 
-- **In flight: `bbffa4d`** (live-edit.html: the table tools push undo
-  and redo into `…`) is committed but **not deployed** — a manual-only
-  deploy, waiting for Clew-boss's go. Otherwise wait for the next docs
-  notice. The manual reflects Clew-app up to **`80b8b44`** — the base
-  hash.
+- **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
+  manual reflects Clew-app up to **`80b8b44`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
-  left in the prose. Everything committed on `main` up to `af6fdbd` is
-  deployed; `bbffa4d` is not (above).
+  left in the prose. Everything committed on `main` is deployed
+  (`make dry-run` clean; `bbffa4d` went out 2026-10-02 on Clew-boss's
+  go, verified byte-identical).
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. `main` is **ahead of `origin`,
   unpushed** — pushing needs the owner's explicit OK (§1).
@@ -64,7 +62,9 @@ names.
   `shots/README.md` has the command, fixture, env and expected log line
   per image; the retake is: run each, read its `shot-…` line, look,
   copy into `site/manual/images/` (and `site/images/` for the two
-  JPEGs), `make check-links`, deploy with the release.
+  JPEGs), `make check-links`, deploy with the release. **Hold
+  `math.jpg`** until the owner rules on the `#toc` heading links (§4,
+  item 8) — Clew-boss's call, 2026-10-02.
 
 ## 1. Rules (also in this project's memory)
 
@@ -143,9 +143,11 @@ Rewrite when upstream changes:
    `Headings: numeric` the engine wraps each heading in `<a
    href="#toc">` (link purple, underlined) even in a note with no TOC
    (the demo's Math and Theorems — it will show in the retaken
-   `math.jpg`); and opening a note in live edit, then a PDF and a split
-   in the same tick, left live edit undrawn (a RangeError in the
-   sidenotes plugin's measure; `shots/pdf-annotations.js` waits).
+   `math.jpg`). The engine's post-processor has done it since 2025;
+   Clew-boss has put the change to the owner. And opening a note in live
+   edit, then a PDF and a split in the same tick, left live edit undrawn
+   (a RangeError in the sidenotes plugin's measure;
+   `shots/pdf-annotations.js` waits) — going to Clew-app as a bug fix.
 9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
