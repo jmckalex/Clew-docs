@@ -25,7 +25,7 @@ given directly.** Do not put credentials, login accounts or key names in
 tracked files — this repository is public.
 
 **Resume here.** Nothing else is in flight. Wait for Clew-boss's next docs
-notice (base hash `5119d93`). 0.12.0 is released and live; the next
+notice (base hash `a3bb88c`). 0.12.0 is released and live; the next
 release starts its markers afresh (§4 item 1) and is not scheduled — do
 not bump the site until Clew-boss says a release is done. Standing rules for working with Clew-boss (report every
 finished task; what it may approve) are in this project's memory and in
@@ -40,7 +40,7 @@ rewritten each session; keep it short and current.
 ## 0. Where things stand
 
 - Branch `main`, clean, remote `origin` on GitHub (public). The manual
-  reflects Clew-app up to **`5119d93`** (0.12.0 = Clew-app `9268aa3`, live) — the base hash for the next
+  reflects Clew-app up to **`a3bb88c`** (0.12.0 = Clew-app `9268aa3`, live) — the base hash for the next
   docs notice. Everything committed is live (`make dry-run` clean).
 - **Live:** `clew-app.com`, `clew-app.net` and both `www` names resolve
   to `jmck-web` (139.59.191.156). One Let's Encrypt certificate covers
@@ -150,7 +150,10 @@ stay with the owner.
 1. **At the next release** (after 0.12.0): grep the manual for
    `0.12.0` — every hit is either the version or a release marker to turn
    into a plain statement. Markers so far: `vaults-and-files.html#windows`
-   "(Not in 0.12.0.)" (the Window menu, Clew-app `5119d93`). Then the
+   "(Not in 0.12.0.)" (the Window menu, Clew-app `5119d93`); ⌘1–⌘9
+   (`a3bb88c`) — `navigation.html` sentence + table row, and two rows in
+   `settings-and-hotkeys.html#default-hotkeys`, each "(not in 0.12.0)".
+   Then the
    version in its five places plus the README, the downloads, and the
    landing page (still owed: a live-edit section — a design question with
    the owner). The 0.12.0 release did this for twenty 0.11.1 markers:
