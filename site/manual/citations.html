@@ -255,7 +255,14 @@ Price 1973, p.&nbsp;17) — the point generalizes."
 	prose can continue after it on the same line, and it carries a
 	<code>fullcite</code> class you can target when
 	<a href="theming.html#app-vs-notes">styling rendered notes</a>, to give
-	embedded references a look of their own.</dd>
+	embedded references a look of their own. In live edit it shows the
+	whole entry in place, formatted as in reading mode and marked only by
+	a faint dotted underline; put the cursor in it to edit the command.
+	Until the formatted entry arrives, or with no bibliography, it reads
+	the <code>.bib</code>'s own author, year and title; a key no
+	<code>.bib</code> defines is shown in red, and a numeric style shows
+	the number, as reading mode does. It has no hover card — the entry is
+	already there. (In 0.12.0 it is a chip like any other citation.)</dd>
 	<dt><code>\nocite{key}</code></dt>
 	<dd>Nothing inline, but the entry is added to the bibliography — the
 	standard way to list a work you consulted without citing it in the
@@ -439,7 +446,8 @@ file in the vault, always available:
 </ul>
 
 <p>
-In live edit a citation is a chip reading what reading mode shows for it,
+In live edit a citation — other than a <code>\fullcite</code>, which
+shows its <a href="#commands">whole entry</a> — is a chip reading what reading mode shows for it,
 in the vault's style — <em>Akerlof and Kranton (2000)</em>, <em>(see
 Smith et al. 2001, p. 7)</em>, <em>[1,3]</em> in a numeric style. Until
 that text arrives, a moment after the note opens, or where there is no
