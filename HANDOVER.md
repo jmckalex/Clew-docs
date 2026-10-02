@@ -10,38 +10,26 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`80b8b44`** — the base hash.
+  manual reflects Clew-app up to **`67311b6`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
   left in the prose. Everything committed on `main` is deployed
-  (`make dry-run` clean; `bbffa4d` went out 2026-10-02 on Clew-boss's
-  go, verified byte-identical).
+  (`make dry-run` clean). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
+  then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
+  each verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
   (2026-10-02: Clew-boss relayed "push all", the owner confirmed here);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
-  says a release is done): grep the manual for `0.12.0` — every hit is
-  the version or a marker to turn into plain prose. Markers so far, twenty-five
-  in nine files: `vaults-and-files.html#windows` "(Not in 0.12.0.)"
-  (the Window menu, `5119d93`); `navigation.html` sentence and table row
-  for ⌘1–⌘9 (`a3bb88c`); two rows in
-  `settings-and-hotkeys.html#default-hotkeys`; the citation chip
-  (`f17c531`) in `citations.html#library` and `live-edit.html`; Open in
-  Default App (`1b98e07`) — `vaults-and-files.html` right-click sentence
-  and Reference row, and two in `links-and-embeds.html#external-apps`;
-  a `.bib` edit reaching reading mode (`a1d8de0`) and `\fullcite` in live
-  edit (`f504e57`), both in `citations.html`; live-edit callouts drawn
-  as reading mode (`95750a5`) in `live-edit.html#lines`; a literal
-  directive's bracket (`914c3f8`) and the slim mode bar (`b0fe140`) in
-  `live-edit.html`, and the mode buttons in
-  `settings-and-hotkeys.html#editor-toolbar`; the slash rule and bare
-  links (`0f797eb`) in `dialect.html` and `editing.html`; custom callout
-  types (`096f129`) in `callouts.html#custom` and its Reference row, and
-  `settings-and-hotkeys.html` (the Callouts section, This vault's lists,
-  both reference rows). Then the version in its
+  says a release is done): grep the manual for `0.12.0` — 41 hits in
+  12 files besides the version pages (2026-10-02). Each is a marker: a
+  "(Not in 0.12.0.)" or "(not in 0.12.0)" is deleted; an "(In 0.12.0 …)"
+  parenthesis describing the old behaviour is deleted whole; a Caution
+  titled "In 0.12.0" (export.html's natbib one) is deleted. Read each in
+  place — a few sentences lean on their marker. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
@@ -64,9 +52,9 @@ names.
   `shots/README.md` has the command, fixture, env and expected log line
   per image; the retake is: run each, read its `shot-…` line, look,
   copy into `site/manual/images/` (and `site/images/` for the two
-  JPEGs), `make check-links`, deploy with the release. **Hold
-  `math.jpg`** until the owner rules on the `#toc` heading links (§4,
-  item 8) — Clew-boss's call, 2026-10-02.
+  JPEGs), `make check-links`, deploy with the release. `math.jpg` is no
+  longer held: the `#toc` heading links are fixed upstream (engine
+  a7de8c6), so its retake is an ordinary release-pass item.
 
 ## 1. Rules (also in this project's memory)
 
@@ -141,16 +129,12 @@ Rewrite when upstream changes:
    "[undefined]" in reading mode (an engine issue on the jmarkdown
    list); `citations.html` states it as a current rough edge — remove
    that clause when the engine is fixed.
-8. **Reported to Clew-boss, 2026-10-02, not ours to fix:** with
-   `Headings: numeric` the engine wraps each heading in `<a
-   href="#toc">` (link purple, underlined) even in a note with no TOC
-   (the demo's Math and Theorems — it will show in the retaken
-   `math.jpg`). The engine's post-processor has done it since 2025;
-   Clew-boss has put the change to the owner. And opening a note in live
-   edit, then a PDF and a split in the same tick, left live edit undrawn
-   (a RangeError in the sidenotes plugin's measure;
-   `shots/pdf-annotations.js` waits) — fixed in Clew-app `09aabdf`,
-   verified A/B here: its parent fails 3 of 3, the fix passes 3 of 3.
+8. **New rough edges stated in the manual (2026-10-02, engine
+   a7de8c6)** — rewrite each when the engine fixes it: in LaTeX a
+   callout broken across a page prints grey (`export.html`, the
+   callouts paragraph); a Markdown `![](x.svg)` is missing from a PDF
+   via LaTeX (`links-and-embeds.html#image-directive`, last SVG
+   paragraph). Both are on the engine's list per Clew-boss.
 9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
