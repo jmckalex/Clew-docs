@@ -10,7 +10,9 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`03bb33a`** — the base hash.
+  manual reflects Clew-app up to **`6623303`** — the base hash. Coming:
+  frame-bridge phases 2–4 (Clew's own app address, then apps in notes via
+  `@app[…]`) — an "Apps in notes" chapter after phase 4, per Clew-boss.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -19,19 +21,22 @@ names.
   then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
   then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), then
   the screenshot lightbox (`c2d201a`, 37 files: every manual page, the
-  landing page, `manual/lightbox.{js,css}` — the owner's direct go), each
-  verified byte-identical live.
+  landing page, `manual/lightbox.{js,css}` — the owner's direct go), then
+  the new chapter *Trusting a vault* (`0b78593`–`9534701`, 38 files — the
+  owner's direct go), each verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
   (2026-10-02: Clew-boss relayed "push all", the owner confirmed here);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
-  says a release is done): grep the manual for `0.12.0` — 47 hits in
-  12 files besides the version pages (2026-10-02). Each is a marker: a
+  says a release is done): grep the manual for `0.12.0` — 64 hits in
+  17 files besides the version pages (2026-10-03). Each is a marker: a
   "(Not in 0.12.0.)" or "(not in 0.12.0)" is deleted; an "(In 0.12.0 …)"
   parenthesis describing the old behaviour is deleted whole; a Caution
-  titled "In 0.12.0" (export.html's natbib one) is deleted. Read each in
+  titled "In 0.12.0" (export.html's natbib one, trusting-a-vault.html's
+  opening one) is deleted — and then reread that chapter's lead, which
+  stands without it. Read each in
   place — a few sentences lean on their marker. Then the version in its
   places (Makefile `VERSION`, `site/index.html` lead, cards and footer,
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
@@ -133,9 +138,9 @@ Rewrite when upstream changes:
 8. (Retired 2026-10-02: the two LaTeX rough edges — callouts across a
    page, a Markdown `.svg` — were fixed in engine aa4ce1e and the
    manual says so.)
-9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
-   code only; the full vault-trust design (Clew-app
-   `docs/dev/frame-bridge.md` §4) will change it.
+9. (Done 2026-10-03: vault trust has its own chapter,
+   `trusting-a-vault.html`, from Clew-app `6623303`; the vaults chapter's
+   #trust section points to it.)
 
 Tidy-ups:
 10. CLAUDE.md is stale in two places: the version appears in more than
