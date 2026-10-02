@@ -190,11 +190,12 @@ about that:
 	<li><strong>Canvas embeds.</strong> A <code>![[board.canvas]]</code>
 	embed appears as a labelled placeholder box, not a live scene — the
 	canvas renderer is part of the app, not of the export runtime.</li>
-	<li><strong>Plugins.</strong> Preview-surface plugin scripts are an
-	app feature and are not injected into exported pages. (Engine-surface
-	plugins, by contrast, <em>do</em> take effect, since the pages are
-	rendered by the same configured engine — any custom syntax they add
-	renders into the exported HTML.)</li>
+	<li><strong>Plugins' app surfaces.</strong> They add commands and
+	panels to Clew itself, so they have nothing to do on a website. A
+	plugin's preview surface does ship (below), and its engine surface
+	has already taken effect, since the pages are rendered by the same
+	configured engine — any custom syntax it adds renders into the
+	exported HTML.</li>
 	<li><strong>Editing, search, backlink panels, the graph</strong> —
 	the app around the notes, in general.</li>
 </ul>
@@ -291,7 +292,8 @@ management step — the vault is the CMS.
 	<tr><td>Canvas embeds</td>
 		<td>A labelled placeholder box.</td></tr>
 	<tr><td>Preview-surface plugins</td>
-		<td>Not included.</td></tr>
+		<td>Enabled ones shipped in <code>assets/plugins/&lt;id&gt;/</code>
+		and loaded on every page.</td></tr>
 	<tr><td><code>.clew/</code>, <code>.obsidian/</code>, <code>.git/</code>, dotfiles</td>
 		<td>Skipped entirely.</td></tr>
 </table>
