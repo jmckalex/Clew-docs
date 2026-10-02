@@ -17,7 +17,9 @@ names.
   left in the prose. Everything committed on `main` is deployed
   (`make dry-run` clean). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
   then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
-  then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), each
+  then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), then
+  the screenshot lightbox (`c2d201a`, 37 files: every manual page, the
+  landing page, `manual/lightbox.{js,css}` — the owner's direct go), each
   verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
@@ -107,11 +109,9 @@ without a measurement in the simulator.
 ## 4. Open items
 
 Owner decisions:
-1. **`nav.js` is served with a 7-day cache** (pages are `no-cache`), so
-   a new chapter or a release's version badge reaches a returning
-   visitor's sidebar up to a week late. Fix: a `manual/nav.js` location
-   in the nginx config (mind the `add_header` gotcha) or a `?v=` on every
-   page's `<script>`.
+1. (Resolved 2026-10-02: every local CSS/JS URL carries `?v=<hash>`
+   — `make stamp`, checked by `check-links` — so a changed `nav.js`
+   reaches returning readers at once despite nginx's 7-day expiry.)
 2. `www.clew-app.com` serves the site rather than 301 to the apex
    (`og:url` is canonical to the apex).
 3. The landing page has **no live-edit section** — Clew-boss has put it
@@ -188,5 +188,9 @@ Tidy-ups:
   repeats files from `site/images/`; `check-links` enforces it).
 - The app is the arbiter of fact; iPad behaviour from `../Clew-iOS`.
 - Re-run `make og-tags` after adding a chapter.
+- **Screenshots zoom:** wrap every new one in `<a class="zoom"
+  href="images/…">` (README, "Screenshots zoom"); decoration is never
+  wrapped. **After editing `manual.css`, `nav.js` or `lightbox.*`, run
+  `make stamp`** — `check-links` fails on a stale stamp.
 - Stage explicit paths; split a file's hunks by topic when two changes
   share it (`git update-index --cacheinfo` with a hand-built blob).
