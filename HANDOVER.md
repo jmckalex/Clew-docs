@@ -1,4 +1,4 @@
-# Handover — 2026-10-02 (site LIVE, serving 0.12.0; `main` ahead of `origin`, unpushed)
+# Handover — 2026-10-02 (site LIVE, serving 0.12.0; `main` pushed through `d4643f9`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -18,8 +18,10 @@ names.
   (`make dry-run` clean; `bbffa4d` went out 2026-10-02 on Clew-boss's
   go, verified byte-identical).
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
-  homepage clew-app.com), `main` only. `main` is **ahead of `origin`,
-  unpushed** — pushing needs the owner's explicit OK (§1).
+  homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
+  (2026-10-02: Clew-boss relayed "push all", the owner confirmed here);
+  anything later is unpushed — every push needs the owner's explicit OK
+  (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — every hit is
   the version or a marker to turn into plain prose. Markers so far, twenty-five
