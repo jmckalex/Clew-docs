@@ -57,6 +57,8 @@ exception: it is one file in two places.
 | `citations-library.png` | `../Clew-app/smoke/citations-scenario.js` (its last frame) | `node smoke/make-citations-vault.mjs $S/ci` (`ci`) | — | `smoke-ci: …` through `pandoc cited-in=[2,1,2]`; the split's live pane shows its toolbar |
 | `trust-prompt.png` | `trust-prompt.js` | `shots/make-trust-vault.sh $S/field-notes` (`field-notes`) | `CLEW_SMOKE_TRUST_PROMPT=1` | `shot-trust-prompt: title="Trust this vault?" details-open=true items=6` |
 | `trust-restricted.png` | `trust-restricted.js` | as above, made afresh (`field-notes`) | `CLEW_SMOKE_FRAME_SCRIPT=$D/trust-restricted-frame.js CLEW_SMOKE_FRAME_MATCH=Budget` | `shot-trust-restricted: indicator="Restricted · Trust…"`, and the frame's `markers=` naming the script and the inline handler |
+| `app-prompt.png` | `app-prompt.js` | the demo vault, KNOWN to fresh user data (`clew-settings.json` `{"recentVaults": [<path>]}`), so trusted | — | `shot-app-prompt: ["Allow “Flashcards”?", …]` |
+| `app-flashcards.png` | `app-running.js` | as above, made afresh | `CLEW_SMOKE_FRAME_SCRIPT=$D/app-running-frame.js CLEW_SMOKE_FRAME_MATCH=clew-frame` | `shot-app-running: "What does an app run on? Show answer …"` |
 | landing `site/images/kanban.jpg` | `kanban-landing.js` | a copy of `study-vault` | — | none; then 1400 wide, JPEG (below) |
 | `math.jpg`, landing and manual | `math.js` | demo vault | — | none; then 1400 wide, JPEG (below) |
 
