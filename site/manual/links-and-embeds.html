@@ -492,6 +492,17 @@ extracted from the first frame if <code>ffmpeg</code> is available.
 </p>
 
 <p>
+An <code>.svg</code> is a picture LaTeX cannot read, so for a LaTeX
+export <code>@image</code> takes a <code>.pdf</code> or <code>.png</code>
+of the same name from beside it. With neither there, the image becomes a
+link to the <code>.svg</code> file and the document still compiles. (In
+0.12.0 it is simply missing from a PDF via LaTeX.) The Markdown form does
+not do this yet: an <code>.svg</code> written as
+<code>![alt](diagram.svg)</code> is missing from the PDF, so for print,
+write it with <code>@image</code>.
+</p>
+
+<p>
 None of this replaces anything. A plain <code>![[image.png|300]]</code> and
 a standard Markdown <code>![alt](src)</code> both still work exactly as
 before; reach for <code>@image</code> when you want the extra control, and
