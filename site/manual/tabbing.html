@@ -247,20 +247,15 @@ bar.
 	(see <a href="publishing.html">Publishing</a>).</li>
 </ul>
 
-<div class="callout warn">
-	<span class="callout-title">Caution — not in single-note exports yet</span>
-	An HTML or LaTeX export of a single note runs your own jmarkdown
-	configuration, which does not load Clew's extensions (see
-	<a href="export.html#config-cascade">Exports use your jmarkdown
-	configuration</a>), and tabbing is one of them. A
-	<code>```tabbing</code> fence exports as a code block — one that
-	currently stops a PDF-via-LaTeX compile (see
-	<a href="export.html#troubleshooting">Troubleshooting</a>) — and a
-	<code>@begin(tabbing)</code> environment loses its commands. Tabbing is
-	written to move into the jmarkdown engine itself; until it does, a note
-	that must keep its tabbing is best shared as a
-	<a href="publishing.html">website</a>.
-</div>
+<p>
+A single note's HTML and LaTeX <a href="export.html">exports</a> carry
+tabbing too, and so does PDF via LaTeX: the engine lays it out exactly
+as reading mode does, and the LaTeX is LaTeX's own <code>tabbing</code>
+environment. (Not in 0.12.0, where a <code>```tabbing</code> fence
+exports as a code block that stops a PDF-via-LaTeX compile, and a
+<code>@begin(tabbing)</code> environment loses its commands — share such
+a note as a <a href="publishing.html">website</a> instead.)
+</p>
 
 <h2 id="reference">Reference</h2>
 
@@ -291,8 +286,7 @@ bar.
 	<li><a href="dialect.html">The jmarkdown dialect</a> — the
 	<code>@begin(name)</code> environments tabbing's LaTeX form uses</li>
 	<li><a href="math-and-theorems.html">Math and theorems</a></li>
-	<li><a href="export.html#config-cascade">Exporting notes</a> — why a
-	single-note export does not carry tabbing</li>
+	<li><a href="export.html">Exporting notes</a></li>
 	<li><a href="publishing.html">Publishing a vault as a website</a></li>
 </ul>
 
