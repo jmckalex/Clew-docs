@@ -301,12 +301,30 @@ PDF export needs a TeX installation on your machine — Clew does not
 bundle one, because a TeX distribution is enormous and you likely
 already have one if you want this feature. On macOS, MacTeX is the
 usual choice.
-Clew looks for <code>latexmk</code> first and falls back to
-<code>pdflatex</code>, checking the standard installation directories
-(<code>/Library/TeX/texbin</code>, <code>/usr/local/bin</code>, and
-<code>/opt/homebrew/bin</code>). With <code>latexmk</code> available,
-reruns for cross-references and bibliographies are handled
-automatically, which is why it is preferred.
+Clew looks for <code>latexmk</code> first, in the standard
+installation directories (<code>/Library/TeX/texbin</code>,
+<code>/usr/local/bin</code>, and <code>/opt/homebrew/bin</code>). With
+it, reruns for cross-references and bibliographies are handled
+automatically, which is why it is preferred; without it, Clew runs the
+TeX engine itself.
+</p>
+
+<h3 id="latex-engine">Which TeX engine</h3>
+
+<p>
+Clew also chooses the engine. Left on <em>Automatic</em>, it reads the
+generated <code>.tex</code>: a document that loads <code>fontspec</code>,
+<code>unicode-math</code> or <code>polyglossia</code>, or runs Lua code —
+a <code>\setmainfont</code> in your jmarkdown configuration's LaTeX
+preamble, say — is compiled with <strong>LuaLaTeX</strong>; one that
+needs a XeTeX-only package such as <code>xeCJK</code>, with
+<strong>XeLaTeX</strong>; anything else with <strong>pdfLaTeX</strong>.
+Reading the document catches whatever put the package there — your
+configuration, the vault's, the note's own header. For what it cannot
+see, Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>LaTeX engine (PDF
+via LaTeX export)</em> names one engine for every export. (Not in 0.12.0,
+which always runs pdfLaTeX, so a preamble that loads
+<code>fontspec</code> stops every PDF via LaTeX.)
 </p>
 
 <p>
@@ -332,10 +350,13 @@ Mechanically, a PDF export first writes the intermediate
 so that relative graphics paths resolve — and then compiles it there,
 with the note's own folder on TeX's search paths, so the note's
 <code>.bib</code> is found wherever you save the PDF.
-The compiler runs with a two-minute timeout, in nonstop mode. One
-pragmatic wrinkle: <code>pdflatex</code> exits with a non-zero status on
-mere warnings, so Clew accepts the run as successful whenever the PDF
-actually materialised.
+The compiler runs in nonstop mode with a three-minute timeout (two in
+0.12.0). One pragmatic wrinkle: a TeX engine can exit with a non-zero
+status on mere warnings, so Clew accepts the run whenever it wrote the
+PDF — that run: a PDF an earlier export left at the same path does not
+count (in 0.12.0 it did, and could hide a failure). When there is none,
+the error says which engine ran, why it was chosen, and the first error
+in the compiler's log.
 </p>
 
 <div class="callout tip">
@@ -343,7 +364,9 @@ actually materialised.
 	After a PDF export, the generated <code>.tex</code> (and the
 	compiler's <code>.log</code> and auxiliary files) remain next to the
 	PDF. If a compile fails or the output looks wrong, open the
-	<code>.tex</code> and run <code>latexmk -pdf</code> on it yourself:
+	<code>.tex</code> and run <code>latexmk</code> on it yourself, with
+	<code>-pdf</code>, <code>-lualatex</code> or <code>-xelatex</code> for
+	the engine the export used:
 	you get the full compiler output, and you can fix or restyle the LaTeX
 	directly. Exporting to LaTeX first and compiling by hand is exactly
 	the same pipeline, one step at a time. If you dislike the auxiliary
@@ -353,15 +376,21 @@ actually materialised.
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <dl>
-	<dt>"No TeX toolchain found (latexmk/pdflatex)"</dt>
-	<dd>Clew could not find <code>latexmk</code> or <code>pdflatex</code>
-	in any of the directories listed above. Install MacTeX (or your
+	<dt>"No TeX toolchain found"</dt>
+	<dd>Clew could not find <code>latexmk</code>, or the engine it chose
+	(the message names both), in any of the directories listed above. Install MacTeX (or your
 	platform's TeX distribution) and try again; no restart of Clew should
 	be needed if the tools land in one of the standard locations.</dd>
 
 	<dt>The PDF was not produced</dt>
-	<dd>The LaTeX compile failed hard enough that no PDF appeared. Export
-	the same note as LaTeX and compile it in a terminal — the compiler's
+	<dd>The LaTeX compile failed hard enough that no PDF appeared. The
+	message names the engine that ran, why it was chosen, and the first
+	error in the compiler's log — often enough on its own. A
+	<em>Fatal Package fontspec Error</em> under pdfLaTeX means the
+	document needs a Unicode engine that Automatic could not see (a
+	package of your own that loads <code>fontspec</code>, say) or that
+	Settings names pdfLaTeX: choose LuaLaTeX there. Otherwise export the
+	same note as LaTeX and compile it in a terminal — the compiler's
 	error messages will name the offending line. Common causes are a
 	missing LaTeX package and raw HTML in the note, which has no LaTeX
 	equivalent.</dd>
@@ -434,7 +463,8 @@ actually materialised.
 		<td><em>Export note as PDF (via LaTeX)</em></td>
 		<td>A typeset <code>.pdf</code>; the intermediate <code>.tex</code>
 		and log files remain alongside it.</td>
-		<td><code>latexmk</code> or <code>pdflatex</code> on the machine.</td></tr>
+		<td><code>latexmk</code>, or the TeX engine itself, on the
+		machine.</td></tr>
 </table>
 </div>
 
@@ -452,12 +482,18 @@ actually materialised.
 		the note's metadata header; all engine-native features.</td></tr>
 	<tr><td>TeX search path</td><td><code>/Library/TeX/texbin</code>,
 		<code>/usr/local/bin</code>, <code>/opt/homebrew/bin</code>
-		(<code>latexmk</code> preferred over <code>pdflatex</code>); the same
+		(<code>latexmk</code> preferred over running the engine); the same
 		directories are appended to <code>PATH</code> for every engine
 		process.</td></tr>
-	<tr><td>Compile behaviour</td><td>Nonstop mode, two-minute timeout;
-		accepted as success if the PDF exists even when the compiler
-		returned warnings.</td></tr>
+	<tr><td>TeX engine</td><td>Automatic: LuaLaTeX for
+		<code>fontspec</code>, <code>unicode-math</code>,
+		<code>polyglossia</code> or Lua code, XeLaTeX for XeTeX-only
+		packages, else pdfLaTeX — or as set in Settings (<a
+		href="#latex-engine">above</a>; not in 0.12.0, always
+		pdfLaTeX).</td></tr>
+	<tr><td>Compile behaviour</td><td>Nonstop mode, three-minute timeout;
+		accepted when that run wrote the PDF, even if the compiler returned
+		warnings.</td></tr>
 </table>
 </div>
 
