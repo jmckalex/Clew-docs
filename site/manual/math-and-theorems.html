@@ -215,9 +215,10 @@ the print document resolves them with the real machinery.
 	<code>{id=key}</code> on its opening line (<code>{id=eq:mass}</code> when
 	the key has a colon, which the <code>#</code> form cannot carry), or from
 	an <code>@label[key]</code> inside it. An <code>@label</code> in a
-	heading takes the heading's number; anywhere else — a footnote included,
-	for now — it has none, and a reference to it prints
-	<code>??</code>.</li>
+	heading takes the heading's number, and one in a footnote the
+	footnote's, so <code>@ref</code> to it prints the number the note
+	shows; anywhere else it has none, and a reference to it prints
+	<code>??</code>. (In 0.12.0 a footnote's label has none either.)</li>
 </ul>
 
 <h3 id="crossrefs-live">While you write</h3>
