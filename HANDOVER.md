@@ -147,7 +147,8 @@ Rewrite when upstream changes:
    Clew-boss has put the change to the owner. And opening a note in live
    edit, then a PDF and a split in the same tick, left live edit undrawn
    (a RangeError in the sidenotes plugin's measure;
-   `shots/pdf-annotations.js` waits) — going to Clew-app as a bug fix.
+   `shots/pdf-annotations.js` waits) — fixed in Clew-app `09aabdf`,
+   verified A/B here: its parent fails 3 of 3, the fix passes 3 of 3.
 9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.

@@ -95,9 +95,9 @@ sips -s format jpeg -s formatOptions 86 --resampleWidth 1400 "$S/out.png" --out 
   it opens. The recipe blurs it, or the shot would carry a focus ring
   the mouse never made.
 - `pdf-annotations.js` waits 2.5 s after opening the note before it opens
-  the PDF and splits. Doing all three in one tick left live edit undrawn,
-  with a RangeError from the sidenotes plugin's measure (reported to
-  Clew-boss, 2026-10-02).
+  the PDF and splits. Before Clew-app `09aabdf`, doing all three in one
+  tick left live edit undrawn, with a RangeError from the sidenotes
+  plugin's measure. The wait is harmless after that commit.
 - `math.jpg`: the note has grown since the old shot. It now has numbered
   headings, a Cross-references section, and the Earthrise figure, whose
   black top edge sits at the bottom of the frame. Decide the framing at

@@ -9,9 +9,9 @@
 //      fresh user data: the note in live edit on the left, Paper.pdf split
 //      off to the right, both sidebars closed. The caret at the note's end,
 //      the view at its top, so the properties are drawn, not revealed.
-// The pause before the PDF opens is load-bearing: opening and splitting in
-// the same tick as the note left live edit undrawn (a RangeError from the
-// sidenotes plugin's measure — reported to Clew-boss, 2026-10-02).
+// The pause before the PDF opens: before Clew-app 09aabdf, opening and
+// splitting in the same tick as the note left live edit undrawn (a
+// RangeError from the sidenotes plugin's measure). Harmless after it.
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const { workspaceStore, vaultStore, editorPool } = window.__clew;
 const until = async (test, ms = 15000) => { for (const t0 = Date.now(); Date.now() - t0 < ms; await sleep(50)) if (test()) return true; return false; };
