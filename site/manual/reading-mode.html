@@ -167,25 +167,26 @@ colored callout box:
 </div>
 
 <p>
-Seven types are available: the five GitHub-standard ones —
-<code>[!NOTE]</code>, <code>[!TIP]</code>, <code>[!IMPORTANT]</code>,
-<code>[!WARNING]</code>, <code>[!CAUTION]</code> — plus two jmarkdown
-additions, <code>[!QUESTION]</code> and <code>[!SUGGESTION]</code>.
-Each gets its own icon and color. The same source survives
-<a href="export.html">export</a>: in LaTeX and PDF output an alert
-becomes a colored <code>tcolorbox</code> rather than leaking HTML into
-the print file.
+The five GitHub-standard alerts — <code>[!NOTE]</code>,
+<code>[!TIP]</code>, <code>[!IMPORTANT]</code>, <code>[!WARNING]</code>,
+<code>[!CAUTION]</code> — are among Clew's fifteen
+<a href="callouts.html">callout types</a>, each with its own icon and
+colour; that chapter has them all, with titles, folding and types of
+your own. The same source survives <a href="export.html">export</a>: in
+a note's LaTeX and PDF output a callout becomes a coloured
+<code>tcolorbox</code> rather than leaking HTML into the print file.
+(In 0.12.0 only the upper-case GitHub alerts do.)
 </p>
 
 <div class="callout obsidian">
 	<span class="callout-title">Obsidian compatibility</span>
 	The <code>&gt; [!note]</code> form is the same syntax Obsidian calls
-	callouts, so these boxes render in both apps. The five GitHub types
-	exist on both sides; beyond those, each app has types the other does
-	not (Obsidian has many more decorative variants; Clew adds
-	<code>question</code> and <code>suggestion</code>). An unknown type
-	is not recognised as an alert at all — it renders as an ordinary
-	blockquote with the <code>[!TYPE]</code> line visible as text.
+	callouts, so these boxes render in both apps: Clew has all thirteen
+	of Obsidian's types and adds <code>compatibility</code> and
+	<code>suggestion</code>. A type an app does not know, both draw as a
+	note headed by its name. (In 0.12.0 Clew shows an unknown type as an
+	ordinary blockquote, the <code>[!TYPE]</code> line visible as
+	text.)
 </div>
 
 <h2 id="live">Live re-rendering</h2>

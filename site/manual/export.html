@@ -139,6 +139,19 @@ formats is generated <em>natively</em> from the Markdown source:
 	line breaking, real fonts, print-ready mathematics.</li>
 </ul>
 
+<p>
+<a href="callouts.html">Callouts</a> come through both. The HTML draws
+them as reading mode does — your own types included, a foldable one
+still folding — and the LaTeX makes each a coloured
+<code>tcolorbox</code> with the same icon and title, printed open. One
+rough edge: in LaTeX, a callout long enough to break across a page
+prints both parts grey, without its coloured edge. (In 0.12.0 a note's
+export draws only GitHub's upper-case alerts, <code>&gt; [!NOTE]</code>
+to <code>&gt; [!CAUTION]</code>, as boxes — without a custom title or
+folding — and every other callout comes out as an ordinary quote with
+its <code>[!type]</code> written out.)
+</p>
+
 <h3 id="two-pdfs">Two PDFs, for two different wishes</h3>
 
 <p>
@@ -238,10 +251,7 @@ since it too could carry code.
 	<em>preview</em> configuration, and single-note exports do not load
 	them. Concretely: inline <code>[[wikilinks]]</code> are not turned
 	into links (they come out as written), <code>![[…]]</code> embeds are
-	not expanded, callouts come out as ordinary quotes with the
-	<code>[!type]</code> written out — only GitHub's five upper-case
-	alerts, <code>&gt; [!NOTE]</code> to <code>&gt; [!CAUTION]</code>,
-	become boxes, without a custom title or folding — and the
+	not expanded, and the
 	<code>```mermaid</code>, <code>```leaflet</code>,
 	<code>```query</code> and <code>```tabbing</code> fences render as plain
 	code blocks (a <code>@begin(tabbing)</code> environment loses its
