@@ -10,21 +10,22 @@ names.
 ## 0. Resume here
 
 - **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`67311b6`** — the base hash.
+  manual reflects Clew-app up to **`03bb33a`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
   left in the prose. Everything committed on `main` is deployed
   (`make dry-run` clean). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
   then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
-  each verified byte-identical live.
+  then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), each
+  verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
   (2026-10-02: Clew-boss relayed "push all", the owner confirmed here);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
-  says a release is done): grep the manual for `0.12.0` — 41 hits in
+  says a release is done): grep the manual for `0.12.0` — 47 hits in
   12 files besides the version pages (2026-10-02). Each is a marker: a
   "(Not in 0.12.0.)" or "(not in 0.12.0)" is deleted; an "(In 0.12.0 …)"
   parenthesis describing the old behaviour is deleted whole; a Caution
@@ -129,12 +130,9 @@ Rewrite when upstream changes:
    "[undefined]" in reading mode (an engine issue on the jmarkdown
    list); `citations.html` states it as a current rough edge — remove
    that clause when the engine is fixed.
-8. **New rough edges stated in the manual (2026-10-02, engine
-   a7de8c6)** — rewrite each when the engine fixes it: in LaTeX a
-   callout broken across a page prints grey (`export.html`, the
-   callouts paragraph); a Markdown `![](x.svg)` is missing from a PDF
-   via LaTeX (`links-and-embeds.html#image-directive`, last SVG
-   paragraph). Both are on the engine's list per Clew-boss.
+8. (Retired 2026-10-02: the two LaTeX rough edges — callouts across a
+   page, a Markdown `.svg` — were fixed in engine aa4ce1e and the
+   manual says so.)
 9. **Vault trust** (`vaults-and-files.html#trust`): covers engine note
    code only; the full vault-trust design (Clew-app
    `docs/dev/frame-bridge.md` §4) will change it.
