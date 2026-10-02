@@ -9,10 +9,14 @@ names.
 
 ## 0. Resume here
 
-- **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  manual reflects Clew-app up to **`6623303`** — the base hash. Coming:
-  frame-bridge phases 2–4 (Clew's own app address, then apps in notes via
-  `@app[…]`) — an "Apps in notes" chapter after phase 4, per Clew-boss.
+- **In flight — committed on `main`, NOT deployed, waiting for the
+  owner's morning OK** (Clew-boss: a new chapter is the owner's to
+  publish): `1c8dc8b`…`e074fc9` — links out of a restricted vault, the
+  update check, footnote labels, tabbing in exports and Clew fences in
+  LaTeX, the unknown numeric key, and the new chapter **Apps in notes**
+  (`5250d47`). `make dry-run` lists every manual page (nav.js changed),
+  nav.js and the two app images; deploy behind the guard, verify each
+  live. The manual reflects Clew-app up to **`036befe`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -30,8 +34,8 @@ names.
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
-  says a release is done): grep the manual for `0.12.0` — 64 hits in
-  17 files besides the version pages (2026-10-03). Each is a marker: a
+  says a release is done): grep the manual for `0.12.0` — 74 hits in
+  19 files besides the version pages (2026-10-03). Each is a marker: a
   "(Not in 0.12.0.)" or "(not in 0.12.0)" is deleted; an "(In 0.12.0 …)"
   parenthesis describing the old behaviour is deleted whole; a Caution
   titled "In 0.12.0" (export.html's natbib one, trusting-a-vault.html's
@@ -46,10 +50,26 @@ names.
   `<h2 id="v0-12-1">` per release — the anchor Clew-app's auto-update feed
   names) is on branch **`release-0.12.1`** (`b8d1e42`), in the worktree
   `../Clew-docs-0.12.1`, NOT on `main` and never deployed. At release:
-  write the date line, add Apps in notes (a comment marks the place) and
-  anything landed since `88b6dd2`, merge into `main`, and run `make
-  stamp` — the merge conflicts on the `?v=` stamps, and restamping is the
-  resolution. Tabbing is deliberately absent: it predates 0.12.0.
+  write the date line and add anything landed since `036befe` (the
+  branch merged `main` at `08a6953`; it is at `953b9ee`, apps included),
+  merge into `main`, and run `make stamp` — the merge conflicts on the
+  `?v=` stamps only, and restamping is the resolution (done once already).
+  Tabbing is deliberately absent: it predates 0.12.0.
+- **Release checklist — the update feed** (Clew-app's update check reads
+  `https://clew-app.com/downloads/latest.json` daily): (1) `make
+  stage-downloads`; (2) in Clew-app, `node scripts/write-latest-json.mjs
+  out --released <date> --out <Clew-docs>/site/downloads/latest.json`
+  (notes default to `whats-new.html#v<x-y-z>`, which the release branch
+  has); (3) once, with the owner's OK: put the `location =
+  /downloads/latest.json { expires -1; }` block from
+  `clew-app.com.nginx.conf` into the droplet's certbot-rewritten config
+  (`make nginx-diff`), `nginx -t`, reload; (4) `make sync-downloads` (it
+  skips latest.json), `make sync`, then **`make sync-feed` LAST**; check
+  it is `Cache-Control: no-cache`, `application/json`.
+- **Release grep caveat:** `getting-started.html` carries the version
+  filenames AND a marker (`#updates`, "Not in 0.12.0: there, watch the
+  download page") — bump the filenames, delete the marker; never a blind
+  replace.
 - **Release checklist — the screenshot pass** (Clew-boss, 2026-10-02:
   at the release, not before, so the shots match what people download).
   Ten manual images show the pre-`80b8b44` UI (checked image by image,
@@ -136,14 +156,19 @@ Owner decisions:
    exists.
 
 Rewrite when upstream changes:
-6. **PDF via LaTeX and Clew fences**: when the jmarkdown unknown-lexer
-   fallback lands, rewrite `export.html#troubleshooting`'s entry, the
-   export caution's pointer, and `tabbing.html`'s caution.
-7. **An unknown citation key under a numeric style** prints
-   "[undefined]" in reading mode (an engine issue on the jmarkdown
-   list); `citations.html` states it as a current rough edge — remove
-   that clause when the engine is fixed.
-8. (Retired 2026-10-02: the two LaTeX rough edges — callouts across a
+6. (Retired 2026-10-03: engine 4ab3d6a's unknown-lexer fallback — a Clew
+   fence prints as its source in PDF via LaTeX — and tabbing in exports;
+   export.html and tabbing.html say so.)
+7. (Retired 2026-10-03: an unknown key under a numeric style reads as
+   written in reading mode, engine 4ab3d6a.)
+8. **Reported to Clew-boss 2026-10-03:** a website export publishes
+   every app's folder, `data/` included, and `clewdata.json` (app.kv and
+   Note API state) — the manual says so (apps-in-notes.html#exports,
+   Publishing's table); and the app's own texts (an app's refusal label,
+   the demo Flashcards message and guide) point to "Settings → This vault
+   → Apps", a heading that does not exist (the rows sit below the
+   plugins).
+8a. (Retired 2026-10-02: the two LaTeX rough edges — callouts across a
    page, a Markdown `.svg` — were fixed in engine aa4ce1e and the
    manual says so.)
 9. (Done 2026-10-03: vault trust has its own chapter,
