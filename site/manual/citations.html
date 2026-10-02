@@ -275,10 +275,10 @@ Two details of the parsing are worth knowing. A cite command inside a
 code span or fenced code block is left alone, which is how this page's
 own examples survive. And a key that resolves to nothing renders the
 command as literal text and logs a warning naming the missing key, so
-a typo is visible rather than silently dropped — except, for now, under
-a numeric style such as <code>vancouver</code>, where reading mode
-prints <em>[undefined]</em> in its place. In live edit the chip shows
-the key in red under every style.
+a typo is visible rather than silently dropped, under every style. In
+live edit the chip shows the key in red. (In 0.12.0, under a numeric
+style such as <code>vancouver</code>, reading mode prints
+<em>[undefined]</em> instead.)
 </p>
 
 <p>
