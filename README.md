@@ -24,11 +24,15 @@ site/                 ← the web root; everything here is published
 ├── manual/           the manual: 28 chapters + index
 │   ├── manual.css    shared stylesheet (landing-page palette)
 │   ├── nav.js        single source of the sidebar tree and prev/next links
+│   ├── lightbox.js   click a screenshot to see it large (+ lightbox.css);
+│   │                 the landing page loads these too
 │   └── images/       the manual's own copy of every screenshot
 └── downloads/        release binaries — not in git, staged from Clew-app/out/
 
 check-links.js        link checker: `make check-links`
 apply-og.js           regenerates the manual's social tags: `make og-tags`
+stamp-assets.js       puts content hashes in CSS/JS URLs: `make stamp`
+shots/                recipes for the app screenshots (see shots/README.md)
 og/clew-og.html       source of the social card: `make og-card`
 clew-app.com.nginx.conf   the server config, mirrored on the droplet at
                           /etc/nginx/sites-available/clew-app.com
@@ -52,6 +56,23 @@ The one deliberate exception is the top bar's Home and Download links, which
 point at `../index.html`. Those are navigation rather than assets, they are
 expected to leave the manual, and `check-links` reports them as a counted
 note rather than an error.
+
+### Screenshots zoom; CSS and JS URLs carry their hash
+
+A screenshot is written wrapped in a link to its own file —
+`<figure class="shot"><a class="zoom" href="images/x.png"><img …></a>` in
+the manual, `<a class="zoom" href="images/x.jpg"><img class="shot" …></a>`
+on the landing page. `lightbox.js` turns a plain click on one into a modal
+viewer (Esc, the ×, or a click outside closes it; ← and → step through the
+page's screenshots); a middle-click, a new tab, or a browser without
+scripts follows the link to the picture instead. Decoration — the brand
+icon — is never wrapped, and so never zooms. **Wrap every new screenshot
+the same way.**
+
+nginx gives CSS and JS a 7-day expiry, so every `<link>` and `<script>`
+URL carries `?v=` and the file's content hash. **After editing
+`manual.css`, `nav.js` or `lightbox.*`, run `make stamp`**; `make
+check-links` fails on a stamp that no longer matches its file.
 
 ## Social previews
 

@@ -1,0 +1,111 @@
+/*
+	The screenshot lightbox (lightbox.js), shared by the manual and the
+	landing page — one file, so the two cannot drift. Colours come from the
+	page's own palette variables, which both pages define alike; the
+	fallbacks are the same values, for a page that does not.
+*/
+
+/* The static link around every screenshot: it must not change the layout. */
+a.zoom { display: block; cursor: zoom-in; }
+a.zoom:focus-visible {
+	outline: 2px solid var(--accent, #a882ff);
+	outline-offset: 4px;
+	border-radius: var(--radius, 14px);
+}
+
+/* The page behind the open dialog does not scroll. */
+html.lightbox-open { overflow: hidden; }
+
+dialog.lightbox {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	max-height: none;
+	margin: 0;
+	/* room for the × at the top and the arrows at the sides */
+	padding: 64px 72px 24px;
+	border: 0;
+	background: transparent;
+	color: var(--text, #e6e2f0);
+	overflow: hidden;
+}
+dialog.lightbox[open] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+/* Dark enough, and blurred, that the page's text cannot be read through it
+   and compete with the caption. */
+dialog.lightbox::backdrop {
+	background: rgba(10, 8, 18, 0.96);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+dialog.lightbox figure {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 100%;
+	max-height: 100%;
+}
+/* As large as the viewport allows, never past the image's own size. */
+dialog.lightbox img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: calc(100vh - 88px - 4.5em);
+	max-height: calc(100dvh - 88px - 4.5em);
+	border-radius: 10px;
+	border: 1px solid var(--border, #3a3153);
+	box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+	background: var(--bg, #171321);
+}
+dialog.lightbox figcaption {
+	margin-top: 12px;
+	max-width: 72ch;
+	font-size: 0.92rem;
+	line-height: 1.5;
+	text-align: center;
+	color: var(--muted, #a89fc0);
+}
+
+dialog.lightbox button {
+	position: fixed;
+	width: 44px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 1px solid var(--border, #3a3153);
+	border-radius: 50%;
+	background: rgba(33, 27, 48, 0.85);
+	color: var(--text, #e6e2f0);
+	font: 400 26px/1 -apple-system, 'Segoe UI', Roboto, sans-serif;
+	cursor: pointer;
+}
+dialog.lightbox button:hover { background: var(--bg-3, #2b2440); border-color: var(--accent, #a882ff); }
+dialog.lightbox button:focus-visible { outline: 2px solid var(--accent, #a882ff); outline-offset: 2px; }
+dialog.lightbox button[hidden] { display: none; }
+.lightbox-close { top: 12px; right: 12px; }
+.lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); }
+.lightbox-prev { left: 12px; }
+.lightbox-next { right: 12px; }
+
+@media (max-width: 640px) {
+	dialog.lightbox { padding: 64px 12px 16px; }
+	/* On a phone the arrows sit at the foot, clear of the picture. */
+	.lightbox-prev, .lightbox-next { top: auto; bottom: 12px; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	dialog.lightbox[open] img { animation: lightbox-zoom 0.18s ease-out; }
+	dialog.lightbox[open]::backdrop { animation: lightbox-fade 0.18s ease-out; }
+}
+@keyframes lightbox-zoom { from { opacity: 0; transform: scale(0.96); } }
+@keyframes lightbox-fade { from { opacity: 0; } }

@@ -25,7 +25,8 @@
 <meta name="twitter:image:alt" content="The Clew icon, a ball of purple yarn, beside the word Clew and the line 'A thread through your notes'.">
 <!-- og:end -->
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-<link rel="stylesheet" href="manual.css">
+<link rel="stylesheet" href="manual.css?v=9dffb9b37c">
+<link rel="stylesheet" href="lightbox.css?v=6cc099bd13">
 </head>
 <body>
 <header class="topbar">
@@ -81,7 +82,7 @@ editor to that exact source line (inverse search).
 </p>
 
 <figure class="shot">
-	<img src="images/editor-split.png" alt="A Clew window split in two: jmarkdown source in one pane, the fully typeset reading mode of the same note in the other">
+	<a class="zoom" href="images/editor-split.png"><img src="images/editor-split.png" alt="A Clew window split in two: jmarkdown source in one pane, the fully typeset reading mode of the same note in the other"></a>
 	<figcaption>The Dialect Demo note (demo vault) in a split: source and
 	reading mode side by side. The rendered pane updates in place as you
 	type, and the two panes scroll in sync.</figcaption>
@@ -150,7 +151,7 @@ read as an italic <em>usr</em>).
 </p>
 
 <figure class="shot">
-	<img src="images/editor-editing.png" alt="The Clew editor in source mode on the Dialect Demo note, with wikilinks, highlights, math, a citation, and a theorem environment each syntax-highlighted">
+	<a class="zoom" href="images/editor-editing.png"><img src="images/editor-editing.png" alt="The Clew editor in source mode on the Dialect Demo note, with wikilinks, highlights, math, a citation, and a theorem environment each syntax-highlighted"></a>
 	<figcaption>Source mode on the demo vault's Dialect Demo note: wikilinks,
 	tags, math, a citation, a footnote, and a theorem environment each carry
 	their own face.</figcaption>
@@ -204,7 +205,7 @@ spaces are ordinary text here; nothing needs escaping.
 </div>
 
 <figure class="shot">
-	<img src="images/wikilink-completion.png" alt="The editor in source mode with a completion popup open after typing two brackets and Guide slash Link, offering Links and Embeds from the Guide folder">
+	<a class="zoom" href="images/wikilink-completion.png"><img src="images/wikilink-completion.png" alt="The editor in source mode with a completion popup open after typing two brackets and Guide slash Link, offering Links and Embeds from the Guide folder"></a>
 	<figcaption>Typing <code>[[Guide/Link</code> finds <em>Links and
 	Embeds</em> by the folder it lives in. Choosing it inserts the whole
 	vault path, because the folder was part of the query.</figcaption>
@@ -513,7 +514,7 @@ change that Clew itself just wrote never triggers the banner.
 <h2 id="preview-pane">A live rendering while you edit maths and diagrams</h2>
 
 <figure class="shot">
-	<img src="images/live-preview-pane.png" alt="A display formula's source between two double-dollar lines, with the cursor at its end; directly below, a pane shows the formula typeset: the integral from 0 to 1 of x squared equals x cubed over three evaluated from 0 to 1, equals one third">
+	<a class="zoom" href="images/live-preview-pane.png"><img src="images/live-preview-pane.png" alt="A display formula's source between two double-dollar lines, with the cursor at its end; directly below, a pane shows the formula typeset: the integral from 0 to 1 of x squared equals x cubed over three evaluated from 0 to 1, equals one third"></a>
 	<figcaption>The cursor is in a <code>$$</code> block, so its source shows
 	— and the pane below it shows what that source typesets to, updated as
 	you type.</figcaption>
@@ -560,7 +561,7 @@ rendering the formula or diagram shows until you step into it.
 <h2 id="link-previews">Link previews on hover</h2>
 
 <figure class="shot">
-	<img src="images/link-preview.png" alt="A note in live edit with the pointer over a link to the Welcome note's section The guide; a popover below the link, headed Welcome › The guide with an Open button, shows that section rendered: its heading and a bulleted list of guide notes">
+	<a class="zoom" href="images/link-preview.png"><img src="images/link-preview.png" alt="A note in live edit with the pointer over a link to the Welcome note's section The guide; a popover below the link, headed Welcome › The guide with an Open button, shows that section rendered: its heading and a bulleted list of guide notes"></a>
 	<figcaption>Hovering a link to a heading shows that section — only
 	that section — rendered as reading mode would.</figcaption>
 </figure>
@@ -696,6 +697,7 @@ Linux read <kbd>⌘</kbd> as <kbd>Ctrl</kbd> and <kbd>⌥</kbd> as
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js"></script>
+<script src="nav.js?v=cbf3435759"></script>
+<script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>

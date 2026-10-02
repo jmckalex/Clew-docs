@@ -86,7 +86,7 @@ OG_TMP  := /tmp/clew-og-2x.png
 
 .PHONY: help check check-links sync dry-run stage-downloads sync-downloads \
         serve preview ls tail-log provision nginx-install nginx-diff \
-        dns-check tls og-card og-tags
+        dns-check tls og-card og-tags stamp
 
 help:
 	@echo "Targets:"
@@ -99,6 +99,7 @@ help:
 	@echo "  make check-links      - Verify local links resolve on disk"
 	@echo "  make og-card          - Re-render the social card (1200x630)"
 	@echo "  make og-tags          - Regenerate the manual's social tags"
+	@echo "  make stamp            - Put content hashes in CSS/JS URLs (after editing them)"
 	@echo "  make dns-check        - Do the domains point at the droplet yet?"
 	@echo "  make provision        - Create the remote web root (one-time)"
 	@echo "  make nginx-install    - Install the nginx config on the droplet"
@@ -130,6 +131,13 @@ check-links:
 # chapter — `make check-links` reports pages that need it.
 og-tags:
 	@node apply-og.js $(LOCAL_DIR)
+
+# Put each local stylesheet's and script's content hash in its URL (?v=…),
+# so a changed manual.css, nav.js or lightbox.js reaches returning readers at
+# once despite nginx's 7-day expiry on CSS/JS. Idempotent. Run after editing
+# any of them — `make check-links` fails on a stale stamp.
+stamp:
+	@node stamp-assets.js $(LOCAL_DIR)
 
 # Rendered at 2x and downsampled, which is what makes the type crisp — a
 # straight 1200x630 screenshot of the same page looks soft next to it.

@@ -240,6 +240,7 @@
 	footer a { color: var(--muted); text-decoration: underline; }
 	footer a:hover { color: var(--accent); }
 </style>
+<link rel="stylesheet" href="manual/lightbox.css?v=6cc099bd13">
 </head>
 <body>
 
@@ -268,7 +269,7 @@
 		</div>
 	</div>
 	<div class="hero-shot">
-		<img class="shot" src="images/welcome.jpg" alt="Clew's Welcome note in reading mode, with a banner header rendered by a vault plugin">
+		<a class="zoom" href="images/welcome.jpg"><img class="shot" src="images/welcome.jpg" alt="Clew's Welcome note in reading mode, with a banner header rendered by a vault plugin"></a>
 	</div>
 </div>
 
@@ -293,7 +294,7 @@
 				</ul>
 				<p>Export any note to HTML, LaTeX, or PDF from the File menu — same source, print-grade output.</p>
 			</div>
-			<img class="shot" src="images/math.jpg" alt="A note with numbered display equations, theorem and lemma environments, and a callout box">
+			<a class="zoom" href="images/math.jpg"><img class="shot" src="images/math.jpg" alt="A note with numbered display equations, theorem and lemma environments, and a callout box"></a>
 		</div>
 
 		<div class="feature flip">
@@ -312,7 +313,7 @@
 					existing vault renders as its author intended, plus everything above.
 				</p>
 			</div>
-			<img class="shot" src="images/split.jpg" alt="The dialect demo note rendered: italics, strong, highlights, math, a citation, and a theorem">
+			<a class="zoom" href="images/split.jpg"><img class="shot" src="images/split.jpg" alt="The dialect demo note rendered: italics, strong, highlights, math, a citation, and a theorem"></a>
 		</div>
 	</div>
 </section>
@@ -336,7 +337,7 @@
 				</ul>
 				<p>Files are standard JSON Canvas — Obsidian opens them; Clew's extras ride in a key other apps ignore.</p>
 			</div>
-			<img class="shot" src="images/canvas.jpg" alt="The demo canvas: an embedded live note, cards, an image, a PDF, connections, and hand-drawn ink and shapes">
+			<a class="zoom" href="images/canvas.jpg"><img class="shot" src="images/canvas.jpg" alt="The demo canvas: an embedded live note, cards, an image, a PDF, connections, and hand-drawn ink and shapes"></a>
 		</div>
 	</div>
 </section>
@@ -358,7 +359,7 @@
 					<li><strong>Photo maps</strong>: point <code>photos:</code> at a vault folder and every geotagged photo becomes a pin — thumbnail popup, capture time, and a link that opens <em>or creates</em> a note about it. iPhone HEIC converts to JPEG automatically.</li>
 				</ul>
 			</div>
-			<img class="shot" src="images/photomap.jpg" alt="A photo map of Rome with an open popup showing a photo thumbnail, its name, and capture time">
+			<a class="zoom" href="images/photomap.jpg"><img class="shot" src="images/photomap.jpg" alt="A photo map of Rome with an open popup showing a photo thumbnail, its name, and capture time"></a>
 		</div>
 	</div>
 </section>
@@ -382,7 +383,7 @@
 					<li>Open dashboards <strong>re-render whenever any note changes</strong></li>
 				</ul>
 			</div>
-			<img class="shot" src="images/dashboard.jpg" alt="A live dashboard: a due-soon table with date arithmetic and papers grouped by status">
+			<a class="zoom" href="images/dashboard.jpg"><img class="shot" src="images/dashboard.jpg" alt="A live dashboard: a due-soon table with date arithmetic and papers grouped by status"></a>
 		</div>
 		<div class="feature flip">
 			<div class="text">
@@ -401,7 +402,7 @@
 					term run entirely on these features.
 				</p>
 			</div>
-			<img class="shot" src="images/kanban.jpg" alt="A kanban board of papers by status, with venue and due-date metadata on the cards">
+			<a class="zoom" href="images/kanban.jpg"><img class="shot" src="images/kanban.jpg" alt="A kanban board of papers by status, with venue and due-date metadata on the cards"></a>
 		</div>
 	</div>
 </section>
@@ -433,7 +434,7 @@
 					<li>Daily-note templates with date substitution</li>
 				</ul>
 			</div>
-			<img class="shot" src="images/diary.jpg" alt="The diary calendar panel beside a rendered note">
+			<a class="zoom" href="images/diary.jpg"><img class="shot" src="images/diary.jpg" alt="The diary calendar panel beside a rendered note"></a>
 		</div>
 		<div class="feature">
 			<div class="text">
@@ -448,7 +449,7 @@
 					folders that live elsewhere — something Obsidian never allowed.
 				</p>
 			</div>
-			<img class="shot" src="images/graph.jpg" alt="The vault graph view">
+			<a class="zoom" href="images/graph.jpg"><img class="shot" src="images/graph.jpg" alt="The vault graph view"></a>
 		</div>
 	</div>
 </section>
@@ -572,7 +573,7 @@
 				</p>
 			</div>
 			<div>
-				<img class="shot" src="images/ios-reading.jpg" alt="Clew running on an iPad: the file explorer, a tab strip, a note in reading mode, and the backlinks panel">
+				<a class="zoom" href="images/ios-reading.jpg"><img class="shot" src="images/ios-reading.jpg" alt="Clew running on an iPad: the file explorer, a tab strip, a note in reading mode, and the backlinks panel"></a>
 			</div>
 		</div>
 	</div>
@@ -710,5 +711,6 @@ npm run package    # build the app for your platform</code></pre>
 	</div>
 </footer>
 
+<script src="manual/lightbox.js?v=e0658a9172"></script>
 </body>
 </html>

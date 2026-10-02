@@ -135,6 +135,25 @@ for (const page of pages) {
 	}
 }
 
+// A stylesheet or script whose ?v= no longer matches its file is served
+// from returning readers' caches for up to a week (nginx's `expires 7d`):
+// the change is deployed and nobody who has visited before sees it.
+// `node stamp-assets.js site` restamps every page; this reports when it is due.
+const { ASSET, hashOf } = require('./stamp-assets.js');
+for (const page of pages) {
+	const rel = path.relative(root, page);
+	const html = fs.readFileSync(page, 'utf8');
+	for (const m of html.matchAll(ASSET)) {
+		const [, , url, stamp] = m;
+		const file = path.resolve(path.dirname(page), decodeURIComponent(url));
+		if (!fs.existsSync(file)) continue; // reported above as missing
+		const want = `?v=${hashOf(file)}`;
+		if (stamp !== want) {
+			problems.push(`${rel}:${lineOf(html, m.index)}  ${stamp ? 'stale' : 'unstamped'}  ${url}${stamp ?? ''}  (run: make stamp)`);
+		}
+	}
+}
+
 console.log(`${pages.length} pages, ${checked} local links checked.`);
 
 if (outward.size) {

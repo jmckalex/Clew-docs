@@ -25,7 +25,8 @@
 <meta name="twitter:image:alt" content="The Clew icon, a ball of purple yarn, beside the word Clew and the line 'A thread through your notes'.">
 <!-- og:end -->
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-<link rel="stylesheet" href="manual.css">
+<link rel="stylesheet" href="manual.css?v=9dffb9b37c">
+<link rel="stylesheet" href="lightbox.css?v=6cc099bd13">
 </head>
 <body>
 <header class="topbar">
@@ -143,7 +144,7 @@ dark page.
 </p>
 
 <figure class="shot">
-	<img src="images/diagrams.png" alt="The Diagrams feature note in reading mode: a three-dimensional TikZ figure from a physics paper — rings of point particles with force arrows converging on the origin — and below it a MetaPost abacus-machine flowchart">
+	<a class="zoom" href="images/diagrams.png"><img src="images/diagrams.png" alt="The Diagrams feature note in reading mode: a three-dimensional TikZ figure from a physics paper — rings of point particles with force arrows converging on the origin — and below it a MetaPost abacus-machine flowchart"></a>
 	<figcaption>The demo vault's Diagrams note: a genuinely
 	three-dimensional TikZ figure from a real physics paper — rings of
 	point particles spun around the axis by a loop, force arrows and all —
@@ -373,7 +374,7 @@ TikZ body; on a complete document they mean nothing and are ignored.
 </div>
 
 <figure class="shot">
-	<img src="images/figures-latex.png" alt="The demo vault's Diagrams note in reading mode: Maxwell's equations as a numbered align environment typeset from a latex fence, and below it a line of plain TeX with a displayed sum">
+	<a class="zoom" href="images/figures-latex.png"><img src="images/figures-latex.png" alt="The demo vault's Diagrams note in reading mode: Maxwell's equations as a numbered align environment typeset from a latex fence, and below it a line of plain TeX with a displayed sum"></a>
 	<figcaption>The Diagrams note's LaTeX section: an <code>align</code> of
 	Maxwell's equations from a <code>```latex</code> fence, typeset by
 	LuaLaTeX in the page, and a line of plain TeX from a
@@ -649,7 +650,7 @@ figure's code reads the same on both sides of a split; see
 </p>
 
 <figure class="shot">
-	<img src="images/fence-split.png" alt="The Diagrams note split in two: on the left the source pane with a tikz both fence highlighted as TeX, on the right the same block in reading mode showing the code block and then the typeset triangle">
+	<a class="zoom" href="images/fence-split.png"><img src="images/fence-split.png" alt="The Diagrams note split in two: on the left the source pane with a tikz both fence highlighted as TeX, on the right the same block in reading mode showing the code block and then the typeset triangle"></a>
 	<figcaption>The Diagrams note in a split: the <code>```tikz both</code>
 	fence in source mode, tokenized as TeX, and the same block in reading
 	mode — its code, then the figure it draws.</figcaption>
@@ -755,7 +756,7 @@ graph drawing or <code>\directlua</code>, or a note holds a
 </div>
 
 <figure class="shot">
-	<img src="images/ipad-diagrams.jpg" alt="Clew on an iPad showing the demo vault's Diagrams note in reading mode, with a three-dimensional TikZ figure of two rings of point particles typeset in the page">
+	<a class="zoom" href="images/ipad-diagrams.jpg"><img src="images/ipad-diagrams.jpg" alt="Clew on an iPad showing the demo vault's Diagrams note in reading mode, with a three-dimensional TikZ figure of two rings of point particles typeset in the page"></a>
 	<figcaption>The Diagrams note on an iPad: the TikZ figure is typeset
 	on the device by the same engines, with no TeX installed.</figcaption>
 </figure>
@@ -898,6 +899,7 @@ no TeX on the server either.
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js"></script>
+<script src="nav.js?v=cbf3435759"></script>
+<script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>
