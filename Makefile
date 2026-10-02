@@ -86,7 +86,7 @@ OG_TMP  := /tmp/clew-og-2x.png
 
 .PHONY: help check check-links sync dry-run stage-downloads sync-downloads \
         serve preview ls tail-log provision nginx-install nginx-diff \
-        dns-check tls og-card og-tags stamp
+        dns-check tls og-card og-tags stamp sync-feed
 
 help:
 	@echo "Targets:"
@@ -94,6 +94,7 @@ help:
 	@echo "  make sync             - Upload $(LOCAL_DIR)/ to $(REMOTE_HOST):$(REMOTE_PATH)"
 	@echo "  make stage-downloads  - Copy v$(VERSION) binaries from $(OUT_DIR)"
 	@echo "  make sync-downloads   - Upload staged binaries (~640 MB)"
+	@echo "  make sync-feed        - Upload the update feed (latest.json) LAST, at a release"
 	@echo "  make serve            - Serve $(LOCAL_DIR)/ at http://localhost:8000"
 	@echo "  make check            - Verify the local tree is safe to sync"
 	@echo "  make check-links      - Verify local links resolve on disk"
@@ -192,10 +193,25 @@ sync-downloads:
 	  echo "ERROR: $(DL_DIR) does not exist — run 'make stage-downloads' first."; exit 1; }
 	rsync -avz --progress \
 	  --chown=$(REMOTE_OWNER) --chmod=F644,D755 \
-	  --rsync-path="sudo rsync" \
+	  --rsync-path="sudo rsync" --exclude=latest.json \
 	  $(DL_DIR)/ $(REMOTE_HOST):$(REMOTE_PATH)/downloads/
 	@echo ""
 	@echo "Binaries live at $(SITE_URL)/downloads/"
+
+# The update feed, uploaded LAST — after `make sync-downloads` and `make
+# sync` — so it never names a file that is not there yet. Write it first
+# with Clew-app's scripts/write-latest-json.mjs (`--out
+# $(DL_DIR)/latest.json`); sync-downloads leaves it out on purpose. nginx
+# serves it no-cache (the exact location in clew-app.com.nginx.conf).
+sync-feed:
+	@[ -f "$(DL_DIR)/latest.json" ] || { \
+	  echo "ERROR: $(DL_DIR)/latest.json missing — write it with Clew-app's scripts/write-latest-json.mjs."; exit 1; }
+	@grep -q '"version": *"$(VERSION)"' "$(DL_DIR)/latest.json" || { \
+	  echo "ERROR: $(DL_DIR)/latest.json is not for $(VERSION)."; exit 1; }
+	rsync -avz --chown=$(REMOTE_OWNER) --chmod=F644 \
+	  --rsync-path="sudo rsync" \
+	  $(DL_DIR)/latest.json $(REMOTE_HOST):$(REMOTE_PATH)/downloads/latest.json
+	@curl -sSI "$(SITE_URL)/downloads/latest.json" | grep -iE '^(HTTP|cache-control|content-type)' || true
 
 # file:// works for the manual, but the landing page and the nginx config are
 # both about how this behaves over http — serve it the way it will be served.
