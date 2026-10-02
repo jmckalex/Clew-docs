@@ -179,6 +179,17 @@ the vault's own, shown in a frame, draws but does not run its scripts;
 and the network is closed to all of it.
 </p>
 
+<p id="links-out">
+<strong>Nor are links that leave the vault.</strong> A
+<a href="vaults-and-files.html#symlinks">symbolic link</a> inside a
+restricted vault that points outside it — to a file or to a folder — is
+not followed: what it points to does not appear in the explorer, cannot
+be opened or embedded, and is not indexed or searched, and an embed of
+it says in place that <em>this link leaves the vault, and a vault you
+have not trusted is not followed out of itself</em>. Trust the vault to
+follow them. Links that stay inside the vault work as always.
+</p>
+
 <p id="indicator">
 While a restricted vault has code, the status bar's left end reads
 <strong>Restricted · Trust…</strong>. Its tooltip lists what was not
@@ -328,7 +339,7 @@ vault you create from the welcome screen is trusted.
 <table>
 	<tr><th>Item</th><th>Detail</th></tr>
 	<tr><td>The question</td><td><em>Trust this vault?</em> — on the first opening of a vault with code, per device: <em>Keep restricted</em> or <em>Trust on this Mac</em> (which reloads)</td></tr>
-	<tr><td>Restricted</td><td>Everything Clew does works; none of the vault's code runs; refusals marked in place, <em>[… not run: note code is off]</em></td></tr>
+	<tr><td>Restricted</td><td>Everything Clew does works; none of the vault's code runs; refusals marked in place, <em>[… not run: note code is off]</em>; links that leave the vault are not followed</td></tr>
 	<tr><td>Indicator</td><td><em>Restricted · Trust…</em> at the status bar's left; its tooltip lists what was not run; click to be asked</td></tr>
 	<tr><td>Settings → This vault</td><td>Trusted on this device; Vault scripts; Note API; Run dataviewjs blocks; Network; plugin checkboxes</td></tr>
 	<tr><td>Settings → Trusted vaults</td><td>Every vault decided about: Revoke / Trust, Forget</td></tr>
