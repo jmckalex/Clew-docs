@@ -54,6 +54,7 @@ const MANUAL_NAV = [
 		{ file: 'publishing.html', title: 'Publishing as a website' },
 	] },
 	{ section: 'Extending Clew', items: [
+		{ file: 'apps-in-notes.html', title: 'Apps in notes' },
 		{ file: 'note-api.html', title: 'The Note API' },
 		{ file: 'plugins.html', title: 'Vault plugins' },
 		{ file: 'theming.html', title: 'Theming and CSS snippets' },
