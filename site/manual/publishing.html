@@ -163,7 +163,10 @@ to.
 The vault's shared JavaScript — <code>.clew/scripts/*.js</code>, the
 <a href="plugins.html">vault scripts</a> mechanism — is copied into
 <code>assets/vault-scripts/</code> and loaded on every page, in the
-same alphabetical order as in the app. Custom elements defined there
+same alphabetical order as in the app, when the vault is
+<a href="trusting-a-vault.html">trusted</a> with its scripts on; a
+restricted vault's are left out (not in 0.12.0, which always ships
+them). Custom elements defined there
 render their content on the published site just as they do in reading
 mode. Inline scripts written into notes also ship as part of their
 pages; see the caution below for what they can and cannot do once
@@ -285,7 +288,8 @@ management step — the vault is the CMS.
 		<td>Copied unchanged, structure preserved.</td></tr>
 	<tr><td>Vault scripts (<code>.clew/scripts/*.js</code>)</td>
 		<td>Shipped in <code>assets/vault-scripts/</code> and loaded on
-		every page, alphabetically.</td></tr>
+		every page, alphabetically — from a trusted vault with its scripts
+		on (not in 0.12.0, which always ships them).</td></tr>
 	<tr><td>Note scripts using the Note API</td>
 		<td>Ship with their pages but find no <code>window.clew</code>;
 		well-written ones degrade to static content.</td></tr>
@@ -293,7 +297,8 @@ management step — the vault is the CMS.
 		<td>A labelled placeholder box.</td></tr>
 	<tr><td>Preview-surface plugins</td>
 		<td>Enabled ones shipped in <code>assets/plugins/&lt;id&gt;/</code>
-		and loaded on every page.</td></tr>
+		and loaded on every page — from a restricted vault, only your own
+		global ones (not in 0.12.0).</td></tr>
 	<tr><td><code>.clew/</code>, <code>.obsidian/</code>, <code>.git/</code>, dotfiles</td>
 		<td>Skipped entirely.</td></tr>
 </table>
@@ -335,7 +340,7 @@ management step — the vault is the CMS.
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js?v=cbf3435759"></script>
+<script src="nav.js?v=f030baae3b"></script>
 <script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>

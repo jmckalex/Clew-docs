@@ -593,7 +593,11 @@ show numbers that are wrong, which is worse than showing nothing.
 <code>```dataviewjs</code> blocks are JavaScript, not queries. Clew can
 run them, but the setting is <strong>per vault and off by default</strong>
 — turn on <em>Run dataviewjs blocks</em> in Settings for a vault you
-wrote or trust, not for one you have just downloaded. Unlike a query,
+wrote or trust, not for one you have just downloaded. It is kept on this
+device and takes effect only in a vault this device
+<a href="trusting-a-vault.html">trusts</a>; in a restricted vault each
+block shows <em>[dataviewjs not run: note code is off]</em> above its
+source. (In 0.12.0 the setting is stored in the vault.) Unlike a query,
 whose unsupported parts can be listed before it runs, there is no telling
 in advance what a script will do.
 </p>
@@ -741,7 +745,7 @@ fences are not evaluated there.
 	<tr><th>Written</th><th>Clew</th></tr>
 	<tr><td><code>```dataview</code></td><td><a href="#dataview">Runs</a> — TABLE / LIST / TASK, FROM, WHERE, SORT, GROUP BY, LIMIT, <code>file.*</code>, <code>this</code></td></tr>
 	<tr><td><code>`= expr`</code></td><td>Runs — an inline query against the current note</td></tr>
-	<tr><td><code>```dataviewjs</code></td><td>Runs <strong>only</strong> with <em>Run dataviewjs blocks</em> on for the vault (<a href="#dataviewjs">above</a>)</td></tr>
+	<tr><td><code>```dataviewjs</code></td><td>Runs <strong>only</strong> with <em>Run dataviewjs blocks</em> on for the vault, in a vault this device trusts (<a href="#dataviewjs">above</a>)</td></tr>
 	<tr><td><code>`$= expr`</code></td><td>Left alone — renders as the code span it is</td></tr>
 	<tr><td><code>![[X.base]]</code></td><td><a href="#bases">Renders</a> the base's first view</td></tr>
 	<tr><td><code>![[X.base#View]]</code></td><td>Renders the named view</td></tr>
@@ -790,7 +794,7 @@ fences are not evaluated there.
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js?v=cbf3435759"></script>
+<script src="nav.js?v=f030baae3b"></script>
 <script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>

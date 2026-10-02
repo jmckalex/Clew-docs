@@ -72,19 +72,23 @@ The counterweight is trust. A plugin is arbitrary code, so discovering
 a plugin in a vault never runs it: every plugin must be explicitly
 enabled in <strong>Settings&nbsp;→&nbsp;This vault</strong>, which
 lists each plugin found in <code>.clew/plugins/</code> with its name,
-version, surfaces, and description, and a checkbox per plugin. The
-enabled set is stored in the vault's
-<code>.clew/vault-settings.json</code> as a <code>"plugins"</code>
-array of ids. Enabling a plugin is a statement of trust in the vault —
-the same posture as the <a href="note-api.html">Note API</a> toggle
-that sits beside it.
+version, surfaces, and description, and a checkbox per plugin. Enabling
+is recorded <strong>on this device</strong>, not in the vault: the
+<code>"plugins"</code> array in the vault's
+<code>.clew/vault-settings.json</code> is only its request, shown when
+Clew asks whether to trust it, and a vault's own plugins run only while
+this device <a href="trusting-a-vault.html">trusts</a> the vault.
+Enabling a plugin is a statement of trust — the same posture as the
+<a href="note-api.html">Note API</a> toggle that sits beside it. (In
+0.12.0 the array in the vault is the enabled set, so a vault can arrive
+with its plugins on.)
 </p>
 
 <div class="callout warn">
 	<span class="callout-title">Caution — there is no sandbox</span>
 	Engine surfaces run with full Node.js access inside the render
-	worker; app surfaces run inside the app itself. The per-vault enable
-	toggle is the security boundary — there is no other. Enable plugins
+	worker; app surfaces run inside the app itself. Trust and the
+	per-vault enable are the security boundary — there is no other. Enable plugins
 	only in vaults you wrote or trust, and read a plugin's code before
 	enabling it in a vault you received. (The worker being a separate
 	process does mean a crashing engine extension cannot take the app
@@ -149,11 +153,12 @@ opens it, so there is nothing to look up.
 <p>
 The split to keep in mind is <strong>installing versus
 enabling</strong>. Installing globally is done once and offers the
-plugin in every vault. <em>Enabling is still per-vault</em>, in the same
-checkbox list and the same <code>"plugins"</code> array as before — so a
-global plugin runs in the vaults you switch it on for, and nowhere else.
-The trust boundary has not moved: opening a vault still runs no plugin
-code you did not enable there.
+plugin in every vault. <em>Enabling is still per vault</em>, on this
+device, in the same checkbox list — so a global plugin runs in the
+vaults you switch it on for, trusted or not, and nowhere else: it is
+your code, not the vault's. A vault's own plugin runs only while the
+vault is trusted, and only then shadows a global plugin of the same id.
+Opening a vault still runs no plugin code you did not enable there.
 </p>
 
 <p>
@@ -598,9 +603,11 @@ Often you do not need a plugin at all. If all you want is shared
 JavaScript available in every rendered note — a custom element, a few
 helper functions — drop <code>.js</code> files into
 <code>.clew/scripts/</code>. Every rendered note loads them, in
-alphabetical order, with no manifest and no enable step beyond the
-vault's existing trust surface (they are the moral equivalent of the
-inline scripts notes can already carry). They are the JavaScript twin
+alphabetical order, with no manifest and no enable step of their own:
+they run in a vault this device <a href="trusting-a-vault.html">trusts</a>,
+with its <em>Vault scripts</em> switch on (it is, by default), and never
+in a restricted one — they are the moral equivalent of the inline
+scripts notes can already carry. (In 0.12.0 they run in every vault.) They are the JavaScript twin
 of the <code>.clew/snippets/</code> CSS convention described in
 <a href="theming.html">Theming and CSS snippets</a>, and — unlike
 plugin surfaces — they ship with the vault on
@@ -771,7 +778,7 @@ full of plugins.
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js?v=cbf3435759"></script>
+<script src="nav.js?v=f030baae3b"></script>
 <script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>

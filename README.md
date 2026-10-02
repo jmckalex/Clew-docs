@@ -21,7 +21,7 @@ either one.
 site/                 ← the web root; everything here is published
 ├── index.html        landing page
 ├── images/           landing-page art + the app icon (see below)
-├── manual/           the manual: 28 chapters + index
+├── manual/           the manual: 34 chapters + index
 │   ├── manual.css    shared stylesheet (landing-page palette)
 │   ├── nav.js        single source of the sidebar tree and prev/next links
 │   ├── lightbox.js   click a screenshot to see it large (+ lightbox.css);

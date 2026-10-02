@@ -347,9 +347,11 @@ two exclusion lists:
 	<dt>Note API <code>(noteApi)</code></dt>
 	<dd>Gives <code>&lt;script&gt;</code> elements in rendered notes a
 	<code>window.clew</code> API — open notes, search, read and write
-	notes and frontmatter, run commands, share state. Off by default,
-	deliberately: with it on, notes are code. Enable it only for vaults
-	you trust. See <a href="note-api.html">The Note API</a>.</dd>
+	notes and frontmatter, run commands, share state — in a vault this
+	device trusts. Off by default, deliberately: with it on, notes are
+	code. The switch is kept on this device; the vault's key is only its
+	request (<a href="#vault-trust">below</a>). See
+	<a href="note-api.html">The Note API</a>.</dd>
 	<dt>Bibliography file <code>(bibliography)</code></dt>
 	<dd>A <code>.bib</code> file — a path from the vault root, or an
 	absolute path — that every note in the vault resolves
@@ -385,9 +387,11 @@ two exclusion lists:
 	<a href="citations.html#pandoc">Citations</a>.</dd>
 	<dt>Run dataviewjs blocks <code>(dataviewJs)</code></dt>
 	<dd>Off by default. Obsidian's <code>```dataviewjs</code> blocks are
-	JavaScript rather than queries, so this is per-vault and off until
+	JavaScript rather than queries, so this is per vault and off until
 	you turn it on for a vault you wrote or trust; plain
-	<code>```dataview</code> queries always run. See
+	<code>```dataview</code> queries always run. Like the Note API it is
+	kept on this device and works only in a trusted vault
+	(<a href="#vault-trust">below</a>). See
 	<a href="queries.html">Queries</a>.</dd>
 	<dt>TeX fragments <code>(texFragments)</code></dt>
 	<dd>Named preamble text this vault's figures can ask for by name,
@@ -409,33 +413,41 @@ two exclusion lists:
 	its version, surfaces, and whether it came from this vault's
 	<code>.clew/plugins/</code> or the global plugin folder (installed
 	once, offered in every vault — there is a button to open it). Each
-	has its own enable checkbox, and the enabled set is stored as an
-	array of plugin ids in this vault: installing may be global, but
-	enabling never is. A plugin is arbitrary code — enable only what you
-	trust. See <a href="plugins.html">Vault plugins</a>.</dd>
+	has its own enable checkbox: installing may be global, but enabling
+	is per vault, on this device, and the vault's array of plugin ids is
+	only its request. A vault's own plugins run only while it is
+	trusted, and are greyed while it is not; your global ones run
+	wherever you enable them. A plugin is arbitrary code — enable only
+	what you trust. See <a href="plugins.html">Vault plugins</a>.</dd>
 </dl>
 
-<p>
-One row on this page is not stored in the vault at all:
-<strong>Trusted on this device: notes may run code</strong>. It says
-whether the engine may run the code a note asks it to — script and
-function blocks, <code>Math.…</code> and <code>calc(…)</code> in prose,
-Mathematica, the <code>Load …</code> and <code>Extension …</code> header
-keys — and Clew keeps it in its own data on this device, so a vault
-cannot arrive trusting itself. A vault new to this device starts
-untrusted. See <a href="vaults-and-files.html#trust">Trusting a vault on
-this device</a>.
+<p id="vault-trust">
+The first rows on this page are not stored in the vault at all. They
+are this device's answer about the vault's code, kept in Clew's own
+data, so a vault cannot arrive trusting itself:
+<strong>Trusted on this device: this vault may run its code</strong>;
+<strong>Vault scripts: run .clew/scripts in every note</strong>;
+<strong>Note API</strong> and <strong>Run dataviewjs blocks in this
+vault</strong>, described above; and <strong>Network: let this vault's
+scripts reach other hosts</strong>. While the vault is restricted they are all off and
+greyed. Changing the trust, the scripts or the network reloads the
+window. See <a href="trusting-a-vault.html">Trusting a vault</a>. (In
+0.12.0 the one device row reads <em>Trusted on this device: notes may
+run code</em> and covers only the code a note asks the engine to run;
+the Note API, <code>dataviewjs</code> and plugins are switched on by the
+keys in the vault.)
 </p>
 
 <div class="callout warn">
-	<span class="callout-title">Caution</span>
-	The trust row, the Note API switch, <em>Run dataviewjs blocks</em> and
-	the plugin checkboxes are trust decisions, not feature toggles, and
-	each covers only its own kind of code: trusting a vault does not enable
-	its plugins, and enabling a plugin does not trust the vault. Vault
-	scripts in <code>.clew/scripts/</code> and a note's own inline scripts
-	run in the rendered page with no switch at all. Read a vault you
-	downloaded before you trust it with anything.
+	<span class="callout-title">Caution — a vault's request is not your answer</span>
+	The keys in a vault's own <code>vault-settings.json</code> —
+	<code>noteApi</code>, <code>dataviewJs</code>, <code>network</code>,
+	<code>plugins</code> — say what the vault asks for, and only this
+	device's switches grant it. Turning a switch on or off writes the key
+	back as the vault's request, so a vault you share goes on asking for
+	what you gave it. In 0.12.0 the keys are the switches themselves, so a
+	vault you receive can arrive with its plugins, the Note API and
+	<code>dataviewjs</code> already on: read it before you open it.
 </div>
 
 <div class="callout tip">
@@ -447,6 +459,20 @@ this device</a>.
 	<a href="office-documents.html#ipad">Office documents</a>). Everything
 	else, every per-vault switch included, is the same.
 </div>
+
+<h3 id="trusted-vaults">Trusted vaults</h3>
+
+<p>
+Every vault this device has decided about, newest first: the folder's
+name (<em>(open)</em> when a window has it, <em>— not on disk</em> when
+it is gone), <em>Trusted</em>, <em>Restricted</em> or <em>Not
+decided</em>, and two buttons. <strong>Revoke</strong> makes a vault
+restricted and keeps its switches for a later <strong>Trust</strong>;
+<strong>Forget</strong> removes the record, so the next opening asks
+again. A vault open in a window reloads. See
+<a href="trusting-a-vault.html#trusted-vaults">Trusting a vault</a>.
+(Not in 0.12.0.)
+</p>
 
 <h2 id="hotkey-editor">The hotkey editor</h2>
 
@@ -640,8 +666,8 @@ source. If you use one daily, give it a key.
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
 	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments), <code>callouts</code> (the global callout types; not in 0.12.0), <code>latexEngine</code> (not in 0.12.0) — plus recent vaults and the windows to restore at launch</td></tr>
-	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>callouts</code> (this vault's callout types; not in 0.12.0), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of enabled plugin ids)</td></tr>
-	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults are trusted to run note code, keyed by the vault folder itself — never written into the vault (see <a href="vaults-and-files.html#trust">Trusting a vault</a>)</td></tr>
+	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>callouts</code> (this vault's callout types; not in 0.12.0), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of plugin ids) — of which <code>noteApi</code>, <code>dataviewJs</code>, <code>plugins</code> and <code>network</code> are the vault's requests, granted only on the device (in 0.12.0 the first three are the switches themselves; <code>network</code> is not in 0.12.0)</td></tr>
+	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults this device trusts and what each may run — vault scripts, plugins, the Note API, <code>dataviewjs</code>, the network — keyed by the vault folder itself, never written into the vault (see <a href="trusting-a-vault.html#settings">Trusting a vault</a>; in 0.12.0, only whether notes may run code)</td></tr>
 </table>
 </div>
 
@@ -664,7 +690,7 @@ source. If you use one daily, give it a key.
 <nav class="pagenav" id="pagenav"></nav>
 </main>
 </div>
-<script src="nav.js?v=cbf3435759"></script>
+<script src="nav.js?v=f030baae3b"></script>
 <script src="lightbox.js?v=e0658a9172"></script>
 </body>
 </html>
