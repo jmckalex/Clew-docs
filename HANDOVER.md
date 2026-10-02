@@ -42,6 +42,14 @@ names.
   `manual/index.html`, `nav.js`, `getting-started.html`, the README
   example), and the downloads. Prepare it on a branch in its own
   worktree so `main` stays deployable — that is how 0.12.0 was done.
+- **Release notes, drafted:** `whats-new.html` (*What's new*, one
+  `<h2 id="v0-12-1">` per release — the anchor Clew-app's auto-update feed
+  names) is on branch **`release-0.12.1`** (`b8d1e42`), in the worktree
+  `../Clew-docs-0.12.1`, NOT on `main` and never deployed. At release:
+  write the date line, add Apps in notes (a comment marks the place) and
+  anything landed since `88b6dd2`, merge into `main`, and run `make
+  stamp` — the merge conflicts on the `?v=` stamps, and restamping is the
+  resolution. Tabbing is deliberately absent: it predates 0.12.0.
 - **Release checklist — the screenshot pass** (Clew-boss, 2026-10-02:
   at the release, not before, so the shots match what people download).
   Ten manual images show the pre-`80b8b44` UI (checked image by image,
