@@ -152,6 +152,18 @@ folding — and every other callout comes out as an ordinary quote with
 its <code>[!type]</code> written out.)
 </p>
 
+<div class="callout warn">
+	<span class="callout-title">In 0.12.0</span>
+	A LaTeX export in 0.12.0 does not load the natbib package its
+	citations need. As <em>PDF via LaTeX</em>, a note that cites prints
+	each citation as its bare key — <code>lewis1969</code> — with no
+	reference list, and the <code>.tex</code> does not compile as it
+	stands. Export such a note as <em>PDF (reading view)</em>, or export
+	the LaTeX and load natbib in its preamble yourself
+	(<code>\usepackage{natbib}</code>; for <code>\fullcite</code>,
+	bibentry too).
+</div>
+
 <h3 id="two-pdfs">Two PDFs, for two different wishes</h3>
 
 <p>
