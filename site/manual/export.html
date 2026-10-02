@@ -329,7 +329,9 @@ extension is needed.
 <p>
 Mechanically, a PDF export first writes the intermediate
 <code>.tex</code> file next to your chosen destination — deliberately,
-so that relative graphics paths resolve — and then compiles it there.
+so that relative graphics paths resolve — and then compiles it there,
+with the note's own folder on TeX's search paths, so the note's
+<code>.bib</code> is found wherever you save the PDF.
 The compiler runs with a two-minute timeout, in nonstop mode. One
 pragmatic wrinkle: <code>pdflatex</code> exits with a non-zero status on
 mere warnings, so Clew accepts the run as successful whenever the PDF
@@ -381,8 +383,9 @@ actually materialised.
 	<dd>The bibliography did not resolve. Check that the note's
 	bibliography setup (see <a href="citations.html">Citations and
 	bibliographies</a>) points at a <code>.bib</code> file the export can
-	reach from the note's own folder — remember that exports run from the
-	note's directory, not from wherever Clew was started.</dd>
+	reach from the note's own folder — exports run from the note's
+	directory, not from wherever Clew was started, and wherever you save
+	the PDF, that folder is where its <code>.bib</code> is looked for.</dd>
 
 	<dt>The export looks different from reading mode</dt>
 	<dd>Almost always the configuration-cascade point above: the preview
