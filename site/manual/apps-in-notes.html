@@ -175,7 +175,10 @@ each app asks for itself.
 The answers are kept on <strong>this device</strong>, for each vault
 and each app, never in the vault: a vault you send someone arrives with
 no grants. When a later version of an app asks for more, only the new
-capabilities are asked about.
+capabilities are asked about, and an app that is running when you allow
+them keeps running — it hears <code>grant-changed</code>. Whatever is
+taken away — a capability, its right to run, or its network either way —
+closes the app and reloads it.
 </p>
 
 <h2 id="capabilities">What an app may ask for</h2>
@@ -247,7 +250,12 @@ what it was granted, and fails if it may not run here.
 <code>clew.context()</code> gives the note's path, the theme and the
 vault's name; and <code>clew.on(name, fn)</code> hears
 <code>theme</code> (the theme changed), <code>find</code> (what you
-searched for in the note) and <code>closed</code>.
+searched for in the note), <code>note-changed</code> (its note was saved
+— by you, a sync or another app; at most once every quarter of a second,
+and only to an app that may read the note), <code>grant-changed</code>
+(you allowed it more; the event brings the new list, and the app keeps
+running) and <code>closed</code>. The demo's Flashcards listens for
+<code>note-changed</code> and re-reads its cards.
 </p>
 
 <div class="tablewrap">
@@ -287,12 +295,22 @@ adds no call: the app uses the browser's own <code>fetch</code>.
 <p>
 <strong>Settings&nbsp;→&nbsp;This vault&nbsp;→&nbsp;Apps</strong>, below
 the plugins, lists each app the vault carries, with its folder and what
-this device lets it do — <em>not asked
+this device lets it do, and the notes it is open in now — <em>not asked
 yet</em>, <em>allowed to run</em>, <em>allowed: …</em> with what it may
 do, <em>not allowed to run</em>, or <em>refused</em> when two folders
 share its id. <strong>Revoke</strong> forgets every answer about the
 app: it stops, reloads, and asks again. There is no other control — to
 change an answer, revoke it and answer anew.
+</p>
+
+<p id="indicator">
+While an app that may change notes is open — one allowed
+<code>note.write</code>, <code>notes.write</code>,
+<code>notes.create</code> or <code>editor.insert</code> — the status bar
+says so: <strong>✎ Writer can edit notes</strong>, or <strong>✎ 2 apps
+can edit notes</strong>. Its tooltip names them; a click opens
+<strong>Settings&nbsp;→&nbsp;This vault&nbsp;→&nbsp;Apps</strong>, where
+<strong>Revoke</strong> is.
 </p>
 
 <h2 id="limits">What an app cannot do</h2>
@@ -343,7 +361,9 @@ the reading-view PDF prints the app's placeholder.
 	<tr><td>Same id twice</td><td>Both folders refused</td></tr>
 	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts</td></tr>
 	<tr><td>Where answers are kept</td><td><code>app-grants.json</code> in Clew's own data on this device — never in the vault</td></tr>
-	<tr><td>Settings</td><td>This vault → Apps: each app's state; <em>Revoke</em></td></tr>
+	<tr><td>Settings</td><td>This vault → Apps: each app's state and the notes it is open in; <em>Revoke</em></td></tr>
+	<tr><td>Status bar</td><td><em>✎ … can edit notes</em> while an app that may change notes is open; click for Settings</td></tr>
+	<tr><td>Events</td><td><code>clew.on</code>: <code>theme</code>, <code>find</code>, <code>note-changed</code>, <code>grant-changed</code>, <code>closed</code></td></tr>
 	<tr><td>Its own data</td><td><code>app.kv</code> in <code>clewdata.json</code>; <code>app.files</code> in its folder's <code>data/</code></td></tr>
 	<tr><td>Never</td><td>Node, <code>.clew/</code>, commands, settings, hidden files, another app's data</td></tr>
 </table>
