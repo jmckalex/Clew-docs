@@ -291,13 +291,14 @@ management step — the vault is the CMS.
 		every page, alphabetically — from a trusted vault with its scripts
 		on (not in 0.12.0, which always ships them).</td></tr>
 	<tr><td>Apps in notes (<code>@app</code>)</td>
-		<td>A labelled box, <em>App: Folder</em>; the app's folder is
-		copied as plain files, its <code>data/</code> included
+		<td>A line naming the app — <em>an app that runs inside Clew, not
+		on a website</em>; its code is copied with its folder, its
+		<code>data/</code> folder is not
 		(<a href="apps-in-notes.html#exports">Apps in notes</a>; not in
 		0.12.0).</td></tr>
 	<tr><td><code>clewdata.json</code></td>
-		<td>Copied as a plain file: it holds what the Note API and apps
-		keep, so look through it before publishing.</td></tr>
+		<td>Left out: it holds what notes and apps store through the API.
+		(In 0.12.0 it is copied as a plain file.)</td></tr>
 	<tr><td>Note scripts using the Note API</td>
 		<td>Ship with their pages but find no <code>window.clew</code>;
 		well-written ones degrade to static content.</td></tr>

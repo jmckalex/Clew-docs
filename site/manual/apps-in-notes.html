@@ -320,12 +320,14 @@ has its data.
 
 <p>
 An app needs Clew to run, so it does not travel into an export. A
-<a href="publishing.html">website export</a> shows a labelled box
-(<em>App: Apps/Flashcards</em>), and copies the app's folder like any
-other file — its <code>data/</code> folder included — along with the
-vault's <code>clewdata.json</code>, where <code>app.kv</code> keeps its
-values: look through both before publishing a vault whose apps keep
-anything private. A single note's HTML or LaTeX
+<a href="publishing.html">website export</a> puts a line in its place —
+<em>Apps/Flashcards — an app that runs inside Clew, not on a
+website.</em> — and copies the app's code with its folder, but not what
+the app keeps: neither its <code>data/</code> folder nor the vault's
+<code>clewdata.json</code>, where <code>app.kv</code> keeps its values, is
+published. (A <code>data/</code> folder that is not inside an app is
+ordinary vault content, and goes out like any other.) A single note's
+HTML or LaTeX
 <a href="export.html">export</a> prints the folder's path as text, and
 the reading-view PDF prints the app's placeholder.
 </p>
