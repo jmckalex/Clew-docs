@@ -23,8 +23,8 @@ names.
   Settings → This vault → Apps subsection (`b9f8dc2`, `ab03e95`); and
   the app events and ✎ indicator, which complete the Apps chapter
   (`eba043a`, `c34d6c0`).
-  `make dry-run` lists every manual page (nav.js changed), nav.js and the
-  four new images; deploy behind the guard, verify each live.
+  `make dry-run` lists 39 files: every manual page, nav.js and the
+  two app images; deploy behind the guard, verify each live.
 - **Pending the owner:** the owner
   may approve PRINTED page labels for PDF quotes: then rewrite
   attachments-and-files.html's `<li id="quote-page">` (and the What's new
