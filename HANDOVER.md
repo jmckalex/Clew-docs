@@ -33,8 +33,8 @@ names.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
-  left in the prose. Everything committed on `main` is deployed
-  (`make dry-run` clean). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
+  left in the prose. Everything committed on `main` up to
+  `73cbb4d` is deployed; what came after is In flight (above). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
   then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
   then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), then
   the screenshot lightbox (`c2d201a`, 37 files: every manual page, the
