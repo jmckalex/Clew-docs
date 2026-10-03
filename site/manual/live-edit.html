@@ -174,9 +174,9 @@ as the engine does.
 	<li>A <strong>table cell</strong> is edited in place
 	(<a href="#tables">Tables</a>); <kbd>⌥</kbd>-click shows the table's
 	source at that cell.</li>
-	<li>Anything else rendered — maths, a footnote number, a citation chip,
-	a diagram's edge strip — puts the cursor there, revealing the
-	source.</li>
+	<li>Anything else rendered — maths, a footnote number, a citation chip
+	— puts the cursor there, revealing the source. A rendered block is the
+	exception: a click on it goes to the block (<a href="#frames">below</a>).</li>
 </ul>
 
 <h3 id="lines">Lines</h3>
@@ -210,14 +210,21 @@ checkboxes — written back through the editor, so <kbd>⌘Z</kbd> undoes
 them; <em>Edit as YAML</em> shows the source.
 </p>
 
-<p>
+<p id="frames">
 Everything else the <em>engine</em> draws — mermaid and the
 <a href="diagrams.html">TeX figures</a>, <a href="maps.html">maps</a>,
 <a href="queries.html">queries</a>, Dataview and Bases, note and PDF
 embeds, canvases, media, <code>@reveal</code>,
 <a href="tabbing.html">tabbing</a> — is rendered by the engine
 into a small frame in the note, exactly what reading mode shows, refusals
-included. Click the thin strip above a frame to edit its source. A frame
+included. A click on a frame goes to the frame itself — a map pans, an
+embed's link opens. To edit its source, point at the frame: a small
+<strong>&lt;/&gt;</strong> icon, <em>Edit source</em>, appears at its
+top-right corner (for a PDF, a note embed, a drawing, an app or raw HTML,
+just outside the corner, so it covers none of their own controls); click
+it, or move the cursor into the block with the arrow keys. On a touch
+screen the icon is always faintly visible. (In 0.12.0 a click on a thin
+bar along a frame's top edge revealed its source.) A frame
 re-renders when a file it reads changes (an embedded note, the notes a
 query lists) and when a setting that changes rendering does.
 </p>
