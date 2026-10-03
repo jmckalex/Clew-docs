@@ -285,8 +285,9 @@ adds no call: the app uses the browser's own <code>fetch</code>.
 <h2 id="settings">Settings</h2>
 
 <p>
-<strong>Settings&nbsp;→&nbsp;This vault</strong> lists the vault's apps
-below its plugins, each with its folder and its state — <em>not asked
+<strong>Settings&nbsp;→&nbsp;This vault&nbsp;→&nbsp;Apps</strong>, below
+the plugins, lists each app the vault carries, with its folder and what
+this device lets it do — <em>not asked
 yet</em>, <em>allowed to run</em>, <em>allowed: …</em> with what it may
 do, <em>not allowed to run</em>, or <em>refused</em> when two folders
 share its id. <strong>Revoke</strong> forgets every answer about the
@@ -342,7 +343,7 @@ the reading-view PDF prints the app's placeholder.
 	<tr><td>Same id twice</td><td>Both folders refused</td></tr>
 	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts</td></tr>
 	<tr><td>Where answers are kept</td><td><code>app-grants.json</code> in Clew's own data on this device — never in the vault</td></tr>
-	<tr><td>Settings</td><td>This vault, below the plugins: each app's state; <em>Revoke</em></td></tr>
+	<tr><td>Settings</td><td>This vault → Apps: each app's state; <em>Revoke</em></td></tr>
 	<tr><td>Its own data</td><td><code>app.kv</code> in <code>clewdata.json</code>; <code>app.files</code> in its folder's <code>data/</code></td></tr>
 	<tr><td>Never</td><td>Node, <code>.clew/</code>, commands, settings, hidden files, another app's data</td></tr>
 </table>
