@@ -10,20 +10,15 @@ names.
 ## 0. Resume here
 
 - **In flight — committed, not deployed:** `0f4608f` (a PDF's citation
-  remembered, Clew-app `5fa2a57`). Held so that one manual-only deploy
-  carries it with the two quoting changes Clew-boss expects next:
-  printed page numbers (rewrite `#quote-page`) and a quieter page
-  navigator. Manual-only under Clew-boss's go; the dry-run should list
+  remembered, Clew-app `5fa2a57`) and `c805dae` (quotes cite the printed
+  page, `d358d18`). Held so that one manual-only deploy carries them with
+  the quieter page navigator Clew-boss expects next. Manual-only under Clew-boss's go; the dry-run should list
   attachments-and-files.html (and whatever those two touch).
   On 2026-10-03 the owner approved the overnight work: deployed (39
   files, `1c8dc8b`…`eba043a` — Apps in notes, PDF quoting, conflicts,
   the engine changes, and the rest; each verified byte-identical live)
   and `main` pushed.
-- **Pending the owner:** the owner
-  may approve PRINTED page labels for PDF quotes: then rewrite
-  attachments-and-files.html's `<li id="quote-page">` (and the What's new
-  line). The manual reflects Clew-app up to **`5fa2a57`** — the base
-  hash.
+- **Base hash:** the manual reflects Clew-app up to **`d358d18`**.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
