@@ -22,8 +22,8 @@ names.
 - **Pending the owner:** the owner
   may approve PRINTED page labels for PDF quotes: then rewrite
   attachments-and-files.html's `<li id="quote-page">` (and the What's new
-  line). The manual reflects Clew-app up to **`c34d6c0`** — the base
-  hash. Clew-app's `0f4608f` write-up is at `5fa2a57`.
+  line). The manual reflects Clew-app up to **`5fa2a57`** — the base
+  hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
