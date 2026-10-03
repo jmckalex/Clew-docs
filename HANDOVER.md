@@ -11,12 +11,18 @@ names.
 
 - **In flight — committed on `main`, NOT deployed, waiting for the
   owner's morning OK** (Clew-boss: a new chapter is the owner's to
-  publish): `1c8dc8b`…`e074fc9` — links out of a restricted vault, the
+  publish): `1c8dc8b`…`dbd4fb3` — links out of a restricted vault, the
   update check, footnote labels, tabbing in exports and Clew fences in
-  LaTeX, the unknown numeric key, and the new chapter **Apps in notes**
-  (`5250d47`). `make dry-run` lists every manual page (nav.js changed),
+  LaTeX, the unknown numeric key, the new chapter **Apps in notes**
+  (`5250d47`), and quoting a passage from a PDF (`dbd4fb3`). Clew-app is
+  changing the site export (app data, `clewdata.json`), a real Settings →
+  This vault → Apps subsection, a live-write indicator and note/grant
+  events: adjust apps-in-notes.html and Publishing's table when that
+  notice comes, before the deploy. The owner may approve PRINTED page
+  labels for PDF quotes: then rewrite attachments-and-files.html's
+  `<li id="quote-page">` (and the What's new line). `make dry-run` lists every manual page (nav.js changed),
   nav.js and the two app images; deploy behind the guard, verify each
-  live. The manual reflects Clew-app up to **`036befe`** — the base hash.
+  live. The manual reflects Clew-app up to **`4921cc1`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -50,8 +56,8 @@ names.
   `<h2 id="v0-12-1">` per release — the anchor Clew-app's auto-update feed
   names) is on branch **`release-0.12.1`** (`b8d1e42`), in the worktree
   `../Clew-docs-0.12.1`, NOT on `main` and never deployed. At release:
-  write the date line and add anything landed since `036befe` (the
-  branch merged `main` at `08a6953`; it is at `953b9ee`, apps included),
+  write the date line and add anything landed since `4921cc1` (the
+  branch last merged `main` at `4138f94`, PDF quoting included),
   merge into `main`, and run `make stamp` — the merge conflicts on the
   `?v=` stamps only, and restamping is the resolution (done once already).
   Tabbing is deliberately absent: it predates 0.12.0.
