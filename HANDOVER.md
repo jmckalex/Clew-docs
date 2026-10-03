@@ -14,10 +14,11 @@ names.
   (`c805dae`), PDF links beside the note (`15f3557`), the quieter
   navigator (`4e055ad`) — went out 2026-10-03 on Clew-boss's go, three
   pages, each verified byte-identical live; so did the live preview that
-  never covers a figure (`adc1657`, editing and diagrams). The overnight work was
+  never covers a figure (`adc1657`, editing and diagrams), and the
+  Edit source icon (`825b3c3`, live-edit). The overnight work was
   deployed (39 files) and `main` pushed the same morning on the owner's
   OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`3031a15`**.
+- **Base hash:** the manual reflects Clew-app up to **`4a5a60a`**.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -83,7 +84,11 @@ names.
   Not affected — crops of the note area: `live-edit-slash`,
   `link-preview`, `live-preview-pane`, `crossref-preview`. Older full
   shots merely lack the switch in the tab strip. Also fold in:
-  `math.jpg`'s Note title colour (§4), the landing `kanban.jpg`.
+  `math.jpg`'s Note title colour (§4), the landing `kanban.jpg`. The
+  thin bar along a live-edit frame's top (gone in Clew-app `4a5a60a`)
+  appears in no current shot — it showed only on hover, and no recipe
+  hovers a frame; a new shot of the `</>` Edit source icon would be the
+  release pass's to add, not a retake.
   **Recipes for all twelve are in `shots/`** (`c268db2`), each run into
   scratch against Clew-app HEAD on 2026-10-02 — none installed.
   `shots/README.md` has the command, fixture, env and expected log line
