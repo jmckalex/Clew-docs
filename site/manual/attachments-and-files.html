@@ -420,7 +420,7 @@ a quote with a citation and a link back to its page. (Not in 0.12.0.)
 	<pre><code>&gt; Conventions are equilibria in a game of coordination; their
 &gt; evolutionary dynamics are slow.
 &gt;
-&gt; \cite[p. 1]{skyrms:1996} · [[Paper.pdf#page=1|PDF p. 1]]</code></pre>
+&gt; \cite[p. 268]{skyrms:1996} · [[Skyrms.pdf#page=2|PDF p. 2]]</code></pre>
 </div>
 
 <ul>
@@ -452,9 +452,20 @@ a quote with a citation and a link back to its page. (Not in 0.12.0.)
 	<code>file</code> field names the PDF always wins over a remembered
 	answer, and a remembered entry that is gone from every
 	<code>.bib</code> asks again.</li>
-	<li id="quote-page"><strong>The page</strong> is the PDF's own page
-	number, counted from 1 at its first page — not the number printed on
-	the page, which in a journal article is usually different.</li>
+	<li id="quote-page"><strong>The page</strong> the citation names is the
+	one the article prints — <em>p. 268</em> — while the link after it is
+	the PDF's own page, <em>PDF p. 2</em>, which is what opens. Clew reads
+	the printed number from the numbers in the pages' headers and footers,
+	else from the PDF's page labels (front matter stays as printed:
+	<em>xii</em>), else uses the PDF's page and says so, once. The printed
+	numbers come first because publishers' page labels are often wrong —
+	some downloads are labelled a page ahead of what each page prints. If
+	the number is wrong or missing, open the PDF at a page whose printed
+	number you know and run <em>PDF: set the printed page number…</em> with
+	that number, in digits: every page follows from it, an empty answer
+	forgets it, and it is remembered for the PDF in this vault, like its
+	citation. A quote without a citation still names the printed page:
+	<em>p. 268 · PDF p. 2</em>.</li>
 	<li><strong>A PDF opened from the web</strong> cannot be quoted from:
 	<em>Save a copy</em> into the vault and quote from the copy.</li>
 </ul>
