@@ -441,6 +441,17 @@ a quote with a citation and a link back to its page. (Not in 0.12.0.)
 	quote goes in without one, and the notice says why. With
 	<a href="citations.html#pandoc">pandoc citations</a> on, the citation
 	is <code>[@key, p. N]</code>.</li>
+	<li><strong>Your answer is remembered</strong> for that PDF in this
+	vault, so Clew asks once: it is kept in the vault's
+	<code>.clew/pdf-citations.json</code>, travelling with the vault (and
+	never into a website export), and follows the PDF when you rename or
+	move it. The first quote of a session that uses it says so in its
+	notice. <em>PDF: change the citation for this PDF…</em> in the palette —
+	for the PDF in the active tab, or the one last quoted from — asks again,
+	with the current choice marked. A <code>.bib</code> entry whose
+	<code>file</code> field names the PDF always wins over a remembered
+	answer, and a remembered entry that is gone from every
+	<code>.bib</code> asks again.</li>
 	<li id="quote-page"><strong>The page</strong> is the PDF's own page
 	number, counted from 1 at its first page — not the number printed on
 	the page, which in a journal article is usually different.</li>
