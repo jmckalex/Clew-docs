@@ -139,15 +139,28 @@ citation resolution switches on with it.
 </p>
 
 <p>
-The precedence is what you would hope: the vault settings are the
-default, and a note's own <code>Bibliography</code> or
-<code>Bibliography style</code> properties override them for that note
-alone. A note's file <strong>replaces</strong> the vault's rather than
-adding to it: the engine reads one <code>.bib</code> per note, so a note
-that names its own file resolves only what is in that file, and a work
-that lives only in the vault-wide one stays an unresolved
-<code>\cite</code> there. To keep the vault's file and change only the
-look, set <code>Bibliography style</code> alone. Everything in this chapter — sectional
+The vault settings are the default, and a note's own properties build
+on them. A note's <code>Bibliography</code> <strong>adds to</strong> the
+vault's: both files are used, and where a key is in both, the note's
+entry wins. To use the note's file alone, write <code>Bibliography mode:
+replace</code>. A note's <code>Bibliography style</code> replaces the
+vault's style for that note. (In 0.12.0 a note's file replaces the
+vault's: a work only in the vault-wide one stays an unresolved
+<code>\cite</code> in a note that names its own.)
+</p>
+
+<div class="example">
+	<p class="example-label">You write (several files, in a note's header)</p>
+	<pre><code>---
+Bibliography:
+  - refs.bib
+  - ../Shared/philosophy.bib
+---</code></pre>
+</div>
+
+<p>
+A <code>Bibliography</code> may name several files, as a list like this
+or on one line separated by commas. Everything in this chapter — sectional
 <code>@bibliography</code> blocks, scopes, per-bibliography styles —
 keeps working on top of a vault-wide file, because the vault setting
 only supplies what the note does not say itself.
