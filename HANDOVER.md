@@ -11,7 +11,7 @@ names.
 
 - **In flight — committed on `main`, NOT deployed, waiting for the
   owner's morning OK** (Clew-boss: a new chapter is the owner's to
-  publish): `1c8dc8b`…`b9f8dc2`. In it: links out of a restricted vault;
+  publish): `1c8dc8b`…`eba043a`. In it: links out of a restricted vault;
   the update check; footnote labels; tabbing in exports and Clew fences
   in LaTeX; the unknown numeric key; the new chapter **Apps in notes**
   (`5250d47`); quoting a passage from a PDF (`dbd4fb3`); the site export
@@ -20,15 +20,15 @@ names.
   additive Bibliography, the ⚠ export warnings, escapes in LaTeX,
   unnumbered headings); conflict safety (`76254ce`, `2f5d80d`); exports
   using the vault's bibliography (`e0b3858`, `c62782b`); and the real
-  Settings → This vault → Apps subsection (`b9f8dc2`, `ab03e95`).
+  Settings → This vault → Apps subsection (`b9f8dc2`, `ab03e95`); and
+  the app events and ✎ indicator, which complete the Apps chapter
+  (`eba043a`, `c34d6c0`).
   `make dry-run` lists every manual page (nav.js changed), nav.js and the
   four new images; deploy behind the guard, verify each live.
-- **Still coming from Clew-app:** the live-write indicator and the
-  note-changed and grant-changed events for apps — adjust
-  apps-in-notes.html when that notice comes, before the deploy. The owner
+- **Pending the owner:** the owner
   may approve PRINTED page labels for PDF quotes: then rewrite
   attachments-and-files.html's `<li id="quote-page">` (and the What's new
-  line). The manual reflects Clew-app up to **`ab03e95`** — the base
+  line). The manual reflects Clew-app up to **`c34d6c0`** — the base
   hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
