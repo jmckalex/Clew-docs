@@ -9,22 +9,11 @@ names.
 
 ## 0. Resume here
 
-- **In flight — committed on `main`, NOT deployed, waiting for the
-  owner's morning OK** (Clew-boss: a new chapter is the owner's to
-  publish): `1c8dc8b`…`eba043a`. In it: links out of a restricted vault;
-  the update check; footnote labels; tabbing in exports and Clew fences
-  in LaTeX; the unknown numeric key; the new chapter **Apps in notes**
-  (`5250d47`); quoting a passage from a PDF (`dbd4fb3`); the site export
-  leaving out `clewdata.json` and apps' data (`1339885`, Clew-app
-  `86ec1bc`); the engine at e7cf638 (`79e5726`…`af3137e`, `21fe191`: the
-  additive Bibliography, the ⚠ export warnings, escapes in LaTeX,
-  unnumbered headings); conflict safety (`76254ce`, `2f5d80d`); exports
-  using the vault's bibliography (`e0b3858`, `c62782b`); and the real
-  Settings → This vault → Apps subsection (`b9f8dc2`, `ab03e95`); and
-  the app events and ✎ indicator, which complete the Apps chapter
-  (`eba043a`, `c34d6c0`).
-  `make dry-run` lists 39 files: every manual page, nav.js and the
-  two app images; deploy behind the guard, verify each live.
+- **Nothing is in flight.** Wait for Clew-boss's next docs notice.
+  On 2026-10-03 the owner approved the overnight work: deployed (39
+  files, `1c8dc8b`…`eba043a` — Apps in notes, PDF quoting, conflicts,
+  the engine changes, and the rest; each verified byte-identical live)
+  and `main` pushed.
 - **Pending the owner:** the owner
   may approve PRINTED page labels for PDF quotes: then rewrite
   attachments-and-files.html's `<li id="quote-page">` (and the What's new
@@ -33,8 +22,8 @@ names.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
-  left in the prose. Everything committed on `main` up to
-  `73cbb4d` is deployed; what came after is In flight (above). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
+  left in the prose. Everything committed on `main` is deployed
+  (`make dry-run` clean). On 2026-10-02, on Clew-boss's go: `bbffa4d`,
   then the callouts/export notice (`7200d20`–`e631b9d`, six pages),
   then the LaTeX-engine notice (`8b3ecc4`–`da59221`, three pages), then
   the screenshot lightbox (`c2d201a`, 37 files: every manual page, the
@@ -42,8 +31,8 @@ names.
   the new chapter *Trusting a vault* (`0b78593`–`9534701`, 38 files — the
   owner's direct go), each verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
-  homepage clew-app.com), `main` only. Pushed through **`d4643f9`**
-  (2026-10-02: Clew-boss relayed "push all", the owner confirmed here);
+  homepage clew-app.com), `main` only. Pushed through the commit that records this push
+  (2026-10-03, the owner's OK given here; 2026-10-02 likewise);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
