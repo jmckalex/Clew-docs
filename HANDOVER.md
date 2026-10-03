@@ -11,18 +11,18 @@ names.
 
 - **In flight — committed on `main`, NOT deployed, waiting for the
   owner's morning OK** (Clew-boss: a new chapter is the owner's to
-  publish): `1c8dc8b`…`dbd4fb3` — links out of a restricted vault, the
+  publish): `1c8dc8b`…`1339885` — links out of a restricted vault, the
   update check, footnote labels, tabbing in exports and Clew fences in
   LaTeX, the unknown numeric key, the new chapter **Apps in notes**
-  (`5250d47`), and quoting a passage from a PDF (`dbd4fb3`). Clew-app is
-  changing the site export (app data, `clewdata.json`), a real Settings →
-  This vault → Apps subsection, a live-write indicator and note/grant
-  events: adjust apps-in-notes.html and Publishing's table when that
-  notice comes, before the deploy. The owner may approve PRINTED page
+  (`5250d47`), quoting a passage from a PDF (`dbd4fb3`), and the site
+  export leaving out `clewdata.json` and apps' data (`1339885`, Clew-app
+  `86ec1bc`). Still coming from Clew-app: a real Settings → This vault →
+  Apps subsection, a live-write indicator and note/grant events — adjust
+  apps-in-notes.html when that notice comes, before the deploy. The owner may approve PRINTED page
   labels for PDF quotes: then rewrite attachments-and-files.html's
   `<li id="quote-page">` (and the What's new line). `make dry-run` lists every manual page (nav.js changed),
   nav.js and the two app images; deploy behind the guard, verify each
-  live. The manual reflects Clew-app up to **`4921cc1`** — the base hash.
+  live. The manual reflects Clew-app up to **`86ec1bc`** — the base hash.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
