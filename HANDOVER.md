@@ -13,10 +13,11 @@ names.
   PDF batch — a remembered citation (`0f4608f`), printed page numbers
   (`c805dae`), PDF links beside the note (`15f3557`), the quieter
   navigator (`4e055ad`) — went out 2026-10-03 on Clew-boss's go, three
-  pages, each verified byte-identical live. The overnight work was
+  pages, each verified byte-identical live; so did the live preview that
+  never covers a figure (`adc1657`, editing and diagrams). The overnight work was
   deployed (39 files) and `main` pushed the same morning on the owner's
   OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`bebc385`**.
+- **Base hash:** the manual reflects Clew-app up to **`3031a15`**.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
