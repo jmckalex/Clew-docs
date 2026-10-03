@@ -574,9 +574,10 @@ rendering the formula or diagram shows until you step into it.
 	the <code>@begin(…)</code> forms — rendered by the engine exactly as
 	reading mode would, below the block; when there is no room below,
 	beside the text instead, or below and shrunk, or not at all: it never
-	covers the lines you are editing. If a figure fails, the pane shows
-	its first error, the full log folded under <em>Show log</em>, and the
-	editor marks the line with the error — hover it for the message.
+	covers the lines you are editing. If a figure fails, the editor marks
+	the line with the error — hover it for the message — and the pane
+	shows the first error; its <em>Show log</em> button below the figure
+	opens the full log without leaving the figure.
 	Mermaid redraws after a short pause; a TeX figure after a longer one,
 	since each run takes about a second. (In 0.12.0 the pane could sit
 	over a figure's own lines, its whole log with it, covering the typo
@@ -587,9 +588,10 @@ rendering the formula or diagram shows until you step into it.
 	previewed — each render would rescan the vault.</li>
 	<li><kbd>Esc</kbd> puts the pane away until the cursor leaves that
 	formula or block. It never takes the cursor, and clicks and scrolls
-	pass through it to the note beneath — in source mode and live edit
-	alike. (In 0.12.0 a diagram taller than the pane scrolled within it
-	first.)</li>
+	pass through it to the note beneath, in source mode and live edit
+	alike — all but a failed figure's <em>Show log</em> and the log it
+	opens, which scrolls on its own. (In 0.12.0 a diagram taller than the
+	pane scrolled within it first.)</li>
 	<li>Settings → Appearance → <em>Live preview of maths and diagrams
 	while editing</em> turns it off. Not yet inside a table cell being
 	edited in place.</li>
