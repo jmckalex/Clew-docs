@@ -784,10 +784,14 @@ between this and a full local installation:
 
 <p>
 When a figure fails for the ordinary reason — a typo in the picture —
-its place in the note is taken by an error box carrying TeX's own
-diagnostics, with the line number in your source and the log beneath
-it. Add <code>show-console</code> to keep that log visible even when
-the figure succeeds.
+its place in the note is taken by an error box: the first error and the
+text TeX had read up to it, with the full log folded under <em>Show
+log</em> — in reading mode, live edit and the
+<a href="editing.html#preview-pane">live preview</a> alike. While you
+edit, the line with the error is marked in the editor; hover it for the
+message. (In 0.12.0 the box shows the whole log at once.) Add
+<code>show-console</code> to keep the log visible even when the figure
+succeeds.
 </p>
 
 <div class="callout tip">

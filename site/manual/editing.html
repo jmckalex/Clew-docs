@@ -572,20 +572,24 @@ rendering the formula or diagram shows until you step into it.
 	<li><strong>Diagrams</strong> — ```mermaid, ```tikz, ```latex,
 	```tex, ```metapost, <code>:::TiKZ</code>, <code>:::mermaid</code> and
 	the <code>@begin(…)</code> forms — rendered by the engine exactly as
-	reading mode would, a TeX error's console included, below the block.
+	reading mode would, below the block; when there is no room below,
+	beside the text instead, or below and shrunk, or not at all: it never
+	covers the lines you are editing. If a figure fails, the pane shows
+	its first error, the full log folded under <em>Show log</em>, and the
+	editor marks the line with the error — hover it for the message.
 	Mermaid redraws after a short pause; a TeX figure after a longer one,
-	since each run takes about a second.</li>
+	since each run takes about a second. (In 0.12.0 the pane could sit
+	over a figure's own lines, its whole log with it, covering the typo
+	you meant to fix.)</li>
 	<li>Only a finished construct previews: a <code>$$</code> with no
 	closing <code>$$</code> yet, or a fence with no closing line, is not
 	yet anything to render. Queries, Dataview and Bases blocks are not
 	previewed — each render would rescan the vault.</li>
 	<li><kbd>Esc</kbd> puts the pane away until the cursor leaves that
-	formula or block. It never takes the cursor, and clicking it does
-	nothing.</li>
-	<li>Scrolling with the wheel or trackpad over the pane scrolls the
-	note. A diagram taller than the pane scrolls within it first, and a
-	sideways scroll over a wide formula scrolls the formula; a gesture
-	that starts on the pane stays with the pane until you pause.</li>
+	formula or block. It never takes the cursor, and clicks and scrolls
+	pass through it to the note beneath — in source mode and live edit
+	alike. (In 0.12.0 a diagram taller than the pane scrolled within it
+	first.)</li>
 	<li>Settings → Appearance → <em>Live preview of maths and diagrams
 	while editing</em> turns it off. Not yet inside a table cell being
 	edited in place.</li>
