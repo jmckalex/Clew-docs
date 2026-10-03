@@ -331,6 +331,24 @@ count once. When the active tab is not a note — a canvas, the graph,
 settings — the status bar is empty.
 </p>
 
+<p id="warnings">
+When the engine warns about the active note, a <strong>⚠</strong> with a
+count joins them — in reading mode too. The warnings are chiefly about
+what renders on screen but would break a
+<a href="export.html">LaTeX export</a>: two amounts such as
+<code>$5 and $10</code> in one paragraph, which pair up as a formula; an
+<code>align*</code> inside <code>$$…$$</code>; MathJax-only commands such
+as <code>\bbox</code>; maths a LaTeX package must provide; a Windows
+path's backslashes; a brace with no partner. Hover for a summary by kind
+(<em>LaTeX export: dollars, display-math … — click to list them</em>);
+click for the list, each warning with its kind beside it. A note's header
+can turn a kind off — <code>Silence warnings: dollars</code>, several
+separated by commas — using the kinds <code>dollars</code>,
+<code>display-math</code>, <code>mathjax-only</code>,
+<code>package</code>, <code>backslash</code> and <code>braces</code>, or
+<code>latex-export</code> for all of them. (Not in 0.12.0.)
+</p>
+
 <div class="callout obsidian">
 	<span class="callout-title">Obsidian compatibility</span>
 	Everything the panels persist — bookmarks in
