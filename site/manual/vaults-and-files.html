@@ -280,22 +280,24 @@ the only place you are likely to notice them.
 	itself: whenever it returns to the foreground, and every twenty
 	seconds while it is in front. An edit made on the Mac reaches an open
 	note on the iPad within that window once iCloud has delivered it, and
-	the same conflict banner protects unsaved typing at either end. Saves
+	a conflict banner protects unsaved typing at either end. Saves
 	from the iPad use the same temporary-and-rename step with the same
 	file name, so neither app ever mistakes the other's temporary for a
 	note.
 </div>
 
 <p>
-The interesting case is a genuine conflict: the file changed on disk
-<em>while you have unsaved local edits</em> to it. Clew refuses to
-guess. A banner appears over the editor, auto-save pauses so your
-typing cannot clobber the disk version behind your back, and you
-choose: <strong>Keep my version</strong> (your buffer wins and is
-saved over the disk change) or <strong>Load disk version</strong>
-(your unsaved edits are discarded in favour of the file). Nothing is
-overwritten silently in either direction. The same banner protects
-canvases.
+The interesting case is a genuine conflict: a note changed in two
+places — on disk while you have unsaved edits to it, or by another app
+or device since Clew last read it, which a save then finds. Clew
+refuses to guess. Both versions go into the note's history, auto-save
+pauses, and a banner asks: <strong>Keep mine</strong>, <strong>Keep
+theirs</strong>, <strong>Keep both</strong> (the other saved beside the
+note) or <strong>Compare…</strong>. Nothing is overwritten silently in
+either direction (see <a href="editing.html#conflicts">External changes
+and conflicts</a>; in 0.12.0 the banner offers <em>Keep my version</em>
+or <em>Load disk version</em>, which discards your unsaved edits).
+Canvases have their own banner with those two choices.
 </p>
 
 <div class="callout warn">

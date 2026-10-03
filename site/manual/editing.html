@@ -488,15 +488,48 @@ whether you have unsaved edits of your own:
 <ul>
 	<li><strong>Your editor is clean:</strong> the note reloads in place,
 	silently, keeping your cursor position where possible.</li>
-	<li><strong>You have unsaved edits:</strong> a banner appears —
-	<em>"This file changed on disk while you have unsaved edits. Auto-save
-	is paused."</em> — and auto-save stays paused so your typing cannot
-	clobber the on-disk version behind your back. The banner offers two
-	buttons: <strong>Keep my version</strong> writes your editor's content
-	over the disk version, and <strong>Load disk version</strong> discards
-	your local edits and loads what is on disk. Nothing is overwritten
-	until you choose.</li>
+	<li><strong>The note changed in two places</strong> — on another
+	device through a sync service, or in another app, while you were
+	writing here. Clew never overwrites either version silently. It
+	notices one of two ways: a change arrives while you have unsaved
+	edits (<em>This note changed on disk while it had unsaved edits here.
+	Auto-save is paused.</em>), or your save finds a version that another
+	app or device saved since Clew last read the note, and is held
+	(<em>Your save was held, so nothing was overwritten.</em> — said in a
+	notice too, since the banner may be in another tab). Either way both
+	versions go into the note's <a href="note-history.html">history</a>
+	first, whatever you choose and whatever its settings, and a banner
+	asks.</li>
 </ul>
+
+<dl>
+	<dt>Keep mine</dt>
+	<dd>Your version is written over the other.</dd>
+	<dt>Keep theirs</dt>
+	<dd>The other version is loaded into the editor; your unsaved text
+	stays in the history.</dd>
+	<dt>Keep both</dt>
+	<dd>Your version stays in the note, and the other is saved beside it
+	as <code>Note (conflict 2026-10-03).md</code>.</dd>
+	<dt>Compare…</dt>
+	<dd>Shows the lines that differ — <code>−</code> only on disk,
+	<code>+</code> only in the editor — with the same three choices.</dd>
+</dl>
+
+<p>
+A copy that Dropbox kept beside a note — its <em>conflicted copy</em> —
+is offered the same way: a notice, <em>Dropbox kept a conflicted copy of
+“Note”</em>, whose <strong>Review…</strong> lets you keep the note (the
+copy goes to the Trash), keep the copy's text in the note, or keep both;
+both versions are in the history first. A note whose text holds git's
+conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>,
+<code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) gets a
+notice saying so; the two versions are in its text, for you to choose
+between. (In 0.12.0 the banner offers only <em>Keep my version</em> and
+<em>Load disk version</em>, which discards your unsaved edits; a save
+over a change the watcher had not reported is not caught; and Dropbox
+copies and git markers pass unremarked.)
+</p>
 
 <p>
 Clew recognizes echoes of its own saves, so the watcher seeing a file
