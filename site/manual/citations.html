@@ -160,7 +160,13 @@ Bibliography:
 
 <p>
 A <code>Bibliography</code> may name several files, as a list like this
-or on one line separated by commas. Everything in this chapter — sectional
+or on one line separated by commas. A note's HTML, LaTeX and PDF
+<a href="export.html">exports</a> use the same files — the vault's as
+well as the note's own; where a key is in more than one, the engine
+writes the merged entries to <code><em>name</em>-bibliography.bib</code>
+beside the <code>.tex</code>. (In 0.12.0 an export reads only the note's
+own <code>Bibliography</code>, so a citation from the vault-wide file
+stays unresolved there.) Everything in this chapter — sectional
 <code>@bibliography</code> blocks, scopes, per-bibliography styles —
 keeps working on top of a vault-wide file, because the vault setting
 only supplies what the note does not say itself.
