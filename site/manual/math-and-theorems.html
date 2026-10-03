@@ -386,7 +386,11 @@ the same characters, and it pays to keep the boundary straight:
 	The same goes for money: two amounts in one paragraph —
 	<code>$5 and $10</code> — are a pair of delimiters, and everything
 	between them becomes a formula. Escape them, <code>\$5</code>, or
-	put them in code spans.
+	put them in code spans. An escaped <code>\$</code>, <code>\_</code>,
+	<code>\%</code> or <code>\{</code> prints as itself, on screen and in
+	a LaTeX export alike. (In 0.12.0 the escape works on screen only: a
+	LaTeX export drops the backslash, the amounts become a formula again,
+	and a <code>%</code> starts a comment.)
 </div>
 
 <div class="callout obsidian">
