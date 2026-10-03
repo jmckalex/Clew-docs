@@ -404,6 +404,50 @@ back to its page.
 	text.</li>
 </ul>
 
+<h2 id="quoting">Quoting a passage</h2>
+
+<p>
+Select text in a PDF — in its tab, in a note's embed or on a canvas —
+and choose <strong>Quote in note</strong> from the viewer's own selection
+menu, or press <kbd>⌘⌥Q</kbd> (also <em>Edit&nbsp;→&nbsp;Quote PDF
+Selection in Note</em>, and the palette's <em>PDF: quote the selection in
+the note</em>). Clew writes the passage into the note you are writing, as
+a quote with a citation and a link back to its page. (Not in 0.12.0.)
+</p>
+
+<div class="example">
+	<p class="example-label">What goes into the note</p>
+	<pre><code>&gt; Conventions are equilibria in a game of coordination; their
+&gt; evolutionary dynamics are slow.
+&gt;
+&gt; \cite[p. 1]{skyrms:1996} · [[Paper.pdf#page=1|PDF p. 1]]</code></pre>
+</div>
+
+<ul>
+	<li><strong>The note</strong> is the one open in source mode or live
+	edit — the active tab, or else the note you last edited. The quote
+	goes in as a block of its own, after the block your cursor is in, so
+	quotes taken one after another stack in order. A note in reading mode
+	is never written into: switch it to source or live first.</li>
+	<li><strong>The text</strong> becomes one paragraph: a word broken by
+	a hyphen at the end of a line is joined, and anything the dialect
+	would read as markup — a <code>$</code>, a <code>^</code> — is
+	escaped, so the quote renders as the PDF reads.</li>
+	<li><strong>The citation</strong> is the <code>.bib</code> entry whose
+	<code>file</code> field names this PDF (see
+	<a href="citations.html#library">the Library</a>). When several entries
+	name it, or none does, Clew asks which to cite — or to <em>Quote
+	without a citation</em>; in a vault with no <code>.bib</code> file the
+	quote goes in without one, and the notice says why. With
+	<a href="citations.html#pandoc">pandoc citations</a> on, the citation
+	is <code>[@key, p. N]</code>.</li>
+	<li id="quote-page"><strong>The page</strong> is the PDF's own page
+	number, counted from 1 at its first page — not the number printed on
+	the page, which in a journal article is usually different.</li>
+	<li><strong>A PDF opened from the web</strong> cannot be quoted from:
+	<em>Save a copy</em> into the vault and quote from the copy.</li>
+</ul>
+
 <h2 id="other-files">Non-media files</h2>
 
 <p>
