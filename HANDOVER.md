@@ -14,11 +14,12 @@ names.
   (`c805dae`), PDF links beside the note (`15f3557`), the quieter
   navigator (`4e055ad`) — went out 2026-10-03 on Clew-boss's go, three
   pages, each verified byte-identical live; so did the live preview that
-  never covers a figure (`adc1657`, editing and diagrams), and the
-  Edit source icon (`825b3c3`, live-edit). The overnight work was
+  never covers a figure (`adc1657`, editing and diagrams), the
+  Edit source icon (`825b3c3`, live-edit), and the preview's own
+  "Show log" (`e025bdc`, editing and diagrams). The overnight work was
   deployed (39 files) and `main` pushed the same morning on the owner's
   OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`4a5a60a`**.
+- **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
