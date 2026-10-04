@@ -31,10 +31,14 @@ names.
 - **Deployed tonight, each verified byte-identical live:** PDF
   conflicts (`4de7ec4`: attachments-and-files#pdf-conflicts, pointers in
   editing and note-history), the device in the trust button (`9137dd7`),
-  untitled admonition headings (`61f6507`, callouts). `main` was pushed
+  untitled admonition headings (`61f6507`, callouts), and apps in live
+  edit, prompts that focus the question, and the six App Gallery
+  examples (`a5489ed`, apps-in-notes and trusting-a-vault). `main` was pushed
   at `ee264a9` on the owner's direct OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**, plus
-  `686232b`, `8e0640c` and `042a05d` (checked on a build of `5268224`).
+- **Base hash:** the manual reflects Clew-app up to **`8173392`**
+  (apps checked on a build of it). Undocumented on purpose: re-vendors
+  and smoke-only commits, and `ef8577e` (markup in code is text), for
+  which no notice came.
   `4ddda35`, `52ba4ae` and `a374b99` are written but held (above);
   `038ec6f` (a notice moves up
   clear of a PDF viewer's status) needs no text.
@@ -114,7 +118,11 @@ names.
   `live-edit-source-icon.png` for live-edit#frames. trust-prompt and
   trust-restricted came out byte-identical. To decide at review:
   math.jpg's framing (an alternative exists), tabbing's bottom edge, and
-  pdf-annotations' fourth quote below the fold. Scratch is temporary
+  pdf-annotations' fourth quote below the fold. At the real pass,
+  consider a shot of the demo vault's App Gallery for apps-in-notes
+  #examples (Clew-boss: screenshots only then). The `@begin(app)` form
+  does not run in live edit (reported 2026-10-04); re-check the
+  chapter's wording if Clew-app changes that. Scratch is temporary
   (`/private/tmp`), so at release retake from the release build, since
   the recipes now make that quick.
   **Recipes for all twelve are in `shots/`** (`c268db2`), each run into
