@@ -79,8 +79,12 @@ is drawn as a box the width of the note. The folder is a path from the
 </p>
 
 <p>
-An app runs in reading mode and in live edit's rendered blocks; source
-mode shows the line as written. When the line names something Clew
+An app runs in reading mode. In <a href="live-edit.html">live edit</a>
+an <code>@app</code> on a line of its own runs too, in a frame like a
+diagram's, after the same question; an <code>@app[…]</code> in the middle
+of a line of text shows only its folder's name, and the
+<code>@begin(app)</code> form a box naming it — reading mode runs those.
+Source mode shows the line as written. When the line names something Clew
 cannot run, the note says why in its place — the folder is missing, is
 a file, has no <code>clew-app.json</code> or a manifest Clew cannot
 read, climbs out of the vault, or is a web address (<em>remote apps are
@@ -159,6 +163,13 @@ itself, outside every frame, so the real question never comes from
 inside an app. In a trusted vault an app starts at once: one that asks
 for nothing is not asked about, and one you do not allow still runs,
 without what it asked for.
+</p>
+
+<p>
+The question, not <strong>Allow</strong>, has the keyboard focus. A
+prompt can appear while you are typing — an app's box is drawn a moment
+after its line — and a key pressed just then answers nothing. Choose
+with a click, or <kbd>Tab</kbd> to a button and press <kbd>Enter</kbd>.
 </p>
 
 <p>
@@ -290,6 +301,45 @@ second; a call with no answer in 30 seconds fails. The network grant
 adds no call: the app uses the browser's own <code>fetch</code>.
 </p>
 
+<h2 id="examples">Six examples</h2>
+
+<p>
+The demo vault's <em>Features/App Gallery</em> note embeds six apps,
+each a folder under <code>Apps/</code> of plain HTML, CSS and
+JavaScript with no libraries, asking for only what it uses. They are
+there to be read and copied:
+</p>
+
+<div class="tablewrap">
+<table>
+	<tr><th>App</th><th>What it does</th><th>Asks for</th></tr>
+	<tr><td>Stock Ticker (<code>Apps/Ticker</code>)</td>
+		<td>A ticker band of the symbols in a table in its note, drifting by a seeded random walk; a <em>Live ECB rates</em> switch shows the euro's reference rates instead</td>
+		<td><code>note.read</code>, <code>app.kv</code>, and <code>network</code> to <code>api.frankfurter.dev</code> only — used only when the switch is on</td></tr>
+	<tr><td>Replicator Dynamics Lab (<code>Apps/Replicator</code>)</td>
+		<td>The replicator dynamics of a 2×2 or 3×3 game, its rest points classified; <em>Insert result</em> writes a summary at your cursor</td>
+		<td><code>editor.insert</code></td></tr>
+	<tr><td>Seminar Picker (<code>Apps/Picker</code>)</td>
+		<td>A wheel of the names in its note, everyone a turn before anyone a second; copies the name</td>
+		<td><code>note.read</code>, <code>app.kv</code>, <code>clipboard</code></td></tr>
+	<tr><td>Lecture Timer (<code>Apps/Timer</code>)</td>
+		<td>A countdown that, when it runs out, appends a dated line to its note</td>
+		<td><code>note.write</code></td></tr>
+	<tr><td>Writing Progress (<code>Apps/Progress</code>)</td>
+		<td>The note's word count against a daily goal, updated on every <code>note-changed</code></td>
+		<td><code>note.read</code>, <code>app.kv</code></td></tr>
+	<tr><td>Reading List (<code>Apps/ReadingList</code>)</td>
+		<td>Every note with <code>status: to-read</code>; a click opens one</td>
+		<td><code>query</code>, <code>notes.read</code>, <code>links.open</code></td></tr>
+</table>
+</div>
+
+<p>
+The ticker also shows the limit of one question per app: you cannot
+allow it the note and the watchlist but not the network.
+<em>Don't allow</em> declines everything it asks for.
+</p>
+
 <h2 id="settings">Settings</h2>
 
 <p>
@@ -359,13 +409,15 @@ the reading-view PDF prints the app's placeholder.
 	<tr><td>Embed</td><td><code>@app[Folder]</code>, <code>@app+[Folder]{height=…}</code>, <code>@begin(app)</code> Folder <code>@end(app)</code> — a path from the vault's root</td></tr>
 	<tr><td>Manifest</td><td><code>clew-app.json</code>: <code>id</code> (required), <code>name</code>, <code>version</code>, <code>entry</code> (<code>index.html</code>), <code>capabilities</code>, <code>network</code></td></tr>
 	<tr><td>Same id twice</td><td>Both folders refused</td></tr>
-	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts</td></tr>
+	<tr><td>Live edit</td><td>An <code>@app</code> on a line of its own runs in a frame; in a line of text, or as <code>@begin(app)</code>, only its name shows</td></tr>
+	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts. The focus is on the question: a click, or <kbd>Tab</kbd> to a button and <kbd>Enter</kbd></td></tr>
 	<tr><td>Where answers are kept</td><td><code>app-grants.json</code> in Clew's own data on this device — never in the vault</td></tr>
 	<tr><td>Settings</td><td>This vault → Apps: each app's state and the notes it is open in; <em>Revoke</em></td></tr>
 	<tr><td>Status bar</td><td><em>✎ … can edit notes</em> while an app that may change notes is open; click for Settings</td></tr>
 	<tr><td>Events</td><td><code>clew.on</code>: <code>theme</code>, <code>find</code>, <code>note-changed</code>, <code>grant-changed</code>, <code>closed</code></td></tr>
 	<tr><td>Its own data</td><td><code>app.kv</code> in <code>clewdata.json</code>; <code>app.files</code> in its folder's <code>data/</code></td></tr>
 	<tr><td>Never</td><td>Node, <code>.clew/</code>, commands, settings, hidden files, another app's data</td></tr>
+	<tr><td>Examples</td><td>The demo vault's <em>Features/App Gallery</em>: six apps in <code>Apps/</code></td></tr>
 </table>
 </div>
 
