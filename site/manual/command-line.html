@@ -134,7 +134,8 @@ happens:
 <p>
 An installed Clew registers itself as the handler for
 <code>clew://</code> links, so clicking one anywhere on the system
-starts Clew if it is not running and opens what the link names. A Clew
+opens what the link names — starting Clew first if it is not running,
+in the window Clew starts with rather than a second one. A Clew
 run from its source code (<code>npm run dev</code>) does not register
 on macOS — it would register the bare Electron app instead — so there
 you give it the link on its command line:
@@ -159,7 +160,8 @@ Windows the menu item says so.
 clew open ~/Notes/Research                # a vault
 clew new --daily                          # today's diary entry
 clew new "Inbox/Call with Sam"            # a new, empty note
-clew export --pdf Projects/Grant\ proposal.md</code></pre>
+clew export --pdf Projects/Grant\ proposal.md                     # beside the note
+clew export --pdf Projects/Grant\ proposal.md --out ~/Desktop/    # elsewhere</code></pre>
 </div>
 
 <dl>
@@ -173,29 +175,38 @@ clew export --pdf Projects/Grant\ proposal.md</code></pre>
 	that path inside the vault, never over a file. Add
 	<code>--vault &lt;name or path&gt;</code> to say which vault;
 	without it, the vault in front, or the last one you had open.</dd>
-	<dt><code>clew export --pdf|--latex|--html &lt;note&gt;</code></dt>
-	<dd>Exports the note <em>beside itself</em> —
-	<code>Grant proposal.pdf</code>, <code>.tex</code> or
-	<code>.html</code> in the note's folder — as
-	<a href="export.html">File&nbsp;→&nbsp;Export</a> would. <code>--pdf</code>
-	is PDF via LaTeX, so its <code>.tex</code> and the compiler's
-	<code>.log</code> and auxiliary files stay beside it too, inside the
-	vault. The export follows the vault's trust exactly as the menu's
-	does: in a restricted vault, no note code runs.</dd>
+	<dt><code>clew export --pdf|--latex|--html &lt;note&gt; [--out &lt;file or folder&gt;]</code></dt>
+	<dd>Exports the note as
+	<a href="export.html">File&nbsp;→&nbsp;Export</a> would —
+	<code>--pdf</code> is PDF via LaTeX — and writes only the file asked
+	for: <code>Grant proposal.pdf</code>, <code>.tex</code> or
+	<code>.html</code>. A PDF is typeset in a temporary folder that is
+	removed afterwards, so no LaTeX build files appear beside the note;
+	its images and its <a href="citations.html">bibliography</a> are
+	still found from the note's own folder. Without <code>--out</code>
+	the file goes beside the note. <code>--out</code> puts it elsewhere:
+	a file name, or a folder — one that exists, or written with a
+	trailing <code>/</code> — relative to where you run the command, with
+	<code>~</code> meaning your home folder. If the PDF fails, the command
+	says so with LaTeX's first error, and nothing is left beside the note.
+	The export follows the vault's trust exactly as the menu's does: in
+	a restricted vault, no note code runs.</dd>
 </dl>
 
 <p>
 The command is your own, typed by you, so unlike a link it opens a
 vault without asking — though a vault new to this device still opens
 restricted. It talks to the running Clew over a socket in Clew's
-settings folder that only your user account can reach, and when Clew
-is not running it starts it first and waits for it. It prints what it
+settings folder that only your user account can reach. When Clew is
+not running it starts it first, and what you asked for opens in the
+window Clew starts with. It prints what it
 did — <em>opened Projects/Grant proposal.md in Research</em>, <em>created
 Inbox/Call with Sam.md in Research</em>, <em>exported …/Grant
 proposal.pdf</em> — and exits with <code>0</code> when it did it,
 <code>1</code> when it could not (and says why, e.g. <em>no such file
 or folder</em>), and <code>2</code> for a command it does not
-understand, after printing its usage.
+understand — or an <code>--out</code> with nothing after it — after
+printing its usage.
 </p>
 
 <h2 id="reference">Reference</h2>
@@ -226,8 +237,8 @@ understand, after printing its usage.
 		<td>Today's diary entry, created if missing</td></tr>
 	<tr><td><code>clew new &lt;note&gt; [--vault V]</code></td>
 		<td>A new, empty note, never over a file</td></tr>
-	<tr><td><code>clew export --pdf|--latex|--html &lt;note&gt;</code></td>
-		<td>Exports the note beside itself, under the vault's trust</td></tr>
+	<tr><td><code>clew export --pdf|--latex|--html &lt;note&gt; [--out F]</code></td>
+		<td>Writes only that file — beside the note, or at <code>F</code> (a file, or a folder that exists or ends in <code>/</code>) — under the vault's trust</td></tr>
 	<tr><td>Exit status</td>
 		<td><code>0</code> done · <code>1</code> failed, with the reason · <code>2</code> usage</td></tr>
 	<tr><td>Installed by</td>
