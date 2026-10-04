@@ -74,21 +74,49 @@ is drawn as a box the width of the note. The folder is a path from the
 <strong>vault's root</strong>, not from the note. The braces take
 <code>width</code> (the note's width by default), <code>height</code>
 (320 pixels by default; a bare number is pixels), <code>aspect</code>
-(quoted: <code>aspect="16/9"</code>), <code>style</code> and
-<code>class</code>.
+(quoted: <code>aspect="16/9"</code>), <code>style</code>,
+<code>class</code>, and <code>pin</code> (<a href="#pin">below</a>).
 </p>
 
 <p>
 An app runs in reading mode. In <a href="live-edit.html">live edit</a>
-an <code>@app</code> on a line of its own runs too, in a frame like a
-diagram's, after the same question; an <code>@app[…]</code> in the middle
-of a line of text shows only its folder's name, and the
-<code>@begin(app)</code> form a box naming it — reading mode runs those.
+an <code>@app</code> on a line of its own, and the
+<code>@begin(app)</code> form, run too, in a frame like a diagram's,
+after the same question; an <code>@app[…]</code> in the middle of a line
+of text shows only its folder's name there — reading mode runs it.
 Source mode shows the line as written. When the line names something Clew
 cannot run, the note says why in its place — the folder is missing, is
 a file, has no <code>clew-app.json</code> or a manifest Clew cannot
 read, climbs out of the vault, or is a web address (<em>remote apps are
 not supported yet — an app is a folder in this vault</em>).
+</p>
+
+<h3 id="pin">Pinning an app to the edge of the pane</h3>
+
+<div class="example">
+	<p class="example-label">You write (at the end of a note)</p>
+	<pre><code>@app+[Apps/Ticker]{height=150 pin=bottom}</code></pre>
+</div>
+
+<p>
+<code>pin=bottom</code> holds the app along the bottom of the pane while
+you read above its place in the note; <code>pin=top</code> holds it along
+the top once you have scrolled past its place. At its place it sits in
+the note like any other. So a ticker pinned at the end of a note runs
+along the bottom all the way down, and a timer pinned near the top stays
+in view once you have read past it. Both forms take it:
+<code>@app+[…]{pin=…}</code> and <code>@begin(app){pin=…}</code>.
+</p>
+
+<p>
+A pin works in reading mode and in live edit, and only within its own
+note: the app is held at the edge of the pane showing that note, over
+the note's own background, and nowhere else. Held or let go, the app
+keeps running as it was — it is never reloaded. In live edit the cursor
+is kept clear of a band pinned at the bottom: the note scrolls so that
+the line you are typing is never under it. A
+<a href="#exports">website export</a> shows the usual line in the app's
+place, unpinned.
 </p>
 
 <h2 id="folder">An app's folder</h2>
@@ -314,7 +342,7 @@ there to be read and copied:
 <table>
 	<tr><th>App</th><th>What it does</th><th>Asks for</th></tr>
 	<tr><td>Stock Ticker (<code>Apps/Ticker</code>)</td>
-		<td>A ticker band of the symbols in a table in its note, drifting by a seeded random walk; a <em>Live ECB rates</em> switch shows the euro's reference rates instead</td>
+		<td>A ticker band of the symbols in a table in its note, drifting by a seeded random walk; a <em>Live ECB rates</em> switch shows the euro's reference rates instead. Pinned along the bottom of the pane (<code>pin=bottom</code>)</td>
 		<td><code>note.read</code>, <code>app.kv</code>, and <code>network</code> to <code>api.frankfurter.dev</code> only — used only when the switch is on</td></tr>
 	<tr><td>Replicator Dynamics Lab (<code>Apps/Replicator</code>)</td>
 		<td>The replicator dynamics of a 2×2 or 3×3 game, its rest points classified; <em>Insert result</em> writes a summary at your cursor</td>
@@ -409,7 +437,8 @@ the reading-view PDF prints the app's placeholder.
 	<tr><td>Embed</td><td><code>@app[Folder]</code>, <code>@app+[Folder]{height=…}</code>, <code>@begin(app)</code> Folder <code>@end(app)</code> — a path from the vault's root</td></tr>
 	<tr><td>Manifest</td><td><code>clew-app.json</code>: <code>id</code> (required), <code>name</code>, <code>version</code>, <code>entry</code> (<code>index.html</code>), <code>capabilities</code>, <code>network</code></td></tr>
 	<tr><td>Same id twice</td><td>Both folders refused</td></tr>
-	<tr><td>Live edit</td><td>An <code>@app</code> on a line of its own runs in a frame; in a line of text, or as <code>@begin(app)</code>, only its name shows</td></tr>
+	<tr><td>Live edit</td><td>An <code>@app</code> on a line of its own, or <code>@begin(app)</code>, runs in a frame; in the middle of a line of text, only its name shows</td></tr>
+	<tr><td>Pin</td><td><code>{pin=top}</code> or <code>{pin=bottom}</code>: held at that edge of the pane while its place is out of view there — reading mode and live edit, within its note; never reloaded</td></tr>
 	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts. The focus is on the question: a click, or <kbd>Tab</kbd> to a button and <kbd>Enter</kbd></td></tr>
 	<tr><td>Where answers are kept</td><td><code>app-grants.json</code> in Clew's own data on this device — never in the vault</td></tr>
 	<tr><td>Settings</td><td>This vault → Apps: each app's state and the notes it is open in; <em>Revoke</em></td></tr>
