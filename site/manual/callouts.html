@@ -282,9 +282,14 @@ The body, in ordinary markdown.
 <code>title:</code> and <code>collapse:</code> (<code>open</code> /
 <code>closed</code>) are honoured; <code>icon:</code> and
 <code>color:</code> were the plugin's cosmetic overrides and the
-callout's own type styling applies instead. An <code>ad-</code> type
-Clew's table does not know renders as a note titled with the raw type
-name, which is how the plugin treated user-defined types too.
+callout's own type styling applies instead. Without a
+<code>title:</code>, a fence is headed by its type as you wrote it, like
+an <a href="#titles">untitled callout</a>: <code>ad-hint</code> is headed
+"Hint", though it looks like a tip, and <code>ad-warning</code>
+"Warning". (In 0.12.0 an untitled fence of a type Clew knows shows its
+icon and no heading.) An <code>ad-</code> type Clew's table does not know
+renders as a note titled with the raw type name, which is how the plugin
+treated user-defined types too.
 </p>
 
 <h2 id="styling">Styling and compatibility</h2>
@@ -321,7 +326,7 @@ on paper alike; a note's LaTeX export draws the same icon in its box.
 	<tr><td><code>&gt; [!type] Title</code></td><td>The same, with your title (markdown allowed)</td></tr>
 	<tr><td><code>&gt; [!type]-</code> / <code>&gt; [!type]+</code></td><td>Collapsible, starting collapsed / expanded</td></tr>
 	<tr><td><code>&gt; [!unknown]</code></td><td>A callout drawn as a note, headed by the name written (in 0.12.0, an ordinary quote, the marker shown as text)</td></tr>
-	<tr><td><code>```ad-type</code></td><td>The Admonition plugin's spelling of the same callout</td></tr>
+	<tr><td><code>```ad-type</code></td><td>The Admonition plugin's spelling of the same callout; untitled, headed by the type as written (in 0.12.0, no heading)</td></tr>
 	<tr><td>Settings → Callouts</td><td>Your own types, global or this vault's: name, title, icon, colour, aliases (not in 0.12.0)</td></tr>
 	<tr><td><code>callouts</code> in <code>clew-settings.json</code> / <code>.clew/vault-settings.json</code></td><td>Where those lists are kept; built-in &lt; global &lt; vault, field by field</td></tr>
 </table>
