@@ -270,7 +270,8 @@ The viewer's <em>Annotate</em> tab gives you highlighting, ink, shapes,
 notes and stamps. Anything you draw is written <strong>into the PDF
 file itself</strong> a couple of seconds after you stop — there is no
 Save button to miss, and a small chip beside the filename tells you where
-things stand (<em>unsaved</em>, <em>saving…</em>, <em>saved</em>).
+things stand (<em>unsaved</em>, <em>saving…</em>, <em>saved</em>, or
+<em>not saved — changed elsewhere</em>, <a href="#pdf-conflicts">below</a>).
 Switch away before then — another tab, closing the tab or the window, a
 note re-rendering over an embed — and the edit is written at once, the
 viewer kept alive out of sight until it lands. The one thing that does
@@ -284,6 +285,46 @@ annotation made here shows up in the viewer tab, on a canvas, in
 Preview.app, and on any other device the vault reaches. The same is true
 in reverse: annotate on an iPad and the marks are there when you open the
 note on your desktop. The three surfaces are three windows onto one file.
+</p>
+
+<p id="pdf-conflicts">
+<strong>When the PDF changed elsewhere.</strong> Because annotations are
+written into the file, one PDF can be changed in two places — annotated
+on another device while it is open here, say, or rewritten by another
+app. Clew never saves over a version the viewer did not load. If the PDF
+changed elsewhere since you opened it, nothing is written: your
+annotations are held, the chip reads <em>not saved — changed
+elsewhere</em>, both versions are kept in the PDF's history (under
+<code>.clew/history/</code>, by its path), and a sheet —
+<em>Paper.pdf changed elsewhere</em> — asks what to keep:
+</p>
+
+<dl>
+	<dt>Keep mine</dt>
+	<dd>Your version, with anything you annotated while it was held, is
+	saved over the other.</dd>
+	<dt>Keep theirs</dt>
+	<dd>The viewer reloads the version on disk; yours stays in the
+	history.</dd>
+	<dt>Keep both, side by side</dt>
+	<dd>Yours is saved beside it as
+	<code>Paper (conflict 2026-10-04).pdf</code>, the viewer reloads the
+	other, and your copy opens in the pane beside it. There is no
+	<em>Compare…</em> as there is for a note: a PDF has no lines to diff,
+	so comparing is looking at both.</dd>
+	<dt>Later</dt>
+	<dd>Nothing is saved, and a notice stays — <em>Paper.pdf: your
+	annotations are not saved — the PDF changed elsewhere.</em> — whose
+	<strong>Resolve…</strong> brings the sheet back.</dd>
+</dl>
+
+<p>
+This holds in every viewer — a PDF tab, an embed in a note, a card on a
+canvas. Close the viewer before choosing and the choice still works,
+from the versions kept in the history. A note changed in two places is
+handled the same way; see <a href="editing.html#conflicts">External
+changes and conflicts</a>. (In 0.12.0 a PDF changed elsewhere was
+overwritten by the next autosave, unseen.)
 </p>
 
 <p>
@@ -562,6 +603,10 @@ everything you paste from now on.
 	<tr><td>Media embed</td>
 		<td><code>![[file]]</code> on its own line; plain
 		<code>[[file]]</code> opens the viewer instead.</td></tr>
+	<tr><td>PDF changed elsewhere</td>
+		<td>The save is held and both versions are kept in
+		<code>.clew/history/</code>; Keep mine, Keep theirs, Keep both
+		(side by side), or Later. Not in 0.12.0.</td></tr>
 </table>
 </div>
 

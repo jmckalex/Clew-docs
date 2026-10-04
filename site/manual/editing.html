@@ -532,6 +532,14 @@ copies and git markers pass unremarked.)
 </p>
 
 <p>
+A PDF you annotate is guarded the same way: a save over a version the
+viewer did not load is held, both versions are kept, and a sheet asks
+what to keep — see <a href="attachments-and-files.html#pdf-conflicts">When
+the PDF changed elsewhere</a>. (In 0.12.0 a PDF changed elsewhere was
+overwritten by the next autosave, unseen.)
+</p>
+
+<p>
 Clew recognizes echoes of its own saves, so the watcher seeing a file
 change that Clew itself just wrote never triggers the banner.
 </p>
