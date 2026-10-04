@@ -17,8 +17,9 @@ names.
   links (`4ddda35`) probably need a NEW chapter, so commit it and hold it
   for the owner's morning OK; book mode is design only, so no docs.
 - **HELD for the owner's OK — the new chapter "Links and the command
-  line"** (`command-line.html`, Clew-app `4ddda35`): branch `cli-chapter`
-  at `12b1735`, worktree `../Clew-docs-cli`, never deployed. It holds the
+  line"** (`command-line.html`, Clew-app `4ddda35`, `52ba4ae`,
+  `a374b99`): branch `cli-chapter` at `721de27`, worktree
+  `../Clew-docs-cli`, never deployed. It holds the
   page, nav.js (Workspace, after Graph view), a contents card, pointers
   from daily-notes and export#where, og tags, and every page restamped.
   On the OK: `git merge cli-chapter` into main, then `make stamp` again
@@ -34,7 +35,8 @@ names.
   at `ee264a9` on the owner's direct OK; everything since is unpushed.
 - **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**, plus
   `686232b`, `8e0640c` and `042a05d` (checked on a build of `5268224`).
-  `4ddda35` is written but held (above); `038ec6f` (a notice moves up
+  `4ddda35`, `52ba4ae` and `a374b99` are written but held (above);
+  `038ec6f` (a notice moves up
   clear of a PDF viewer's status) needs no text.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
