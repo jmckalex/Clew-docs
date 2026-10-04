@@ -34,10 +34,11 @@ names.
   untitled admonition headings (`61f6507`, callouts), and apps in live
   edit, prompts that focus the question, and the six App Gallery
   examples (`a5489ed`, apps-in-notes and trusting-a-vault), and pinned
-  apps (`054a6f4`, apps-in-notes#pin). `main` was pushed
+  apps (`054a6f4`, apps-in-notes#pin), and the demo vault gaining new
+  notes on upgrade (`eb17415`, getting-started#example-vaults). `main` was pushed
   at `ee264a9` on the owner's direct OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`77b0bea`**
-  (pinning checked on a build of it). Undocumented on purpose: re-vendors
+- **Base hash:** the manual reflects Clew-app up to **`2619e1c`**
+  (demo sync checked on a build of it). Undocumented on purpose: re-vendors
   and smoke-only commits, and `ef8577e` (markup in code is text), for
   which no notice came.
   `4ddda35`, `52ba4ae` and `a374b99` are written but held (above);
