@@ -16,6 +16,17 @@ names.
   overnight work as notices arrive: the `clew` command and `clew://`
   links (`4ddda35`) probably need a NEW chapter, so commit it and hold it
   for the owner's morning OK; book mode is design only, so no docs.
+- **HELD for the owner's OK — the new chapter "Links and the command
+  line"** (`command-line.html`, Clew-app `4ddda35`): branch `cli-chapter`
+  at `12b1735`, worktree `../Clew-docs-cli`, never deployed. It holds the
+  page, nav.js (Workspace, after Graph view), a contents card, pointers
+  from daily-notes and export#where, og tags, and every page restamped.
+  On the OK: `git merge cli-chapter` into main, then `make stamp` again
+  if main touched nav.js or the CSS meanwhile, then `make check-links`.
+  The dry-run should list `manual/command-line.html` plus every restamped
+  page. Then deploy, add a What's-new item on release-0.12.1, and remove
+  the worktree. The RunAsNode question is deliberately not documented
+  (an open owner decision).
 - **Deployed tonight, each verified byte-identical live:** PDF
   conflicts (`4de7ec4`: attachments-and-files#pdf-conflicts, pointers in
   editing and note-history), the device in the trust button (`9137dd7`),
@@ -23,7 +34,8 @@ names.
   at `ee264a9` on the owner's direct OK; everything since is unpushed.
 - **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**, plus
   `686232b`, `8e0640c` and `042a05d` (checked on a build of `5268224`).
-  Not yet documented: `4ddda35` (awaiting its notice).
+  `4ddda35` is written but held (above); `038ec6f` (a notice moves up
+  clear of a PDF viewer's status) needs no text.
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
