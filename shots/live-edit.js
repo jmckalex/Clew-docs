@@ -21,5 +21,10 @@ const rule = doc.indexOf('## The rule');
 view.scrollDOM.scrollTop = Math.max(0, view.lineBlockAt(rule).top - 40);
 await until(() => document.querySelector('.le-cite') && !/\b20\d\d\b$/.test(''), 3000);
 await sleep(4000);
+// Re-scroll once every line above is measured (the first scroll lands on
+// estimated heights), and frame the Inline paragraph whole — it has grown
+// since 0.12.0 and its citation chip fell below the fold.
+const inline = doc.indexOf('## Inline');
+for (let i = 0; i < 2; i++) { view.scrollDOM.scrollTop = Math.max(0, view.lineBlockAt(inline).top + 18); await sleep(800); }
 const chip = document.querySelector('clew-editor-view [class*="cite"]');
 console.log('shot-live-edit: strong=' + strong + ' rule=' + rule + ' chip=' + JSON.stringify(chip?.textContent ?? null));

@@ -106,6 +106,15 @@ names.
   appears in no current shot — it showed only on hover, and no recipe
   hovers a frame; a new shot of the `</>` Edit source icon would be the
   release pass's to add, not a retake.
+  **Retaken for review 2026-10-04** from Clew-app `5268224` into the
+  session scratch folder `release-shots/` (`out/`, `INDEX.md`, a
+  side-by-side `INDEX.html`): every image, plus the new
+  `live-edit-source-icon.png` for live-edit#frames. trust-prompt and
+  trust-restricted came out byte-identical. To decide at review:
+  math.jpg's framing (an alternative exists), tabbing's bottom edge, and
+  pdf-annotations' fourth quote below the fold. Scratch is temporary
+  (`/private/tmp`), so at release retake from the release build, since
+  the recipes now make that quick.
   **Recipes for all twelve are in `shots/`** (`c268db2`), each run into
   scratch against Clew-app HEAD on 2026-10-02 — none installed.
   `shots/README.md` has the command, fixture, env and expected log line

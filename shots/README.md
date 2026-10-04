@@ -20,6 +20,9 @@ D=../Clew-docs/shots
 # a fixture: a copy of the demo vault, without its saved layout
 rsync -a --exclude .clew/cache --exclude .clew/history demo-vault/ "$S/demo-vault/"
 rm -f "$S/demo-vault/.clew/workspace.json"
+# fresh user data that already knows the vault, so it opens trusted
+mkdir -p "$S/ud-1"
+printf '{"recentVaults": ["%s"]}\n' "$S/demo-vault" > "$S/ud-1/clew-settings.json"
 env CLEW_SMOKE="$S/out.png" CLEW_SMOKE_SCRIPT=$D/live-edit.js \
     CLEW_SMOKE_VAULT="$S/demo-vault" CLEW_USER_DATA="$S/ud-1" \
     CLEW_SMOKE_LOG=1 npx electron . 2>&1 | grep -E 'shot-|smoke:'
@@ -28,6 +31,11 @@ env CLEW_SMOKE="$S/out.png" CLEW_SMOKE_SCRIPT=$D/live-edit.js \
 - **A fresh fixture and fresh `CLEW_USER_DATA` for every run.** A
   recipe can edit its vault, and a saved layout or setting from the last
   run will leak into the next shot.
+- **Every fixture is KNOWN to its fresh user data** (the
+  `clew-settings.json` above), except the two trust shots', which need
+  the vault unknown. Since vault trust, a fixture the user data does not
+  know opens restricted, and *Restricted · Trust…* sits in the status
+  bar of the shot.
 - **The fixture's folder name is the vault's name**, in the title bar
   and at the head of the explorer. Copies of the demo vault are called
   `demo-vault`; the other fixtures keep the names below.
@@ -45,7 +53,8 @@ exception: it is one file in two places.
 
 | Image | Recipe | Fixture (folder name) | Extra env | The log line to expect |
 |---|---|---|---|---|
-| `live-edit.png` | `live-edit.js` | demo vault (`demo-vault`) | — | `shot-live-edit: strong=… rule=… chip="Alexander 2023"` |
+| `live-edit.png` | `live-edit.js` (framed on "## Inline") | demo vault (`demo-vault`) | — | `shot-live-edit: strong=… rule=… chip="Alexander 2023"` |
+| `live-edit-source-icon.png` (new for 0.12.1, `live-edit.html#frames`) | `edit-source-icon.js`, then `sips -c 450 1440 --cropOffset 845 550` | demo vault | — | `shot-source-icon: shown=true opacity=1 label="Edit source" at-corner=true revealed=false` |
 | `live-edit-toolbar.png` | `live-edit-toolbar.js` | demo vault | — | `shot-toolbar: block-style="Heading 2" lit=12 caption="3 × 4" focus=BODY` |
 | `live-edit-table.png` | `live-edit-table.js` | demo vault | — | `shot-table: cell="mermaid" active=true menu=true items=16 block-style="Table"` |
 | `sidenotes-live.png` | `sidenotes-live.js` | `node smoke/make-live-vault.mjs $S/snv` (`snv`) | — | `shot-sidenotes-live: sidenotes=3` |
