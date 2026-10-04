@@ -9,17 +9,21 @@ names.
 
 ## 0. Resume here
 
-- **Nothing is in flight.** Wait for Clew-boss's next docs notice. The
-  PDF batch — a remembered citation (`0f4608f`), printed page numbers
-  (`c805dae`), PDF links beside the note (`15f3557`), the quieter
-  navigator (`4e055ad`) — went out 2026-10-03 on Clew-boss's go, three
-  pages, each verified byte-identical live; so did the live preview that
-  never covers a figure (`adc1657`, editing and diagrams), the
-  Edit source icon (`825b3c3`, live-edit), and the preview's own
-  "Show log" (`e025bdc`, editing and diagrams). The overnight work was
-  deployed (39 files) and `main` pushed the same morning on the owner's
-  OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**.
+- **In flight (the night of 2026-10-03/04, the owner's plan via
+  Clew-boss):** (1) the release-pass screenshots, retaken into scratch
+  from a build of Clew-app main, NOT into `site/`, with an INDEX of old
+  vs new for the owner's review at release; (2) documenting Clew-app's
+  overnight work as notices arrive: the `clew` command and `clew://`
+  links (`4ddda35`) probably need a NEW chapter, so commit it and hold it
+  for the owner's morning OK; book mode is design only, so no docs.
+- **Deployed tonight, each verified byte-identical live:** PDF
+  conflicts (`4de7ec4`: attachments-and-files#pdf-conflicts, pointers in
+  editing and note-history), the device in the trust button (`9137dd7`),
+  untitled admonition headings (`61f6507`, callouts). `main` was pushed
+  at `ee264a9` on the owner's direct OK; everything since is unpushed.
+- **Base hash:** the manual reflects Clew-app up to **`f3a7d5b`**, plus
+  `686232b`, `8e0640c` and `042a05d` (checked on a build of `5268224`).
+  Not yet documented: `4ddda35` (awaiting its notice).
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
