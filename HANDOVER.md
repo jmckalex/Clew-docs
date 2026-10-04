@@ -37,8 +37,15 @@ names.
   apps (`054a6f4`, apps-in-notes#pin), and the demo vault gaining new
   notes on upgrade (`eb17415`, getting-started#example-vaults). `main` was pushed
   at `ee264a9` on the owner's direct OK; everything since is unpushed.
-- **Base hash:** the manual reflects Clew-app up to **`2619e1c`**
-  (demo sync checked on a build of it). Undocumented on purpose: re-vendors
+- **Committed, NOT deployed (on purpose):** `7063fe7`, the ticker's
+  three modes and the key (apps-in-notes#examples). Clew-boss asked to
+  hold it for two follow-ups that change wording: network grants bound to
+  their origins (a new host, a new prompt), and the demo vault updating
+  files you have not changed, which revises getting-started#example-vaults
+  ("a note already in the copy is never changed, edited or not"). Deploy
+  all three together; `make dry-run` lists apps-in-notes until then.
+- **Base hash:** the manual reflects Clew-app up to **`7bbfdb1`** (the
+  ticker checked against the stub on a build of it). Undocumented on purpose: re-vendors
   and smoke-only commits, and `ef8577e` (markup in code is text), for
   which no notice came.
   `4ddda35`, `52ba4ae` and `a374b99` are written but held (above);
