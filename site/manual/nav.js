@@ -48,6 +48,7 @@ const MANUAL_NAV = [
 		{ file: 'panels.html', title: 'Panels' },
 		{ file: 'search.html', title: 'Search' },
 		{ file: 'graph-view.html', title: 'Graph view' },
+		{ file: 'command-line.html', title: 'Links and the command line' },
 	] },
 	{ section: 'Sharing your work', items: [
 		{ file: 'export.html', title: 'Exporting notes' },
