@@ -342,8 +342,8 @@ there to be read and copied:
 <table>
 	<tr><th>App</th><th>What it does</th><th>Asks for</th></tr>
 	<tr><td>Stock Ticker (<code>Apps/Ticker</code>)</td>
-		<td>A ticker band of the symbols in a table in its note, drifting by a seeded random walk; a <em>Live ECB rates</em> switch shows the euro's reference rates instead. Pinned along the bottom of the pane (<code>pin=bottom</code>)</td>
-		<td><code>note.read</code>, <code>app.kv</code>, and <code>network</code> to <code>api.frankfurter.dev</code> only — used only when the switch is on</td></tr>
+		<td>A ticker band of the symbols in a table in its note, pinned along the bottom of the pane (<code>pin=bottom</code>): simulated, live US quotes, or the ECB's rates (below)</td>
+		<td><code>note.read</code>, <code>app.kv</code>, and <code>network</code> to <code>finnhub.io</code> and <code>api.frankfurter.dev</code> only — used only in the live modes</td></tr>
 	<tr><td>Replicator Dynamics Lab (<code>Apps/Replicator</code>)</td>
 		<td>The replicator dynamics of a 2×2 or 3×3 game, its rest points classified; <em>Insert result</em> writes a summary at your cursor</td>
 		<td><code>editor.insert</code></td></tr>
@@ -361,6 +361,21 @@ there to be read and copied:
 		<td><code>query</code>, <code>notes.read</code>, <code>links.open</code></td></tr>
 </table>
 </div>
+
+<p>
+The ticker has three modes. <em>Simulated</em>, the default, uses no
+network: the prices start from the numbers in the note's table —
+invented, not the market — and drift by a seeded random walk.
+<em>Live stocks</em> shows real US quotes from Finnhub, each symbol
+refreshed about once a minute, the band giving the time of the last
+update, or <em>Closed · as of …</em> when the market is shut. It needs
+your own free Finnhub key: choose <em>Key…</em> in the app and paste it.
+The key is kept on this device in the app's own storage, never in the
+vault, so it does not travel with a copy you share; <em>Forget key</em>
+removes it, and without one the mode says where to get one.
+<em>ECB rates</em> shows the euro's reference rates from the European
+Central Bank.
+</p>
 
 <p>
 The ticker also shows the limit of one question per app: you cannot
