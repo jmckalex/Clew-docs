@@ -9,48 +9,27 @@ names.
 
 ## 0. Resume here
 
-- **In flight (the night of 2026-10-03/04, the owner's plan via
-  Clew-boss):** (1) the release-pass screenshots, retaken into scratch
-  from a build of Clew-app main, NOT into `site/`, with an INDEX of old
-  vs new for the owner's review at release; (2) documenting Clew-app's
-  overnight work as notices arrive: the `clew` command and `clew://`
-  links (`4ddda35`) probably need a NEW chapter, so commit it and hold it
-  for the owner's morning OK; book mode is design only, so no docs.
-- **HELD for the owner's OK — the new chapter "Links and the command
-  line"** (`command-line.html`, Clew-app `4ddda35`, `52ba4ae`,
-  `a374b99`): branch `cli-chapter` at `721de27`, worktree
-  `../Clew-docs-cli`, never deployed. It holds the
-  page, nav.js (Workspace, after Graph view), a contents card, pointers
-  from daily-notes and export#where, og tags, and every page restamped.
-  On the OK: `git merge cli-chapter` into main, then `make stamp` again
-  if main touched nav.js or the CSS meanwhile, then `make check-links`.
-  The dry-run should list `manual/command-line.html` plus every restamped
-  page. Then deploy, add a What's-new item on release-0.12.1, and remove
-  the worktree. The RunAsNode question is deliberately not documented
-  (an open owner decision).
-- **Deployed tonight, each verified byte-identical live:** PDF
-  conflicts (`4de7ec4`: attachments-and-files#pdf-conflicts, pointers in
-  editing and note-history), the device in the trust button (`9137dd7`),
-  untitled admonition headings (`61f6507`, callouts), and apps in live
-  edit, prompts that focus the question, and the six App Gallery
-  examples (`a5489ed`, apps-in-notes and trusting-a-vault), and pinned
-  apps (`054a6f4`, apps-in-notes#pin), and the demo vault gaining new
-  notes on upgrade (`eb17415`, getting-started#example-vaults). `main` was pushed
-  at `ee264a9` on the owner's direct OK; everything since is unpushed.
-- **Committed, NOT deployed (on purpose):** `7063fe7`, the ticker's
-  three modes and the key (apps-in-notes#examples). Clew-boss asked to
-  hold it for two follow-ups that change wording: network grants bound to
-  their origins (a new host, a new prompt), and the demo vault updating
-  files you have not changed, which revises getting-started#example-vaults
-  ("a note already in the copy is never changed, edited or not"). Deploy
-  all three together; `make dry-run` lists apps-in-notes until then.
-- **Base hash:** the manual reflects Clew-app up to **`7bbfdb1`** (the
-  ticker checked against the stub on a build of it). Undocumented on purpose: re-vendors
-  and smoke-only commits, and `ef8577e` (markup in code is text), for
-  which no notice came.
-  `4ddda35`, `52ba4ae` and `a374b99` are written but held (above);
-  `038ec6f` (a notice moves up
-  clear of a PDF viewer's status) needs no text.
+- **In flight (2026-10-05):** Clew-boss's queued notices — origin-bound
+  network grants (Clew-app `917303b`, pushed: may deploy); the demo vault
+  updating unchanged files (`5a99c9e`, local: write and HOLD); export
+  printing links as text and finding embeds (`be46044`, local: HOLD); and
+  a new "Books" page (book mode: `4bc9c04`, `2c6a6a8`, `eeb7371`,
+  `70aa64a`, `1f960e0`, `abca0bf`, all local) drafted on a branch and HELD
+  for the owner's OK. Held work lives on branches, never on main, so
+  main stays deployable.
+- **Live 2026-10-05 on the owner's OK:** the chapter "Links and the
+  command line" (`command-line.html`), merged from `cli-chapter`
+  (`2d105cb`), 38 files, each verified 200 and byte-identical, the ticker
+  text (`7063fe7`) with it on the owner's choice; `main` pushed at
+  `2d105cb`.
+- **Deployed 2026-10-04, each verified byte-identical live:** PDF
+  conflicts (`4de7ec4`), the device in the trust button (`9137dd7`),
+  untitled admonition headings (`61f6507`), apps in live edit, prompts
+  that focus the question and the App Gallery (`a5489ed`), pinned apps
+  (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
+- **Base hash:** the manual reflects Clew-app up to **`7bbfdb1`**.
+  Undocumented on purpose: re-vendors, smoke-only commits, `ef8577e`
+  (markup in code is text; no notice came) and `038ec6f` (needs no text).
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
