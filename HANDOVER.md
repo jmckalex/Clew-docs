@@ -9,14 +9,25 @@ names.
 
 ## 0. Resume here
 
-- **In flight (2026-10-05):** Clew-boss's queued notices — origin-bound
-  network grants (Clew-app `917303b`, pushed: may deploy); the demo vault
-  updating unchanged files (`5a99c9e`, local: write and HOLD); export
-  printing links as text and finding embeds (`be46044`, local: HOLD); and
-  a new "Books" page (book mode: `4bc9c04`, `2c6a6a8`, `eeb7371`,
-  `70aa64a`, `1f960e0`, `abca0bf`, all local) drafted on a branch and HELD
-  for the owner's OK. Held work lives on branches, never on main, so
-  main stays deployable.
+- **HELD on branches (2026-10-05), each in its own worktree; main stays
+  deployable:**
+  - `held-demo-update` (`../Clew-docs-held`, `c613ab5`): getting-started
+    #example-vaults for Clew-app `5a99c9e` (untouched demo files updated).
+    Merge when Clew-boss says it is pushed. Clew-app is fixing the
+    record-less-copy case, so then DROP the "a copy made by 0.12.0 gets
+    back any demo note you had deleted" exception.
+  - `held-export-links` (`../Clew-docs-export`, `ec01741`): export.html,
+    with `[[links]]` printed as text and `![[images]]` included (Clew-app
+    `be46044` + the path fixes). Merge when Clew-boss says it is pushed.
+  - `held-books` (`../Clew-docs-books`, `bf73354`): the NEW chapter
+    `books.html` (book mode) and its pointers. It needs the owner's OK and
+    Clew-app's book commits pushed. It touches export.html as
+    held-export-links does (different paragraphs). Re-run `make stamp`
+    after any merge.
+  To merge one: `git merge <branch>`, `make stamp`, `make check-links`,
+  then the dry-run guard; then remove its worktree and branch.
+- **Live 2026-10-05:** origin-bound network grants (`e9f3d35`,
+  apps-in-notes#network-hosts, Clew-app `917303b`).
 - **Live 2026-10-05 on the owner's OK:** the chapter "Links and the
   command line" (`command-line.html`), merged from `cli-chapter`
   (`2d105cb`), 38 files, each verified 200 and byte-identical, the ticker
