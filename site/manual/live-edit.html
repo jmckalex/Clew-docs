@@ -116,6 +116,17 @@ never changes its height: a heading keeps its size, a list its indent, a
 callout its tint.
 </p>
 
+<p id="list-paragraphs">
+A list item can hold more than one paragraph: a line after a hard break
+(two spaces or a <code>\</code> at the end of the line before), a lazy
+line that simply carries on, or an indented paragraph after a blank
+line. Each is drawn as part of the item — aligned under its text, in the
+text's colour, in a nested, numbered or task item and inside a quote
+alike — and stays put when the cursor enters it. (In 0.12.0 such a line
+is drawn in the list marker's colour, starting to the left of the item's
+text.)
+</p>
+
 <h2 id="inline">What renders in place</h2>
 
 <h3 id="inline-text">Inline</h3>
