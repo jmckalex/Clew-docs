@@ -11,11 +11,13 @@ names.
 
 - **HELD on branches (2026-10-05), each in its own worktree; main stays
   deployable:**
-  - `held-demo-update` (`../Clew-docs-held`, `c613ab5`): getting-started
-    #example-vaults for Clew-app `5a99c9e` (untouched demo files updated).
-    Merge when Clew-boss says it is pushed. Clew-app is fixing the
-    record-less-copy case, so then DROP the "a copy made by 0.12.0 gets
-    back any demo note you had deleted" exception.
+  - `held-demo-update` (`../Clew-docs-held`, `6595b0b`): getting-started
+    #example-vaults for Clew-app `5a99c9e` and `15163db` (untouched demo
+    files updated; a deleted note stays deleted in every copy, verified
+    over dev.6 and 0.12.0 copies). Merge when Clew-boss says they are
+    pushed.
+  - `held-live-lists` (`../Clew-docs-lists`, `de21541`):
+    live-edit#list-paragraphs for Clew-app `ffad0e5`. Merge when pushed.
   - `held-export-links` (`../Clew-docs-export`, `ec01741`): export.html,
     with `[[links]]` printed as text and `![[images]]` included (Clew-app
     `be46044` + the path fixes). Merge when Clew-boss says it is pushed.
