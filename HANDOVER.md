@@ -19,7 +19,7 @@ names.
   - `held-export-links` (`../Clew-docs-export`, `ec01741`): export.html,
     with `[[links]]` printed as text and `![[images]]` included (Clew-app
     `be46044` + the path fixes). Merge when Clew-boss says it is pushed.
-  - `held-books` (`../Clew-docs-books`, `bf73354`): the NEW chapter
+  - `held-books` (`../Clew-docs-books`, `443f392`): the NEW chapter
     `books.html` (book mode) and its pointers. It needs the owner's OK and
     Clew-app's book commits pushed. It touches export.html as
     held-export-links does (different paragraphs). Re-run `make stamp`
