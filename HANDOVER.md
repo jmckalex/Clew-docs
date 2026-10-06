@@ -18,6 +18,13 @@ names.
   against Clew-app `3d39952`: book-export-scenario, both cases, as its
   README records. 39 files live (every manual page restamped for
   nav.js), each 200 and byte-identical. No held branches remain.
+- **HELD on a branch, in its own worktree; main stays deployable:**
+  `held-secrets` (`../Clew-docs-secrets`, `a15b065`):
+  apps-in-notes#secrets and trusting-a-vault#trusted-vaults for Clew-app
+  `0cc8547` and `bd71168` (app.secrets; the Ticker's key). Merge and
+  deploy when Clew-boss says Clew-app has pushed them. Settings shows no
+  secrets count (`clew-settings-view.js` does not draw `APPS_LIST`'s);
+  write one only if Clew-app adds it.
 - **On iPad, pending:** the parity notice for Clew-iOS's `cbfa692`
   sync (Book panel, network grants, demo-vault updates). No iPad claim
   until then.
