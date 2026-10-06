@@ -27,6 +27,7 @@ const MANUAL_NAV = [
 		{ file: 'links-and-embeds.html', title: 'Links and embeds' },
 		{ file: 'properties.html', title: 'Properties and metadata' },
 		{ file: 'daily-notes.html', title: 'Daily notes and the diary' },
+		{ file: 'books.html', title: 'Books' },
 	] },
 	{ section: 'Reading mode', items: [
 		{ file: 'reading-mode.html', title: 'How rendering works' },
