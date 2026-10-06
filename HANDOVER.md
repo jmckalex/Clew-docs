@@ -1,4 +1,4 @@
-# Handover — 2026-10-02 (site LIVE, serving 0.12.0; `main` pushed through `d4643f9`)
+# Handover — 2026-10-06 (site LIVE, serving 0.12.0; `main` pushed through `5c8232e`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -9,25 +9,29 @@ names.
 
 ## 0. Resume here
 
-- **HELD on branches (2026-10-05), each in its own worktree; main stays
-  deployable:**
-  - `held-demo-update` (`../Clew-docs-held`, `6595b0b`): getting-started
-    #example-vaults for Clew-app `5a99c9e` and `15163db` (untouched demo
-    files updated; a deleted note stays deleted in every copy, verified
-    over dev.6 and 0.12.0 copies). Merge when Clew-boss says they are
-    pushed.
-  - `held-live-lists` (`../Clew-docs-lists`, `de21541`):
-    live-edit#list-paragraphs for Clew-app `ffad0e5`. Merge when pushed.
-  - `held-export-links` (`../Clew-docs-export`, `ec01741`): export.html,
-    with `[[links]]` printed as text and `![[images]]` included (Clew-app
-    `be46044` + the path fixes). Merge when Clew-boss says it is pushed.
-  - `held-books` (`../Clew-docs-books`, `443f392`): the NEW chapter
-    `books.html` (book mode) and its pointers. It needs the owner's OK and
-    Clew-app's book commits pushed. It touches export.html as
-    held-export-links does (different paragraphs). Re-run `make stamp`
-    after any merge.
-  To merge one: `git merge <branch>`, `make stamp`, `make check-links`,
+- **HELD on a branch, in its own worktree; main stays deployable:**
+  `held-books` (`../Clew-docs-books`, `443f392`): the NEW chapter
+  `books.html` (book mode) and its pointers. It needs the owner's OK
+  (Clew-app's book commits are pushed, at `cbfa692`). It touches
+  export.html; it still merges clean onto `9817abc` (checked with
+  `git merge-tree`). Recheck it against Clew-app `8abee50` and
+  `4c556b0` (a book's embeds are relative to the chapter) first.
+  To merge: `git merge held-books`, `make stamp`, `make check-links`,
   then the dry-run guard; then remove its worktree and branch.
+- **Live 2026-10-06, on Clew-boss's go (manual-only), NOT pushed:**
+  the three held branches merged (`d3f8046` demo update, `2313d85` live
+  lists, `b44cdb2` export links), then `026384e` (an embed's `|size`,
+  relative paths, `![[Note]]` as its name), `c2c9b11` (Mermaid and
+  MetaPost figures in a LaTeX export, diagrams#export) and `9817abc`
+  (0.12.0's list-item `&`/`#` and diagram errors, folded into
+  export.html's "In 0.12.0" caution; measured on 0.12.0's engine: the
+  PDF is still made, every code span prints `<MINTED>`). Four pages,
+  each 200 and byte-identical. `main` is ahead of `origin`; a push needs
+  the owner's OK.
+- **The diagram caches** (`mermaid/`, `MetaPost/` beside the note) are
+  made even in a restricted vault: an owner question, per Clew-boss.
+  diagrams#export says only that the folders are beside the note;
+  revisit that paragraph if the owner moves them.
 - **Live 2026-10-05:** origin-bound network grants (`e9f3d35`,
   apps-in-notes#network-hosts, Clew-app `917303b`).
 - **Live 2026-10-05 on the owner's OK:** the chapter "Links and the
@@ -40,9 +44,12 @@ names.
   untitled admonition headings (`61f6507`), apps in live edit, prompts
   that focus the question and the App Gallery (`a5489ed`), pinned apps
   (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
-- **Base hash:** the manual reflects Clew-app up to **`7bbfdb1`**.
-  Undocumented on purpose: re-vendors, smoke-only commits, `ef8577e`
-  (markup in code is text; no notice came) and `038ec6f` (needs no text).
+- **Base hash:** the manual reflects Clew-app up to **`cbfa692`**, except
+  book mode (`8a7f173`…`4c556b0`, the Books commits), which is
+  `held-books`'s. Undocumented on purpose: re-vendors, smoke-only
+  commits, `ef8577e` (markup in code is text; no notice came),
+  `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
+  check 0.12.0 never had) and `cbfa692` (mp-tikz 0.3.1, nothing visible).
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -55,8 +62,8 @@ names.
   the new chapter *Trusting a vault* (`0b78593`–`9534701`, 38 files — the
   owner's direct go), each verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
-  homepage clew-app.com), `main` only. Pushed through the commit that records this push
-  (2026-10-03, the owner's OK given here; 2026-10-02 likewise);
+  homepage clew-app.com), `main` only. Pushed through `5c8232e`
+  (2026-10-06, relayed by Clew-boss and confirmed by the owner here);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
@@ -241,6 +248,11 @@ Tidy-ups:
 - `make check-links` (every href/src/anchor and `og:url`), `make check`
   (the `--delete` guard), `make dry-run`, `make serve` (:8000),
   `make nginx-diff`.
+- Live checks from a sandboxed Claude shell: a local `curl` of
+  clew-app.com fails TLS ("self-signed certificate in chain", the
+  sandbox's proxy). Fetch on the droplet instead: `ssh jmck-web "curl -s
+  https://clew-app.com/manual/x.html"`, and `cmp` against `git show
+  HEAD:site/…`.
 - Live checks when the local resolver lags: `curl --resolve
   host:443:<ip>` (in zsh, pass the flags as an array) or DNS-over-HTTPS
   (`https://dns.google/resolve?name=…&type=A`).
