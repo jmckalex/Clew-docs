@@ -1,4 +1,4 @@
-# Handover — 2026-10-06 (site LIVE, serving 0.12.0; `main` pushed through `5c8232e`)
+# Handover — 2026-10-06 (site LIVE, serving 0.12.0; `main` pushed through the commit recording it)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -9,16 +9,19 @@ names.
 
 ## 0. Resume here
 
-- **HELD on a branch, in its own worktree; main stays deployable:**
-  `held-books` (`../Clew-docs-books`, `443f392`): the NEW chapter
-  `books.html` (book mode) and its pointers. It needs the owner's OK
-  (Clew-app's book commits are pushed, at `cbfa692`). It touches
-  export.html; it still merges clean onto `9817abc` (checked with
-  `git merge-tree`). Recheck it against Clew-app `8abee50` and
-  `4c556b0` (a book's embeds are relative to the chapter) first.
-  To merge: `git merge held-books`, `make stamp`, `make check-links`,
-  then the dry-run guard; then remove its worktree and branch.
-- **Live 2026-10-06, on Clew-boss's go (manual-only), NOT pushed:**
+- **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
+  chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
+  and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
+  build, images are chapter-relative, and the iPad lines are dropped
+  (Clew-iOS's sync brings a Book panel with Build refused; write the
+  iPad text from Clew-boss's parity notice, measured). Rechecked
+  against Clew-app `3d39952`: book-export-scenario, both cases, as its
+  README records. 39 files live (every manual page restamped for
+  nav.js), each 200 and byte-identical. No held branches remain.
+- **On iPad, pending:** the parity notice for Clew-iOS's `cbfa692`
+  sync (Book panel, network grants, demo-vault updates). No iPad claim
+  until then.
+- **Live 2026-10-06, on Clew-boss's go (manual-only):**
   the three held branches merged (`d3f8046` demo update, `2313d85` live
   lists, `b44cdb2` export links), then `026384e` (an embed's `|size`,
   relative paths, `![[Note]]` as its name), `c2c9b11` (Mermaid and
@@ -26,8 +29,7 @@ names.
   (0.12.0's list-item `&`/`#` and diagram errors, folded into
   export.html's "In 0.12.0" caution; measured on 0.12.0's engine: the
   PDF is still made, every code span prints `<MINTED>`). Four pages,
-  each 200 and byte-identical. `main` is ahead of `origin`; a push needs
-  the owner's OK.
+  each 200 and byte-identical.
 - **The diagram caches** (`mermaid/`, `MetaPost/` beside the note) are
   made even in a restricted vault: an owner question, per Clew-boss.
   diagrams#export says only that the folders are beside the note;
@@ -44,12 +46,12 @@ names.
   untitled admonition headings (`61f6507`), apps in live edit, prompts
   that focus the question and the App Gallery (`a5489ed`), pinned apps
   (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
-- **Base hash:** the manual reflects Clew-app up to **`cbfa692`**, except
-  book mode (`8a7f173`…`4c556b0`, the Books commits), which is
-  `held-books`'s. Undocumented on purpose: re-vendors, smoke-only
+- **Base hash:** the manual reflects Clew-app up to **`3d39952`**
+  (book mode included). Undocumented on purpose: re-vendors, smoke-only
   commits, `ef8577e` (markup in code is text; no notice came),
   `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
-  check 0.12.0 never had) and `cbfa692` (mp-tikz 0.3.1, nothing visible).
+  check 0.12.0 never had) `cbfa692` (mp-tikz 0.3.1, nothing visible) and `3d39952` (an
+  equation's number once in live edit; the manual never said twice).
 - **Live:** clew-app.com serves **0.12.0** (Clew-app `9268aa3`), pages and
   downloads, deployed 2026-10-01 on the owner's direct go and verified:
   0.12.0 everywhere, the five files 200 at their exact sizes, no 0.11.1
@@ -62,8 +64,9 @@ names.
   the new chapter *Trusting a vault* (`0b78593`–`9534701`, 38 files — the
   owner's direct go), each verified byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
-  homepage clew-app.com), `main` only. Pushed through `5c8232e`
-  (2026-10-06, relayed by Clew-boss and confirmed by the owner here);
+  homepage clew-app.com), `main` only. Pushed through the commit that
+  records this push (2026-10-06, "authorise pushes", relayed by
+  Clew-boss and confirmed by the owner here; `5c8232e` earlier that day);
   anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
@@ -146,6 +149,10 @@ names.
 - **Report every finished task to Clew-boss** (`SendMessage`), after the
   commits it cites have landed: what was done, hashes, whether anything
   was committed / pushed / deployed, anything touching Clew-app or iOS.
+- **End each turn's last message to the owner with a short executive
+  summary** (the owner, via Clew-boss, 2026-10-06): what matters, what
+  needs the owner's action, and one line naming any detail left out.
+  Reports to Clew-boss keep their full detail.
 - **Clew-boss may approve** (the owner confirmed it directly,
   2026-09-29): manual-only deploys — `make dry-run` must list only
   manual pages — small low-risk fixes, and the order of work.
