@@ -272,9 +272,13 @@ since it too could carry code.
 	<span class="callout-title">Caution — Clew's preview extensions do not apply</span>
 	Clew's Obsidian-flavoured additions are extensions loaded by the
 	<em>preview</em> configuration, and single-note exports do not load
-	them. Concretely: inline <code>[[wikilinks]]</code> are not turned
-	into links (they come out as written), <code>![[…]]</code> embeds are
-	not expanded, and the <code>```mermaid</code>,
+	them; the engine's own Obsidian links stand in for two. Concretely:
+	an inline <code>[[wikilink]]</code> prints as its text, not as a link — the alias if it has one, else the note's name,
+	or <em>Note &gt; Heading</em> for a link to a heading; an
+	<code>![[image]]</code> embed is included, the image found anywhere in
+	the vault as in reading mode (an HTML export refers to it where it
+	lies, by a path relative to the exported file). (In 0.12.0 both come
+	out as written.) The <code>```mermaid</code>,
 	<code>```leaflet</code> and <code>```query</code> fences render as plain
 	code blocks (see <a href="#troubleshooting">Troubleshooting</a>).
 	<a href="tabbing.html">Tabbing</a> is the engine's own and exports
@@ -437,8 +441,8 @@ in the compiler's log.
 	<dt>The export looks different from reading mode</dt>
 	<dd>Almost always the configuration-cascade point above: the preview
 	runs with Clew's extensions and per-vault settings, the export runs
-	with yours. Wikilinks, Obsidian-style fences, and query blocks are the
-	usual suspects.</dd>
+	with yours. Obsidian-style fences and query blocks are the usual
+	suspects, and wikilinks, which print as their text.</dd>
 
 	<dt>The exported HTML page needs the network</dt>
 	<dd>Unlike Clew's preview, which uses only local assets, the engine's
@@ -493,8 +497,9 @@ in the compiler's log.
 		jmarkdown config cascade applies (<code>~/.jmarkdown</code>, then a
 		<code>.jmarkdown/</code> next to the note, then the note's metadata
 		header).</td></tr>
-	<tr><td>Not applied</td><td>Clew's preview configuration: wikilink and
-		embed rendering, <code>```mermaid</code>/<code>```leaflet</code>/<code>```query</code>
+	<tr><td>Not applied</td><td>Clew's preview configuration: wikilinks as
+		links (they print as text; an image embed is included),
+		<code>```mermaid</code>/<code>```leaflet</code>/<code>```query</code>
 		fences, local preview assets.</td></tr>
 	<tr><td>Applied</td><td>The vault's standard-Markdown-syntax setting;
 		the note's metadata header; all engine-native features.</td></tr>
