@@ -273,12 +273,16 @@ since it too could carry code.
 	Clew's Obsidian-flavoured additions are extensions loaded by the
 	<em>preview</em> configuration, and single-note exports do not load
 	them; the engine's own Obsidian links stand in for two. Concretely:
-	an inline <code>[[wikilink]]</code> prints as its text, not as a link — the alias if it has one, else the note's name,
-	or <em>Note &gt; Heading</em> for a link to a heading; an
-	<code>![[image]]</code> embed is included, the image found anywhere in
-	the vault as in reading mode (an HTML export refers to it where it
-	lies, by a path relative to the exported file). (In 0.12.0 both come
-	out as written.) The <code>```mermaid</code>,
+	an inline <code>[[wikilink]]</code> prints as its text, not as a link
+	— the alias if it has one, else the note's name, or <em>Note &gt;
+	Heading</em> for a link to a heading. An <code>![[image]]</code> embed
+	is included, the image found anywhere in the vault as in reading mode,
+	at the size a <code>|300</code> or <code>|300x200</code> after its name
+	asks for; the HTML or LaTeX refers to it where it lies, by a path
+	relative to the exported file, never by its full path on your disk. A
+	note cannot be embedded: <code>![[Note]]</code> prints as its name,
+	with a <a href="#troubleshooting">warning</a>. (In 0.12.0 all three
+	come out as written.) The <code>```mermaid</code>,
 	<code>```leaflet</code> and <code>```query</code> fences render as plain
 	code blocks (see <a href="#troubleshooting">Troubleshooting</a>).
 	<a href="tabbing.html">Tabbing</a> is the engine's own and exports
@@ -426,6 +430,9 @@ in the compiler's log.
 	<dt>The export's notice lists warnings</dt>
 	<dd>The engine checks every note for what would trouble LaTeX, and an
 	export that found any says so — <em>LaTeX export: dollars, braces</em>.
+	Whatever else the export reported, such as a diagram left out or a
+	note embed printed as its name, is counted at the end (<em>· 1
+	other</em>), and the <strong>⚠</strong> lists each one in full.
 	The same warnings show as a <strong>⚠</strong> in the status bar while
 	you write; see <a href="panels.html#warnings">The status bar</a> for
 	what each kind means and how to silence one. (Not in 0.12.0.)</dd>
