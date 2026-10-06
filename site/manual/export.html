@@ -290,7 +290,9 @@ since it too could carry code.
 	<code>@begin(tabbing)</code> environment loses its tab commands, and in a
 	PDF via LaTeX such a block stops the compile.) The
 	engine's native forms still work — <code>:::mermaid</code> or
-	<code>@begin(mermaid)</code> blocks export fine, and everything in
+	<code>@begin(mermaid)</code> blocks export fine, in LaTeX and PDF as
+	figures (<a href="diagrams.html#export">Diagrams in export</a>), and
+	everything in
 	<a href="math-and-theorems.html">math</a>,
 	<a href="citations.html">citations</a>, and the engine's own
 	<a href="diagrams.html">diagram</a> machinery is native. A note you
@@ -420,7 +422,8 @@ in the compiler's log.
 	<code>minted</code> knows none of Clew's own fence languages —
 	<code>```query</code>, <code>```mermaid</code>, <code>```kanban</code>,
 	<code>```dataview</code> and the like — so such a block is set as plain
-	text: the PDF shows the fence's source, not the table or diagram. For
+	text: the PDF shows the fence's source, not the table or diagram, and
+	the export warns once for each such language. For
 	what reading mode shows, export the note as <em>PDF (reading
 	view)</em>, which prints it fences and all (see
 	<a href="#two-pdfs">Two PDFs</a>), or as a

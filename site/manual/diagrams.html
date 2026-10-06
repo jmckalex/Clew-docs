@@ -125,13 +125,15 @@ graph TD
 
 <p>
 In the preview all three spellings look identical. The difference
-appears at <a href="export.html">export</a> time: the native forms can
-be rasterized for LaTeX and PDF output through the mermaid CLI
-(<code>mmdc</code>), while the compatibility fence renders in HTML
-only and exports to LaTeX as nothing. If you expect a note to become a
-PDF, prefer the native forms. (When <code>mmdc</code> is not
-installed, a LaTeX export skips the diagram with a one-line hint
-rather than failing.)
+appears at <a href="export.html">export</a> time: for LaTeX and PDF
+the native forms are drawn as PDF figures by the mermaid CLI
+(<code>mmdc</code>), which you install yourself, while the
+compatibility fence is the preview's alone, and an export prints it as
+code (in LaTeX, with a warning). If you expect a note to become a PDF,
+prefer the native forms. When <code>mmdc</code> is not installed, or
+fails on a diagram, the export leaves that diagram out, and its
+warnings name it by its first line. (In 0.12.0 it is left out without
+a word.)
 </p>
 
 <p>
@@ -826,6 +828,20 @@ the picture.)
 </p>
 
 <p>
+A <code>@begin(metapost)</code> figure, and a Mermaid diagram in one of
+its native forms, go into LaTeX as PDF figures no wider than the line:
+the export makes each one once (MetaPost through your own
+<code>mptopdf</code>, Mermaid through <code>mmdc</code>), keeps it in a
+<code>MetaPost/</code> or <code>mermaid/</code> folder beside the note,
+and the <code>.tex</code> includes it from there by a path relative to
+itself, never by its full path on your disk. Moved or sent elsewhere, a
+<code>.tex</code> needs those figures at the same place relative to
+it. (In 0.12.0 the path is the full
+one, and TeX meets an error at every such figure; see
+<a href="export.html#one-source">Exporting notes</a>.)
+</p>
+
+<p>
 The <a href="export.html#two-pdfs">reading-view PDF</a> waits for
 every figure and prints what the screen shows. When a whole vault is
 <a href="publishing.html">published as a website</a>, each figure is
@@ -858,12 +874,12 @@ no TeX on the server either.
 <div class="tablewrap">
 <table>
 	<tr><th>Diagram</th><th>Syntax</th><th>Rendered by</th><th>Needs</th></tr>
-	<tr><td>Mermaid (Obsidian-compatible)</td><td><code>```mermaid … ```</code></td><td>Bundled mermaid, in the preview; not exported to LaTeX</td><td>Nothing</td></tr>
-	<tr><td>Mermaid (native)</td><td><code>:::mermaid … :::</code> or <code>@begin(mermaid) … @end(mermaid)</code></td><td>Bundled mermaid; rasterized via <code>mmdc</code> for LaTeX/PDF</td><td><code>mmdc</code> for print only</td></tr>
+	<tr><td>Mermaid (Obsidian-compatible)</td><td><code>```mermaid … ```</code></td><td>Bundled mermaid, in the preview; code in an export</td><td>Nothing</td></tr>
+	<tr><td>Mermaid (native)</td><td><code>:::mermaid … :::</code> or <code>@begin(mermaid) … @end(mermaid)</code></td><td>Bundled mermaid; a PDF figure via <code>mmdc</code> for LaTeX/PDF</td><td><code>mmdc</code> for print only</td></tr>
 	<tr><td>TikZ (native)</td><td><code>@begin(TiKZ) … @end(TiKZ)</code> or <code>:::TiKZ … :::</code></td><td>Bundled pdfTeX/LuaTeX + dvisvgm, in the preview; native <code>tikzpicture</code> in LaTeX export</td><td>Nothing (a TeX installation for LaTeX export)</td></tr>
 	<tr><td>TikZ (TikZJax-compatible)</td><td><code>```tikz … ```</code></td><td>The same engines; exports to LaTeX as a code block</td><td>Nothing</td></tr>
-	<tr><td>MetaPost (native)</td><td><code>@begin(metapost) … @end(metapost)</code></td><td>Bundled MetaPost 2.11 → SVG, in the preview</td><td>Nothing</td></tr>
-	<tr><td>MetaPost (fence)</td><td><code>```metapost … ```</code></td><td>The same engine; Clew's own spelling</td><td>Nothing</td></tr>
+	<tr><td>MetaPost (native)</td><td><code>@begin(metapost) … @end(metapost)</code></td><td>Bundled MetaPost 2.11 → SVG, in the preview; a PDF figure via <code>mptopdf</code> in LaTeX export</td><td>Nothing (a TeX installation for LaTeX export)</td></tr>
+	<tr><td>MetaPost (fence)</td><td><code>```metapost … ```</code></td><td>The same engine; Clew's own spelling; code in an export</td><td>Nothing</td></tr>
 	<tr><td>LaTeX snippet or document</td><td><code>```latex … ```</code></td><td>Bundled LuaLaTeX + dvisvgm, in the preview; a snippet wrapped in <code>standalone</code>, a document as written; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
 	<tr><td>Plain TeX</td><td><code>```tex … ```</code></td><td>Bundled LuaTeX + dvisvgm, in the preview; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
 </table>
