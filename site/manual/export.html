@@ -168,6 +168,13 @@ its <code>[!type]</code> written out.)
 	the LaTeX and load natbib in its preamble yourself
 	(<code>\usepackage{natbib}</code>; for <code>\fullcite</code>,
 	bibentry too).
+	And TeX meets an error, though the PDF is still made, in a note with
+	an <code>&amp;</code> or <code>#</code> in a list item (or in a theorem
+	inside one) or with a Mermaid or MetaPost
+	<a href="diagrams.html#export">figure</a>. The <code>&amp;</code> or
+	<code>#</code> is lost, with a line break in its place, and every piece
+	of code in the PDF, inline or a block, prints as
+	<em>&lt;MINTED&gt;</em>. PDF (reading view) is the way round this too.
 </div>
 
 <h3 id="two-pdfs">Two PDFs, for two different wishes</h3>
