@@ -18,13 +18,14 @@ names.
   against Clew-app `3d39952`: book-export-scenario, both cases, as its
   README records. 39 files live (every manual page restamped for
   nav.js), each 200 and byte-identical. No held branches remain.
-- **HELD on a branch, in its own worktree; main stays deployable:**
-  `held-secrets` (`../Clew-docs-secrets`, `a15b065`):
-  apps-in-notes#secrets and trusting-a-vault#trusted-vaults for Clew-app
-  `0cc8547` and `bd71168` (app.secrets; the Ticker's key). Merge and
-  deploy when Clew-boss says Clew-app has pushed them. Settings shows no
-  secrets count (`clew-settings-view.js` does not draw `APPS_LIST`'s);
-  write one only if Clew-app adds it.
+- **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
+  `b8065d8`): apps-in-notes#secrets and trusting-a-vault#trusted-vaults
+  for Clew-app `0cc8547`/`bd71168`, rechecked at `e430bed`
+  (app-secrets-scenario unchanged). Settings shows no secrets count
+  (`clew-settings-view.js` does not draw `APPS_LIST`'s); write one only
+  if Clew-app adds it. `93912fa`/`e430bed` (a manifest asking only for
+  more prompts without a reload) needed no text: #prompt already says
+  so.
 - **Live 2026-10-07 (manual-only, Clew-boss's go): the iPad at Clew-iOS
   `3947dd7`** (= Clew-app `cbfa692`; simulator-measured by Clew-iOS):
   books#not-yet On iPad (`ab20dc9`), getting-started#example-vaults
@@ -58,8 +59,8 @@ names.
   untitled admonition headings (`61f6507`), apps in live edit, prompts
   that focus the question and the App Gallery (`a5489ed`), pinned apps
   (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
-- **Base hash:** the manual reflects Clew-app up to **`3d39952`**
-  (book mode included). Undocumented on purpose: re-vendors, smoke-only
+- **Base hash:** the manual reflects Clew-app up to **`e430bed`**
+  (book mode and app secrets included). Undocumented on purpose: re-vendors, smoke-only
   commits, `ef8577e` (markup in code is text; no notice came),
   `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
   check 0.12.0 never had) `cbfa692` (mp-tikz 0.3.1, nothing visible) and `3d39952` (an
