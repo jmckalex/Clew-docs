@@ -25,9 +25,14 @@ names.
   deploy when Clew-boss says Clew-app has pushed them. Settings shows no
   secrets count (`clew-settings-view.js` does not draw `APPS_LIST`'s);
   write one only if Clew-app adds it.
-- **On iPad, pending:** the parity notice for Clew-iOS's `cbfa692`
-  sync (Book panel, network grants, demo-vault updates). No iPad claim
-  until then.
+- **Live 2026-10-07 (manual-only, Clew-boss's go): the iPad at Clew-iOS
+  `3947dd7`** (= Clew-app `cbfa692`; simulator-measured by Clew-iOS):
+  books#not-yet On iPad (`ab20dc9`), getting-started#example-vaults
+  (`24f7a53`), apps-in-notes On iPad after #network-hosts (`1c3be22`).
+  Left out on purpose: live edit's "(1)(1)" equation and the task
+  list's 4 px offset (no iPad section there; both fixed at the next
+  sync). At the next iOS sync, rewrite the apps callout: the Ticker's
+  key becomes a secret, and a grant for more stops reloading.
 - **Live 2026-10-06, on Clew-boss's go (manual-only):**
   the three held branches merged (`d3f8046` demo update, `2313d85` live
   lists, `b44cdb2` export links), then `026384e` (an embed's `|size`,
