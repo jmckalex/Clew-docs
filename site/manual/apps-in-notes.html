@@ -252,6 +252,7 @@ is asked about once more.)
 	<tr><td><code>notes.read</code></td><td>read the notes in this vault</td><td>The same for any note — never a hidden file or <code>.clew/</code></td></tr>
 	<tr><td><code>query</code></td><td>search this vault and read its index</td><td>List the notes, search, read a note's headings, links, tags and backlinks</td></tr>
 	<tr><td><code>app.kv</code></td><td>keep a little data of its own (which travels with the vault)</td><td>Keys and values in the vault's <code>clewdata.json</code>, under its own id</td></tr>
+	<tr><td><code>app.secrets</code></td><td>keep secrets, such as an API key, on this device only (never in the vault)</td><td>Short named strings of its own, encrypted on this device (<a href="#secrets">below</a>)</td></tr>
 	<tr><td><code>app.files</code></td><td>keep files of its own in its data folder (which travel with the vault)</td><td>Files in its folder's <code>data/</code>: 25&nbsp;MB a file, 250&nbsp;MB in all, never a note</td></tr>
 	<tr><td><code>links.open</code></td><td>open notes and links</td><td>Open a note in a new tab, or a web or <code>mailto:</code> link outside Clew</td></tr>
 	<tr><td><code>note.write</code></td><td>edit this note</td><td>Replace, append to, or set a property of its own note</td></tr>
@@ -326,6 +327,7 @@ running) and <code>closed</code>. The demo's Flashcards listens for
 	<tr><td><code>clew.notes.read(path?)</code>, <code>clew.properties.get(path?)</code></td><td><code>note.read</code>; another note's path, <code>notes.read</code></td></tr>
 	<tr><td><code>clew.notes.list()</code>, <code>clew.search(text)</code>, <code>clew.index.get(path)</code>, <code>clew.index.backlinks(path?)</code></td><td><code>query</code></td></tr>
 	<tr><td><code>clew.kv.get</code> / <code>set</code> / <code>delete</code> / <code>list</code></td><td><code>app.kv</code></td></tr>
+	<tr><td><code>clew.secrets.get(name)</code> / <code>set(name, value)</code> / <code>delete(name)</code></td><td><code>app.secrets</code></td></tr>
 	<tr><td><code>clew.files.list</code> / <code>read</code> / <code>write</code> / <code>delete</code> / <code>mkdir</code></td><td><code>app.files</code></td></tr>
 	<tr><td><code>clew.open(target)</code></td><td><code>links.open</code></td></tr>
 	<tr><td><code>clew.notes.write(path, text)</code>, <code>clew.notes.append(path, text)</code>, <code>clew.properties.set(path, key, value)</code></td><td><code>note.write</code>; another note, <code>notes.write</code></td></tr>
@@ -340,16 +342,48 @@ running) and <code>closed</code>. The demo's Flashcards listens for
 A path of <code>null</code> means the app's own note. Every call returns
 a promise; a refused one rejects with an error whose <code>code</code>
 says why — <code>denied</code>, <code>not-found</code>,
-<code>conflict</code>, <code>too-large</code>,
+<code>conflict</code>, <code>too-large</code>, <code>too-many</code>,
 <code>rate-limited</code>, <code>bad-params</code>,
 <code>unavailable</code> — and whose message says it in words
 (<em>notes.write needs "note.write", which this app has not been granted
 here</em>). Grants are checked at every call, so one taken back in
 Settings stops the next call. The limits: a request of 1&nbsp;MB (a
 file of 25&nbsp;MB), a note or a write of 1&nbsp;MB, a stored value of
-256&nbsp;KB, 32 calls waiting at once, 50 a second, and 5 writes a
+256&nbsp;KB (a secret, 8&nbsp;KB), 32 calls waiting at once, 50 a second, and 5 writes a
 second; a call with no answer in 30 seconds fails. The network grant
 adds no call: the app uses the browser's own <code>fetch</code>.
+</p>
+
+<h3 id="secrets">Secrets</h3>
+
+<p>
+What an app keeps with <code>app.kv</code> or <code>app.files</code> is
+in the vault, for anyone who has the vault. A password or an API key
+belongs with <code>app.secrets</code> instead: Clew keeps it for that
+app, in that vault, on <strong>this device</strong> only, and never
+writes it into the vault, a log or an error message.
+<code>clew.secrets.get(name)</code> gives the value, or
+<code>null</code> when there is none; <code>set(name, value)</code>
+keeps a string, and <code>delete(name)</code> says whether there was one
+to remove. A name is 1 to 64 letters, digits, <code>.</code>,
+<code>_</code> or <code>-</code>; a value is at most 8&nbsp;KB, and an
+app keeps at most 32 (<code>bad-params</code>, <code>too-large</code>,
+<code>too-many</code>). <code>set</code> and <code>delete</code> count
+as writes. An app without the grant gets <code>denied</code> from every
+call, never a value.
+</p>
+
+<p>
+Another app cannot read them, and nor can the same app in another
+vault. They are encrypted on disk, in Clew's own data: on a Mac with a
+key macOS keeps in the Keychain, on Windows by Windows' own data
+protection, and on Linux only through a keyring. Linux without one
+keeps no secrets at all (<code>unavailable</code>) rather than keep
+them unencrypted. <strong>Revoke</strong> in
+<a href="#settings">Settings</a> deletes an app's secrets with its
+answers, and <strong>Forget</strong> in
+<a href="trusting-a-vault.html#trusted-vaults">Trusted vaults</a>
+deletes every app's secrets for that vault.
 </p>
 
 <h2 id="examples">Six examples</h2>
@@ -366,7 +400,7 @@ there to be read and copied:
 	<tr><th>App</th><th>What it does</th><th>Asks for</th></tr>
 	<tr><td>Stock Ticker (<code>Apps/Ticker</code>)</td>
 		<td>A ticker band of the symbols in a table in its note, pinned along the bottom of the pane (<code>pin=bottom</code>): simulated, live US quotes, or the ECB's rates (below)</td>
-		<td><code>note.read</code>, <code>app.kv</code>, and <code>network</code> to <code>finnhub.io</code> and <code>api.frankfurter.dev</code> only — used only in the live modes</td></tr>
+		<td><code>note.read</code>, <code>app.kv</code>, <code>app.secrets</code> (the key), and <code>network</code> to <code>finnhub.io</code> and <code>api.frankfurter.dev</code> only — used only in the live modes</td></tr>
 	<tr><td>Replicator Dynamics Lab (<code>Apps/Replicator</code>)</td>
 		<td>The replicator dynamics of a 2×2 or 3×3 game, its rest points classified; <em>Insert result</em> writes a summary at your cursor</td>
 		<td><code>editor.insert</code></td></tr>
@@ -393,9 +427,11 @@ invented, not the market — and drift by a seeded random walk.
 refreshed about once a minute, the band giving the time of the last
 update, or <em>Closed · as of …</em> when the market is shut. It needs
 your own free Finnhub key: choose <em>Key…</em> in the app and paste it.
-The key is kept on this device in the app's own storage, never in the
-vault, so it does not travel with a copy you share; <em>Forget key</em>
-removes it, and without one the mode says where to get one.
+Clew keeps the key as the app's <a href="#secrets">secret</a>, on this
+device and never in the vault, so it does not travel with a copy you
+share. If you do not allow it to <em>keep secrets</em>, the key lasts
+this session only, and the app says so. <em>Forget key</em> removes it,
+and without a key the mode says where to get one.
 <em>ECB rates</em> shows the euro's reference rates from the European
 Central Bank.
 </p>
@@ -415,7 +451,8 @@ this device lets it do, and the notes it is open in now — <em>not asked
 yet</em>, <em>allowed to run</em>, <em>allowed: …</em> with what it may
 do, <em>not allowed to run</em>, or <em>refused</em> when two folders
 share its id. <strong>Revoke</strong> forgets every answer about the
-app: it stops, reloads, and asks again. There is no other control — to
+app and deletes its <a href="#secrets">secrets</a>: it stops, reloads,
+and asks again. There is no other control — to
 change an answer, revoke it and answer anew.
 </p>
 
@@ -448,7 +485,8 @@ reach WebRTC, the browser's machinery for direct connections, so a
 determined app without the grant may still get a little data out that
 way. And what it keeps with <code>app.kv</code> and
 <code>app.files</code> travels with the vault, so whoever has the vault
-has its data.
+has its data; only its <a href="#secrets">secrets</a> stay on this
+device.
 </p>
 
 <h2 id="exports">In exports</h2>
@@ -480,10 +518,11 @@ the reading-view PDF prints the app's placeholder.
 	<tr><td>The question</td><td><em>Allow “…”?</em> — once per app, for all it asks: <em>Allow</em> / <em>Don't allow</em>; in a restricted vault, before it starts. The focus is on the question: a click, or <kbd>Tab</kbd> to a button and <kbd>Enter</kbd></td></tr>
 	<tr><td>Network grant</td><td>Bound to the hosts named when it was allowed; a new host is asked about alone, a dropped one no longer reached</td></tr>
 	<tr><td>Where answers are kept</td><td><code>app-grants.json</code> in Clew's own data on this device — never in the vault</td></tr>
+	<tr><td>Secrets</td><td><code>clew.secrets</code> with <code>app.secrets</code>: per app, per vault, on this device, encrypted (<code>app-secrets.json</code>); names of 1–64 <code>[A-Za-z0-9._-]</code>, 8&nbsp;KB a value, 32 an app; deleted by <em>Revoke</em>, and by <em>Forget</em> for the vault</td></tr>
 	<tr><td>Settings</td><td>This vault → Apps: each app's state and the notes it is open in; <em>Revoke</em></td></tr>
 	<tr><td>Status bar</td><td><em>✎ … can edit notes</em> while an app that may change notes is open; click for Settings</td></tr>
 	<tr><td>Events</td><td><code>clew.on</code>: <code>theme</code>, <code>find</code>, <code>note-changed</code>, <code>grant-changed</code>, <code>closed</code></td></tr>
-	<tr><td>Its own data</td><td><code>app.kv</code> in <code>clewdata.json</code>; <code>app.files</code> in its folder's <code>data/</code></td></tr>
+	<tr><td>Its own data</td><td><code>app.kv</code> in <code>clewdata.json</code>; <code>app.files</code> in its folder's <code>data/</code>; <code>app.secrets</code> on this device only</td></tr>
 	<tr><td>Never</td><td>Node, <code>.clew/</code>, commands, settings, hidden files, another app's data</td></tr>
 	<tr><td>Examples</td><td>The demo vault's <em>Features/App Gallery</em>: six apps in <code>Apps/</code></td></tr>
 </table>
