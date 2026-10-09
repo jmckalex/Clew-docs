@@ -18,6 +18,13 @@ names.
   against Clew-app `3d39952`: book-export-scenario, both cases, as its
   README records. 39 files live (every manual page restamped for
   nav.js), each 200 and byte-identical. No held branches remain.
+- **HELD on a branch, in its own worktree; main stays deployable:**
+  `held-books2` (`../Clew-docs-books2`, `c487b56`): book mode phase 2
+  (Clew-app `fdac07a`…`6fc68ac`): books#writing, math-and-theorems
+  (`:::` kinds unnumbered; the callout's book exception), pointers from
+  live-edit#clicks and citations. Merge and deploy when Clew-boss says
+  Clew-app pushed; first recheck the master's reading-view line against
+  its commit (measured on Clew-app's uncommitted tree). No iPad claims.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
   `b8065d8`): apps-in-notes#secrets and trusting-a-vault#trusted-vaults
   for Clew-app `0cc8547`/`bd71168`, rechecked at `e430bed`
