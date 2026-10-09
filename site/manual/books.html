@@ -156,6 +156,45 @@ give them one in the <a href="settings-and-hotkeys.html">hotkey
 editor</a>.
 </p>
 
+<h2 id="writing">Writing a chapter</h2>
+
+<p>
+In live edit a chapter shows its <strong>book's</strong> numbers, the
+ones the built book will print: per chapter (Theorem&nbsp;2.1,
+equation&nbsp;(2.1)) or straight through, as the master's
+<code>numbering</code> says. That is every number live edit draws: a
+reference's, an equation's tag, a numbered heading's and an
+environment's heading. A reference can name a label in another chapter.
+Typing <code>@ref[</code> lists the book's labels, each with the chapter
+it is in, and <em>Jump to label…</em> lists them all. A click on the
+reference opens that chapter at the label's line, and hovering it
+previews the label from that chapter's text. The numbers follow your
+edits: in any chapter open in an editor, saved or not, and in any other
+once it is saved.
+</p>
+
+<p>
+Citations follow the book too. A built book has one bibliography (the
+vault's, the master's, then each chapter's own files, in book order)
+under the master's citation settings, and in live edit a chapter's
+citation chips read as the book prints them. In a numeric style a
+citation's number counts from the first chapter, and a key that only
+another chapter's bibliography holds is found, as the build finds it.
+A chapter's own citation style is not used. The build warns about both
+(<a href="#chapter-keys">below</a>).
+</p>
+
+<p>
+Reading view still shows a chapter on its own: there its figures,
+theorems and equations number from 1, and a reference to another
+chapter prints <code>??</code>. A quiet line above it says so —
+<em>Chapter 2 of Signals: A Short Book · numbers as in the book:</em> —
+with a <strong>Build</strong> button that builds the book's HTML pages,
+as the panel's does. The master has the line too (<em>Master of Signals:
+A Short Book</em>), since its references into the chapters print
+<code>??</code> there. A note in no book has none.
+</p>
+
 <h2 id="build">Building a book</h2>
 
 <p>
@@ -251,9 +290,9 @@ by name.
 
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
-	Clew for iOS reads a book as the desktop does: the master note, the
-	chapter in the status bar, the next and previous chapter, and the
-	Book panel with its word counts and statuses. Reorder by dragging a
+	Clew for iOS has the master note, the chapter in the status bar, the
+	next and previous chapter, and the Book panel with its word counts and
+	statuses. Reorder by dragging a
 	row's grip, which is small for a finger for now, or with
 	<kbd>⌥↑</kbd> and <kbd>⌥↓</kbd> on a keyboard. Building stays on the
 	desktop: on the iPad, Build says <em>Signals: A Short Book was not
@@ -272,6 +311,8 @@ by name.
 	<tr><td>Book panel</td><td>Right sidebar, only in a vault with a master: reorder (grip, <kbd>⌥↑</kbd>/<kbd>⌥↓</kbd>), × to remove, Add …, status chip, prose word counts, Build</td></tr>
 	<tr><td>Status bar</td><td><em>Ch. N of Book</em>; <em>· also in …</em> for a note in two books; click to switch or open the panel</td></tr>
 	<tr><td>Commands</td><td><em>Book: next chapter</em>, <em>Book: previous chapter</em>, <em>Book: show the Book panel</em> — no default keys</td></tr>
+	<tr><td>Writing a chapter</td><td>Live edit shows the book's numbers and citations; <code>@ref[</code> and <em>Jump to label…</em> list the book's labels; a click opens the label's chapter</td></tr>
+	<tr><td>Reading view</td><td>A chapter on its own (numbers from 1, other chapters <code>??</code>); a line above it, <em>… · numbers as in the book:</em> <strong>Build</strong></td></tr>
 	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
 	<tr><td>HTML build</td><td><code>build/&lt;master&gt;/</code>: <code>index.html</code>, a page per chapter, <code>references.html</code>; the old folder to the Trash</td></tr>
 	<tr><td>Links and images</td><td>A <code>[[link]]</code> to a chapter links to it; any other prints as its text; an image is found from its chapter, by a relative path</td></tr>
