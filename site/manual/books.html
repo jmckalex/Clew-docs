@@ -198,9 +198,10 @@ A Short Book</em>), since its references into the chapters print
 <h2 id="build">Building a book</h2>
 
 <p>
-<strong>Build</strong> — the Book panel's PDF, LaTeX and HTML buttons,
-or File&nbsp;→&nbsp;Export&nbsp;→&nbsp;<em>Book as PDF (via LaTeX)</em>,
-<em>Book as LaTeX</em> or <em>Book as HTML</em> — makes the whole book
+<strong>Build</strong> — the Book panel's PDF, LaTeX, HTML and Print
+PDF buttons, or File&nbsp;→&nbsp;Export&nbsp;→&nbsp;<em>Book as PDF (via
+LaTeX)</em>, <em>Book as LaTeX</em>, <em>Book as HTML</em> or <em>Book as
+PDF (reading view)</em> — makes the whole book
 one document: the master's text, then each chapter in order, every
 chapter's front matter left out and its <code>#</code> heading made a
 chapter (a chapter with no <code>#</code> heading gets one from its
@@ -222,6 +223,13 @@ chapter, numbered from 1.
 	when the master ends with <code>@bibliography</code>. Clew opens
 	<code>index.html</code> in your browser when the build is done. Each
 	HTML build replaces the folder, the old one going to the Trash.</li>
+	<li><strong>Print PDF</strong> (<em>Book as PDF (reading view)</em>)
+	prints the book as reading view draws it, with the book's numbers and
+	no TeX needed. Each chapter starts a new page, as does a further
+	<code>#</code> heading in a chapter's file, and the references and the
+	index. It goes to <code>build/Signals (reading view).pdf</code>, apart
+	from the LaTeX PDF, in the light theme and at Settings' paper size, as
+	a note's <a href="export.html#two-pdfs">reading-view PDF</a> does.</li>
 	<li><strong>In a vault you have not
 	<a href="trusting-a-vault.html">trusted</a></strong>, a build runs no
 	note code, as any <a href="export.html">export</a> there does, and its
@@ -313,7 +321,8 @@ by name.
 	<tr><td>Commands</td><td><em>Book: next chapter</em>, <em>Book: previous chapter</em>, <em>Book: show the Book panel</em> — no default keys</td></tr>
 	<tr><td>Writing a chapter</td><td>Live edit shows the book's numbers and citations; <code>@ref[</code> and <em>Jump to label…</em> list the book's labels; a click opens the label's chapter</td></tr>
 	<tr><td>Reading view</td><td>A chapter on its own (numbers from 1, other chapters <code>??</code>); a line above it, <em>… · numbers as in the book:</em> <strong>Build</strong></td></tr>
-	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
+	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML / Print PDF, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
+	<tr><td>Print PDF</td><td><code>build/&lt;master&gt; (reading view).pdf</code>: the book as reading view draws it, each chapter from a new page; no TeX</td></tr>
 	<tr><td>HTML build</td><td><code>build/&lt;master&gt;/</code>: <code>index.html</code>, a page per chapter, <code>references.html</code>; the old folder to the Trash</td></tr>
 	<tr><td>Links and images</td><td>A <code>[[link]]</code> to a chapter links to it; any other prints as its text; an image is found from its chapter, by a relative path</td></tr>
 	<tr><td>Chapter keys</td><td><code>Bibliography</code>, <code>Packages</code>, <code>LaTeX preamble</code>, <code>Lang</code>/<code>Language</code>, <code>Math macros</code>, <code>&lt;style&gt;</code>; anything else warns unless equal to the book's</td></tr>
