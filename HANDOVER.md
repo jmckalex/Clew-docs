@@ -1,4 +1,4 @@
-# Handover — 2026-10-06 (site LIVE, serving 0.12.0; `main` pushed through the commit recording it)
+# Handover — 2026-10-10 (site LIVE, serving 0.12.0; one held branch, `held-postscript`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -25,11 +25,26 @@ names.
   book exception); pointers in live-edit, citations (and chips follow an
   edited style), export#where. Five pages, each 200 and byte-identical.
   No held branches remain.
-- **Coming, no text yet:** Clew-app's unmerged `postscript` branch —
-  PostScript figures (`3f196ac`) and system fonts named in figures
-  (`8892154`) — merges when mp-tikz 0.4.0 is published; Clew-boss will
-  send a notice. Then diagrams.html:488 and :776 ("a system face cannot
-  be named by family") change. Not on the iPad either.
+- **HELD: `held-postscript` `870b7df`** (worktree
+  `../Clew-docs-postscript`), drafted 2026-10-10 on Clew-boss's notice
+  (mp-tikz-wasm 0.4.0 published): diagrams#postscript and
+  #system-fonts (new), the complete-document paragraph, the toolchain,
+  reference rows; publishing#figures. Against Clew-app `postscript`
+  `5a976d1` (`3f196ac`, `8892154`), measured in scratch builds (the
+  commit lists them). **Deploys only when Clew-app's merge is pushed,
+  on the owner's word**; recheck against the merged hash first. **Before
+  deploy:** diagrams#toolchain's iPad callout says a figure typesets on
+  the iPad "exactly as it does on the desktop", which stops being true
+  for PostScript and named families (Clew-iOS `94f0571` has neither).
+  It needs Clew-iOS's simulator measurement (PostScript.md and
+  Families.md from Clew-app's `make-figures-vault.mjs`) or a rewording
+  that makes no iPad claim. Asked of Clew-boss.
+- **Coming:** Clew-app's diagram cache "Outside" (approved plan, after
+  jmarkdown at-migration `d134995`, vendored at `2a877a5`, local):
+  exports' figure caches leave the vault. diagrams#export's "beside the
+  note" paragraph changes then, on Clew-boss's notice. Also coming: the
+  demo vault's Dashboards chart follows its `target` widget (an owner
+  bug). No manual page or screenshot shows that chart; nothing to change.
 - **Live 2026-10-10:** apps on the iPad (`d85e186`): secrets in the
   Keychain, grants arriving live; the callout lists no differences.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
@@ -57,9 +72,8 @@ names.
   PDF is still made, every code span prints `<MINTED>`). Four pages,
   each 200 and byte-identical.
 - **The diagram caches** (`mermaid/`, `MetaPost/` beside the note) are
-  made even in a restricted vault: an owner question, per Clew-boss.
-  diagrams#export says only that the folders are beside the note;
-  revisit that paragraph if the owner moves them.
+  made even in a restricted vault. The owner approved moving them out
+  (the "Outside" plan above); revisit diagrams#export when it lands.
 - **Live 2026-10-05:** origin-bound network grants (`e9f3d35`,
   apps-in-notes#network-hosts, Clew-app `917303b`).
 - **Live 2026-10-05 on the owner's OK:** the chapter "Links and the
