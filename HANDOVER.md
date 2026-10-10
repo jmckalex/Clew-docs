@@ -25,25 +25,19 @@ names.
   book exception); pointers in live-edit, citations (and chips follow an
   edited style), export#where. Five pages, each 200 and byte-identical.
   No held branches remain.
-- **HELD: `held-postscript` `870b7df`** (worktree
-  `../Clew-docs-postscript`), drafted 2026-10-10 on Clew-boss's notice
-  (mp-tikz-wasm 0.4.0 published): diagrams#postscript and
-  #system-fonts (new), the complete-document paragraph, the toolchain,
+- **HELD: `held-postscript` `fc7f39d`** (worktree
+  `../Clew-docs-postscript`; draft `870b7df`, iPad lines `fc7f39d`):
+  diagrams#postscript and #system-fonts (new, with an On iPad callout),
+  the complete-document paragraph, the toolchain and its On iPad,
   reference rows; publishing#figures. Against Clew-app `postscript`
-  `5a976d1` (`3f196ac`, `8892154`), measured in scratch builds (the
-  commit lists them). Rechecked 2026-10-10: merged into Clew-app main
-  as `e00dabe`, pinned to the published 0.4.0 at `fa78cc0`; the figure
-  code is unchanged through `d4eae20` (protocol.js differs only by
-  main's book work). **Deploys only when Clew-app's merge is pushed,
-  on the owner's word**; recheck against the merged hash first. **Before
-  deploy:** diagrams#toolchain's iPad callout says a figure typesets on
-  the iPad "exactly as it does on the desktop", which stops being true
-  for PostScript and named families (Clew-iOS `94f0571` has neither).
-  Clew-boss's plan (2026-10-10): no measurement of `94f0571`; Clew-iOS's
-  next sync (after Clew-app's diagram cache) brings 0.4.0 with the
-  Ghostscript archive and measures PostScript.md, Families.md and the
-  system families iPadOS provides. Write the iPad line from those numbers:
-  "exactly as on the desktop" if it holds, else the exact difference.
+  `5a976d1`, merged as `e00dabe`, pinned to the published 0.4.0 at
+  `fa78cc0`; figure code unchanged through `d4eae20`. The iPad text is
+  from Clew-iOS's sync build `137932f` in the simulator (relayed by
+  Clew-boss 2026-10-10): PostScript 4/4, gs.wasm only where needed,
+  families from iPadOS's installed fonts (the set and its limits are in
+  the commit). **Deploys only when Clew-app's push AND the Clew-iOS
+  build carrying this are on GitHub (Clew-boss says when), then on the
+  owner's word.** Recheck against both hashes first.
 - **HELD: `held-cache` `a362245`** (worktree `../Clew-docs-cache`),
   drafted 2026-10-10 on Clew-boss's notice, against Clew-app `d4eae20`
   (local) and `478cfdf`: export#figures-folder (new; the cache outside
