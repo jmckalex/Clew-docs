@@ -596,7 +596,9 @@ among the fonts in the system's font folders and your own, and hands
 the engine that family's files: every style it has, so
 <code>\textbf</code> and <code>\textit</code> find theirs. A name
 ending in <code>.ttf</code>, <code>.otf</code>, <code>.ttc</code> or
-<code>.otc</code> is a file, never looked up as a family. Mathematics
+<code>.otc</code> is a file, never looked up as a family; a family is
+named in full, as the system's font list gives it, in any case —
+<code>Hoefler Text</code>, not <code>Hoefler</code>. Mathematics
 works the same way: <code>unicode-math</code>'s default font does not
 load, but <code>\setmathfont{STIX Two Math}</code>, or any OpenType
 maths font you have, does. (Not in 0.12.0, where a family name fails,
@@ -624,6 +626,19 @@ installed while Clew is running is found after a restart.
 	<a href="publishing.html#figures">website export</a> takes the
 	family from the exporting machine and bakes the figure as outlines,
 	so the published page needs no font at all.
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	A figure names a family on the iPad the same way, and finds it among
+	the fonts iPadOS has installed: Avenir Next, Optima, Gill Sans,
+	Hoefler Text, Palatino, Baskerville, Didot, Charter, Georgia, Times
+	New Roman, Helvetica Neue, Futura and Menlo, and STIX Two Math for
+	<code>unicode-math</code>, among others. That is not the Mac's set,
+	so a family one has and the other lacks fails on the other with
+	fontspec's error naming it. A font iPadOS downloads only when asked
+	is not found, and a few of its faces, Iowan Old Style among them,
+	cannot be named.
 </div>
 
 <h2 id="fragments">Fragments: preamble text by name</h2>
@@ -871,10 +886,14 @@ output carries PostScript.
 
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
-	Clew for iOS carries the same engines and the same bundles, so a
-	figure typesets on the iPad exactly as it does on the desktop —
-	nothing is downloaded, nothing is installed, and the result cache
-	works the same way. The first figure after a fresh install takes a
+	Clew for iOS carries the same engines and the same bundles,
+	Ghostscript included, so a figure typesets on the iPad exactly as it
+	does on the desktop, PostScript and all: nothing is downloaded,
+	nothing is installed, Ghostscript starts only for a figure that needs
+	it, and the result cache works the same way. The one
+	difference is the fonts a figure can
+	<a href="#system-fonts">name by family</a>: the iPad's own, which
+	are not the Mac's. The first figure after a fresh install takes a
 	few seconds while the engines load; after that a picture you have
 	seen before is drawn from the cache without an engine starting. What
 	the iPad does not have is the <em>other</em> path: a LaTeX export, or
