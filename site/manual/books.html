@@ -215,7 +215,11 @@ chapter, numbered from 1.
 	beside the master, named after it — <code>build/Signals.pdf</code>,
 	<code>build/Signals.tex</code> — and a rebuild replaces them. LaTeX's
 	own files (<code>.aux</code>, <code>.log</code>, <code>.bbl</code> …)
-	stay in <code>build/</code> too, so nothing lands beside a chapter.</li>
+	stay in <code>build/</code> too, so nothing lands beside a chapter.
+	The diagrams the build draws are copied into
+	<code>build/Signals-figures/</code>, which the <code>.tex</code> and
+	the HTML pages share, as a
+	<a href="export.html#figures-folder">note's export</a> does.</li>
 	<li><strong>HTML</strong> is a small website in
 	<code>build/Signals/</code>: <code>index.html</code>, the master's text
 	with the contents; a page for each chapter, with previous, contents and

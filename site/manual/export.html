@@ -181,6 +181,54 @@ its <code>[!type]</code> written out.)
 	<em>&lt;MINTED&gt;</em>. PDF (reading view) is the way round this too.
 </div>
 
+<h3 id="figures-folder">Diagrams go in a folder beside the file</h3>
+
+<p>
+Some diagrams an export draws itself rather than passing their source
+through: a <a href="diagrams.html#export">MetaPost figure or a native
+Mermaid diagram</a> in LaTeX, the TeX figures in HTML. It keeps what it
+draws in a cache of Clew's own, outside the vault, and copies the
+figures each file uses into a folder beside that file, named after it —
+<code>Report.tex</code> or <code>Report.html</code> gets
+<code>Report-figures/</code>, with a folder inside for each kind
+(<code>mermaid/</code>, <code>MetaPost/</code>, <code>TiKZ/</code>) —
+and refers to them there by a relative path. A kept <code>.tex</code>
+or <code>.html</code> therefore stands on its own: move it or send it
+with its folder and every figure is still found. A note's
+<code>.tex</code> and <code>.html</code> share the one folder; a book's
+go into <code>build/</code> (<a href="books.html#build">Building a
+book</a>).
+</p>
+
+<p>
+The folder is the export's, and safe to delete: the next export makes
+it again. Before exporting, Clew moves the folder it made last time to
+the Trash, so a diagram since taken out of the note leaves no copy
+behind — unless the note's other export still uses it (a
+<code>.html</code> beside the <code>.tex</code>), when it is kept. Clew
+marks the folders it makes and never touches one it did not: if a
+folder of yours already has that name, the figures are not copied into
+it, and the export's warnings say so and what to do — rename or move
+your folder, then export again. Until you do, the file refers to Clew's
+cache on this computer, which is pruned, so it will not travel (from a
+restricted vault, to a temporary folder already removed, so its
+diagrams do not show).
+</p>
+
+<p>
+The cache is in Clew's own data folder, and later exports of the same
+vault reuse it; every vault's together is kept under 500&nbsp;MB, the
+figures used least recently going first. A vault you have not
+<a href="trusting-a-vault.html">trusted</a> keeps no cache at all: each
+export draws into a temporary folder that is removed when it ends.
+Either way an export writes nothing into the vault but the file you
+asked for and its figures folder. Folders such as <code>mermaid/</code>, <code>MetaPost/</code>
+or <code>TiKZ/</code> that an earlier version's exports left beside
+your notes are yours now; Clew does not touch them. (In 0.12.0 an
+export keeps its figures in those folders, beside the note, and the
+file it writes refers to them there.)
+</p>
+
 <h3 id="two-pdfs">Two PDFs, for two different wishes</h3>
 
 <p>
@@ -377,11 +425,14 @@ extension is needed.
 </p>
 
 <p>
-Mechanically, a PDF export first writes the intermediate
-<code>.tex</code> file next to your chosen destination — deliberately,
-so that relative graphics paths resolve — and then compiles it there,
-with the note's own folder on TeX's search paths, so the note's
-<code>.bib</code> is found wherever you save the PDF.
+Mechanically, a PDF export writes the intermediate <code>.tex</code>
+into a temporary folder and compiles it there, with the note's own
+folder on TeX's search paths, so the note's images and its
+<code>.bib</code> are found wherever you save the PDF. Then it delivers
+the PDF alone and removes the folder: no <code>.tex</code>,
+<code>.aux</code>, <code>.log</code> or figures land beside the PDF.
+(In 0.12.0 the <code>.tex</code> is written next to the PDF and
+compiled there, and it stays, with LaTeX's own files.)
 The compiler runs in nonstop mode with a three-minute timeout (two in
 0.12.0). One pragmatic wrinkle: a TeX engine can exit with a non-zero
 status on mere warnings, so Clew accepts the run whenever it wrote the
@@ -393,16 +444,17 @@ in the compiler's log.
 
 <div class="callout tip">
 	<span class="callout-title">Tip — the .tex file is your debugging window</span>
-	After a PDF export, the generated <code>.tex</code> (and the
-	compiler's <code>.log</code> and auxiliary files) remain next to the
-	PDF. If a compile fails or the output looks wrong, open the
-	<code>.tex</code> and run <code>latexmk</code> on it yourself, with
-	<code>-pdf</code>, <code>-lualatex</code> or <code>-xelatex</code> for
-	the engine the export used:
+	A PDF export keeps nothing but the PDF, so to see the LaTeX behind it,
+	export the note as LaTeX: the same <code>.tex</code>, with its
+	figures in the folder beside it. If a compile fails or the output
+	looks wrong, run <code>latexmk</code> on that <code>.tex</code>
+	yourself, with <code>-pdf</code>, <code>-lualatex</code> or
+	<code>-xelatex</code> for the engine the export used:
 	you get the full compiler output, and you can fix or restyle the LaTeX
 	directly. Exporting to LaTeX first and compiling by hand is exactly
-	the same pipeline, one step at a time. If you dislike the auxiliary
-	clutter, export into a scratch folder and copy out the PDF.
+	the same pipeline, one step at a time. (In 0.12.0 the PDF export
+	leaves its <code>.tex</code>, and LaTeX's <code>.log</code> and
+	auxiliary files, beside the PDF.)
 </div>
 
 <h2 id="troubleshooting">Troubleshooting</h2>
@@ -493,19 +545,23 @@ in the compiler's log.
 		<td>File → Export → As HTML…</td>
 		<td><em>Export note as HTML</em></td>
 		<td>A standalone <code>.html</code> page from the engine's own
-		templates, at the location you choose.</td>
+		templates, at the location you choose; the diagrams the export
+		draws go into a <code>-figures/</code> folder beside it (not in
+		0.12.0).</td>
 		<td>Nothing extra.</td></tr>
 	<tr><td><strong>LaTeX</strong></td>
 		<td>File → Export → As LaTeX…</td>
 		<td><em>Export note as LaTeX (.tex)</em></td>
 		<td>A <code>.tex</code> source file; relative graphics resolve
-		from where it is saved.</td>
+		from where it is saved. The diagrams the export draws go into a
+		<code>-figures/</code> folder beside it (not in 0.12.0).</td>
 		<td>Nothing extra (a TeX installation to compile it later).</td></tr>
 	<tr><td><strong>PDF</strong></td>
 		<td>File → Export → As PDF (via LaTeX)…</td>
 		<td><em>Export note as PDF (via LaTeX)</em></td>
-		<td>A typeset <code>.pdf</code>; the intermediate <code>.tex</code>
-		and log files remain alongside it.</td>
+		<td>A typeset <code>.pdf</code>, and nothing else (in 0.12.0 the
+		intermediate <code>.tex</code> and log files remain alongside
+		it).</td>
 		<td><code>latexmk</code>, or the TeX engine itself, on the
 		machine.</td></tr>
 </table>
