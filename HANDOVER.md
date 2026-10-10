@@ -26,6 +26,11 @@ names.
   live-edit#clicks, citations and export#where. Every claim measured at
   `5abf52d` (the master's line included). Merge and deploy when
   Clew-boss says Clew-app pushed. No iPad claims.
+- **Coming, no text yet:** Clew-app's unmerged `postscript` branch —
+  PostScript figures (`3f196ac`) and system fonts named in figures
+  (`8892154`) — merges when mp-tikz 0.4.0 is published; Clew-boss will
+  send a notice. Then diagrams.html:488 and :776 ("a system face cannot
+  be named by family") change. Not on the iPad either.
 - **Live 2026-10-10:** apps on the iPad (`d85e186`): secrets in the
   Keychain, grants arriving live; the callout lists no differences.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
