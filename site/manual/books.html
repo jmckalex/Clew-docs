@@ -156,12 +156,52 @@ give them one in the <a href="settings-and-hotkeys.html">hotkey
 editor</a>.
 </p>
 
+<h2 id="writing">Writing a chapter</h2>
+
+<p>
+In live edit a chapter shows its <strong>book's</strong> numbers, the
+ones the built book will print: per chapter (Theorem&nbsp;2.1,
+equation&nbsp;(2.1)) or straight through, as the master's
+<code>numbering</code> says. That is every number live edit draws: a
+reference's, an equation's tag, a numbered heading's and an
+environment's heading. A reference can name a label in another chapter.
+Typing <code>@ref[</code> lists the book's labels, each with the chapter
+it is in, and <em>Jump to label…</em> lists them all. A click on the
+reference opens that chapter at the label's line, and hovering it
+previews the label from that chapter's text. The numbers follow your
+edits: in any chapter open in an editor, saved or not, and in any other
+once it is saved.
+</p>
+
+<p>
+Citations follow the book too. A built book has one bibliography (the
+vault's, the master's, then each chapter's own files, in book order)
+under the master's citation settings, and in live edit a chapter's
+citation chips read as the book prints them. In a numeric style a
+citation's number counts from the first chapter, and a key that only
+another chapter's bibliography holds is found, as the build finds it.
+A chapter's own citation style is not used. The build warns about both
+(<a href="#chapter-keys">below</a>).
+</p>
+
+<p>
+Reading view still shows a chapter on its own: there its figures,
+theorems and equations number from 1, and a reference to another
+chapter prints <code>??</code>. A quiet line above it says so —
+<em>Chapter 2 of Signals: A Short Book · numbers as in the book:</em> —
+with a <strong>Build</strong> button that builds the book's HTML pages,
+as the panel's does. The master has the line too (<em>Master of Signals:
+A Short Book</em>), since its references into the chapters print
+<code>??</code> there. A note in no book has none.
+</p>
+
 <h2 id="build">Building a book</h2>
 
 <p>
-<strong>Build</strong> — the Book panel's PDF, LaTeX and HTML buttons,
-or File&nbsp;→&nbsp;Export&nbsp;→&nbsp;<em>Book as PDF (via LaTeX)</em>,
-<em>Book as LaTeX</em> or <em>Book as HTML</em> — makes the whole book
+<strong>Build</strong> — the Book panel's PDF, LaTeX, HTML and Print
+PDF buttons, or File&nbsp;→&nbsp;Export&nbsp;→&nbsp;<em>Book as PDF (via
+LaTeX)</em>, <em>Book as LaTeX</em>, <em>Book as HTML</em> or <em>Book as
+PDF (reading view)</em> — makes the whole book
 one document: the master's text, then each chapter in order, every
 chapter's front matter left out and its <code>#</code> heading made a
 chapter (a chapter with no <code>#</code> heading gets one from its
@@ -183,6 +223,13 @@ chapter, numbered from 1.
 	when the master ends with <code>@bibliography</code>. Clew opens
 	<code>index.html</code> in your browser when the build is done. Each
 	HTML build replaces the folder, the old one going to the Trash.</li>
+	<li><strong>Print PDF</strong> (<em>Book as PDF (reading view)</em>)
+	prints the book as reading view draws it, with the book's numbers and
+	no TeX needed. Each chapter starts a new page, as does a further
+	<code>#</code> heading in a chapter's file, and the references and the
+	index. It goes to <code>build/Signals (reading view).pdf</code>, apart
+	from the LaTeX PDF, in the light theme and at Settings' paper size, as
+	a note's <a href="export.html#two-pdfs">reading-view PDF</a> does.</li>
 	<li><strong>In a vault you have not
 	<a href="trusting-a-vault.html">trusted</a></strong>, a build runs no
 	note code, as any <a href="export.html">export</a> there does, and its
@@ -251,13 +298,16 @@ by name.
 
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
-	Clew for iOS reads a book as the desktop does: the master note, the
-	chapter in the status bar, the next and previous chapter, and the
-	Book panel with its word counts and statuses. Reorder by dragging a
-	row's grip, which is small for a finger for now, or with
-	<kbd>⌥↑</kbd> and <kbd>⌥↓</kbd> on a keyboard. Building stays on the
-	desktop: on the iPad, Build says <em>Signals: A Short Book was not
-	built: building a book needs Clew on a Mac</em>.
+	Clew for iOS has the master note, the chapter in the status bar, the
+	next and previous chapter, the Book panel with its word counts and
+	statuses, and the book's numbers and citations while you write, as
+	here. Reorder by dragging a row's grip, which is small for a finger
+	for now, or with <kbd>⌥↑</kbd> and <kbd>⌥↓</kbd> on a keyboard. Of the
+	builds, the iPad has only <strong>Print PDF</strong>: the panel's one
+	button, and the one on the line above reading view (<em>… · numbers
+	as in the book: Print PDF</em>). It prints the book with each chapter
+	from a new page and hands it to the share sheet. A PDF, LaTeX or HTML
+	build says it needs Clew on a Mac.
 </div>
 
 <h2 id="reference">Reference</h2>
@@ -272,11 +322,14 @@ by name.
 	<tr><td>Book panel</td><td>Right sidebar, only in a vault with a master: reorder (grip, <kbd>⌥↑</kbd>/<kbd>⌥↓</kbd>), × to remove, Add …, status chip, prose word counts, Build</td></tr>
 	<tr><td>Status bar</td><td><em>Ch. N of Book</em>; <em>· also in …</em> for a note in two books; click to switch or open the panel</td></tr>
 	<tr><td>Commands</td><td><em>Book: next chapter</em>, <em>Book: previous chapter</em>, <em>Book: show the Book panel</em> — no default keys</td></tr>
-	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
+	<tr><td>Writing a chapter</td><td>Live edit shows the book's numbers and citations; <code>@ref[</code> and <em>Jump to label…</em> list the book's labels; a click opens the label's chapter</td></tr>
+	<tr><td>Reading view</td><td>A chapter on its own (numbers from 1, other chapters <code>??</code>); a line above it, <em>… · numbers as in the book:</em> <strong>Build</strong></td></tr>
+	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML / Print PDF, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
+	<tr><td>Print PDF</td><td><code>build/&lt;master&gt; (reading view).pdf</code>: the book as reading view draws it, each chapter from a new page; no TeX</td></tr>
 	<tr><td>HTML build</td><td><code>build/&lt;master&gt;/</code>: <code>index.html</code>, a page per chapter, <code>references.html</code>; the old folder to the Trash</td></tr>
 	<tr><td>Links and images</td><td>A <code>[[link]]</code> to a chapter links to it; any other prints as its text; an image is found from its chapter, by a relative path</td></tr>
 	<tr><td>Chapter keys</td><td><code>Bibliography</code>, <code>Packages</code>, <code>LaTeX preamble</code>, <code>Lang</code>/<code>Language</code>, <code>Math macros</code>, <code>&lt;style&gt;</code>; anything else warns unless equal to the book's</td></tr>
-	<tr><td>Not yet</td><td>Parts, front matter, back matter; a Build on the iPad</td></tr>
+	<tr><td>Not yet</td><td>Parts, front matter, back matter; a PDF, LaTeX or HTML build on the iPad</td></tr>
 </table>
 </div>
 

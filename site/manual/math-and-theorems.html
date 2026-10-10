@@ -213,6 +213,12 @@ the print document resolves them with the real machinery.
 	<em>References</em>, an index (not in 0.12.0). In a note with a <code>{{TOC}}</code>, each numbered heading
 	also links back to the table of contents. (In 0.12.0 it does so even
 	without one, so the headings look like links that lead nowhere.)</li>
+	<li>Only the <code>@begin(…)</code> forms are numbered. A
+	<code>:::theorem</code>, <code>:::figure</code> or
+	<code>:::equation</code> is the engine's plain container: it takes no
+	number, and a reference to it prints <code>??</code>. (In 0.12.0 live
+	edit shows a number on one anyway, which reading mode and the export
+	do not print.)</li>
 	<li>A target takes its key from <code>{#key}</code> or
 	<code>{id=key}</code> on its opening line (<code>{id=eq:mass}</code> when
 	the key has a colon, which the <code>#</code> form cannot carry), or from
@@ -245,11 +251,14 @@ palette's <em>Jump to label…</em> lists them to go to.
 </p>
 
 <div class="callout warn">
-	<span class="callout-title">Numbered within the note</span>
-	Clew numbers each note on its own. A project that includes chapters from
-	other notes (the vault's <code>jmarkdownProject</code> option) is
-	numbered as a whole by its export, and a reference to a label in another
-	note shows <code>??</code> while you write.
+	<span class="callout-title">Numbered within the note, or the book</span>
+	Clew numbers each note on its own, with one exception: in live edit a
+	chapter of a <a href="books.html#writing">book</a> shows the book's
+	numbers, and can refer to a label in another chapter. A project that
+	includes chapters from other notes (the vault's
+	<code>jmarkdownProject</code> option) is numbered as a whole by its
+	export, and a reference to a label in another note shows
+	<code>??</code> while you write.
 </div>
 
 <p>
