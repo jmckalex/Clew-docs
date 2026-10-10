@@ -1,4 +1,4 @@
-# Handover — 2026-10-10 (site LIVE, serving 0.12.0; one held branch, `held-postscript`)
+# Handover — 2026-10-10 (site LIVE, serving 0.12.0; held: `held-postscript`, `held-cache`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -31,7 +31,10 @@ names.
   #system-fonts (new), the complete-document paragraph, the toolchain,
   reference rows; publishing#figures. Against Clew-app `postscript`
   `5a976d1` (`3f196ac`, `8892154`), measured in scratch builds (the
-  commit lists them). **Deploys only when Clew-app's merge is pushed,
+  commit lists them). Rechecked 2026-10-10: merged into Clew-app main
+  as `e00dabe`, pinned to the published 0.4.0 at `fa78cc0`; the figure
+  code is unchanged through `d4eae20` (protocol.js differs only by
+  main's book work). **Deploys only when Clew-app's merge is pushed,
   on the owner's word**; recheck against the merged hash first. **Before
   deploy:** diagrams#toolchain's iPad callout says a figure typesets on
   the iPad "exactly as it does on the desktop", which stops being true
@@ -41,12 +44,17 @@ names.
   Ghostscript archive and measures PostScript.md, Families.md and the
   system families iPadOS provides. Write the iPad line from those numbers:
   "exactly as on the desktop" if it holds, else the exact difference.
-- **Coming:** Clew-app's diagram cache "Outside" (approved plan, after
-  jmarkdown at-migration `d134995`, vendored at `2a877a5`, local):
-  exports' figure caches leave the vault. diagrams#export's "beside the
-  note" paragraph changes then, on Clew-boss's notice. Also coming: the
-  demo vault's Dashboards chart follows its `target` widget (an owner
-  bug). No manual page or screenshot shows that chart; nothing to change.
+- **HELD: `held-cache` `a362245`** (worktree `../Clew-docs-cache`),
+  drafted 2026-10-10 on Clew-boss's notice, against Clew-app `d4eae20`
+  (local) and `478cfdf`: export#figures-folder (new; the cache outside
+  the vault, `<name>-figures/` beside the file, the Trash rule, a user's
+  folder, 500 MB, restricted keeps none), the PDF alone (and the Tip),
+  diagrams#caching/#export, books#build, command-line, trusting-a-vault,
+  live-edit#frames (a block reading the note's own fields follows its
+  front matter). Measured on a scratch build (the commit lists it).
+  Deploys with Clew-app's push, on the owner's word. Merges cleanly with
+  `held-postscript` (`git merge-tree`). The demo Dashboards chart
+  (`4f6a706`) appears on no manual page or screenshot: nothing to change.
 - **Live 2026-10-10:** apps on the iPad (`d85e186`): secrets in the
   Keychain, grants arriving live; the callout lists no differences.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
@@ -73,9 +81,6 @@ names.
   export.html's "In 0.12.0" caution; measured on 0.12.0's engine: the
   PDF is still made, every code span prints `<MINTED>`). Four pages,
   each 200 and byte-identical.
-- **The diagram caches** (`mermaid/`, `MetaPost/` beside the note) are
-  made even in a restricted vault. The owner approved moving them out
-  (the "Outside" plan above); revisit diagrams#export when it lands.
 - **Live 2026-10-05:** origin-bound network grants (`e9f3d35`,
   apps-in-notes#network-hosts, Clew-app `917303b`).
 - **Live 2026-10-05 on the owner's OK:** the chapter "Links and the
