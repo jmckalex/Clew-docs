@@ -24,7 +24,9 @@ names.
   yet. Not documented, nothing to change: `42d6930` reads
   `@begin(<figure>)`/`@begin(.lemma)` as numbered (the manual never
   mentions the sigils). Deploys after Clew-app's push, on the owner's
-  word. Merges cleanly with the three frozen branches.
+  word. Merges cleanly with the three frozen branches. Verified by
+  Clew-boss. Next: phase 2's pages ("Convert this vault") when Clew-app
+  builds it.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
