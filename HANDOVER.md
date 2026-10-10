@@ -36,9 +36,11 @@ names.
   deploy:** diagrams#toolchain's iPad callout says a figure typesets on
   the iPad "exactly as it does on the desktop", which stops being true
   for PostScript and named families (Clew-iOS `94f0571` has neither).
-  It needs Clew-iOS's simulator measurement (PostScript.md and
-  Families.md from Clew-app's `make-figures-vault.mjs`) or a rewording
-  that makes no iPad claim. Asked of Clew-boss.
+  Clew-boss's plan (2026-10-10): no measurement of `94f0571`; Clew-iOS's
+  next sync (after Clew-app's diagram cache) brings 0.4.0 with the
+  Ghostscript archive and measures PostScript.md, Families.md and the
+  system families iPadOS provides. Write the iPad line from those numbers:
+  "exactly as on the desktop" if it holds, else the exact difference.
 - **Coming:** Clew-app's diagram cache "Outside" (approved plan, after
   jmarkdown at-migration `d134995`, vendored at `2a877a5`, local):
   exports' figure caches leave the vault. diagrams#export's "beside the
