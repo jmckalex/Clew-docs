@@ -18,14 +18,13 @@ names.
   against Clew-app `3d39952`: book-export-scenario, both cases, as its
   README records. 39 files live (every manual page restamped for
   nav.js), each 200 and byte-identical. No held branches remain.
-- **HELD on a branch, in its own worktree; main stays deployable:**
-  `held-books2` (`../Clew-docs-books2`, `e72bb96`): book mode phase 2
-  and the print PDF (Clew-app `fdac07a`…`6fc68ac`, `76dd382`,
-  `5abf52d`, `c115418`, `fb3635a`; the iPad at Clew-iOS `94f0571`): books#writing and #build (Print PDF), math-and-theorems
-  (`:::` kinds unnumbered; the callout's book exception), pointers from
-  live-edit#clicks, citations and export#where. Every claim measured at
-  `5abf52d` (the master's line included). Merge and deploy when
-  Clew-boss says Clew-app pushed. No iPad claims.
+- **Live 2026-10-10 on the owner's "Please push!" (via Clew-boss): book
+  mode phase 2 and the print PDF** (`held-books2` `e72bb96`, merged
+  `d80b1ad`; Clew-app pushed at `416c031`): books#writing, #build (Print
+  PDF), the iPad callout; math-and-theorems (`:::` kinds unnumbered, the
+  book exception); pointers in live-edit, citations (and chips follow an
+  edited style), export#where. Five pages, each 200 and byte-identical.
+  No held branches remain.
 - **Coming, no text yet:** Clew-app's unmerged `postscript` branch —
   PostScript figures (`3f196ac`) and system fonts named in figures
   (`8892154`) — merges when mp-tikz 0.4.0 is published; Clew-boss will
@@ -73,8 +72,8 @@ names.
   untitled admonition headings (`61f6507`), apps in live edit, prompts
   that focus the question and the App Gallery (`a5489ed`), pinned apps
   (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
-- **Base hash:** the manual reflects Clew-app up to **`e430bed`**
-  (book mode and app secrets included). Undocumented on purpose: re-vendors, smoke-only
+- **Base hash:** the manual reflects Clew-app up to **`416c031`**
+  (book mode phase 2, the print PDF and app secrets included). Undocumented on purpose: re-vendors, smoke-only
   commits, `ef8577e` (markup in code is text; no notice came),
   `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
   check 0.12.0 never had) `cbfa692` (mp-tikz 0.3.1, nothing visible) and `3d39952` (an
