@@ -58,8 +58,9 @@ names.
   (verified by Clew-boss, not yet pushed) offers no Proof row or palette
   command and refuses a stray request; the books callout and the Not yet
   row say proofing stays on the desktop ("desktop", not "Mac": Clew
-  ships for Windows and Linux too). Deploys only when Clew-app's push
-  AND that iOS build are on GitHub, then on the owner's word.
+  ships for Windows and Linux too; Clew-boss confirmed). Deploys only
+  when Clew-app's push AND Clew-iOS `52cd16a` are on GitHub, then on the
+  owner's word; byte-check each page against the pushed hashes.
 - **Settled (Clew-boss, 2026-10-10):** no "In 0.12.0" line for the
   `:target` export crash (`e8fdad2` fixes it; 0.12.0's engine stops a
   note's export on `:target` with no `[…]`). Narrow; the fix ships next.
