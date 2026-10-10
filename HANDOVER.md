@@ -1,4 +1,4 @@
-# Handover — 2026-10-10 (site LIVE, serving 0.12.0; held: `held-postscript`, `held-cache`, `held-proof`)
+# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`; frozen: `held-postscript`, `held-cache`, `held-proof`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -9,6 +9,22 @@ names.
 
 ## 0. Resume here
 
+- **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
+  work first.** Only colon work is drafted; `held-postscript`,
+  `held-cache` and `held-proof` are FROZEN as they stand: no deploys,
+  no new drafting on them, until the colon work has settled.
+- **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
+  from main): colon retirement phase 1, against Clew-app `97d7f0d`
+  (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
+  (the Format menu writes `@begin(name)` … `@end(name)`, `@today`, the
+  generic `@begin(<name>)`; Insert environment… the numbered
+  `@begin(theorem)`) and live-edit (game, Mathematica, markdown-demo
+  framed in either spelling; `@begin(HTML)` marked HTML only), with 0.12.0
+  markers. Colon examples elsewhere stay until phase 3; no screenshots
+  yet. Not documented, nothing to change: `42d6930` reads
+  `@begin(<figure>)`/`@begin(.lemma)` as numbered (the manual never
+  mentions the sigils). Deploys after Clew-app's push, on the owner's
+  word. Merges cleanly with the three frozen branches.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
