@@ -49,16 +49,17 @@ names.
   Deploys with Clew-app's push, on the owner's word. Merges cleanly with
   `held-postscript` (`git merge-tree`). The demo Dashboards chart
   (`4f6a706`) appears on no manual page or screenshot: nothing to change.
-- **HELD: `held-proof` `f190342`** (worktree `../Clew-docs-proof`),
+- **HELD: `held-proof` `b547a52`** (worktree `../Clew-docs-proof`),
   branched from `held-cache` (merge it after, or with, `held-cache`):
   books#build (a .tex per chapter for the PDF) and books#proof (Proof
   This Chapter), reference rows, export#where. Against Clew-app
   `235b27a` (`ef22b0b`), measured on a scratch build (the commit lists
-  it). Deploys with Clew-app's push, on the owner's word. The iPad: the
-  current iOS build (`35c8922`, pinned to `6b6fbbb`) predates Proof and
-  has no Proof row, so the books iPad callout stands. The next sync
-  (bringing `ef22b0b`) hides or refuses the row by name; write from its
-  report.
+  it). The iPad (`b547a52`): Clew-iOS synced to Clew-app `f959799`
+  (verified by Clew-boss, not yet pushed) offers no Proof row or palette
+  command and refuses a stray request; the books callout and the Not yet
+  row say proofing stays on the desktop ("desktop", not "Mac": Clew
+  ships for Windows and Linux too). Deploys only when Clew-app's push
+  AND that iOS build are on GitHub, then on the owner's word.
 - **Settled (Clew-boss, 2026-10-10):** no "In 0.12.0" line for the
   `:target` export crash (`e8fdad2` fixes it; 0.12.0's engine stops a
   note's export on `:target` with no `[…]`). Narrow; the fix ships next.
