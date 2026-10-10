@@ -61,6 +61,17 @@ names.
   ships for Windows and Linux too; Clew-boss confirmed). Deploys only
   when Clew-app's push AND Clew-iOS `52cd16a` are on GitHub, then on the
   owner's word; byte-check each page against the pushed hashes.
+- **WAITING: jmarkdown retires the colon directives** (`:name[…]`,
+  `::name[…]`, `:::name … :::` → `@name`, `@name+`, `@begin/@end`;
+  branch `retire-colon-directives` in jmarkdown, owner's decision, not
+  landed). Change nothing until it lands and Clew-app follows. Then:
+  convert diagrams (11), dialect (9), editing (7), live-edit (2),
+  math-and-theorems (2), export (1) and trusting-a-vault (1), rewording
+  diagrams.html:303 and dialect.html:307 rather than respelling them;
+  re-capture `editor-split.png`, `editor-editing.png` and
+  `fence-split.png` (the only screenshots showing `:::`) from the
+  converted demo vault. Check that `:::theorem` → `@begin(theorem)`
+  really is unnumbered → numbered, as math-and-theorems says.
 - **Settled (Clew-boss, 2026-10-10):** no "In 0.12.0" line for the
   `:target` export crash (`e8fdad2` fixes it; 0.12.0's engine stops a
   note's export on `:target` with no `[…]`). Narrow; the fix ships next.
