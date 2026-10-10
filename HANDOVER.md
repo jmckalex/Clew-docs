@@ -19,13 +19,15 @@ names.
   README records. 39 files live (every manual page restamped for
   nav.js), each 200 and byte-identical. No held branches remain.
 - **HELD on a branch, in its own worktree; main stays deployable:**
-  `held-books2` (`../Clew-docs-books2`, `17fd61a`): book mode phase 2
+  `held-books2` (`../Clew-docs-books2`, `e72bb96`): book mode phase 2
   and the print PDF (Clew-app `fdac07a`…`6fc68ac`, `76dd382`,
-  `5abf52d`): books#writing and #build (Print PDF), math-and-theorems
+  `5abf52d`, `c115418`, `fb3635a`; the iPad at Clew-iOS `94f0571`): books#writing and #build (Print PDF), math-and-theorems
   (`:::` kinds unnumbered; the callout's book exception), pointers from
   live-edit#clicks, citations and export#where. Every claim measured at
   `5abf52d` (the master's line included). Merge and deploy when
   Clew-boss says Clew-app pushed. No iPad claims.
+- **Live 2026-10-10:** apps on the iPad (`d85e186`): secrets in the
+  Keychain, grants arriving live; the callout lists no differences.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
   `b8065d8`): apps-in-notes#secrets and trusting-a-vault#trusted-vaults
   for Clew-app `0cc8547`/`bd71168`, rechecked at `e430bed`
@@ -40,8 +42,7 @@ names.
   (`24f7a53`), apps-in-notes On iPad after #network-hosts (`1c3be22`).
   Left out on purpose: live edit's "(1)(1)" equation and the task
   list's 4 px offset (no iPad section there; both fixed at the next
-  sync). At the next iOS sync, rewrite the apps callout: the Ticker's
-  key becomes a secret, and a grant for more stops reloading.
+  sync). The apps callout was rewritten at Clew-iOS `94f0571`.
 - **Live 2026-10-06, on Clew-boss's go (manual-only):**
   the three held branches merged (`d3f8046` demo update, `2313d85` live
   lists, `b44cdb2` export links), then `026384e` (an embed's `|size`,
