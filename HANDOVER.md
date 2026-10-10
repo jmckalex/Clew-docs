@@ -70,8 +70,10 @@ names.
   diagrams.html:303 and dialect.html:307 rather than respelling them;
   re-capture `editor-split.png`, `editor-editing.png` and
   `fence-split.png` (the only screenshots showing `:::`) from the
-  converted demo vault. Check that `:::theorem` → `@begin(theorem)`
-  really is unnumbered → numbered, as math-and-theorems says.
+  converted demo vault, only after Clew-app has changed. Confirmed by
+  Clew-boss at jmarkdown `21dee42`: `:::theorem` is unnumbered (ref ??),
+  `@begin(theorem)` numbered, so the conversion changes output there;
+  math-and-theorems.html:216-220 follows whatever the engine settles on.
 - **Settled (Clew-boss, 2026-10-10):** no "In 0.12.0" line for the
   `:target` export crash (`e8fdad2` fixes it; 0.12.0's engine stops a
   note's export on `:target` with no `[…]`). Narrow; the fix ships next.
