@@ -219,7 +219,13 @@ chapter, numbered from 1.
 	The diagrams the build draws are copied into
 	<code>build/Signals-figures/</code>, which the <code>.tex</code> and
 	the HTML pages share, as a
-	<a href="export.html#figures-folder">note's export</a> does.</li>
+	<a href="export.html#figures-folder">note's export</a> does. The PDF
+	is typeset from a <code>.tex</code> per chapter —
+	<code>build/Signals.tex</code> includes
+	<code>build/Signals-ch-1.tex</code>, <code>-ch-2.tex</code> and on —
+	which prints the same text as one file would and is what lets a
+	chapter be proofed alone (below). <em>Book as LaTeX</em> still writes
+	the one <code>build/Signals.tex</code>, the whole book in it.</li>
 	<li><strong>HTML</strong> is a small website in
 	<code>build/Signals/</code>: <code>index.html</code>, the master's text
 	with the contents; a page for each chapter, with previous, contents and
@@ -234,6 +240,23 @@ chapter, numbered from 1.
 	index. It goes to <code>build/Signals (reading view).pdf</code>, apart
 	from the LaTeX PDF, in the light theme and at Settings' paper size, as
 	a note's <a href="export.html#two-pdfs">reading-view PDF</a> does.</li>
+	<li id="proof"><strong>Proof</strong>
+	(File&nbsp;→&nbsp;Export&nbsp;→&nbsp;<em>Proof This Chapter (PDF via
+	LaTeX)</em>, or the Book panel's <strong>Proof</strong> row,
+	<em>Proof: Conventions (ch.&nbsp;2)</em>, both there while a chapter
+	of the book is the open note) typesets that chapter alone, in a few
+	seconds however long the book. Every other chapter's numbers and pages
+	come from the book's last full PDF, through LaTeX's
+	<code>\includeonly</code>, so the chapter keeps the number, the page
+	numbers and the cross-references the book gives it; the master's own
+	text and the references come with it. It goes to
+	<code>build/Signals (proof, Conventions).pdf</code>, and the notice
+	says which full PDF the numbers come from. So a proof needs one full
+	PDF first, and rather than number anything wrong it refuses, saying
+	why, when the book has no full PDF yet, when the list or order of its
+	chapters has changed since, when that run's files have been cleared
+	from <code>build/</code>, or when the open note is not a chapter of
+	the book. Build the book as PDF, then proof again.</li>
 	<li><strong>In a vault you have not
 	<a href="trusting-a-vault.html">trusted</a></strong>, a build runs no
 	note code, as any <a href="export.html">export</a> there does, and its
@@ -323,13 +346,14 @@ by name.
 	<tr><td><code>numbering</code></td><td><code>per chapter</code> (default) or <code>continuous</code>; case and spacing ignored</td></tr>
 	<tr><td>Chapter title</td><td>First <code>#</code> heading, else front-matter <code>title</code>, else the file name</td></tr>
 	<tr><td>Chapter status</td><td>Its <code>status:</code> — <code>draft</code>, <code>revised</code>, <code>done</code></td></tr>
-	<tr><td>Book panel</td><td>Right sidebar, only in a vault with a master: reorder (grip, <kbd>⌥↑</kbd>/<kbd>⌥↓</kbd>), × to remove, Add …, status chip, prose word counts, Build</td></tr>
+	<tr><td>Book panel</td><td>Right sidebar, only in a vault with a master: reorder (grip, <kbd>⌥↑</kbd>/<kbd>⌥↓</kbd>), × to remove, Add …, status chip, prose word counts, Build, Proof (with a chapter open)</td></tr>
 	<tr><td>Status bar</td><td><em>Ch. N of Book</em>; <em>· also in …</em> for a note in two books; click to switch or open the panel</td></tr>
 	<tr><td>Commands</td><td><em>Book: next chapter</em>, <em>Book: previous chapter</em>, <em>Book: show the Book panel</em> — no default keys</td></tr>
 	<tr><td>Writing a chapter</td><td>Live edit shows the book's numbers and citations; <code>@ref[</code> and <em>Jump to label…</em> list the book's labels; a click opens the label's chapter</td></tr>
 	<tr><td>Reading view</td><td>A chapter on its own (numbers from 1, other chapters <code>??</code>); a line above it, <em>… · numbers as in the book:</em> <strong>Build</strong></td></tr>
 	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML / Print PDF, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
 	<tr><td>Print PDF</td><td><code>build/&lt;master&gt; (reading view).pdf</code>: the book as reading view draws it, each chapter from a new page; no TeX</td></tr>
+	<tr><td>Proof</td><td>File → Export → Proof This Chapter (PDF via LaTeX), or the panel's Proof row, with a chapter open: that chapter alone, numbered from the last full PDF, into <code>build/&lt;master&gt; (proof, &lt;chapter&gt;).pdf</code>; refused, saying why, with no full PDF or after the chapters change</td></tr>
 	<tr><td>HTML build</td><td><code>build/&lt;master&gt;/</code>: <code>index.html</code>, a page per chapter, <code>references.html</code>; the old folder to the Trash</td></tr>
 	<tr><td>Links and images</td><td>A <code>[[link]]</code> to a chapter links to it; any other prints as its text; an image is found from its chapter, by a relative path</td></tr>
 	<tr><td>Chapter keys</td><td><code>Bibliography</code>, <code>Packages</code>, <code>LaTeX preamble</code>, <code>Lang</code>/<code>Language</code>, <code>Math macros</code>, <code>&lt;style&gt;</code>; anything else warns unless equal to the book's</td></tr>
