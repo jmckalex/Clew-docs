@@ -54,16 +54,14 @@ names.
   books#build (a .tex per chapter for the PDF) and books#proof (Proof
   This Chapter), reference rows, export#where. Against Clew-app
   `235b27a` (`ef22b0b`), measured on a scratch build (the commit lists
-  it). Deploys with Clew-app's push, on the owner's word. **At Clew-iOS's
-  next sync:** the books iPad callout says only Print PDF works there;
-  whether the iPad's Book panel shows a Proof row needs its measurement.
-- **Open, asked of Clew-boss:** Clew-app `e8fdad2` (a bare `:target`
-  prints as written) needs no text for now; 0.12.0's engine fails the
-  same way ("Cannot read properties of undefined (reading 'trim')"
-  stops a note's HTML/LaTeX export when its prose has `:target` with no
-  `[…]`, e.g. Meta Bind's `INPUT[number:target]`). Measured on
-  `9268aa3`'s vendored engine. An "In 0.12.0" line only if Clew-boss
-  wants one.
+  it). Deploys with Clew-app's push, on the owner's word. The iPad: the
+  current iOS build (`35c8922`, pinned to `6b6fbbb`) predates Proof and
+  has no Proof row, so the books iPad callout stands. The next sync
+  (bringing `ef22b0b`) hides or refuses the row by name; write from its
+  report.
+- **Settled (Clew-boss, 2026-10-10):** no "In 0.12.0" line for the
+  `:target` export crash (`e8fdad2` fixes it; 0.12.0's engine stops a
+  note's export on `:target` with no `[…]`). Narrow; the fix ships next.
 - **Live 2026-10-10:** apps on the iPad (`d85e186`): secrets in the
   Keychain, grants arriving live; the callout lists no differences.
 - **Live 2026-10-07: app secrets** (`held-secrets` `a15b065`, merged
