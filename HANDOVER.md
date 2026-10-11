@@ -1,4 +1,4 @@
-# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`; frozen: `held-postscript`, `held-cache`, `held-proof`)
+# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -10,9 +10,12 @@ names.
 ## 0. Resume here
 
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
-  work first.** Only colon work is drafted; `held-postscript`,
-  `held-cache` and `held-proof` are FROZEN as they stand: no deploys,
-  no new drafting on them, until the colon work has settled.
+  work first.** Done on the docs side: phases 1 and 2 drafted and
+  verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
+  freeze and restarts the parked work in the agreed order — Clew-iOS,
+  jmarkdown's figure-engine queue, Clew-app step C, then Docs fourth.
+  Until Clew-boss comes back to Docs, every held branch stays as it is:
+  no deploys, no new drafting.
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -27,7 +30,7 @@ names.
   word. Merges cleanly with the three frozen branches. Verified by
   Clew-boss. Next: phase 2's pages ("Convert this vault") when Clew-app
   builds it.
-- **HELD: `held-convert` `03ea0cf`** (worktree `../Clew-docs-convert`,
+- **HELD: `held-convert` `2b977f9`** (worktree `../Clew-docs-convert`,
   from `held-inserts` `3dd9c10`, so it carries phase 1 too): colon
   retirement phase 2, against Clew-app `0aebcf8` (local; `65ef069`,
   `fcc7faf`, `ae6787e`). New chapter `converting-colon-directives.html`
@@ -41,7 +44,9 @@ names.
   math-and-theorems#what-numbers, trusting-a-vault#restricted. Measured
   on a scratch build (`$SC/convert/`: make-fixture.mjs, sheet-, editor-,
   envs-, latex-scenario.js). Merges cleanly with main and the three
-  frozen branches. Sent to Clew-boss to verify. Deploys with
+  frozen branches. `03ea0cf` VERIFIED by Clew-boss (placement approved);
+  `2b977f9` adds its one requested sentence (a TeX block's LaTeX: line
+  break, same paragraph, `\par` for a new one; measured). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
