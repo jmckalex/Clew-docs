@@ -46,7 +46,8 @@ names.
   envs-, latex-scenario.js). Merges cleanly with main and the three
   frozen branches. `03ea0cf` VERIFIED by Clew-boss (placement approved);
   `2b977f9` adds its one requested sentence (a TeX block's LaTeX: line
-  break, same paragraph, `\par` for a new one; measured). Deploys with
+  break, same paragraph, `\par` for a new one; measured), VERIFIED by
+  Clew-boss too; the freeze has lifted (Docs fourth). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
