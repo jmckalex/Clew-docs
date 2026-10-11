@@ -180,7 +180,12 @@ export can still differ. The colon form wrote a generic block into the
 <code>&lt;/note&gt;</code>, and <code>:span[…]</code> as a
 <code>&lt;span&gt;</code>. Converted, the block is
 <code>\begin{note}</code> … <code>\end{note}</code>, which does nothing
-until the document defines it, and the span is just its text.
+until the document defines it, and the span is just its text. A
+<code>:::TeX</code> block glued the next paragraph's first word straight
+onto its last line (<code>only}.A description</code>); after
+<code>@begin(TeX)</code> there is a line break, which LaTeX reads as a
+space, but the text after it still continues the same paragraph. To
+start a new one, end the TeX body with <code>\par</code>.
 </p>
 
 <h2 id="loading">Notes that load directives</h2>
