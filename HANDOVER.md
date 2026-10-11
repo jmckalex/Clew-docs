@@ -1,4 +1,4 @@
-# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`; frozen: `held-postscript`, `held-cache`, `held-proof`)
+# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`; frozen: `held-postscript`, `held-cache`, `held-proof`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -27,6 +27,22 @@ names.
   word. Merges cleanly with the three frozen branches. Verified by
   Clew-boss. Next: phase 2's pages ("Convert this vault") when Clew-app
   builds it.
+- **HELD: `held-convert` `03ea0cf`** (worktree `../Clew-docs-convert`,
+  from `held-inserts` `3dd9c10`, so it carries phase 1 too): colon
+  retirement phase 2, against Clew-app `0aebcf8` (local; `65ef069`,
+  `fcc7faf`, `ae6787e`). New chapter `converting-colon-directives.html`
+  after the dialect (nav.js, the contents card, og-tags, every page
+  restamped for nav.js): File → Convert Colon Directives… / Undo Colon
+  Conversion… (palette too), the dry run, the five groups, the default
+  button, the output changes, notes that load directives and Convert
+  anyway, the safeguards, Undo; "(Not in 0.12.0.)"; nothing on the iPad
+  (no measurement) or on when the colon forms stop working ("still work
+  today"). Pointers from dialect#blocks (+ see-also), editing#formatting,
+  math-and-theorems#what-numbers, trusting-a-vault#restricted. Measured
+  on a scratch build (`$SC/convert/`: make-fixture.mjs, sheet-, editor-,
+  envs-, latex-scenario.js). Merges cleanly with main and the three
+  frozen branches. Sent to Clew-boss to verify. Deploys with
+  `held-inserts`, after Clew-app's push, on the owner's word.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
