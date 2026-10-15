@@ -193,7 +193,11 @@ clew export --pdf Projects/Grant\ proposal.md --out ~/Desktop/    # elsewhere</c
 	<code>~</code> meaning your home folder. If the PDF fails, the command
 	says so with LaTeX's first error, and nothing is left beside the note.
 	The export follows the vault's trust exactly as the menu's does: in
-	a restricted vault, no note code runs.</dd>
+	a restricted vault, no note code runs, and <code>--pdf</code> is
+	refused — the command prints why, as the menu's notice does, and
+	exits with <code>1</code> (<a href="trusting-a-vault.html#restricted">Trusting
+	a vault</a>); <code>--html</code> and <code>--latex</code> still
+	export.</dd>
 </dl>
 
 <p>
@@ -241,7 +245,7 @@ printing its usage.
 	<tr><td><code>clew new &lt;note&gt; [--vault V]</code></td>
 		<td>A new, empty note, never over a file</td></tr>
 	<tr><td><code>clew export --pdf|--latex|--html &lt;note&gt; [--out F]</code></td>
-		<td>Writes only that file (and a <code>.tex</code>'s or <code>.html</code>'s <code>-figures/</code> folder) — beside the note, or at <code>F</code> (a file, or a folder that exists or ends in <code>/</code>) — under the vault's trust</td></tr>
+		<td>Writes only that file (and a <code>.tex</code>'s or <code>.html</code>'s <code>-figures/</code> folder) — beside the note, or at <code>F</code> (a file, or a folder that exists or ends in <code>/</code>) — under the vault's trust: in a restricted vault <code>--pdf</code> is refused (exit 1)</td></tr>
 	<tr><td>Exit status</td>
 		<td><code>0</code> done · <code>1</code> failed, with the reason · <code>2</code> usage</td></tr>
 	<tr><td>Installed by</td>

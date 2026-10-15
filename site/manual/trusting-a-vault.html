@@ -226,11 +226,12 @@ by Clew's built-in TeX alone, which reads nothing on your disk but the
 fonts Clew hands it, never by your
 TeX installation, whatever Settings says
 (<a href="diagrams.html#export-figures">Who draws an export's
-figures</a>; not in 0.12.0). A PDF via LaTeX, a note's or a
-<a href="books.html#build">book's</a>, is refused by name, since your
-installation would compile the whole document and its TeX can read
-anything you can; the refusal offers the reading-view PDF instead, or
-trusting the vault. (In 0.12.0 a restricted vault's PDF via LaTeX is
+figures</a>; not in 0.12.0). No PDF via LaTeX is made, a note's or a
+<a href="books.html#build">book's</a>: it would run your TeX
+installation over the vault's own TeX, which can read any file you can.
+The notice says so in those words, and offers the reading-view PDF
+instead, or trusting the vault (Settings&nbsp;→ This vault);
+<code>clew export --pdf</code> is refused the same way. (In 0.12.0 a restricted vault's PDF via LaTeX is
 compiled like any other.) A <a href="publishing.html">website export</a>
 leaves out the vault's scripts and its own plugins, and refuses
 <code>dataviewjs</code> by name; your enabled global plugins still go in.

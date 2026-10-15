@@ -324,10 +324,11 @@ And one exception runs the other way: a vault this device has not
 <a href="trusting-a-vault.html#restricted">trusted</a> exports without
 running its notes' code, and from your global <code>~/.jmarkdown</code>
 alone — a <code>.jmarkdown/</code> folder inside the vault is not read,
-since it too could carry code. It does not export as PDF via LaTeX at
-all, since your TeX installation would compile the whole document: that
-is refused by name, and the refusal offers the reading-view PDF, or
-trusting the vault, instead (not in 0.12.0).
+since it too could carry code. It makes no PDF via LaTeX at all, which
+would run your TeX installation over the vault's own TeX: that is
+refused by name, before anything is built, and the notice offers the
+reading-view PDF, or trusting the vault, instead
+(<a href="#troubleshooting">Troubleshooting</a>; not in 0.12.0).
 </p>
 
 <div class="callout warn">
@@ -389,7 +390,16 @@ installation directories (<code>/Library/TeX/texbin</code>,
 <code>/usr/local/bin</code>, and <code>/opt/homebrew/bin</code>). With
 it, reruns for cross-references and bibliographies are handled
 automatically, which is why it is preferred; without it, Clew runs the
-TeX engine itself.
+TeX engine itself. <code>latexmk</code> reads only its system-wide
+configuration and yours — <code>~/.latexmkrc</code>, or
+<code>~/.config/latexmk/latexmkrc</code> — and the <code>biber</code> it
+runs only yours (<code>~/.biber.conf</code>,
+<code>~/.config/biber/biber.conf</code>, or on a Mac
+<code>~/Library/biber/biber.conf</code>): a <code>latexmkrc</code> or
+<code>biber.conf</code> in a note's or a book's folder, its
+<code>build/</code> included, or where you save the PDF, is never read.
+(In 0.12.0, which compiles where you save the PDF, <code>latexmk</code>
+reads a <code>latexmkrc</code> there too.)
 </p>
 
 <h3 id="latex-engine">Which TeX engine</h3>
@@ -465,6 +475,20 @@ in the compiler's log.
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <dl>
+	<dt>"A PDF via LaTeX is not made in a vault this Mac does not trust"</dt>
+	<dd>The vault is <a href="trusting-a-vault.html#restricted">restricted</a>
+	on this device, and Clew makes no PDF via LaTeX there. The notice
+	reads in full: <em>A PDF via LaTeX is not made in a vault this Mac
+	does not trust: it would run your TeX installation over the vault's
+	own TeX, which can read any file you can. Export the note as PDF
+	(reading view), or trust the vault (Settings → This vault).</em> On
+	Windows and Linux it says <em>this computer</em>. Nothing is built,
+	and Clew does not ask where to save. Export the note as
+	<em>PDF (reading view)</em>, which needs no TeX, or trust the vault in
+	Settings&nbsp;→ This vault and export again. <code>clew export --pdf</code> prints the same words and exits
+	with <code>1</code>; a <a href="books.html#build">book's</a> PDF is
+	refused in the same way. (Not in 0.12.0.)</dd>
+
 	<dt>"No TeX toolchain found"</dt>
 	<dd>Clew could not find <code>latexmk</code>, or the engine it chose
 	(the message names both), in any of the directories listed above. Install MacTeX (or your
