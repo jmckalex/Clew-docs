@@ -238,7 +238,13 @@ it, or move the cursor into the block with the arrow keys. On a touch
 screen the icon is always faintly visible. (In 0.12.0 a click on a thin
 bar along a frame's top edge revealed its source.) A frame
 re-renders when a file it reads changes (an embedded note, the notes a
-query lists) and when a setting that changes rendering does.
+query lists) and when a setting that changes rendering does. That
+includes the note itself: a block that reads the note's own fields — a
+query's <code>this</code>, <code>dv.current()</code> in
+<code>dataviewjs</code>, a Meta Bind <code>VIEW</code> — follows a
+change to its front matter once the note is saved, whether you typed
+the change or a widget made it, without the page reloading. (In 0.12.0
+it keeps the old values in live edit; reading mode follows.)
 </p>
 
 <p>

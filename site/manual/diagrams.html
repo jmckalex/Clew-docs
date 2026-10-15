@@ -673,11 +673,12 @@ come back from the cache without an engine starting.
 <p>
 Nothing goes into your vault. Earlier versions of Clew shelled out to
 your TeX installation and cached the SVG in <code>TiKZ/</code> and
-<code>MetaPost/</code> folders beside the note; the preview no longer
-writes or reads those. If a vault of yours has them, they are ordinary
-folders of SVG files and can be deleted — though a jmarkdown run on
-the command line, or a single-note HTML export (below), will still use
-them.
+<code>MetaPost/</code> folders beside the note; neither the preview nor
+an <a href="#export">export</a> writes or reads those now. If a vault of
+yours has them, they are ordinary folders of SVG files, yours to keep or
+delete, and Clew does not touch them — though a jmarkdown run of your
+own on the command line still uses them. (In 0.12.0 a single-note
+export uses them too.)
 </p>
 
 <p>
@@ -818,8 +819,8 @@ path is unchanged, and it is the one place a TeX installation still
 matters: an export runs your own jmarkdown configuration and your own
 <code>lualatex</code>, <code>mpost</code> and
 <code>dvisvgm</code> — which is also why a single note exported to
-HTML still uses the <code>TiKZ/</code> and <code>MetaPost/</code>
-folders beside it, and why the fences — <code>```tikz</code>,
+HTML has its TikZ and MetaPost figures drawn by those tools, and why
+the fences — <code>```tikz</code>,
 <code>```metapost</code>, <code>```latex</code> and
 <code>```tex</code>, which jmarkdown itself does not know — export to
 LaTeX as code blocks. (<code>show=</code> is likewise the preview's:
@@ -831,14 +832,19 @@ the picture.)
 A <code>@begin(metapost)</code> figure, and a Mermaid diagram in one of
 its native forms, go into LaTeX as PDF figures no wider than the line:
 the export makes each one once (MetaPost through your own
-<code>mptopdf</code>, Mermaid through <code>mmdc</code>), keeps it in a
-<code>MetaPost/</code> or <code>mermaid/</code> folder beside the note,
-and the <code>.tex</code> includes it from there by a path relative to
-itself, never by its full path on your disk. Moved or sent elsewhere, a
-<code>.tex</code> needs those figures at the same place relative to
-it. (In 0.12.0 the path is the full
-one, and TeX meets an error at every such figure; see
-<a href="export.html#one-source">Exporting notes</a>.)
+<code>mptopdf</code>, Mermaid through <code>mmdc</code>) and keeps it in
+a cache of Clew's own, outside the vault. The figures a file uses are
+copied into a folder beside it, named after it —
+<code>Report.tex</code> gets <code>Report-figures/</code> — and the
+<code>.tex</code> includes them from there by a path relative to
+itself, never by its full path on your disk; an HTML export does the
+same with its SVG figures. So a kept <code>.tex</code> or
+<code>.html</code> stands on its own, as long as its folder goes with
+it; <a href="export.html#figures-folder">Exporting notes</a> says what
+Clew does with the folder. (In 0.12.0 the figures are kept in
+<code>MetaPost/</code> and <code>mermaid/</code> folders beside the
+note, the path is the full one, and TeX meets an error at every such
+figure; see <a href="export.html#one-source">Exporting notes</a>.)
 </p>
 
 <p>

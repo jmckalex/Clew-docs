@@ -180,7 +180,10 @@ clew export --pdf Projects/Grant\ proposal.md --out ~/Desktop/    # elsewhere</c
 	<a href="export.html">File&nbsp;→&nbsp;Export</a> would —
 	<code>--pdf</code> is PDF via LaTeX — and writes only the file asked
 	for: <code>Grant proposal.pdf</code>, <code>.tex</code> or
-	<code>.html</code>. A PDF is typeset in a temporary folder that is
+	<code>.html</code>, with a <code>.tex</code> or <code>.html</code>
+	that has diagrams the export draws getting its
+	<a href="export.html#figures-folder"><code>-figures/</code>
+	folder</a> beside it. A PDF is typeset in a temporary folder that is
 	removed afterwards, so no LaTeX build files appear beside the note;
 	its images and its <a href="citations.html">bibliography</a> are
 	still found from the note's own folder. Without <code>--out</code>
@@ -238,7 +241,7 @@ printing its usage.
 	<tr><td><code>clew new &lt;note&gt; [--vault V]</code></td>
 		<td>A new, empty note, never over a file</td></tr>
 	<tr><td><code>clew export --pdf|--latex|--html &lt;note&gt; [--out F]</code></td>
-		<td>Writes only that file — beside the note, or at <code>F</code> (a file, or a folder that exists or ends in <code>/</code>) — under the vault's trust</td></tr>
+		<td>Writes only that file (and a <code>.tex</code>'s or <code>.html</code>'s <code>-figures/</code> folder) — beside the note, or at <code>F</code> (a file, or a folder that exists or ends in <code>/</code>) — under the vault's trust</td></tr>
 	<tr><td>Exit status</td>
 		<td><code>0</code> done · <code>1</code> failed, with the reason · <code>2</code> usage</td></tr>
 	<tr><td>Installed by</td>
