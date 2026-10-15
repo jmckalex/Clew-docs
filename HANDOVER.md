@@ -50,7 +50,7 @@ names.
   break, same paragraph, `\par` for a new one; measured), VERIFIED by
   Clew-boss too; the freeze has lifted (Docs fourth). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
-- **HELD: `held-pdfsize` `5726d80`** (worktree `../Clew-docs-pdfsize`,
+- **HELD: `held-pdfsize` `507d821`** (worktree `../Clew-docs-pdfsize`,
   from main `e4e7024`): a PDF embed one page tall at fit width, sizes in
   the link — the owner's report (a sliver in live edit), Clew-app `2e80ff4`
   (`ed6ffb0`; local) and Clew-iOS `9b0b67e` (pushed).
@@ -71,9 +71,9 @@ names.
   other held items on the owner's word. The shortfalls are routed: ⟷ in
   live edit to Clew-app (after its current work), `#page=N` to the owner
   as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
-  HOLD with the rest); the ⟷ sentence waits on Clew-app, which is hiding
-  ⟷ inside live edit's block frames (approved, being built) — Clew-boss
-  sends the sentence change once verified.
+  HOLD with the rest); ⟷ answered too: Clew-app `a7b9940` draws it in
+  reading view only, and `507d821` says so (live edit keeps the column's
+  width; 0.12.0's live edit showed a ⟷); sent to Clew-boss.
 - **HELD: `held-figengine` `3e7c15a`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
