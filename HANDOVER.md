@@ -38,7 +38,8 @@ names.
   the `0520b2c` scratch build (which carries `1406ffc`) and on `9268aa3`:
   0.12.0 makes a mid-line image a `!` and a link too, unless it ends the
   line, when it is drawn below the text as a block (`$SC/inl/`).
-  Awaiting Clew-boss's check; deploys on its go (manual-only).
+  ACCEPTED by Clew-boss; HOLD — Clew-boss is asking the owner (the
+  earlier yes covered only the seven branches), and relays the word.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
