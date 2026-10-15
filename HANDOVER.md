@@ -50,7 +50,7 @@ names.
   break, same paragraph, `\par` for a new one; measured), VERIFIED by
   Clew-boss too; the freeze has lifted (Docs fourth). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
-- **HELD: `held-pdfsize` `41d2887`** (worktree `../Clew-docs-pdfsize`,
+- **HELD: `held-pdfsize` `5726d80`** (worktree `../Clew-docs-pdfsize`,
   from main `e4e7024`): a PDF embed one page tall at fit width, sizes in
   the link — the owner's report (a sliver in live edit), Clew-app `2e80ff4`
   (`ed6ffb0`; local) and Clew-iOS `9b0b67e` (pushed).
@@ -58,7 +58,11 @@ names.
   (media bullet, #sizes, two reference rows). Written as measured, two
   shortfalls included: ⟷ in live edit widens only to the column (its
   frame is no wider), and `#page=N` changes nothing (page 1, as in
-  0.12.0). One iPad sentence, from Clew-iOS 9b0b67e's simulator
+  0.12.0) — the latter replaced in `5726d80` (Clew-app `f47ae05`:
+  `c7417b9`, `f47ae05`, the owner's yes): `#page=3` opens at page 3's
+  top, with sizes or alone, past the end the last page, the title opens
+  the tab there; a broken or locked PDF's box as tall as EmbedPDF's card
+  at any width. One iPad sentence, from Clew-iOS 9b0b67e's simulator
   measurement (sizes only). 0.12.0 markers measured on `9268aa3`
   (`$SC/pdfsize/`: Clew-app's pdf-size-scenario, extra-, open-,
   wide-width-scenario.js). No screenshot. Merges cleanly with the five
@@ -66,8 +70,8 @@ names.
   ACCEPTED by Clew-boss (no screenshot for now); HOLD, deploys with the
   other held items on the owner's word. The shortfalls are routed: ⟷ in
   live edit to Clew-app (after its current work), `#page=N` to the owner
-  as a feature question; Clew-boss says which sentence goes if either
-  changes.
+  as a feature question (answered yes: `5726d80`, sent to Clew-boss; still
+  held); Clew-boss says which sentence goes if ⟷ changes.
 - **HELD: `held-figengine` `584acf9`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
