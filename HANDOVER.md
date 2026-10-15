@@ -71,7 +71,9 @@ names.
   other held items on the owner's word. The shortfalls are routed: ⟷ in
   live edit to Clew-app (after its current work), `#page=N` to the owner
   as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
-  HOLD with the rest); the ⟷ sentence waits on Clew-app's proposal.
+  HOLD with the rest); the ⟷ sentence waits on Clew-app, which is hiding
+  ⟷ inside live edit's block frames (approved, being built) — Clew-boss
+  sends the sentence change once verified.
 - **HELD: `held-figengine` `3e7c15a`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
@@ -101,7 +103,7 @@ names.
   `3e7c15a` (Clew-app `1a5ab6e`): a family a figure names is handed over
   whole from this computer's fonts, restricted vaults too; a family it
   lacks or one over 64 MB falls back; "reads nothing on your disk but the
-  fonts Clew hands it". Sent to Clew-boss.
+  fonts Clew hands it". ACCEPTED by Clew-boss; HOLD.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
