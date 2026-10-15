@@ -852,10 +852,14 @@ Where an export draws a TikZ or MetaPost figure as a picture — both
 kinds in an HTML export, MetaPost in a LaTeX export and so in a PDF via
 LaTeX — <strong>Clew's built-in TeX</strong> draws it by default: the
 same engines the preview uses, so it needs no TeX installation.
-What the built-in TeX cannot draw goes to your TeX installation
-instead: a figure naming a font it cannot find, or needing a file its
-bundles leave out — a package such as <code>siunitx</code>, or a file
-the figure <code>\input</code>s. The export's
+A font family a figure names, <code>\setmainfont{Georgia}</code> say, is
+handed to it from this computer's fonts with every face — bold and
+italic included — the way the preview gets it, and in a restricted vault
+too, since it is only fonts. What the built-in TeX cannot draw goes to
+your TeX installation instead: a figure naming a family this computer
+does not have, or one over 64&nbsp;MB, which is not handed over; or one
+needing a file the built-in TeX's bundles leave out — a package such as
+<code>siunitx</code>, or a file the figure <code>\input</code>s. The export's
 <a href="export.html#troubleshooting">warnings</a> say which figure went
 and what came of it: drawn by your installation, or, with no TeX
 installed, not drawn, with an error box in its place. They call the
@@ -887,8 +891,9 @@ than in the note.)
 
 <p>
 A restricted vault's HTML and LaTeX exports never send a figure to your
-installation, whatever the setting: the built-in TeX cannot read your disk, and your
-installation's TeX can. A figure the built-in TeX cannot draw shows
+installation, whatever the setting: the built-in TeX reads nothing on
+your disk but the fonts Clew hands it, and your installation's TeX can
+read anything you can. A figure the built-in TeX cannot draw shows
 TeX's own error box — a package the vault's own <code>.jmarkdown/</code> folder would
 have loaded is missing, for one, since a restricted export does not read
 it. If the built-in TeX cannot run at all, each figure is
