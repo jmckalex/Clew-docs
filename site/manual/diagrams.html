@@ -869,8 +869,8 @@ Appearance&nbsp;→ <em>TikZ and MetaPost figures in exports</em>&nbsp;→
 TeX</em>). That runs your <code>lualatex</code>, <code>dvisvgm</code>,
 <code>mpost</code> and <code>mptopdf</code>; without them each figure is
 an error box. The setting is for a vault you have
-<a href="trusting-a-vault.html">trusted</a>; a restricted vault's
-exports always use the built-in TeX (below). (In 0.12.0 there is no
+<a href="trusting-a-vault.html">trusted</a>; a restricted vault's HTML
+and LaTeX exports always use the built-in TeX (below). (In 0.12.0 there is no
 setting: your installation draws every export's figures, a restricted
 vault's too.)
 </p>
@@ -886,8 +886,8 @@ than in the note.)
 </p>
 
 <p>
-A restricted vault's exports never send a figure to your installation,
-whatever the setting: the built-in TeX cannot read your disk, and your
+A restricted vault's HTML and LaTeX exports never send a figure to your
+installation, whatever the setting: the built-in TeX cannot read your disk, and your
 installation's TeX can. A figure the built-in TeX cannot draw shows
 TeX's own error box — a package the vault's own <code>.jmarkdown/</code> folder would
 have loaded is missing, for one, since a restricted export does not read
