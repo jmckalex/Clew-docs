@@ -94,7 +94,10 @@ names.
   bridging sentence until it changes. `82508ea` follows Clew-app
   `72af6a2`'s corrected hint: four sentences now say a restricted vault's
   HTML and LaTeX exports (a PDF via LaTeX is still the installation's);
-  sent to Clew-boss.
+  ACCEPTED by Clew-boss, HOLD. If the owner refuses PDF via LaTeX in
+  untrusted vaults, four sentences change (Clew-boss has the list):
+  settings-and-hotkeys' entry, the end of diagrams#export-figures'
+  restricted paragraph, export's reference row, trusting-a-vault#restricted.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
