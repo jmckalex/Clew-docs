@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-pdfsize`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-pdfsize`, `held-figengine`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -15,8 +15,8 @@ names.
   freeze and restarts the parked work in the agreed order — Clew-iOS,
   jmarkdown's figure-engine queue, Clew-app step C, then Docs fourth.
   Until Clew-boss comes back to Docs, every held branch stays as it is:
-  no deploys, no new drafting. (2026-10-15: Clew-boss asked for one new
-  held item, `held-pdfsize`, below.)
+  no deploys, no new drafting. (2026-10-15: Clew-boss asked for two new
+  held items, `held-pdfsize` and `held-figengine`, below.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -68,6 +68,21 @@ names.
   live edit to Clew-app (after its current work), `#page=N` to the owner
   as a feature question; Clew-boss says which sentence goes if either
   changes.
+- **HELD: `held-figengine` `584acf9`** (worktree `../Clew-docs-figengine`,
+  from `held-cache` `a362245` — merge it after, or with, `held-cache`):
+  step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
+  default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
+  `3267bf5`, `b7ad70a`; local). diagrams#export-figures (new) and
+  #export's first two paragraphs, two reference rows;
+  export#pdf-toolchain and a reference row; trusting-a-vault#restricted;
+  settings-and-hotkeys (entry, app-global key). Written as measured:
+  in a restricted vault a figure the built-in TeX fails on is TeX's error
+  box (no warning), and "[TiKZ figure not drawn]" only when it cannot run
+  at all; a restricted PDF via LaTeX still compiles TikZ with the user's
+  TeX. Item 5 (dev builds' pinned `'external'`) left out: 0.12.0 never had
+  the key. 0.12.0 markers measured on `9268aa3`. Scratch: `$SC/stepc/`.
+  Merges cleanly with every held branch and main. Sent to Clew-boss;
+  deploys with Clew-app's push, on the owner's word.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
