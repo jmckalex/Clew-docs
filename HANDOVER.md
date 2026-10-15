@@ -16,7 +16,9 @@ names.
   jmarkdown's figure-engine queue, Clew-app step C, then Docs fourth.
   Until Clew-boss comes back to Docs, every held branch stays as it is:
   no deploys, no new drafting. (2026-10-15: Clew-boss asked for two new
-  held items, `held-pdfsize` and `held-figengine`, below.)
+  held items, `held-pdfsize` and `held-figengine`, below; both accepted.
+  Every held branch deploys with Clew-app's push, on the owner's word,
+  which Clew-boss has asked for. Nothing else is queued for Docs.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -73,7 +75,7 @@ names.
   as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
   HOLD with the rest); ⟷ answered too: Clew-app `a7b9940` draws it in
   reading view only, and `507d821` says so (live edit keeps the column's
-  width; 0.12.0's live edit showed a ⟷); sent to Clew-boss.
+  width; 0.12.0's live edit showed a ⟷); ACCEPTED by Clew-boss, HOLD.
 - **HELD: `held-figengine` `3e7c15a`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
