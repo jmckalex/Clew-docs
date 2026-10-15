@@ -72,7 +72,7 @@ names.
   live edit to Clew-app (after its current work), `#page=N` to the owner
   as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
   HOLD with the rest); the ⟷ sentence waits on Clew-app's proposal.
-- **HELD: `held-figengine` `584acf9`** (worktree `../Clew-docs-figengine`,
+- **HELD: `held-figengine` `82508ea`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
   default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
@@ -91,7 +91,10 @@ names.
   (HTML and LaTeX only); refusing a PDF via LaTeX in untrusted vaults is
   the owner's open question (Clew-boss says which sentence changes if so);
   "mp-tikz-wasm" in the warnings is an engine-wording candidate — keep the
-  bridging sentence until it changes.
+  bridging sentence until it changes. `82508ea` follows Clew-app
+  `72af6a2`'s corrected hint: four sentences now say a restricted vault's
+  HTML and LaTeX exports (a PDF via LaTeX is still the installation's);
+  sent to Clew-boss.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
