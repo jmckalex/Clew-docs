@@ -206,7 +206,8 @@ can be a size, and it must look like one — all digits, or
 digits<code>x</code>digits. Anything else is treated as alt text, so
 <code>![[photo.jpg|The 1968 original]]</code> is a caption, not a
 mangled size. Videos accept the same size syntax; audio and PDFs
-ignore it.
+ignore it — a PDF takes its sizes in the link instead
+(<a href="#pdf-sizes">below</a>).
 </p>
 
 <h3 id="pdfs">PDFs</h3>
@@ -214,11 +215,61 @@ ignore it.
 <p>
 <code>![[sample.pdf]]</code> embeds the document itself inside a titled
 box in the note — page through it, search it, and annotate it without
-leaving reading mode. The box's title is a link that opens the same file
-in a full viewer tab, and beside it sits a <strong>⟷</strong> button that
-expands the embed to the width of the window and back: useful when you
-want the page and comment sidebars beside the document rather than
-stacked below it, which is what happens in a narrow column.
+leaving the note. The box is as wide as the note's column and exactly
+one page tall: the viewer opens at <em>fit width</em>, at the top of
+page 1, and the next page begins just below the box's bottom edge, a
+scroll inside it away. When the width changes — a split, a sidebar, a
+resized window — the height follows. Reading mode and live edit are the
+same. (In 0.12.0 an embed is 70% of the pane's height in reading mode and
+a strip about 120 pixels tall in live edit, with the page shrunk to fit.)
+</p>
+
+<p id="pdf-sizes">
+Sizes, and the page to open at, go in the link, as in Obsidian:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>![[sample.pdf#height=600]]              600 pixels tall
+![[sample.pdf#width=480]]               480 pixels wide, one page tall
+![[sample.pdf#width=60%]]               60% of the column
+![[sample.pdf#width=60%&amp;height=600]]    both, joined by &amp;
+![[sample.pdf#page=3]]                  opens at the top of page 3
+![[sample.pdf#page=3&amp;height=600]]       page 3, 600 pixels tall</code></pre>
+</div>
+
+<p>
+A height is in pixels (<code>#height=50%</code> is ignored); a width is
+in pixels or a percentage of the note's column, and with a width alone
+the embed is still one page tall, at that width. On the iPad an embed
+takes the same sizes. With <code>#page=3</code> the embed opens at the
+top of page 3, still one page tall, so page 4 begins at its bottom edge;
+a page past the end opens the last one, and a link edited to another page
+goes there. The title shows just the file's name, and opens the full
+viewer tab at that page too. (In 0.12.0 the link's sizes and page are
+ignored — an embed always opens at page 1 — and the title shows them:
+<em>sample.pdf § height=600</em>.)
+</p>
+
+<p>
+The box's title is a link that opens the same file in a full viewer tab.
+In reading mode a <strong>⟷</strong> button sits beside it that widens the
+embed to the window and back, still one page tall and over any
+<code>#width</code>: useful when you want the page and comment sidebars
+beside the document rather than stacked below it, which is what happens
+in a narrow column. Live edit has no <strong>⟷</strong>: there the embed
+keeps the column's width. (In 0.12.0 a widened embed is 88% of the
+pane's height, and live edit shows a <strong>⟷</strong> too.)
+</p>
+
+<p>
+A file EmbedPDF cannot open — not a PDF, or damaged — shows its own
+<em>Error loading document</em> card instead, and a PDF behind a password
+its <em>Password Required</em> prompt; the box is then as tall as that
+card, at any width — the card grows taller in a narrow column, and the
+box with it, so the prompt's field and buttons are never cut off. Type
+the password and the document opens in the same box, one page tall like
+any other.
 </p>
 
 <p>
@@ -563,7 +614,7 @@ everything you paste from now on.
 		<td>Inline image</td><td>Yes</td><td>Yes</td></tr>
 	<tr><td>PDF</td>
 		<td><code>.pdf</code></td>
-		<td>Clew's PDF viewer in a titled box (annotatable)</td><td>Yes</td><td>—</td></tr>
+		<td>Clew's PDF viewer in a titled box, one page tall (annotatable)</td><td>Yes</td><td>—; <a href="#pdf-sizes"><code>#height=</code>, <code>#width=</code></a> in the link</td></tr>
 	<tr><td>Audio</td>
 		<td><code>.mp3</code> <code>.m4a</code> <code>.wav</code> <code>.ogg</code> <code>.flac</code></td>
 		<td>Audio player</td><td>Yes</td><td>—</td></tr>

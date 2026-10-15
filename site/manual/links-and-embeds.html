@@ -384,9 +384,15 @@ When the target of an embed is a media file, it renders natively:
 	<li><strong>Images</strong> — <code>![[clew-gradient.png]]</code>
 	shows the image inline.</li>
 	<li><strong>PDFs</strong> — <code>![[sample.pdf]]</code> embeds Clew's
-	full PDF viewer in a framed box: page, search and annotate in place,
-	with a title bar linking to the file's own viewer tab and a
-	<strong>⟷</strong> button that widens the embed to the window.</li>
+	full PDF viewer in a framed box, as wide as the column and one page
+	tall: page, search and annotate in place, with a title bar linking to
+	the file's own viewer tab and, in reading mode, a <strong>⟷</strong>
+	button that widens the embed to the window. <code>![[sample.pdf#height=600]]</code> and
+	<code>#width=60%</code> set its size, and <code>#page=3</code> the
+	page it opens at (see
+	<a href="attachments-and-files.html#pdf-sizes">PDFs</a>). (In 0.12.0
+	it is 70% of the pane's height, a strip in live edit, and the link's
+	sizes and page are ignored.)</li>
 	<li><strong>Audio and video</strong> — <code>![[clip.mp3]]</code> and
 	<code>![[film.mp4]]</code> get playback controls.</li>
 	<li><strong>Canvases</strong> — <code>![[Demo Canvas.canvas]]</code>
@@ -406,7 +412,11 @@ When the target of an embed is a media file, it renders natively:
 Images and video take Obsidian's size syntax after a pipe. The last
 pipe segment, when it is a bare number or a
 <code>width</code><code>x</code><code>height</code> pair, is read as a
-size in pixels; any earlier segments form the alt text:
+size in pixels; any earlier segments form the alt text (a PDF takes its
+sizes in the link instead, also as Obsidian does:
+<code>![[paper.pdf#height=600]]</code>, <code>#width=480</code> or
+<code>#width=60%</code>, joined by <code>&amp;</code> — see
+<a href="attachments-and-files.html#pdf-sizes">PDFs</a>):
 </p>
 
 <div class="example">
@@ -768,6 +778,8 @@ detected and walked once, so a link loop cannot hang the indexer.
 	<tr><td><code>![[img.png|300]]</code></td><td>Media embed, width 300&nbsp;px</td></tr>
 	<tr><td><code>![[img.png|300x200]]</code></td><td>Media embed, width × height</td></tr>
 	<tr><td><code>![[img.png|alt text|300]]</code></td><td>Alt text, then size</td></tr>
+	<tr><td><code>![[file.pdf#height=600]]</code></td><td>PDF embed 600&nbsp;px tall; <code>#width=480</code> or <code>#width=60%</code> too, joined by <code>&amp;</code> (<a href="attachments-and-files.html#pdf-sizes">PDFs</a>)</td></tr>
+	<tr><td><code>![[file.pdf#page=3]]</code></td><td>PDF embed opening at the top of page 3; with sizes, <code>#page=3&amp;height=600</code></td></tr>
 	<tr><td><code>@image(p)[alt]{attrs}</code></td><td>Image with translated attributes (<a href="#image-directive">above</a>)</td></tr>
 	<tr><td><code>@image+(p)[alt]{attrs}</code></td><td>The same as its own block — what <code>align</code> needs</td></tr>
 	<tr><td><code>@video(p)[alt]{attrs}</code></td><td>Video, degrading to a poster frame in print</td></tr>
@@ -782,7 +794,7 @@ detected and walked once, so a link loop cannot hang the indexer.
 <table>
 	<tr><th>Kind</th><th>Extensions</th><th>Renders as</th></tr>
 	<tr><td>Image</td><td><code>.png .jpg .jpeg .gif .webp .avif .svg .bmp</code></td><td>Inline image (size pipe applies)</td></tr>
-	<tr><td>PDF</td><td><code>.pdf</code></td><td>Embedded PDF viewer (annotatable)</td></tr>
+	<tr><td>PDF</td><td><code>.pdf</code></td><td>Embedded PDF viewer, one page tall (annotatable; sizes in the link)</td></tr>
 	<tr><td>Audio</td><td><code>.mp3 .m4a .wav .ogg .flac</code></td><td>Audio player</td></tr>
 	<tr><td>Video</td><td><code>.mp4 .webm .mov</code></td><td>Video player (size pipe applies)</td></tr>
 	<tr><td>Canvas</td><td><code>.canvas</code></td><td>Live read-only canvas view</td></tr>
