@@ -20,7 +20,8 @@ names.
   Every held branch deploys with Clew-app's push, on the owner's word,
   which Clew-boss has asked for. Then the owner decided Q4 — a restricted
   vault refuses PDF via LaTeX — and `held-figengine` `90db69b` and
-  `held-proof` `6081075` draft it, below; awaiting Clew-boss's check.)
+  `held-proof` `6081075` draft it, below; both ACCEPTED as held, extras
+  included.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -116,9 +117,13 @@ names.
   sentences above, plus export#config-cascade's exception paragraph and
   books#build's restricted bullet and Build row. When Clew-boss sends the
   refusal's exact text and the new Settings hint, align the wording,
-  measure on a scratch build, and consider quoting the refusal under
-  export#troubleshooting. Open: does `clew export --pdf` refuse too
-  (command-line.html's "no note code runs" would need a clause)?
+  measure on a scratch build. ACCEPTED by Clew-boss, extras included;
+  HOLD. When the text arrives: (a) if the book's refusal does not offer
+  Print PDF, books#build says what it does offer; (b) Clew-boss has asked
+  Clew-app whether `clew export --pdf` and deep links refuse the same
+  way — leave command-line.html until it answers, then add the clause if
+  they do; (c) quote the refusal under export#troubleshooting, measured
+  on a scratch build first.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
@@ -173,6 +178,8 @@ names.
   owner's word; byte-check each page against the pushed hashes.
   `6081075`: a restricted vault refuses a proof (the Q4 decision; the
   proof bullet and its reference row); merges cleanly with `90db69b`.
+  ACCEPTED by Clew-boss, HOLD; add what the proof's refusal offers once
+  its text arrives.
 - **WAITING: jmarkdown retires the colon directives** (`:name[…]`,
   `::name[…]`, `:::name … :::` → `@name`, `@name+`, `@begin/@end`;
   branch `retire-colon-directives` in jmarkdown, owner's decision, not
