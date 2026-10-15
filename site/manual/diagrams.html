@@ -814,13 +814,10 @@ succeeds.
 In <a href="export.html">LaTeX and PDF export</a>, TikZ figures are
 not embedded as images at all — the <code>tikzpicture</code> source
 passes through natively, so the print figure is drawn by the same
-engine as the rest of the document, in the document's own fonts. That
-path is unchanged, and it is the one place a TeX installation still
-matters: an export runs your own jmarkdown configuration and your own
-<code>lualatex</code>, <code>mpost</code> and
-<code>dvisvgm</code> — which is also why a single note exported to
-HTML has its TikZ and MetaPost figures drawn by those tools, and why
-the fences — <code>```tikz</code>,
+engine as the rest of the document, in the document's own fonts —
+your TeX installation, when the document is compiled. An export runs
+jmarkdown itself, with your own configuration, which is why the
+fences — <code>```tikz</code>,
 <code>```metapost</code>, <code>```latex</code> and
 <code>```tex</code>, which jmarkdown itself does not know — export to
 LaTeX as code blocks. (<code>show=</code> is likewise the preview's:
@@ -831,8 +828,9 @@ the picture.)
 <p>
 A <code>@begin(metapost)</code> figure, and a Mermaid diagram in one of
 its native forms, go into LaTeX as PDF figures no wider than the line:
-the export makes each one once (MetaPost through your own
-<code>mptopdf</code>, Mermaid through <code>mmdc</code>) and keeps it in
+the export makes each one once (MetaPost with the TeX that draws the
+export's figures, <a href="#export-figures">below</a>; Mermaid through
+<code>mmdc</code>) and keeps it in
 a cache of Clew's own, outside the vault. The figures a file uses are
 copied into a folder beside it, named after it —
 <code>Report.tex</code> gets <code>Report-figures/</code> — and the
@@ -845,6 +843,59 @@ Clew does with the folder. (In 0.12.0 the figures are kept in
 <code>MetaPost/</code> and <code>mermaid/</code> folders beside the
 note, the path is the full one, and TeX meets an error at every such
 figure; see <a href="export.html#one-source">Exporting notes</a>.)
+</p>
+
+<h3 id="export-figures">Who draws an export's figures</h3>
+
+<p>
+Where an export draws a TikZ or MetaPost figure as a picture — both
+kinds in an HTML export, MetaPost in a LaTeX export and so in a PDF via
+LaTeX — <strong>Clew's built-in TeX</strong> draws it by default: the
+same engines the preview uses, so it needs no TeX installation.
+What the built-in TeX cannot draw goes to your TeX installation
+instead: a figure naming a font it cannot find, or needing a file its
+bundles leave out — a package such as <code>siunitx</code>, or a file
+the figure <code>\input</code>s. The export's
+<a href="export.html#troubleshooting">warnings</a> say which figure went
+and what came of it: drawn by your installation, or, with no TeX
+installed, not drawn, with an error box in its place. They call the
+built-in TeX by its library's name, <em>mp-tikz-wasm</em>.
+</p>
+
+<p>
+To have your installation draw every figure, choose Settings&nbsp;→
+Appearance&nbsp;→ <em>TikZ and MetaPost figures in exports</em>&nbsp;→
+<em>Your TeX installation</em> (the default is <em>Clew's built-in
+TeX</em>). That runs your <code>lualatex</code>, <code>dvisvgm</code>,
+<code>mpost</code> and <code>mptopdf</code>; without them each figure is
+an error box. The setting is for a vault you have
+<a href="trusting-a-vault.html">trusted</a>; a restricted vault's
+exports always use the built-in TeX (below). (In 0.12.0 there is no
+setting: your installation draws every export's figures, a restricted
+vault's too.)
+</p>
+
+<p>
+One difference shows. A MetaPost figure with no size of its own comes
+out ¾ as large in an HTML export as your installation drew it: the
+built-in TeX measures it in pixels, as the preview does, where your
+installation's SVG was in points, so it now matches the note. A figure
+given a size, <code>@begin(metapost){width='45%'}</code> say, is
+unchanged. (In 0.12.0 such a figure is a third larger in an HTML export
+than in the note.)
+</p>
+
+<p>
+A restricted vault's exports never send a figure to your installation,
+whatever the setting: the built-in TeX cannot read your disk, and your
+installation's TeX can. A figure the built-in TeX cannot draw shows
+TeX's own error box — a package the vault's own <code>.jmarkdown/</code> folder would
+have loaded is missing, for one, since a restricted export does not read
+it. If the built-in TeX cannot run at all, each figure is
+<em>[TiKZ figure not drawn]</em> or <em>[MetaPost figure not drawn]</em>
+in a quiet dashed box, left out of a LaTeX export, and the warnings say
+why. A PDF via LaTeX is different by nature: your installation compiles
+the whole document, its TikZ pictures included.
 </p>
 
 <p>
@@ -882,9 +933,9 @@ no TeX on the server either.
 	<tr><th>Diagram</th><th>Syntax</th><th>Rendered by</th><th>Needs</th></tr>
 	<tr><td>Mermaid (Obsidian-compatible)</td><td><code>```mermaid … ```</code></td><td>Bundled mermaid, in the preview; code in an export</td><td>Nothing</td></tr>
 	<tr><td>Mermaid (native)</td><td><code>:::mermaid … :::</code> or <code>@begin(mermaid) … @end(mermaid)</code></td><td>Bundled mermaid; a PDF figure via <code>mmdc</code> for LaTeX/PDF</td><td><code>mmdc</code> for print only</td></tr>
-	<tr><td>TikZ (native)</td><td><code>@begin(TiKZ) … @end(TiKZ)</code> or <code>:::TiKZ … :::</code></td><td>Bundled pdfTeX/LuaTeX + dvisvgm, in the preview; native <code>tikzpicture</code> in LaTeX export</td><td>Nothing (a TeX installation for LaTeX export)</td></tr>
+	<tr><td>TikZ (native)</td><td><code>@begin(TiKZ) … @end(TiKZ)</code> or <code>:::TiKZ … :::</code></td><td>Bundled pdfTeX/LuaTeX + dvisvgm, in the preview and in an HTML export (<a href="#export-figures">not in 0.12.0</a>); native <code>tikzpicture</code> in LaTeX export</td><td>Nothing (a TeX installation to compile a LaTeX export)</td></tr>
 	<tr><td>TikZ (TikZJax-compatible)</td><td><code>```tikz … ```</code></td><td>The same engines; exports to LaTeX as a code block</td><td>Nothing</td></tr>
-	<tr><td>MetaPost (native)</td><td><code>@begin(metapost) … @end(metapost)</code></td><td>Bundled MetaPost 2.11 → SVG, in the preview; a PDF figure via <code>mptopdf</code> in LaTeX export</td><td>Nothing (a TeX installation for LaTeX export)</td></tr>
+	<tr><td>MetaPost (native)</td><td><code>@begin(metapost) … @end(metapost)</code></td><td>Bundled MetaPost 2.11 → SVG, in the preview and in an HTML export; a PDF figure from the same in LaTeX export (<a href="#export-figures">not in 0.12.0</a>: <code>mptopdf</code>)</td><td>Nothing (a TeX installation to compile a LaTeX export)</td></tr>
 	<tr><td>MetaPost (fence)</td><td><code>```metapost … ```</code></td><td>The same engine; Clew's own spelling; code in an export</td><td>Nothing</td></tr>
 	<tr><td>LaTeX snippet or document</td><td><code>```latex … ```</code></td><td>Bundled LuaLaTeX + dvisvgm, in the preview; a snippet wrapped in <code>standalone</code>, a document as written; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
 	<tr><td>Plain TeX</td><td><code>```tex … ```</code></td><td>Bundled LuaTeX + dvisvgm, in the preview; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>

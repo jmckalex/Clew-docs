@@ -417,9 +417,11 @@ the common TeX and Homebrew locations
 (<code>/Library/TeX/texbin</code>, <code>/opt/homebrew/bin</code>,
 <code>/usr/local/bin</code>). This matters for anything that shells out
 to a TeX program by name: the <code>latex</code> run behind this
-export, and jmarkdown's own diagram tools when an export uses them.
-(<a href="diagrams.html">TikZ and MetaPost figures in the preview</a>
-need none of it — those engines ship with Clew, as WebAssembly.) On
+export, and your TeX's figure tools when an export sends a figure to
+them. (TikZ and MetaPost figures need none of it, in the preview or, by
+default, in an export: those engines ship with Clew, as WebAssembly —
+see <a href="diagrams.html#export-figures">Who draws an export's
+figures</a>.) On
 Windows, TeX installers put themselves on the <code>PATH</code>, so no
 extension is needed.
 </p>
@@ -591,6 +593,12 @@ in the compiler's log.
 		packages, else pdfLaTeX — or as set in Settings (<a
 		href="#latex-engine">above</a>; not in 0.12.0, always
 		pdfLaTeX).</td></tr>
+	<tr><td>TikZ and MetaPost figures</td><td>Drawn by Clew's built-in
+		TeX, your installation taking what it cannot draw, with a warning;
+		or all by your installation, as set in Settings. A restricted
+		vault's: the built-in TeX alone (<a
+		href="diagrams.html#export-figures">Who draws an export's
+		figures</a>; not in 0.12.0, always your installation).</td></tr>
 	<tr><td>Compile behaviour</td><td>Nonstop mode, three-minute timeout;
 		accepted when that run wrote the PDF, even if the compiler returned
 		warnings.</td></tr>

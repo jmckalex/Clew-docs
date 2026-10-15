@@ -221,7 +221,12 @@ folder inside the vault (see
 configuration</a>). They keep no figure cache either: each draws its
 diagrams in a temporary folder that is removed when it ends
 (<a href="export.html#figures-folder">Diagrams go in a folder beside
-the file</a>; not in 0.12.0). A <a href="publishing.html">website export</a>
+the file</a>; not in 0.12.0). Their TikZ and MetaPost figures are drawn
+by Clew's built-in TeX alone, which cannot read your disk, never by your
+TeX installation, whatever Settings says; a PDF via LaTeX still has your
+installation compile the whole document, its TikZ pictures included
+(<a href="diagrams.html#export-figures">Who draws an export's
+figures</a>; not in 0.12.0). A <a href="publishing.html">website export</a>
 leaves out the vault's scripts and its own plugins, and refuses
 <code>dataviewjs</code> by name; your enabled global plugins still go in.
 </p>
