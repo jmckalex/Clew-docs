@@ -899,8 +899,12 @@ have loaded is missing, for one, since a restricted export does not read
 it. If the built-in TeX cannot run at all, each figure is
 <em>[TiKZ figure not drawn]</em> or <em>[MetaPost figure not drawn]</em>
 in a quiet dashed box, left out of a LaTeX export, and the warnings say
-why. A PDF via LaTeX is different by nature: your installation compiles
-the whole document, its TikZ pictures included.
+why. A PDF via LaTeX would have your installation compile the whole
+document, its TikZ pictures included, so a restricted vault refuses it,
+a note's or a book's, by name, and offers the reading-view PDF, or
+trusting the vault, instead (<a href="trusting-a-vault.html#restricted">Trusting
+a vault</a>). (In 0.12.0 a restricted vault's PDF via LaTeX is compiled
+like any other.)
 </p>
 
 <p>

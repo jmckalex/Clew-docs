@@ -324,7 +324,10 @@ And one exception runs the other way: a vault this device has not
 <a href="trusting-a-vault.html#restricted">trusted</a> exports without
 running its notes' code, and from your global <code>~/.jmarkdown</code>
 alone — a <code>.jmarkdown/</code> folder inside the vault is not read,
-since it too could carry code.
+since it too could carry code. It does not export as PDF via LaTeX at
+all, since your TeX installation would compile the whole document: that
+is refused by name, and the refusal offers the reading-view PDF, or
+trusting the vault, instead (not in 0.12.0).
 </p>
 
 <div class="callout warn">
@@ -596,10 +599,11 @@ in the compiler's log.
 	<tr><td>TikZ and MetaPost figures</td><td>Drawn by Clew's built-in
 		TeX, your installation taking what it cannot draw, with a warning;
 		or all by your installation, as set in Settings. A restricted
-		vault's HTML and LaTeX exports: the built-in TeX alone; a PDF via
-		LaTeX is still compiled by your installation (<a
+		vault's HTML and LaTeX exports: the built-in TeX alone; its PDF
+		via LaTeX is refused (<a
 		href="diagrams.html#export-figures">Who draws an export's
-		figures</a>; not in 0.12.0, always your installation).</td></tr>
+		figures</a>; not in 0.12.0, always your installation, a restricted
+		vault's PDF included).</td></tr>
 	<tr><td>Compile behaviour</td><td>Nonstop mode, three-minute timeout;
 		accepted when that run wrote the PDF, even if the compiler returned
 		warnings.</td></tr>
