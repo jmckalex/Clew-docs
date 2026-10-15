@@ -225,7 +225,7 @@ a strip about 120 pixels tall in live edit, with the page shrunk to fit.)
 </p>
 
 <p id="pdf-sizes">
-Sizes go in the link, as in Obsidian:
+Sizes, and the page to open at, go in the link, as in Obsidian:
 </p>
 
 <div class="example">
@@ -233,17 +233,22 @@ Sizes go in the link, as in Obsidian:
 	<pre><code>![[sample.pdf#height=600]]              600 pixels tall
 ![[sample.pdf#width=480]]               480 pixels wide, one page tall
 ![[sample.pdf#width=60%]]               60% of the column
-![[sample.pdf#width=60%&amp;height=600]]    both, joined by &amp;</code></pre>
+![[sample.pdf#width=60%&amp;height=600]]    both, joined by &amp;
+![[sample.pdf#page=3]]                  opens at the top of page 3
+![[sample.pdf#page=3&amp;height=600]]       page 3, 600 pixels tall</code></pre>
 </div>
 
 <p>
 A height is in pixels (<code>#height=50%</code> is ignored); a width is
 in pixels or a percentage of the note's column, and with a width alone
-the embed is still one page tall, at that width. The title shows just the
-file's name. A <code>#page=3</code> among them is not a size and changes
-nothing: an embed always opens at page 1. On the iPad an embed is sized
-the same way, from the same link. (In 0.12.0 the link's sizes are
-ignored, and the title shows them: <em>sample.pdf § height=600</em>.)
+the embed is still one page tall, at that width. On the iPad an embed
+takes the same sizes. With <code>#page=3</code> the embed opens at the
+top of page 3, still one page tall, so page 4 begins at its bottom edge;
+a page past the end opens the last one, and a link edited to another page
+goes there. The title shows just the file's name, and opens the full
+viewer tab at that page too. (In 0.12.0 the link's sizes and page are
+ignored — an embed always opens at page 1 — and the title shows them:
+<em>sample.pdf § height=600</em>.)
 </p>
 
 <p>
@@ -260,9 +265,11 @@ widened embed is 88% of the pane's height.)
 <p>
 A file EmbedPDF cannot open — not a PDF, or damaged — shows its own
 <em>Error loading document</em> card instead, and a PDF behind a password
-its <em>Password Required</em> prompt; the box is then only as tall as the
-message. Type the password and the document opens in the same box, one
-page tall like any other.
+its <em>Password Required</em> prompt; the box is then as tall as that
+card, at any width — the card grows taller in a narrow column, and the
+box with it, so the prompt's field and buttons are never cut off. Type
+the password and the document opens in the same box, one page tall like
+any other.
 </p>
 
 <p>
