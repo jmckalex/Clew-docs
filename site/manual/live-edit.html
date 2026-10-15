@@ -206,8 +206,13 @@ is where it starts. <code>&gt;&gt; text &lt;&lt;</code> centres and
 <code>&gt;&gt; text</code> right-aligns. A code fence keeps its source,
 highlighted, with its fence lines turned into a language label and a
 <strong>Copy</strong> button. A <code>:::name</code> block or
-<code>@begin(name)</code> environment becomes a captioned frame;
-<code>:::TeX</code> and <code>:::comment</code> bodies are dimmed.
+<code>@begin(name)</code> environment becomes a captioned frame, and a
+diagram, a game, or a Mathematica or markdown-demo block is drawn in it
+as reading mode draws it, however it is spelt. A TeX block's caption
+says <em>LaTeX only</em> and an HTML block's <em>HTML only</em>; TeX and
+comment bodies are dimmed. (In 0.12.0 a game, Mathematica or
+markdown-demo block is drawn only when it is written with
+<code>:::</code>, and <code>@begin(HTML)</code> is not marked.)
 </p>
 
 <h3 id="blocks">Blocks</h3>

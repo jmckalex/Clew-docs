@@ -288,8 +288,12 @@ strikethrough, subscript, superscript, code, math), headings, lists and
 quotes, the alignment forms (<code>&gt;&gt; text &lt;&lt;</code> centers,
 <code>&gt;&gt; text</code> right-aligns), GitHub-style alerts, table
 insertion, footnotes, citations, labels and references, and every block
-container from <code>:::mermaid</code> and <code>:::TiKZ</code> to
-<code>:::TeX</code>, <code>:::game</code>, and <code>:::comment</code>.
+environment, from a mermaid or TiKZ diagram to <code>@begin(TeX)</code>,
+<code>@begin(game)</code> and <code>@begin(comment)</code>. Each block is
+written as the engine's <code>@begin(name)</code> …
+<code>@end(name)</code>, and Today's Date as <code>@today</code>: Clew
+writes no <code>:::</code> block. (In 0.12.0 the menu writes the colon
+forms — <code>:::TeX</code> … <code>:::</code>, <code>:today</code>.)
 </p>
 
 <p>
@@ -314,9 +318,18 @@ The commands behave the way you would hope:
 	and quote commands — and applying the task-list command to a bullet
 	list converts it directly into a task list.</li>
 	<li><strong>Containers wrap the selection.</strong> Select three
-	paragraphs and insert a <code>:::comment</code> block, and the fence
-	goes around them; with nothing selected you get the fence with a
-	placeholder ready to type over.</li>
+	paragraphs and insert a comment block, and <code>@begin(comment)</code>
+	and <code>@end(comment)</code> go around them; with nothing selected
+	you get the two lines with a placeholder ready to type over. The
+	generic container writes <code>@begin(&lt;name&gt;)</code> …
+	<code>@end(name)</code>, a <code>name</code> to change in both lines;
+	the angle brackets make the block the element
+	<code>&lt;name&gt;</code>, as <code>:::name</code> does.
+	<em>Insert environment…</em>, in the palette, wraps the selection in
+	<code>@begin(theorem)</code> … <code>@end(theorem)</code>, which is
+	numbered: <em>Theorem 1.</em> (In 0.12.0 it writes
+	<code>:::theorem</code>, which the engine leaves unnumbered, unless the
+	note already has an <code>@begin</code>.)</li>
 	<li><strong>Insert wikilink</strong> (<kbd>⌘K</kbd>) wraps the
 	selection in <code>[[…]]</code> — or, with nothing selected, inserts
 	empty brackets and pops the note-name completion. The citation command
