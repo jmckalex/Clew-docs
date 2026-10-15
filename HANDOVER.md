@@ -1,4 +1,4 @@
-# Handover — 2026-10-11 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-pdfsize`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -15,7 +15,8 @@ names.
   freeze and restarts the parked work in the agreed order — Clew-iOS,
   jmarkdown's figure-engine queue, Clew-app step C, then Docs fourth.
   Until Clew-boss comes back to Docs, every held branch stays as it is:
-  no deploys, no new drafting.
+  no deploys, no new drafting. (2026-10-15: Clew-boss asked for one new
+  held item, `held-pdfsize`, below.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -49,6 +50,21 @@ names.
   break, same paragraph, `\par` for a new one; measured), VERIFIED by
   Clew-boss too; the freeze has lifted (Docs fourth). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
+- **HELD: `held-pdfsize` `41d2887`** (worktree `../Clew-docs-pdfsize`,
+  from main `e4e7024`): a PDF embed one page tall at fit width, sizes in
+  the link — the owner's report (a sliver in live edit), Clew-app `2e80ff4`
+  (`ed6ffb0`; local) and Clew-iOS `9b0b67e` (pushed).
+  attachments-and-files#pdfs and the new #pdf-sizes; links-and-embeds
+  (media bullet, #sizes, two reference rows). Written as measured, two
+  shortfalls included: ⟷ in live edit widens only to the column (its
+  frame is no wider), and `#page=N` changes nothing (page 1, as in
+  0.12.0). One iPad sentence, from Clew-iOS 9b0b67e's simulator
+  measurement (sizes only). 0.12.0 markers measured on `9268aa3`
+  (`$SC/pdfsize/`: Clew-app's pdf-size-scenario, extra-, open-,
+  wide-width-scenario.js). No screenshot. Merges cleanly with the five
+  other held branches (release-0.12.1: stamp lines only, as main).
+  Sent to Clew-boss; deploys with the other held items on the owner's
+  word.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
