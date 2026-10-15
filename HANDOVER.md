@@ -18,7 +18,9 @@ names.
   no deploys, no new drafting. (2026-10-15: Clew-boss asked for two new
   held items, `held-pdfsize` and `held-figengine`, below; both accepted.
   Every held branch deploys with Clew-app's push, on the owner's word,
-  which Clew-boss has asked for. Nothing else is queued for Docs.)
+  which Clew-boss has asked for. Then the owner decided Q4 — a restricted
+  vault refuses PDF via LaTeX — and `held-figengine` `90db69b` and
+  `held-proof` `6081075` draft it, below; awaiting Clew-boss's check.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -76,7 +78,7 @@ names.
   HOLD with the rest); ⟷ answered too: Clew-app `a7b9940` draws it in
   reading view only, and `507d821` says so (live edit keeps the column's
   width; 0.12.0's live edit showed a ⟷); ACCEPTED by Clew-boss, HOLD.
-- **HELD: `held-figengine` `3e7c15a`** (worktree `../Clew-docs-figengine`,
+- **HELD: `held-figengine` `90db69b`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
   default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
@@ -106,6 +108,17 @@ names.
   whole from this computer's fonts, restricted vaults too; a family it
   lacks or one over 64 MB falls back; "reads nothing on your disk but the
   fonts Clew hands it". ACCEPTED by Clew-boss; HOLD.
+  `90db69b`: the owner decided Q4 (2026-10-15, via Clew-boss): a
+  restricted vault refuses PDF via LaTeX by name — a note's, a book's, a
+  chapter proof — offering the reading-view PDF or trusting the vault;
+  HTML and LaTeX exports stay. Drafted from the decision, before Clew-app's
+  `refuse-latex-pdf` branch has the refusal (not measured): the four
+  sentences above, plus export#config-cascade's exception paragraph and
+  books#build's restricted bullet and Build row. When Clew-boss sends the
+  refusal's exact text and the new Settings hint, align the wording,
+  measure on a scratch build, and consider quoting the refusal under
+  export#troubleshooting. Open: does `clew export --pdf` refuse too
+  (command-line.html's "no note code runs" would need a clause)?
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
@@ -146,7 +159,7 @@ names.
   Deploys with Clew-app's push, on the owner's word. Merges cleanly with
   `held-postscript` (`git merge-tree`). The demo Dashboards chart
   (`4f6a706`) appears on no manual page or screenshot: nothing to change.
-- **HELD: `held-proof` `b547a52`** (worktree `../Clew-docs-proof`),
+- **HELD: `held-proof` `6081075`** (worktree `../Clew-docs-proof`),
   branched from `held-cache` (merge it after, or with, `held-cache`):
   books#build (a .tex per chapter for the PDF) and books#proof (Proof
   This Chapter), reference rows, export#where. Against Clew-app
@@ -158,6 +171,8 @@ names.
   ships for Windows and Linux too; Clew-boss confirmed). Deploys only
   when Clew-app's push AND Clew-iOS `52cd16a` are on GitHub, then on the
   owner's word; byte-check each page against the pushed hashes.
+  `6081075`: a restricted vault refuses a proof (the Q4 decision; the
+  proof bullet and its reference row); merges cleanly with `90db69b`.
 - **WAITING: jmarkdown retires the colon directives** (`:name[…]`,
   `::name[…]`, `:::name … :::` → `@name`, `@name+`, `@begin/@end`;
   branch `retire-colon-directives` in jmarkdown, owner's decision, not
