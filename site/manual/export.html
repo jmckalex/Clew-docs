@@ -324,7 +324,11 @@ And one exception runs the other way: a vault this device has not
 <a href="trusting-a-vault.html#restricted">trusted</a> exports without
 running its notes' code, and from your global <code>~/.jmarkdown</code>
 alone — a <code>.jmarkdown/</code> folder inside the vault is not read,
-since it too could carry code.
+since it too could carry code. It makes no PDF via LaTeX at all, which
+would run your TeX installation over the vault's own TeX: that is
+refused by name, before anything is built, and the notice offers the
+reading-view PDF, or trusting the vault, instead
+(<a href="#troubleshooting">Troubleshooting</a>; not in 0.12.0).
 </p>
 
 <div class="callout warn">
@@ -386,7 +390,16 @@ installation directories (<code>/Library/TeX/texbin</code>,
 <code>/usr/local/bin</code>, and <code>/opt/homebrew/bin</code>). With
 it, reruns for cross-references and bibliographies are handled
 automatically, which is why it is preferred; without it, Clew runs the
-TeX engine itself.
+TeX engine itself. <code>latexmk</code> reads only its system-wide
+configuration and yours — <code>~/.latexmkrc</code>, or
+<code>~/.config/latexmk/latexmkrc</code> — and the <code>biber</code> it
+runs only yours (<code>~/.biber.conf</code>,
+<code>~/.config/biber/biber.conf</code>, or on a Mac
+<code>~/Library/biber/biber.conf</code>): a <code>latexmkrc</code> or
+<code>biber.conf</code> in a note's or a book's folder, its
+<code>build/</code> included, or where you save the PDF, is never read.
+(In 0.12.0, which compiles where you save the PDF, <code>latexmk</code>
+reads a <code>latexmkrc</code> there too.)
 </p>
 
 <h3 id="latex-engine">Which TeX engine</h3>
@@ -417,9 +430,11 @@ the common TeX and Homebrew locations
 (<code>/Library/TeX/texbin</code>, <code>/opt/homebrew/bin</code>,
 <code>/usr/local/bin</code>). This matters for anything that shells out
 to a TeX program by name: the <code>latex</code> run behind this
-export, and jmarkdown's own diagram tools when an export uses them.
-(<a href="diagrams.html">TikZ and MetaPost figures in the preview</a>
-need none of it — those engines ship with Clew, as WebAssembly.) On
+export, and your TeX's figure tools when an export sends a figure to
+them. (TikZ and MetaPost figures need none of it, in the preview or, by
+default, in an export: those engines ship with Clew, as WebAssembly —
+see <a href="diagrams.html#export-figures">Who draws an export's
+figures</a>.) On
 Windows, TeX installers put themselves on the <code>PATH</code>, so no
 extension is needed.
 </p>
@@ -460,6 +475,20 @@ in the compiler's log.
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <dl>
+	<dt>"A PDF via LaTeX is not made in a vault this Mac does not trust"</dt>
+	<dd>The vault is <a href="trusting-a-vault.html#restricted">restricted</a>
+	on this device, and Clew makes no PDF via LaTeX there. The notice
+	reads in full: <em>A PDF via LaTeX is not made in a vault this Mac
+	does not trust: it would run your TeX installation over the vault's
+	own TeX, which can read any file you can. Export the note as PDF
+	(reading view), or trust the vault (Settings → This vault).</em> On
+	Windows and Linux it says <em>this computer</em>. Nothing is built,
+	and Clew does not ask where to save. Export the note as
+	<em>PDF (reading view)</em>, which needs no TeX, or trust the vault in
+	Settings&nbsp;→ This vault and export again. <code>clew export --pdf</code> prints the same words and exits
+	with <code>1</code>; a <a href="books.html#build">book's</a> PDF is
+	refused in the same way. (Not in 0.12.0.)</dd>
+
 	<dt>"No TeX toolchain found"</dt>
 	<dd>Clew could not find <code>latexmk</code>, or the engine it chose
 	(the message names both), in any of the directories listed above. Install MacTeX (or your
@@ -591,6 +620,14 @@ in the compiler's log.
 		packages, else pdfLaTeX — or as set in Settings (<a
 		href="#latex-engine">above</a>; not in 0.12.0, always
 		pdfLaTeX).</td></tr>
+	<tr><td>TikZ and MetaPost figures</td><td>Drawn by Clew's built-in
+		TeX, your installation taking what it cannot draw, with a warning;
+		or all by your installation, as set in Settings. A restricted
+		vault's HTML and LaTeX exports: the built-in TeX alone; its PDF
+		via LaTeX is refused (<a
+		href="diagrams.html#export-figures">Who draws an export's
+		figures</a>; not in 0.12.0, always your installation, a restricted
+		vault's PDF included).</td></tr>
 	<tr><td>Compile behaviour</td><td>Nonstop mode, three-minute timeout;
 		accepted when that run wrote the PDF, even if the compiler returned
 		warnings.</td></tr>

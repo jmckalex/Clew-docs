@@ -238,7 +238,14 @@ chapter, numbered from 1.
 	<a href="trusting-a-vault.html">trusted</a></strong>, a build runs no
 	note code, as any <a href="export.html">export</a> there does, and its
 	pages are shown in Finder rather than opened, since they may carry the
-	notes' own scripts; the notice says why.</li>
+	notes' own scripts; the notice says why. The <strong>PDF</strong>
+	button (<em>Book as PDF (via LaTeX)</em>) builds nothing there: its
+	notice says a book's PDF via LaTeX is not made in a vault this device
+	does not trust, as a note's is not
+	(<a href="trusting-a-vault.html#restricted">Trusting a vault</a>),
+	and offers <strong>Print PDF</strong> instead, or trusting the vault
+	(Settings&nbsp;→ This vault). Print PDF and the LaTeX and HTML builds
+	still run.</li>
 </ul>
 
 <p>
@@ -328,7 +335,7 @@ by name.
 	<tr><td>Commands</td><td><em>Book: next chapter</em>, <em>Book: previous chapter</em>, <em>Book: show the Book panel</em> — no default keys</td></tr>
 	<tr><td>Writing a chapter</td><td>Live edit shows the book's numbers and citations; <code>@ref[</code> and <em>Jump to label…</em> list the book's labels; a click opens the label's chapter</td></tr>
 	<tr><td>Reading view</td><td>A chapter on its own (numbers from 1, other chapters <code>??</code>); a line above it, <em>… · numbers as in the book:</em> <strong>Build</strong></td></tr>
-	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML / Print PDF, or File → Export → Book as …; into <code>build/</code> beside the master</td></tr>
+	<tr><td>Build</td><td>The panel's PDF / LaTeX / HTML / Print PDF, or File → Export → Book as …; into <code>build/</code> beside the master; in a restricted vault the PDF is refused</td></tr>
 	<tr><td>Print PDF</td><td><code>build/&lt;master&gt; (reading view).pdf</code>: the book as reading view draws it, each chapter from a new page; no TeX</td></tr>
 	<tr><td>HTML build</td><td><code>build/&lt;master&gt;/</code>: <code>index.html</code>, a page per chapter, <code>references.html</code>; the old folder to the Trash</td></tr>
 	<tr><td>Links and images</td><td>A <code>[[link]]</code> to a chapter links to it; any other prints as its text; an image is found from its chapter, by a relative path</td></tr>
