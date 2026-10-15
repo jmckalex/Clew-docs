@@ -72,7 +72,7 @@ names.
   live edit to Clew-app (after its current work), `#page=N` to the owner
   as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
   HOLD with the rest); the ⟷ sentence waits on Clew-app's proposal.
-- **HELD: `held-figengine` `82508ea`** (worktree `../Clew-docs-figengine`,
+- **HELD: `held-figengine` `3e7c15a`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
   default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
@@ -98,6 +98,10 @@ names.
   untrusted vaults, four sentences change (Clew-boss has the list):
   settings-and-hotkeys' entry, the end of diagrams#export-figures'
   restricted paragraph, export's reference row, trusting-a-vault#restricted.
+  `3e7c15a` (Clew-app `1a5ab6e`): a family a figure names is handed over
+  whole from this computer's fonts, restricted vaults too; a family it
+  lacks or one over 64 MB falls back; "reads nothing on your disk but the
+  fonts Clew hands it". Sent to Clew-boss.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
