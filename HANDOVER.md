@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; held: `held-inserts`, `held-convert`, `held-pdfsize`, `held-figengine`, `held-postscript`, `held-cache`, `held-proof` — all waiting for Clew-boss)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed — no held branches)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -9,6 +9,23 @@ names.
 
 ## 0. Resume here
 
+- **Live 2026-10-15 on the owner's yes ("Yes to 2 and 3, push them",
+  relayed by Clew-boss, whose session address is now
+  `uds:/tmp/cc-socks/49277.sock` after a disruption):** all seven held
+  branches merged into main with `--no-ff` — `held-cache` `a362245`,
+  `held-figengine` `90d653c`, `held-proof` `1b7aca3`, `held-inserts`
+  `3dd9c10`, `held-convert` `2b977f9`, `held-pdfsize` `507d821`,
+  `held-postscript` `fc7f39d` (no conflicts; stamp and og-tags
+  unchanged; check-links clean). Deployed only after Clew-boss confirmed,
+  and I checked by `ls-remote`, Clew-app origin/main `f0aeaa4` (every
+  documented hash, `0520b2c` included, an ancestor) and Clew-iOS
+  origin/main `c0f2a20` (`52cd16a`, `137932f`, `9b0b67e` ancestors).
+  `make dry-run`: manual only, 40 files (the new chapter, `nav.js`, 38
+  pages), no deletions; after `make sync` each is 200 and byte-identical
+  (sha256). Pushed main `cd1c65a..1599589`, fast-forward, after a
+  credentials scan (hits: PDF-password prose only). The HELD entries
+  below are history now; their branches and worktrees remain, merged —
+  remove them when convenient. release-0.12.1 untouched.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
@@ -24,7 +41,7 @@ names.
   below; both ACCEPTED. Clew-boss puts publishing to the owner together
   with the push of `0520b2c`: on the owner's yes, deploy only after
   Clew-boss confirms `0520b2c` is on origin/main.)
-- **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
+- **Published 2026-10-15 (was HELD): `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
   (the Format menu writes `@begin(name)` … `@end(name)`, `@today`, the
@@ -38,7 +55,7 @@ names.
   word. Merges cleanly with the three frozen branches. Verified by
   Clew-boss. Next: phase 2's pages ("Convert this vault") when Clew-app
   builds it.
-- **HELD: `held-convert` `2b977f9`** (worktree `../Clew-docs-convert`,
+- **Published 2026-10-15 (was HELD): `held-convert` `2b977f9`** (worktree `../Clew-docs-convert`,
   from `held-inserts` `3dd9c10`, so it carries phase 1 too): colon
   retirement phase 2, against Clew-app `0aebcf8` (local; `65ef069`,
   `fcc7faf`, `ae6787e`). New chapter `converting-colon-directives.html`
@@ -57,7 +74,7 @@ names.
   break, same paragraph, `\par` for a new one; measured), VERIFIED by
   Clew-boss too; the freeze has lifted (Docs fourth). Deploys with
   `held-inserts`, after Clew-app's push, on the owner's word.
-- **HELD: `held-pdfsize` `507d821`** (worktree `../Clew-docs-pdfsize`,
+- **Published 2026-10-15 (was HELD): `held-pdfsize` `507d821`** (worktree `../Clew-docs-pdfsize`,
   from main `e4e7024`): a PDF embed one page tall at fit width, sizes in
   the link — the owner's report (a sliver in live edit), Clew-app `2e80ff4`
   (`ed6ffb0`; local) and Clew-iOS `9b0b67e` (pushed).
@@ -81,7 +98,7 @@ names.
   HOLD with the rest); ⟷ answered too: Clew-app `a7b9940` draws it in
   reading view only, and `507d821` says so (live edit keeps the column's
   width; 0.12.0's live edit showed a ⟷); ACCEPTED by Clew-boss, HOLD.
-- **HELD: `held-figengine` `90d653c`** (worktree `../Clew-docs-figengine`,
+- **Published 2026-10-15 (was HELD): `held-figengine` `90d653c`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
   default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
@@ -153,7 +170,7 @@ names.
   book exception); pointers in live-edit, citations (and chips follow an
   edited style), export#where. Five pages, each 200 and byte-identical.
   No held branches remain.
-- **HELD: `held-postscript` `fc7f39d`** (worktree
+- **Published 2026-10-15 (was HELD): `held-postscript` `fc7f39d`** (worktree
   `../Clew-docs-postscript`; draft `870b7df`, iPad lines `fc7f39d`):
   diagrams#postscript and #system-fonts (new, with an On iPad callout),
   the complete-document paragraph, the toolchain and its On iPad,
@@ -166,7 +183,7 @@ names.
   the commit). **Deploys only when Clew-app's push AND the Clew-iOS
   build carrying this are on GitHub (Clew-boss says when), then on the
   owner's word.** Recheck against both hashes first.
-- **HELD: `held-cache` `a362245`** (worktree `../Clew-docs-cache`),
+- **Published 2026-10-15 (was HELD): `held-cache` `a362245`** (worktree `../Clew-docs-cache`),
   drafted 2026-10-10 on Clew-boss's notice, against Clew-app `d4eae20`
   (local) and `478cfdf`: export#figures-folder (new; the cache outside
   the vault, `<name>-figures/` beside the file, the Trash rule, a user's
@@ -177,7 +194,7 @@ names.
   Deploys with Clew-app's push, on the owner's word. Merges cleanly with
   `held-postscript` (`git merge-tree`). The demo Dashboards chart
   (`4f6a706`) appears on no manual page or screenshot: nothing to change.
-- **HELD: `held-proof` `1b7aca3`** (worktree `../Clew-docs-proof`),
+- **Published 2026-10-15 (was HELD): `held-proof` `1b7aca3`** (worktree `../Clew-docs-proof`),
   branched from `held-cache` (merge it after, or with, `held-cache`):
   books#build (a .tex per chapter for the PDF) and books#proof (Proof
   This Chapter), reference rows, export#where. Against Clew-app
@@ -250,7 +267,12 @@ names.
   that focus the question and the App Gallery (`a5489ed`), pinned apps
   (`054a6f4`), the demo vault gaining new notes on upgrade (`eb17415`).
 - **Base hash:** the manual reflects Clew-app up to **`416c031`**
-  (book mode phase 2, the print PDF and app secrets included). Undocumented on purpose: re-vendors, smoke-only
+  (book mode phase 2, the print PDF and app secrets included), and
+  since 2026-10-15 every feature the seven published branches name, up
+  to `0520b2c` on origin/main `f0aeaa4`. Not yet reviewed for the
+  manual: `1406ffc` (two inline image embeds on a line now draw; the
+  manual never described the fault), `c2c3fb4` (EmbedPDF's card wraps in
+  a narrow viewer), `f0aeaa4` and `ef5f7f2` (speed only). Undocumented on purpose: re-vendors, smoke-only
   commits, `ef8577e` (markup in code is text; no notice came),
   `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
   check 0.12.0 never had) `cbfa692` (mp-tikz 0.3.1, nothing visible) and `3d39952` (an
@@ -265,12 +287,14 @@ names.
   the screenshot lightbox (`c2d201a`, 37 files: every manual page, the
   landing page, `manual/lightbox.{js,css}` — the owner's direct go), then
   the new chapter *Trusting a vault* (`0b78593`–`9534701`, 38 files — the
-  owner's direct go), each verified byte-identical live.
+  owner's direct go), each verified byte-identical live. On 2026-10-15
+  the seven held branches (above), manual only, byte-identical live.
 - **GitHub:** `origin` = https://github.com/jmckalex/Clew-docs (public,
   homepage clew-app.com), `main` only. Pushed through the commit that
   records this push (2026-10-06, "authorise pushes", relayed by
-  Clew-boss and confirmed by the owner here; `5c8232e` earlier that day);
-  anything later is unpushed — every push needs the owner's explicit OK
+  Clew-boss and confirmed by the owner here; `5c8232e` earlier that day;
+  2026-10-15 `1599589` and the commit that records it, on the owner's
+  yes relayed by Clew-boss); anything later is unpushed — every push needs the owner's explicit OK
   (§1).
 - **Next release** (not scheduled; do not bump the site until Clew-boss
   says a release is done): grep the manual for `0.12.0` — 74 hits in
