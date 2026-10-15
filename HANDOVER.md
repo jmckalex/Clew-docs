@@ -81,8 +81,13 @@ names.
   at all; a restricted PDF via LaTeX still compiles TikZ with the user's
   TeX. Item 5 (dev builds' pinned `'external'`) left out: 0.12.0 never had
   the key. 0.12.0 markers measured on `9268aa3`. Scratch: `$SC/stepc/`.
-  Merges cleanly with every held branch and main. Sent to Clew-boss;
-  deploys with Clew-app's push, on the owner's word.
+  Merges cleanly with every held branch and main. ACCEPTED by Clew-boss;
+  HOLD, deploys after or with `held-cache`, with Clew-app's push, on the
+  owner's word. Findings routed: Clew-app to make its Settings hint true
+  (HTML and LaTeX only); refusing a PDF via LaTeX in untrusted vaults is
+  the owner's open question (Clew-boss says which sentence changes if so);
+  "mp-tikz-wasm" in the warnings is an engine-wording candidate — keep the
+  bridging sentence until it changes.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
