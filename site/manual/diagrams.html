@@ -394,6 +394,66 @@ pdfTeX instead, and <code>engine=plain</code> on a <code>```tex</code>
 fence for the e-TeX format.
 </p>
 
+<h3 id="postscript">PostScript: PSTricks, EPS and turned boxes</h3>
+
+<p>
+Some of what LaTeX draws is PostScript, which dvisvgm cannot turn into
+SVG on its own: a PSTricks picture, an EPS image, a box that
+graphicx's <code>\rotatebox</code> turns or <code>\scalebox</code>
+scales, a raw <code>\special{ps: …}</code>. Clew passes such a figure
+through Ghostscript, compiled to WebAssembly and shipped with the
+engines, so all of these are drawn — PSTricks with its family of
+packages, <code>pst-plot</code>, <code>pst-node</code>,
+<code>pst-circ</code>, <code>pst-solides3d</code> and the rest. (In
+0.12.0 PSTricks is “not found”, an EPS image is left out without a
+word, and turned or scaled text is drawn level and at its own size.)
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```latex
+\documentclass[border=2pt]{standalone}
+\usepackage{pst-plot}
+\begin{document}
+\begin{pspicture}(0,-1.2)(6.3,1.2)
+\psaxes{-&gt;}(0,0)(0,-1.2)(6.3,1.2)
+\psplot[linecolor=red]{0}{6.28}{x 57.2958 mul sin}
+\end{pspicture}
+\end{document}
+```</code></pre>
+</div>
+
+<p>
+Ghostscript is big — 12.5&nbsp;MB — so it starts only for a figure
+that needs it, one whose typeset output carries PostScript. A note
+whose figures carry none never loads it.
+</p>
+
+<p>
+A figure cannot reach files in the vault, so an EPS image kept beside
+the note is “not found”. Put the image in the document instead: a
+<code>filecontents*</code> environment writes it under a name, and
+<code>\includegraphics</code> takes it from there.
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```latex
+\documentclass[border=2pt]{standalone}
+\begin{filecontents*}[overwrite]{box.eps}
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 72 36
+0 0.6 0 setrgbcolor
+0 0 72 36 rectfill
+showpage
+\end{filecontents*}
+\usepackage{graphicx}
+\begin{document}
+\includegraphics{box.eps}
+\end{document}
+```</code></pre>
+</div>
+
 <h2 id="note-font">In the note's own typeface</h2>
 
 <p>
@@ -478,16 +538,17 @@ ignore it — their labels are set by the TeX named in <code>tex=</code>.
 
 <p>
 A complete document that loads <code>fontspec</code> itself is
-recognised too and gets the same bundle and the same font files; name
-them as Clew does, <code>NoteFont-Regular.ttf</code>,
+recognised too and gets the same bundle and the same font files. Name
+the face by its family — <code>\setmainfont{Avenir Next}</code> on a
+Mac — or by its files, as Clew does: <code>NoteFont-Regular.ttf</code>,
 <code>NoteFont-Bold.ttf</code>, <code>NoteFont-Italic.ttf</code> and
-<code>NoteFont-BoldItalic.ttf</code>, with <code>Path=./</code>, and add
+<code>NoteFont-BoldItalic.ttf</code>, with <code>Path=./</code>. Add
 <code>fonts=woff2</code> on the fence for text rather than outlines.
-Any face can be asked for by file name that way, but only those four
-files are there to find: luaotfload's font database knows the bundled
-fonts alone, so a system face cannot be named by family. To have a
-<code>font=note</code> figure drawn as outlines after all, add
-<code>fonts=paths</code> beside it.
+Other families can be named too, from the fonts on this machine
+(<a href="#system-fonts">below</a>). (In 0.12.0 only those four files
+are there to find, and only by file name: a family name fails, the
+note's own included.) To have a <code>font=note</code> figure drawn as
+outlines after all, add <code>fonts=paths</code> beside it.
 </p>
 
 <div class="callout warn">
@@ -502,6 +563,82 @@ fonts alone, so a system face cannot be named by family. To have a
 	figures as outlines whatever the note says: a published page must
 	not carry a subset of Apple's or Microsoft's font, and outlines look
 	the same on a visitor's machine that does not have the face.
+</div>
+
+<h3 id="system-fonts">Any font on this machine, by name</h3>
+
+<p>
+A document that loads <code>fontspec</code> can name any font family
+installed on this machine, as it would under a desktop TeX
+installation:
+</p>
+
+<div class="example">
+	<p class="example-label">You write</p>
+	<pre><code>```latex
+\documentclass[border=2pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Optima}
+\newfontfamily\head{Gill Sans}
+\begin{document}
+{\head In Gill Sans,} then Optima, \textbf{bold} and \textit{italic}.
+\end{document}
+```</code></pre>
+</div>
+
+<p>
+Clew reads the families a figure asks for — the names in
+<code>\setmainfont</code>, <code>\setsansfont</code>,
+<code>\setmonofont</code>, <code>\setmathfont</code>,
+<code>\fontspec</code>, <code>\newfontfamily</code>,
+<code>\newfontface</code> and <code>\setfontfamily</code> — finds each
+among the fonts in the system's font folders and your own, and hands
+the engine that family's files: every style it has, so
+<code>\textbf</code> and <code>\textit</code> find theirs. A name
+ending in <code>.ttf</code>, <code>.otf</code>, <code>.ttc</code> or
+<code>.otc</code> is a file, never looked up as a family; a family is
+named in full, as the system's font list gives it, in any case —
+<code>Hoefler Text</code>, not <code>Hoefler</code>. Mathematics
+works the same way: <code>unicode-math</code>'s default font does not
+load, but <code>\setmathfont{STIX Two Math}</code>, or any OpenType
+maths font you have, does. (Not in 0.12.0, where a family name fails,
+whatever the family.)
+</p>
+
+<p>
+The text comes out as outlines, as any fontspec document's does,
+unless the fence says <code>fonts=woff2</code>. A figure naming a
+family the preview has not been given yet — one you have just
+written — reloads the preview once, from the top, to hand it over, as
+a first <code>font=note</code> figure does. Clew lists the installed
+families once a launch, the first time a figure names one, so a font
+installed while Clew is running is found after a restart.
+</p>
+
+<div class="callout warn">
+	<span class="callout-title">Only as portable as the font</span>
+	A family this machine does not have fails its figure, in the
+	figure's own place, with fontspec's error naming it; the note's other
+	figures typeset as usual. So a note that names Optima typesets on a
+	Mac and fails on a machine without Optima — a synced vault opened on
+	Windows, say. A family whose files come to more than 64&nbsp;MB is
+	not handed over, and fails the same way. A
+	<a href="publishing.html#figures">website export</a> takes the
+	family from the exporting machine and bakes the figure as outlines,
+	so the published page needs no font at all.
+</div>
+
+<div class="callout tip">
+	<span class="callout-title">On iPad</span>
+	A figure names a family on the iPad the same way, and finds it among
+	the fonts iPadOS has installed: Avenir Next, Optima, Gill Sans,
+	Hoefler Text, Palatino, Baskerville, Didot, Charter, Georgia, Times
+	New Roman, Helvetica Neue, Futura and Menlo, and STIX Two Math for
+	<code>unicode-math</code>, among others. That is not the Mac's set,
+	so a family one has and the other lacks fails on the other with
+	fontspec's error naming it. A font iPadOS downloads only when asked
+	is not found, and a few of its faces, Iowan Old Style among them,
+	cannot be named.
 </div>
 
 <h2 id="fragments">Fragments: preamble text by name</h2>
@@ -732,24 +869,32 @@ reported as errors in a note you wrote years ago.
 
 <p>
 The engines ship with Clew: MetaPost 2.11, pdfTeX, LuaTeX and
-dvisvgm, all from TeX&nbsp;Live&nbsp;2025 and compiled to WebAssembly,
-together with the fonts and macro packages they read — Computer
-Modern, Latin Modern, the 35 PostScript fonts, PGF/TikZ with every
-library it ships, pgfplots, tikz-cd, circuitikz, chemfig,
-tikz-3dplot, amsmath, xcolor, <code>standalone</code>, and more. There is nothing to install and
-nothing on your <code>PATH</code> to find, on any of the three
-platforms; a figure renders the same on a machine that has never seen
-TeX. LuaTeX is the one piece loaded on demand, when a figure asks for
-graph drawing or <code>\directlua</code>, or a note holds a
-<code>```latex</code> or <code>```tex</code> fence.
+dvisvgm, all from TeX&nbsp;Live&nbsp;2025, and Ghostscript 10.08.0 for
+the <a href="#postscript">PostScript</a> in a figure, all compiled to
+WebAssembly, together with the fonts and macro packages they read —
+Computer Modern, Latin Modern, the 35 PostScript fonts, PGF/TikZ with
+every library it ships, pgfplots, tikz-cd, circuitikz, chemfig,
+tikz-3dplot, PSTricks, amsmath, xcolor, <code>standalone</code>, and
+more. (Ghostscript and PSTricks are not in 0.12.0.) There is nothing
+to install and nothing on your <code>PATH</code> to find, on any of
+the three platforms; a figure renders the same on a machine that has
+never seen TeX. Two pieces are loaded only when they are wanted:
+LuaTeX, when a figure asks for graph drawing or
+<code>\directlua</code>, or a note holds a <code>```latex</code> or
+<code>```tex</code> fence; and Ghostscript, when a figure's typeset
+output carries PostScript.
 </p>
 
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
-	Clew for iOS carries the same engines and the same bundles, so a
-	figure typesets on the iPad exactly as it does on the desktop —
-	nothing is downloaded, nothing is installed, and the result cache
-	works the same way. The first figure after a fresh install takes a
+	Clew for iOS carries the same engines and the same bundles,
+	Ghostscript included, so a figure typesets on the iPad exactly as it
+	does on the desktop, PostScript and all: nothing is downloaded,
+	nothing is installed, Ghostscript starts only for a figure that needs
+	it, and the result cache works the same way. The one
+	difference is the fonts a figure can
+	<a href="#system-fonts">name by family</a>: the iPad's own, which
+	are not the Mac's. The first figure after a fresh install takes a
 	few seconds while the engines load; after that a picture you have
 	seen before is drawn from the cache without an engine starting. What
 	the iPad does not have is the <em>other</em> path: a LaTeX export, or
@@ -770,19 +915,24 @@ between this and a full local installation:
 </p>
 
 <ul>
-	<li><strong>Fonts: the bundled ones, plus the note's.</strong> Text
-	in figures is set in the Type&nbsp;1 faces above, and a figure can
-	ask for the note's own face with <a href="#note-font"><code>font=note</code></a>,
-	or load <code>fontspec</code> in a complete document. What it cannot
-	do is name an arbitrary installed font by family: only the note's
-	face is handed over, as files. <code>unicode-math</code>'s maths font
-	is not bundled.</li>
+	<li><strong>Fonts: the bundled ones, the note's, and this machine's
+	by name.</strong> Text in figures is set in the Type&nbsp;1 faces
+	above; a figure can ask for the note's own face with
+	<a href="#note-font"><code>font=note</code></a>, or load
+	<code>fontspec</code> and <a href="#system-fonts">name any family
+	installed here</a>. What it cannot have is a font this machine lacks.
+	<code>unicode-math</code>'s default maths font does not load; name an
+	installed one with <code>\setmathfont</code>. (In 0.12.0 a figure
+	cannot name a family at all: only the note's face is handed over, as
+	files.)</li>
 	<li><strong>The bundled packages, not all of CTAN.</strong> A figure
 	needing something outside the bundle fails with TeX's own "file not
 	found" in its error box rather than silently dropping it.</li>
-	<li><strong>No <code>\write18</code>, no PDF output, no
-	Ghostscript.</strong> A figure is typeset and converted to SVG;
-	nothing shells out.</li>
+	<li><strong>No <code>\write18</code>, no PDF output.</strong> A
+	figure is typeset and converted to SVG; nothing shells out.
+	Ghostscript, which draws a figure's
+	<a href="#postscript">PostScript</a>, is WebAssembly like the
+	engines.</li>
 </ul>
 
 <p>
@@ -914,7 +1064,8 @@ every figure and prints what the screen shows. When a whole vault is
 <a href="publishing.html">published as a website</a>, each figure is
 typeset once during the export and the SVG is written into the page,
 so the published site carries no engine at all — a visitor loads a few
-kilobytes of vector graphics instead of 74&nbsp;MB of TeX, and needs
+kilobytes of vector graphics instead of a hundred megabytes or so of
+TeX, and needs
 no TeX on the server either.
 </p>
 
@@ -949,6 +1100,8 @@ no TeX on the server either.
 	<tr><td>MetaPost (fence)</td><td><code>```metapost … ```</code></td><td>The same engine; Clew's own spelling; code in an export</td><td>Nothing</td></tr>
 	<tr><td>LaTeX snippet or document</td><td><code>```latex … ```</code></td><td>Bundled LuaLaTeX + dvisvgm, in the preview; a snippet wrapped in <code>standalone</code>, a document as written; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
 	<tr><td>Plain TeX</td><td><code>```tex … ```</code></td><td>Bundled LuaTeX + dvisvgm, in the preview; a code block in LaTeX export</td><td>Nothing (LuaTeX fetched once)</td></tr>
+	<tr><td>PostScript in a figure</td><td>PSTricks, an EPS image, <code>\rotatebox</code> / <code>\scalebox</code>, <code>\special{ps: …}</code></td><td>Bundled Ghostscript, started only for a figure that carries PostScript (not in 0.12.0)</td><td>Nothing; an EPS image goes inside the document</td></tr>
+	<tr><td>A font family by name</td><td><code>\setmainfont{Optima}</code> and the like, in a document that loads <code>fontspec</code></td><td>The family's files, from this machine's fonts (not in 0.12.0)</td><td>The font, installed on this machine</td></tr>
 </table>
 </div>
 
