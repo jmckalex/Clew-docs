@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed — no held branches)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -24,8 +24,21 @@ names.
   pages), no deletions; after `make sync` each is 200 and byte-identical
   (sha256). Pushed main `cd1c65a..1599589`, fast-forward, after a
   credentials scan (hits: PDF-password prose only). The HELD entries
-  below are history now; their branches and worktrees remain, merged —
-  remove them when convenient. release-0.12.1 untouched.
+  below are history now; their worktrees are removed and their branches
+  deleted (`git branch -d`, all merged; Clew-boss approved).
+  release-0.12.1 untouched. Clew-boss VERIFIED (origin/main `2925a97`,
+  six pages sha256-identical live). Clew-iOS origin/main: `07810a8`.
+- **HELD: `held-inline` `bf362de`** (worktree `../Clew-docs-inline`,
+  from main `2925a97`): Clew-app `1406ffc` (on origin in `f0aeaa4`;
+  Clew-iOS `07810a8` vendors it) — an image within a line is drawn in
+  place, two side by side, after text, mid-sentence, at a link's size;
+  a note, a PDF or any other file there is still a `!` and a link.
+  links-and-embeds' Caution (it said every mid-line `![[…]]` was a `!`
+  and a link) and attachments-and-files' Media embed row. Measured on
+  the `0520b2c` scratch build (which carries `1406ffc`) and on `9268aa3`:
+  0.12.0 makes a mid-line image a `!` and a link too, unless it ends the
+  line, when it is drawn below the text as a block (`$SC/inl/`).
+  Awaiting Clew-boss's check; deploys on its go (manual-only).
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
@@ -270,9 +283,8 @@ names.
   (book mode phase 2, the print PDF and app secrets included), and
   since 2026-10-15 every feature the seven published branches name, up
   to `0520b2c` on origin/main `f0aeaa4`. Not yet reviewed for the
-  manual: `1406ffc` (two inline image embeds on a line now draw; the
-  manual never described the fault), `c2c3fb4` (EmbedPDF's card wraps in
-  a narrow viewer), `f0aeaa4` and `ef5f7f2` (speed only). Undocumented on purpose: re-vendors, smoke-only
+  manual: none — `1406ffc` is `held-inline`; `c2c3fb4`, `ef5f7f2` and
+  `f0aeaa4` need no text (Clew-boss). Undocumented on purpose: re-vendors, smoke-only
   commits, `ef8577e` (markup in code is text; no notice came),
   `038ec6f` (needs no text), `6ab62ae` (latexmk `-g`: fixes a freshness
   check 0.12.0 never had) `cbfa692` (mp-tikz 0.3.1, nothing visible) and `3d39952` (an
