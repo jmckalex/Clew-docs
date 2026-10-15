@@ -21,7 +21,9 @@ names.
   which Clew-boss has asked for. Then the owner decided Q4 — a restricted
   vault refuses PDF via LaTeX — and `held-figengine` `90d653c` and
   `held-proof` `1b7aca3` say it as Clew-app `0520b2c` does, measured,
-  below.)
+  below; both ACCEPTED. Clew-boss puts publishing to the owner together
+  with the push of `0520b2c`: on the owner's yes, deploy only after
+  Clew-boss confirms `0520b2c` is on origin/main.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -131,7 +133,10 @@ names.
   `9268aa3` — it compiles where the PDF is saved and a latexmkrc there
   ran; the refusal quoted under #troubleshooting), books#build (the panel's
   **Print PDF**), command-line (`--pdf` refused, exit 1; deep links only
-  open, nothing to say). Nothing written about the hole.
+  open, nothing to say). Nothing written about the hole. ACCEPTED by
+  Clew-boss (the troubleshooting quote and the hint checked against
+  `0520b2c`; the system-wide latexmk file and "where you save the PDF"
+  kept); HOLD until `0520b2c` is on origin/main and the owner says yes.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
@@ -188,7 +193,8 @@ names.
   proof bullet and its reference row); merges cleanly with `90db69b`.
   ACCEPTED by Clew-boss, HOLD. `1b7aca3` (Clew-app `0520b2c`, measured):
   the Proof row stays, a proof builds nothing, and its notice offers only
-  trusting the vault. Merges cleanly with `90d653c`.
+  trusting the vault. Merges cleanly with `90d653c`. ACCEPTED by
+  Clew-boss; HOLD.
 - **WAITING: jmarkdown retires the colon directives** (`:name[…]`,
   `::name[…]`, `:::name … :::` → `@name`, `@name+`, `@begin/@end`;
   branch `retire-colon-directives` in jmarkdown, owner's decision, not
