@@ -70,8 +70,8 @@ names.
   ACCEPTED by Clew-boss (no screenshot for now); HOLD, deploys with the
   other held items on the owner's word. The shortfalls are routed: ⟷ in
   live edit to Clew-app (after its current work), `#page=N` to the owner
-  as a feature question (answered yes: `5726d80`, sent to Clew-boss; still
-  held); Clew-boss says which sentence goes if ⟷ changes.
+  as a feature question (answered yes: `5726d80`, ACCEPTED by Clew-boss;
+  HOLD with the rest); the ⟷ sentence waits on Clew-app's proposal.
 - **HELD: `held-figengine` `584acf9`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
