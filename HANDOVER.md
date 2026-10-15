@@ -19,9 +19,9 @@ names.
   held items, `held-pdfsize` and `held-figengine`, below; both accepted.
   Every held branch deploys with Clew-app's push, on the owner's word,
   which Clew-boss has asked for. Then the owner decided Q4 — a restricted
-  vault refuses PDF via LaTeX — and `held-figengine` `90db69b` and
-  `held-proof` `6081075` draft it, below; both ACCEPTED as held, extras
-  included.)
+  vault refuses PDF via LaTeX — and `held-figengine` `90d653c` and
+  `held-proof` `1b7aca3` say it as Clew-app `0520b2c` does, measured,
+  below.)
 - **HELD: `held-inserts` `3dd9c10`** (worktree `../Clew-docs-inserts`,
   from main): colon retirement phase 1, against Clew-app `97d7f0d`
   (`42d6930`, `acd9c27`, `bbde7fc`, `97d7f0d`; local). editing#formatting
@@ -79,7 +79,7 @@ names.
   HOLD with the rest); ⟷ answered too: Clew-app `a7b9940` draws it in
   reading view only, and `507d821` says so (live edit keeps the column's
   width; 0.12.0's live edit showed a ⟷); ACCEPTED by Clew-boss, HOLD.
-- **HELD: `held-figengine` `90db69b`** (worktree `../Clew-docs-figengine`,
+- **HELD: `held-figengine` `90d653c`** (worktree `../Clew-docs-figengine`,
   from `held-cache` `a362245` — merge it after, or with, `held-cache`):
   step C, exports draw TikZ and MetaPost with Clew's built-in TeX by
   default (the owner's yes), Clew-app `73f92eb` (`2cc6d89`, `320b310`,
@@ -118,12 +118,20 @@ names.
   books#build's restricted bullet and Build row. When Clew-boss sends the
   refusal's exact text and the new Settings hint, align the wording,
   measure on a scratch build. ACCEPTED by Clew-boss, extras included;
-  HOLD. When the text arrives: (a) if the book's refusal does not offer
-  Print PDF, books#build says what it does offer; (b) Clew-boss has asked
-  Clew-app whether `clew export --pdf` and deep links refuse the same
-  way — leave command-line.html until it answers, then add the clause if
-  they do; (c) quote the refusal under export#troubleshooting, measured
-  on a scratch build first.
+  HOLD. `90d653c` aligns it to Clew-app `refuse-latex-pdf` `0520b2c`
+  (held; lands on local main after dev.12), measured on a scratch build
+  (`$SC/lpr/`: Clew-app's latex-pdf-refusal-scenario restricted and
+  trusted; panel-scenario.js — the Book panel's PDF and Proof buttons
+  still shown, a real click → the refusal for 12 s, nothing built; Print
+  PDF, LaTeX, HTML build; the Settings hint verbatim; `clew export --pdf`
+  exit 1 with the note's words, `--html`/`--latex` exit 0; rc-scenario.js
+  — planted latexmkrc files: only HOME's runs). Pages: the Settings entry
+  (the new hint), diagrams, trusting-a-vault, export (#config-cascade,
+  #pdf-toolchain's new latexmk/biber line with a 0.12.0 marker measured on
+  `9268aa3` — it compiles where the PDF is saved and a latexmkrc there
+  ran; the refusal quoted under #troubleshooting), books#build (the panel's
+  **Print PDF**), command-line (`--pdf` refused, exit 1; deep links only
+  open, nothing to say). Nothing written about the hole.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
@@ -164,7 +172,7 @@ names.
   Deploys with Clew-app's push, on the owner's word. Merges cleanly with
   `held-postscript` (`git merge-tree`). The demo Dashboards chart
   (`4f6a706`) appears on no manual page or screenshot: nothing to change.
-- **HELD: `held-proof` `6081075`** (worktree `../Clew-docs-proof`),
+- **HELD: `held-proof` `1b7aca3`** (worktree `../Clew-docs-proof`),
   branched from `held-cache` (merge it after, or with, `held-cache`):
   books#build (a .tex per chapter for the PDF) and books#proof (Proof
   This Chapter), reference rows, export#where. Against Clew-app
@@ -178,8 +186,9 @@ names.
   owner's word; byte-check each page against the pushed hashes.
   `6081075`: a restricted vault refuses a proof (the Q4 decision; the
   proof bullet and its reference row); merges cleanly with `90db69b`.
-  ACCEPTED by Clew-boss, HOLD; add what the proof's refusal offers once
-  its text arrives.
+  ACCEPTED by Clew-boss, HOLD. `1b7aca3` (Clew-app `0520b2c`, measured):
+  the Proof row stays, a proof builds nothing, and its notice offers only
+  trusting the vault. Merges cleanly with `90d653c`.
 - **WAITING: jmarkdown retires the colon directives** (`:name[…]`,
   `::name[…]`, `:::name … :::` → `@name`, `@name+`, `@begin/@end`;
   branch `retire-colon-directives` in jmarkdown, owner's decision, not
