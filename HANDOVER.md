@@ -63,8 +63,11 @@ names.
   (`$SC/pdfsize/`: Clew-app's pdf-size-scenario, extra-, open-,
   wide-width-scenario.js). No screenshot. Merges cleanly with the five
   other held branches (release-0.12.1: stamp lines only, as main).
-  Sent to Clew-boss; deploys with the other held items on the owner's
-  word.
+  ACCEPTED by Clew-boss (no screenshot for now); HOLD, deploys with the
+  other held items on the owner's word. The shortfalls are routed: ⟷ in
+  live edit to Clew-app (after its current work), `#page=N` to the owner
+  as a feature question; Clew-boss says which sentence goes if either
+  changes.
 - **Live 2026-10-06 on the owner's OK ("OK books", via Clew-boss):** the
   chapter *Books* (`books.html`), merged from `held-books` (`427dde2`)
   and corrected (`b25d3da`): a `[[link]]` to a chapter is a link in a
