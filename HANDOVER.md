@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -66,6 +66,20 @@ names.
   `ae1e892`. Clew-boss VERIFIED: all three ACCEPTED and HELD
   (`d8ad312`, `96102b6`, `ae1e892`); Clew-boss is asking the owner.
   Publishing needs `dc2ed22` on Clew-app origin and the owner's word.
+- **HELD (2026-10-19, Clew-boss's request): `held-latexstyle` `ac721a9`**
+  (`../Clew-docs-latexstyle`, from main `2925a97`) for Clew-app's
+  UNPUSHED local main `963b2bd` (`3bfc0b6` Clew's LaTeX export style +
+  the old-TeX guard): export `#latex-style` (new h3 under
+  `#config-cascade`), mentions in `#one-source`, the cascade sentence and
+  `#latex-engine`, a Troubleshooting entry, a Reference row; settings
+  page dt `latexExportStyle` and the app-global keys row. Measured
+  through the app on scratch `963b2bd` (`$SC/tp/applx2`, `run2.sh`,
+  `lx-*.js`, HOME of its own; 0.12.0 on `app012`): the setting is in
+  Settings → APPEARANCE (no Export section — the guide says Export); a
+  note header's `Lang` does not move the paper or hyphenation (only a
+  config's `Lang` or the locale); a header's `Class options: 11pt`
+  prints on Letter. Not drafted, by Clew-boss's word: the title block.
+  Publishing needs `963b2bd` on Clew-app origin and the owner's word.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
