@@ -80,6 +80,12 @@ names.
   config's `Lang` or the locale); a header's `Class options: 11pt`
   prints on Letter. Not drafted, by Clew-boss's word: the title block.
   Publishing needs `963b2bd` on Clew-app origin and the owner's word.
+  Clew-boss: HELD, NOT yet accepted — a header's `Lang` and `LaTeX
+  engine` being ignored went back to Clew-app as regressions (with the
+  Settings → Appearance location and Export.md's hyphenation words);
+  "11pt alone → Letter" is Clew-app's call. Keep the settings dt/dd.
+  Re-measure on Clew-app's fixing commit (Clew-boss sends the hash) and
+  re-word the header/`Lang` passages (`#latex-style` ¶1–2) to match.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
