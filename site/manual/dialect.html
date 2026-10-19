@@ -350,6 +350,26 @@ selection wrapped.
 	<a href="diagrams.html">Diagrams</a>.
 </div>
 
+<h3 id="title-page">A title page</h3>
+
+<p>
+Five directives set out a title page, each on a line of its own:
+<code>@title[…]</code>, <code>@subtitle[…]</code>,
+<code>@author[…]</code>, <code>@institution[…]</code> and
+<code>@date[…]</code>. Reading mode sizes them — the title bold, at
+1.8&nbsp;times the size of the text, the author and the date a step up
+(1.15), the subtitle and the institution as body text. Any spelling of
+the directive counts — <code>@title+[…]</code>,
+<code>@&lt;title&gt;[…]</code>, <code>::title[…]</code> — except the
+single colon: the engine makes <code>:title[…]</code> an HTML
+<code>&lt;title&gt;</code> element, which the page does not show.
+<code>@today</code> prints the day's date as <em>19 October 2026</em>,
+always in that form, so <code>@date[@today]</code> dates a draft on the
+day it is rendered. <a href="live-edit.html#lines">Live edit</a> draws
+the same lines as a title block. (In 0.12.0 all five are plain body
+text.)
+</p>
+
 <h2 id="normal-syntax">The Standard Markdown switch</h2>
 
 <p>
@@ -424,6 +444,7 @@ its author meant.
 	<tr><td><code>\cite{key}</code></td><td>Citation</td><td>Citation (kept)</td></tr>
 	<tr><td><code>&gt;&gt; x &lt;&lt;</code> / <code>&gt;&gt; x</code></td><td>Center / right-align</td><td>Alignment (kept)</td></tr>
 	<tr><td><code>:::name … :::</code>, <code>@begin(name)…@end(name)</code></td><td>Container / environment</td><td>Container / environment (kept)</td></tr>
+	<tr><td><code>@title[…]</code>, <code>@subtitle[…]</code>, <code>@author[…]</code>, <code>@institution[…]</code>, <code>@date[…]</code></td><td><a href="#title-page">A title page</a> (in 0.12.0, plain body text)</td><td>A title page (kept)</td></tr>
 </table>
 </div>
 
