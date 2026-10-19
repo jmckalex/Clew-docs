@@ -391,35 +391,40 @@ A LaTeX export and a PDF via LaTeX — a note's or a
 <a href="books.html#build">book's</a> — come out in <strong>Clew's
 style</strong>: EB&nbsp;Garamond, with Garamond-Math for the
 mathematics, at 12pt on A4; <code>microtype</code>; curly quotes from
-straight ones; English hyphenation; quieter lists and headings, and long
-quotations a size smaller; emoji in colour; and links without boxes
-round them. The paper is US&nbsp;Letter where the region uses it — the
-United States, Canada, Mexico and a few others — and the hyphenation
-American in the United States, British elsewhere. The region is the one
-in the <code>Lang</code> your jmarkdown configuration sets
-(<code>en-US</code>, say), or else your computer's; a <code>Lang</code>
-in a note's own header changes neither. Where your configuration's
-<code>Lang</code> is not English, or its LaTeX preamble loads
-<code>babel</code> or <code>polyglossia</code>, the style leaves the
-hyphenation alone.
+straight ones; hyphenation in the note's language; quieter lists and
+headings, and long quotations a size smaller; emoji in colour; and links
+without boxes round them. The language is the <code>Lang</code> in the
+note's header, else the one your jmarkdown configuration sets, else
+English; and English, a bare <code>en</code> included, is your
+region's — British, American, Canadian and so on. A language <code>babel</code>
+does not know (<code>ja</code>, say) gets no hyphenation from the style,
+and where <code>babel</code> or <code>polyglossia</code> is loaded
+already — by your configuration's preamble, or by a book whose chapters
+are in other languages (<a href="books.html#chapter-keys">What a
+chapter may set for itself</a>) — the style leaves the hyphenation to
+it. The paper is US&nbsp;Letter where the region uses it — the United
+States, Canada, Mexico and a few others — and A4 elsewhere. The region
+is the one in that <code>Lang</code> (<code>en-US</code>, say), or else
+your computer's.
 </p>
 
 <p>
 The style is added to your jmarkdown configuration, not put in its
 place: your configuration's packages and preamble still load, and a
 layout it sets — <code>Class options</code>, <code>Geometry</code> — is
-kept, the style setting one only where your configuration leaves it
-alone. The fonts are the exception: EB&nbsp;Garamond replaces a main
-font your configuration sets with <code>\setmainfont</code>. A note's
-own header wins over both, as it wins over any configuration: a key it
-sets — <code>Class options</code>, <code>Geometry</code>,
-<code>Packages</code>, <code>LaTeX preamble</code> — replaces the
-style's and your configuration's whole, so a header's <code>LaTeX
-preamble</code> takes the style's fonts with it and leaves LaTeX's
-default face. <code>Class options</code> carry the paper: from your
-configuration or a header, <code>11pt</code> alone prints on
-US&nbsp;Letter, LaTeX's own default, so write <code>11pt,a4paper</code>
-to keep A4.
+kept, the style setting one only where neither your configuration nor
+the note's header does. Class options that name no paper
+(<code>11pt</code>) still get the region's paper, which the style then
+sets through its geometry — unless a <code>Geometry</code> is set as
+well, which must name the paper itself. The fonts are the exception:
+EB&nbsp;Garamond replaces a main font your configuration sets with
+<code>\setmainfont</code>. A note's own header wins over both, as it
+wins over any configuration: a key it sets — <code>Class
+options</code>, <code>Geometry</code>, <code>Packages</code>,
+<code>LaTeX preamble</code> — replaces the style's and your
+configuration's whole, so a header's <code>LaTeX preamble</code> takes
+the style's fonts and hyphenation with it and leaves LaTeX's default
+face.
 </p>
 
 <p>
@@ -429,8 +434,9 @@ and a full TeX Live have both; BasicTeX does not, and
 them the document keeps LaTeX's default face and still compiles. It
 needs LuaLaTeX or XeLaTeX too — Automatic compiles it with LuaLaTeX
 (<a href="#latex-engine">Which TeX engine</a>), the one engine that
-draws its emoji in colour — so with pdfLaTeX chosen in Settings, the
-style is left out.
+draws its emoji in colour — so with pdfLaTeX chosen in Settings, or a
+note's header saying <code>LaTeX engine: pdflatex</code>, the style is
+left out altogether.
 </p>
 
 <p>
@@ -580,7 +586,8 @@ in the compiler's log.
 	<dd><a href="#latex-style">Clew's style</a> was left out, or could not
 	find its fonts. Settings&nbsp;→&nbsp;Appearance may say <em>Your
 	jmarkdown configuration only</em> for the style, or name pdfLaTeX as
-	the LaTeX engine; a note whose header sets <code>LaTeX
+	the LaTeX engine; a note whose header says <code>LaTeX engine:
+	pdflatex</code> gets no style, and one whose header sets <code>LaTeX
 	preamble</code> replaces the style's fonts with its own lines. Or the
 	TeX installation lacks EB&nbsp;Garamond and Garamond-Math: BasicTeX
 	does, and <code>tlmgr install ebgaramond garamond-math</code> adds
@@ -689,13 +696,14 @@ in the compiler's log.
 		the note's metadata header; all engine-native features.</td></tr>
 	<tr><td>Clew's style (LaTeX, PDF via LaTeX)</td><td>On by default:
 		EB&nbsp;Garamond and Garamond-Math, 12pt, A4 or US&nbsp;Letter by
-		region, <code>microtype</code>, curly quotes, English hyphenation,
-		links unboxed — added to your configuration, whose main font it
-		replaces; a note's header wins over it. Off with
+		region, <code>microtype</code>, curly quotes, hyphenation in the
+		note's language, links unboxed — added to your configuration, whose
+		main font it replaces; a note's header wins over it. Off with
 		Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>Style of LaTeX and
 		PDF via LaTeX exports</em> (<code>latexExportStyle</code>:
-		<code>none</code>), and left out under pdfLaTeX (<a
-		href="#latex-style">above</a>; not in 0.12.0).</td></tr>
+		<code>none</code>), and left out under pdfLaTeX, chosen in Settings
+		or a note's header (<a href="#latex-style">above</a>; not in
+		0.12.0).</td></tr>
 	<tr><td>TeX search path</td><td><code>/Library/TeX/texbin</code>,
 		<code>/usr/local/bin</code>, <code>/opt/homebrew/bin</code>
 		(<code>latexmk</code> preferred over running the engine); the same
