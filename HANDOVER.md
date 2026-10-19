@@ -86,6 +86,12 @@ names.
   "11pt alone → Letter" is Clew-app's call. Keep the settings dt/dd.
   Re-measure on Clew-app's fixing commit (Clew-boss sends the hash) and
   re-word the header/`Lang` passages (`#latex-style` ¶1–2) to match.
+  DONE: re-measured on Clew-app `41f8713` (local main, 10 over origin
+  `f0aeaa4`, not pushed; `$SC/tp/applx3`, `lx3-*.js`, `bk2-scenario.js`)
+  — now `bcb48bc`: the header's `Lang` → babel hyphenation and the
+  region's paper; a header's `LaTeX engine: pdflatex` → no style; `11pt`
+  alone → the region's paper (Letter still if a `Geometry` is set too —
+  said in one clause). Publishing needs `41f8713` on Clew-app origin.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
