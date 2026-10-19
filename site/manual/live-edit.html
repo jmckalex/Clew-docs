@@ -145,8 +145,9 @@ beside it (<a href="reading-mode.html#sidenotes">sidenotes</a>); a <code>\cite{�
 becomes a chip reading the citation exactly as reading mode formats it
 (<a href="citations.html#library">Citations</a>; in 0.12.0, a plain
 <em>Author Year</em>); a <code>{{variable}}</code>, a
-<code>@label[…]</code>, <code>:today</code> and a <code>^block-id</code>
-become small chips; an <code>@ref[…]</code> shows the number it will print. A <code>:TeX[…]</code> span is shown dimmed — it
+<code>@label[…]</code>, <code>:today</code> (the date as reading mode
+prints it, <em>19 October 2026</em>; in 0.12.0, your locale's short form,
+such as 19/10/2026) and a <code>^block-id</code> become small chips; an <code>@ref[…]</code> shows the number it will print. A <code>:TeX[…]</code> span is shown dimmed — it
 renders only in a LaTeX export. The bracket of a directive the engine
 takes literally — <code>@reveal[…]</code>, <code>@image[…]</code>,
 <code>@label[…]</code> and <code>@ref[…]</code>, the figure and
@@ -196,7 +197,11 @@ as the engine does.
 <p>
 Headings take their size; bullets become bullets (nested ones differ);
 tasks become checkboxes; numbered items keep their numbers; quotes keep a
-bar; <a href="callouts.html">callouts</a> are drawn as reading mode
+bar, drawn as reading mode draws a quote — muted text, a grey bar — and a
+quote inside a list item stands under the item's text (in 0.12.0 a quote
+is green, and one inside a list item starts at the note's margin, left of
+the bullets, with the spaces before its <code>&gt;</code> showing);
+<a href="callouts.html">callouts</a> are drawn as reading mode
 draws them — tint, icon, rounded box, padding, list numbers inside the
 box — and a foldable one (<code>+</code> or <code>-</code>) folds and
 unfolds from the chevron at the right of its title (in 0.12.0 the box is
@@ -213,6 +218,21 @@ says <em>LaTeX only</em> and an HTML block's <em>HTML only</em>; TeX and
 comment bodies are dimmed. (In 0.12.0 a game, Mathematica or
 markdown-demo block is drawn only when it is written with
 <code>:::</code>, and <code>@begin(HTML)</code> is not marked.)
+</p>
+
+<p id="title-page">
+A title page's lines — <code>@title[…]</code>, <code>@subtitle[…]</code>,
+<code>@author[…]</code>, <code>@institution[…]</code> and
+<code>@date[…]</code>, each alone on its line — are drawn as a title
+block, sized as reading mode sizes them
+(<a href="dialect.html#blocks">the dialect</a>): the title bold, in the
+headings' colour, and every line's text plain, its directive hidden until
+the cursor reaches it, when the line keeps its height.
+<code>@date[@today]</code> shows the date. <code>@&lt;title&gt;[…]</code>
+and <code>::title[…]</code> are title lines too; <code>:title[…]</code>
+is not, nor is a directive in the middle of a sentence. (In 0.12.0 these
+lines are underlined directive text in the link colour, and
+<code>@date[@today]</code> shows <code>@today</code>.)
 </p>
 
 <h3 id="blocks">Blocks</h3>
