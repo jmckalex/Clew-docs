@@ -63,8 +63,9 @@ names.
   `held-listkeys` re-measured on Clew-app's fix `dc2ed22` (local main,
   not pushed): first-line Enter stays in the item; the empty-item
   sentence corrected (Enter twice, once in a loose list) — now
-  `ae1e892`, sent to Clew-boss to verify. Publishing needs `dc2ed22`
-  on origin.
+  `ae1e892`. Clew-boss VERIFIED: all three ACCEPTED and HELD
+  (`d8ad312`, `96102b6`, `ae1e892`); Clew-boss is asking the owner.
+  Publishing needs `dc2ed22` on Clew-app origin and the owner's word.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
