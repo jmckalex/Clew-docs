@@ -157,6 +157,15 @@ carries with it, with the vault's winning where both use a name.
 	<code>polyglossia</code>, or runs Lua code, takes LuaLaTeX; one that
 	needs a XeTeX-only package, XeLaTeX; anything else, pdfLaTeX. (Not in
 	0.12.0.)</dd>
+	<dt>Style of LaTeX and PDF via LaTeX exports <code>(latexExportStyle)</code></dt>
+	<dd>Clew (EB Garamond) (<code>clew</code>, the default) or Your
+	jmarkdown configuration only (<code>none</code>) — whether a LaTeX
+	export and a PDF via LaTeX come out in
+	<a href="export.html#latex-style">Clew's style</a>: EB Garamond with
+	matching maths, 12pt on A4 (US&nbsp;Letter where your region uses it),
+	smart quotes and English hyphenation, added to your jmarkdown
+	configuration, a note's own header still winning. With pdfLaTeX chosen
+	above, the style is left out. (Not in 0.12.0.)</dd>
 	<dt>TikZ and MetaPost figures in exports <code>(exportFigureEngine)</code></dt>
 	<dd>Clew's built-in TeX (default) or Your TeX installation — what
 	draws a note's or book's TikZ and MetaPost figures when it is exported
@@ -705,7 +714,7 @@ source. If you use one daily, give it a key.
 <div class="tablewrap">
 <table>
 	<tr><th>Scope</th><th>File</th><th>Contents</th></tr>
-	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments), <code>callouts</code> (the global callout types; not in 0.12.0), <code>latexEngine</code> (not in 0.12.0), <code>exportFigureEngine</code> (not in 0.12.0), <code>updateCheck</code> (not in 0.12.0) — plus recent vaults and the windows to restore at launch</td></tr>
+	<tr><td>App-global</td><td><code>clew-settings.json</code> in the per-user application-data directory</td><td>Theme, tab-opening modes, editor font size and line width, the shell panel font, diary configuration, attachment and templates folders, hotkey overrides, <code>texFragments</code> (the global TeX fragments), <code>callouts</code> (the global callout types; not in 0.12.0), <code>latexEngine</code> (not in 0.12.0), <code>latexExportStyle</code> (not in 0.12.0), <code>exportFigureEngine</code> (not in 0.12.0), <code>updateCheck</code> (not in 0.12.0) — plus recent vaults and the windows to restore at launch</td></tr>
 	<tr><td>Per-vault</td><td><code>&lt;vault&gt;/.clew/vault-settings.json</code></td><td><code>history</code>, <code>jmarkdownProject</code>, <code>normalSyntax</code>, <code>noteApi</code>, <code>bibliography</code>, <code>bibliographyStyle</code>, <code>bibliographyPanel</code>, <code>pandocCitations</code>, <code>excalidrawFormat</code>, <code>dataviewJs</code>, <code>texFragments</code> (this vault's TeX fragments), <code>callouts</code> (this vault's callout types; not in 0.12.0), <code>unindexed</code> and <code>hidden</code> (the two exclusion lists), <code>plugins</code> (array of plugin ids) — of which <code>noteApi</code>, <code>dataviewJs</code>, <code>plugins</code> and <code>network</code> are the vault's requests, granted only on the device (in 0.12.0 the first three are the switches themselves; <code>network</code> is not in 0.12.0)</td></tr>
 	<tr><td>Per-vault, on this device</td><td><code>vault-trust.json</code> in the per-user application-data directory</td><td>Which vaults this device trusts and what each may run — vault scripts, plugins, the Note API, <code>dataviewjs</code>, the network — keyed by the vault folder itself, never written into the vault (see <a href="trusting-a-vault.html#settings">Trusting a vault</a>; in 0.12.0, only whether notes may run code)</td></tr>
 </table>

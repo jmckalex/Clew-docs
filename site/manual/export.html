@@ -145,7 +145,9 @@ formats is generated <em>natively</em> from the Markdown source:
 	keep their AMS numbering, citations go through natbib, figures become
 	floats, and TikZ pictures are emitted as native TikZ — not as embedded
 	screenshots. The <code>.tex</code> file is yours to edit, include in a
-	larger document, or hand to a journal.</li>
+	larger document, or hand to a journal. By default it is set in
+	<a href="#latex-style">Clew's style</a>: EB&nbsp;Garamond, 12pt,
+	A4.</li>
 	<li><strong>PDF</strong> is the LaTeX route carried one step further:
 	Clew generates the <code>.tex</code> and then runs your TeX toolchain
 	on it. The result is a typeset page in the full LaTeX sense — proper
@@ -291,7 +293,8 @@ any <code>.jmarkdown/</code> folder next to the note.
 
 <p>
 In other words, an export behaves exactly as if you had run the
-jmarkdown command-line tool on the file yourself. That is a feature:
+jmarkdown command-line tool on the file yourself (a LaTeX export adds
+<a href="#latex-style">Clew's style</a>, below). That is a feature:
 </p>
 
 <ul>
@@ -381,6 +384,66 @@ reading-view PDF, or trusting the vault, instead
 	<code>.jmarkdown/</code> config next to the note to switch it off.
 </div>
 
+<h3 id="latex-style">Clew's style for LaTeX</h3>
+
+<p>
+A LaTeX export and a PDF via LaTeX — a note's or a
+<a href="books.html#build">book's</a> — come out in <strong>Clew's
+style</strong>: EB&nbsp;Garamond, with Garamond-Math for the
+mathematics, at 12pt on A4; <code>microtype</code>; curly quotes from
+straight ones; English hyphenation; quieter lists and headings, and long
+quotations a size smaller; emoji in colour; and links without boxes
+round them. The paper is US&nbsp;Letter where the region uses it — the
+United States, Canada, Mexico and a few others — and the hyphenation
+American in the United States, British elsewhere. The region is the one
+in the <code>Lang</code> your jmarkdown configuration sets
+(<code>en-US</code>, say), or else your computer's; a <code>Lang</code>
+in a note's own header changes neither. Where your configuration's
+<code>Lang</code> is not English, or its LaTeX preamble loads
+<code>babel</code> or <code>polyglossia</code>, the style leaves the
+hyphenation alone.
+</p>
+
+<p>
+The style is added to your jmarkdown configuration, not put in its
+place: your configuration's packages and preamble still load, and a
+layout it sets — <code>Class options</code>, <code>Geometry</code> — is
+kept, the style setting one only where your configuration leaves it
+alone. The fonts are the exception: EB&nbsp;Garamond replaces a main
+font your configuration sets with <code>\setmainfont</code>. A note's
+own header wins over both, as it wins over any configuration: a key it
+sets — <code>Class options</code>, <code>Geometry</code>,
+<code>Packages</code>, <code>LaTeX preamble</code> — replaces the
+style's and your configuration's whole, so a header's <code>LaTeX
+preamble</code> takes the style's fonts with it and leaves LaTeX's
+default face. <code>Class options</code> carry the paper: from your
+configuration or a header, <code>11pt</code> alone prints on
+US&nbsp;Letter, LaTeX's own default, so write <code>11pt,a4paper</code>
+to keep A4.
+</p>
+
+<p>
+The style needs the EB&nbsp;Garamond and Garamond-Math fonts. MacTeX
+and a full TeX Live have both; BasicTeX does not, and
+<code>tlmgr install ebgaramond garamond-math</code> adds them. Without
+them the document keeps LaTeX's default face and still compiles. It
+needs LuaLaTeX or XeLaTeX too — Automatic compiles it with LuaLaTeX
+(<a href="#latex-engine">Which TeX engine</a>), the one engine that
+draws its emoji in colour — so with pdfLaTeX chosen in Settings, the
+style is left out.
+</p>
+
+<p>
+Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>Style of LaTeX and PDF
+via LaTeX exports</em> turns it off. <em>Your jmarkdown configuration
+only</em> (<code>latexExportStyle</code>: <code>none</code>; the
+default, <em>Clew (EB Garamond)</em>, is <code>clew</code>) exports from
+your configuration alone, as before — with nothing configured, LaTeX's
+own defaults: Computer Modern at 10pt on US&nbsp;Letter, quotation marks
+as typed. (Not in 0.12.0, whose exports are always your configuration
+alone.)
+</p>
+
 <h2 id="pdf-toolchain">PDF export and the TeX toolchain</h2>
 
 <p>
@@ -415,6 +478,8 @@ a <code>\setmainfont</code> in your jmarkdown configuration's LaTeX
 preamble, say — is compiled with <strong>LuaLaTeX</strong>; one that
 needs a XeTeX-only package such as <code>xeCJK</code>, with
 <strong>XeLaTeX</strong>; anything else with <strong>pdfLaTeX</strong>.
+<a href="#latex-style">Clew's style</a> loads <code>unicode-math</code>,
+so a document in it is compiled with LuaLaTeX.
 Reading the document catches whatever put the package there — your
 configuration, the vault's, the note's own header. For what it cannot
 see, Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>LaTeX engine (PDF
@@ -510,6 +575,16 @@ in the compiler's log.
 	error messages will name the offending line. Common causes are a
 	missing LaTeX package and raw HTML in the note, which has no LaTeX
 	equivalent.</dd>
+
+	<dt>The PDF via LaTeX is not in EB Garamond</dt>
+	<dd><a href="#latex-style">Clew's style</a> was left out, or could not
+	find its fonts. Settings&nbsp;→&nbsp;Appearance may say <em>Your
+	jmarkdown configuration only</em> for the style, or name pdfLaTeX as
+	the LaTeX engine; a note whose header sets <code>LaTeX
+	preamble</code> replaces the style's fonts with its own lines. Or the
+	TeX installation lacks EB&nbsp;Garamond and Garamond-Math: BasicTeX
+	does, and <code>tlmgr install ebgaramond garamond-math</code> adds
+	them. (Not in 0.12.0, which has no style.)</dd>
 
 	<dt>A Clew fence prints as its source in PDF via LaTeX</dt>
 	<dd>A LaTeX export sets each fenced block as a <code>minted</code>
@@ -612,6 +687,15 @@ in the compiler's log.
 		fences, local preview assets.</td></tr>
 	<tr><td>Applied</td><td>The vault's standard-Markdown-syntax setting;
 		the note's metadata header; all engine-native features.</td></tr>
+	<tr><td>Clew's style (LaTeX, PDF via LaTeX)</td><td>On by default:
+		EB&nbsp;Garamond and Garamond-Math, 12pt, A4 or US&nbsp;Letter by
+		region, <code>microtype</code>, curly quotes, English hyphenation,
+		links unboxed — added to your configuration, whose main font it
+		replaces; a note's header wins over it. Off with
+		Settings&nbsp;→&nbsp;Appearance&nbsp;→&nbsp;<em>Style of LaTeX and
+		PDF via LaTeX exports</em> (<code>latexExportStyle</code>:
+		<code>none</code>), and left out under pdfLaTeX (<a
+		href="#latex-style">above</a>; not in 0.12.0).</td></tr>
 	<tr><td>TeX search path</td><td><code>/Library/TeX/texbin</code>,
 		<code>/usr/local/bin</code>, <code>/opt/homebrew/bin</code>
 		(<code>latexmk</code> preferred over running the engine); the same
