@@ -60,8 +60,11 @@ names.
   All four held branches merge pairwise clean. Clew-boss VERIFIED all
   three: `held-titlepage` and `held-liveblocks` ACCEPTED and HELD (the
   "Lines" placement, the extras and the empty-item wording kept);
-  `held-listkeys` BLOCKED until I re-measure on Clew-app's fixing
-  commit — Clew-boss has briefed Clew-app and will send the hash.
+  `held-listkeys` re-measured on Clew-app's fix `dc2ed22` (local main,
+  not pushed): first-line Enter stays in the item; the empty-item
+  sentence corrected (Enter twice, once in a loose list) — now
+  `ae1e892`, sent to Clew-boss to verify. Publishing needs `dc2ed22`
+  on origin.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
