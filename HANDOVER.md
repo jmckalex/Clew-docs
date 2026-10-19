@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle`)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held, all five ACCEPTED, waiting only for the owner's publish word: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -92,6 +92,16 @@ names.
   region's paper; a header's `LaTeX engine: pdflatex` → no style; `11pt`
   alone → the region's paper (Letter still if a `Geometry` is set too —
   said in one clause). Publishing needs `41f8713` on Clew-app origin.
+  Clew-boss VERIFIED: ACCEPTED and HELD (the Geometry clause kept).
+- **ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
+  (2026-10-19): `held-inline` `bf362de`, `held-titlepage` `d8ad312`,
+  `held-liveblocks` `96102b6`, `held-listkeys` `ae1e892`,
+  `held-latexstyle` `bcb48bc`. Clew-app origin/main is `41f8713` (pushed
+  on the owner's word; `ls-remote` checked: `1406ffc`, `dc2ed22`,
+  `41f8713` all ancestors). Clew-boss sends the GO: merge all five
+  (`--no-ff`), check-links, stamp, og-tags, dry-run, `make sync`,
+  byte-check, credentials scan, push main (fast-forward), and report the
+  live pages so Clew-boss can byte-check them.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
