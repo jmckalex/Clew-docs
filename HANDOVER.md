@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`)
+# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -40,6 +40,24 @@ names.
   line, when it is drawn below the text as a block (`$SC/inl/`).
   ACCEPTED by Clew-boss; HOLD — Clew-boss is asking the owner (the
   earlier yes covered only the seven branches), and relays the word.
+- **HELD (2026-10-19, Clew-boss's request; Clew-boss is now
+  `uds:/tmp/cc-socks/1993.sock`): three drafts for Clew-app's UNPUSHED
+  local main `1dc5c81`**, each from main `2925a97` in its own worktree;
+  publishing waits for the app's push and the owner's word. Measured on
+  scratch builds of `1dc5c81` and `9268aa3` (`$SC/tp/`).
+  - `held-titlepage` `d8ad312` (`../Clew-docs-titlepage`): dialect
+    `#title-page` and a Reference row — `e4667a9`'s reading-view sizes.
+  - `held-liveblocks` `96102b6` (`../Clew-docs-liveblocks`): live-edit
+    `#lines` — the title block (`p#title-page`), quotes in reading view's
+    grey, a quote in a list item under its text; `:today`'s chip.
+  - `held-listkeys` `dd2465c` (`../Clew-docs-listkeys`): editing
+    `#lists` (new), live-edit `#list-paragraphs` and Reference, the
+    hotkey table — `a7baa98`. **BLOCKED on the app:** on `1dc5c81`
+    itself Enter on an item's first line still starts a new item
+    (lang-markdown's own keymap, Prec.high, runs before `listEnter`); the
+    Enter text was measured with `markdown({ addKeymap: false })` in the
+    scratch copy. Re-measure on the app's fix.
+  All four held branches merge pairwise clean.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
