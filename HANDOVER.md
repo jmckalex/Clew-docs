@@ -57,7 +57,11 @@ names.
     (lang-markdown's own keymap, Prec.high, runs before `listEnter`); the
     Enter text was measured with `markdown({ addKeymap: false })` in the
     scratch copy. Re-measure on the app's fix.
-  All four held branches merge pairwise clean.
+  All four held branches merge pairwise clean. Clew-boss VERIFIED all
+  three: `held-titlepage` and `held-liveblocks` ACCEPTED and HELD (the
+  "Lines" placement, the extras and the empty-item wording kept);
+  `held-listkeys` BLOCKED until I re-measure on Clew-app's fixing
+  commit — Clew-boss has briefed Clew-app and will send the hash.
 - **OWNER DIRECTIVE (2026-10-11, via Clew-boss): the colon-directive
   work first.** Done on the docs side: phases 1 and 2 drafted and
   verified (`held-inserts`, `held-convert`). Clew-boss then lifts the
