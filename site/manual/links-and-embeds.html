@@ -299,7 +299,13 @@ nothing at all.
 	on its own line. In the middle of a sentence, the <code>!</code>
 	renders as a literal exclamation mark and the <code>[[…]]</code>
 	becomes an ordinary link — the text flows on, nothing breaks, but
-	nothing is transcluded either.
+	nothing is transcluded either. An image is the exception: within a
+	line — after text, mid-sentence, or two side by side — it is drawn in
+	place, at its size if the link gives one
+	(<code>![[pic.png|200]]</code>). A note, a PDF or any other file
+	within a line is still a <code>!</code> and a link. (In 0.12.0 an
+	image within a line is a <code>!</code> and a link too, unless it ends
+	the line, when it is drawn below the text, on its own.)
 </div>
 
 <h2 id="blocks">Block references</h2>
