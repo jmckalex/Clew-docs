@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem` — the PDF Title item waits for Clew-app's push of `a9284a9`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-exportread` — the PDF Title item waits for Clew-app's push of `a9284a9`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -188,8 +188,27 @@ names.
   citations.html's "HTML, LaTeX and PDF exports use the same files".
   Release-notes candidates (0.12.0 faults): the `%` URL; a Clew fence as
   `<MINTED>`. Clew-app `cdde7df` (on origin) fixes both (1) and (2);
-  `afbf933` makes an HTML export cite in the vault's style. No notice
-  from Clew-boss yet; nothing drafted.
+  `afbf933` makes an HTML export cite in the vault's style. Clew-boss's
+  notice came: drafted as `held-exportread`, below.
+- **HELD, drafted 2026-10-20 on Clew-boss's notice (Clew-app `cdde7df`,
+  `afbf933`, on origin):** `held-exportread` `4018440` (worktree
+  `../Clew-docs-exportread`, from main `2d53340`). `f475788`: export.html
+  #config a new bullet — an HTML export cites as reading mode does (the
+  vault's file resolves with no `Resolve citations`; the vault's style
+  over `~/.jmarkdown`'s, which applies where the vault names none; a
+  custom .csl by its path; the header's style and `Resolve citations:
+  false` win; a LaTeX export's natbib style never the vault's; 0.12.0's
+  HTML takes no style from the vault); citations.html #vault-wide one
+  sentence and #export's `.bst` clause; settings' Bibliography style row.
+  `4018440`: export.html — the header bullet (the `---` block alone, so
+  "Note: remember this." is text) and one paragraph in the In 0.12.0
+  caution (such a note exports with no text there; a blank first line or
+  a `---` block avoids it). Measured on `$SC/tp/app0e7v` (`0e773c3`, own
+  vendor `efd8a39`) and `app012v` (`cs-scenario.js` over `cs-vault`, the
+  `pc-*` vault settings, `home-vanc`; `cs012w.js`; files read by
+  `$SC/tools/outs.py` — the scenarios' note-read logging is wrong, the
+  files are right). Merges clean with all four other held branches, in
+  sequence too.
 - **`%` FINDINGS (reported to Clew-boss 2026-10-20, don't draft):** the
   engine never escapes `%` in LaTeX. A body title block with `%` makes
   PDF via LaTeX FAIL on `a9284a9` ("File ended while scanning use of
@@ -199,7 +218,11 @@ names.
   by 50% today." prints "It rose by 50" in every LaTeX PDF; HTML keeps it
   in a note with no header, but in a note with a header HTML also cuts
   at the `%` (`<!-- Markdown source commented out -->`). `pt-pct.js`,
-  `pt-pcthtml.js`.
+  `pt-pcthtml.js`. Clew-boss: (a) and (b) reproduced (efd8a39 already
+  failed on `\title{Up 50% Today}`; ba83371 adds the pdftitle failure),
+  jmarkdown fixing both first; (c) with jmarkdown for diagnosis only — `%`
+  is its comment marker by design. Document no `%` behaviour in titles
+  until Clew-boss's notice; the PDF Title text stays as drafted.
 - **HELD, drafted 2026-10-20 on Clew-boss's notice (Clew-iOS origin/main
   `b1443f4`, the sync to Clew-app `0ada21d`):** `held-nextitem`
   `097f45b` (worktree `../Clew-docs-nextitem`, from `held-tasktoggle`
