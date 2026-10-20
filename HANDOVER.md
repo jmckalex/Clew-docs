@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-exportread` — the PDF Title item waits for Clew-app's push of `a9284a9`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-exportread`, `held-mermaidwarn` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -213,6 +213,21 @@ names.
   caution is for"), the LaTeX sentence checked against export-config.js
   44–64. All five held branches wait for the owner's "publish";
   Clew-boss verifies against source before the push.
+- **HELD, drafted 2026-10-20 on Clew-boss's notice (Clew-app `c504a9e`,
+  LOCAL, in no build):** `held-mermaidwarn` `ad6af5f` (worktree
+  `../Clew-docs-mermaidwarn`, from main `5374434`). diagrams.html's
+  export paragraph (the three spellings): mermaid-cli named, the npm
+  line, where Clew looks for `mmdc` (/opt/homebrew/bin, /usr/local/bin,
+  its PATH; Windows its PATH alone), and that the warning says why.
+  Measured on `$SC/tp/appc50v` (own vendor `ba83371`): the engine with
+  `mmdc` off its PATH gives the raw warning; c504a9e's
+  explainFiguresWarnings words it per platform (`mmdc-engine/explain.mjs`).
+  This Mac's `mmdc` (11.15.0, /opt/homebrew/bin, always on an export's
+  PATH) cannot be hidden without touching the system, so the not-found
+  case was not seen in the app; in the app, "mmdc failed: Could not find
+  Chrome" passes unchanged (`mm-scenario.js`, scratch HOME). The iPad
+  wording is NOT documented: the manual's iPad has no LaTeX export until
+  Clew-iOS ships one. Merges clean with the other five, in sequence.
 - **`%` FINDINGS (reported to Clew-boss 2026-10-20, don't draft):** the
   engine never escapes `%` in LaTeX. A body title block with `%` makes
   PDF via LaTeX FAIL on `a9284a9` ("File ended while scanning use of
