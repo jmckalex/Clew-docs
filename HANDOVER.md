@@ -1,4 +1,4 @@
-# Handover — 2026-10-15 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; held, all five ACCEPTED, waiting only for the owner's publish word: `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; no held branches)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -93,7 +93,21 @@ names.
   alone → the region's paper (Letter still if a `Geometry` is set too —
   said in one clause). Publishing needs `41f8713` on Clew-app origin.
   Clew-boss VERIFIED: ACCEPTED and HELD (the Geometry clause kept).
-- **ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
+- **Live 2026-10-20 on the owner's word ("Yes, please publish the
+  docs.", relayed by Clew-boss):** the five held branches merged into
+  main with `--no-ff` — `held-inline` `614b588`, `held-titlepage`
+  `d174486`, `held-liveblocks` `244b20d`, `held-listkeys` `cab3e73`,
+  `held-latexstyle` `e7961d8` (no conflicts; the two auto-merged pages,
+  live-edit and settings-and-hotkeys, keep every added line; stamp and
+  og-tags unchanged; check-links clean). `make sync` sent exactly seven
+  pages — attachments-and-files, dialect, editing, export,
+  links-and-embeds, live-edit, settings-and-hotkeys — each 200 and
+  sha256-identical live. Credentials scan clean; main pushed
+  fast-forward. Worktrees and branches stay until Clew-boss approves the
+  housekeeping. Coming (don't draft until notified): ⌘L on a plain line
+  makes a task (editing.html's "⌘L ticks a task" stays right until
+  then); an iPad-only "Next item" button on the editing toolbar.
+- **(Done 2026-10-20, above.) ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
   (2026-10-19): `held-inline` `bf362de`, `held-titlepage` `d8ad312`,
   `held-liveblocks` `96102b6`, `held-listkeys` `ae1e892`,
   `held-latexstyle` `bcb48bc`. Clew-app origin/main is `41f8713` (pushed
