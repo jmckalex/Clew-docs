@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`; the iPad Next item waits for the iOS sync)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`; the iPad Next item waits for the iOS sync)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -145,7 +145,35 @@ names.
   put to Clew-boss: audit the live manual's engine-side "(in 0.12.0 …)"
   claims (184 mentions of 0.12.0, most app-side) on a correct 0.12.0
   build? Spot-checked so far: dialect.html's "In 0.12.0 all five are
-  plain body text" (reading mode) holds.
+  plain body text" (reading mode) holds. The figure engine has the same
+  trap: a dev run reads `CLEW_MPTIKZ_DIR`, else the LIVE
+  `~/Source/mp-tikz-wasm/dist`; pin an old build's with the release its
+  `src/shared/mptikz-manifest.json` names (0.12.0: v0.3.0, sha256
+  `4a3a61b3…`, in `$SC/dl/mptikz030`).
+- **HELD, the 0.12.0 audit (Clew-boss approved 2026-10-20):**
+  `held-0120-audit` `a351ee7` (worktree `../Clew-docs-0120audit`, from
+  `1357bba`). The 184 "0.12.0" mentions sorted; every engine-side one
+  re-measured on `app012v` (engine `82b21fd`) with mp-tikz-wasm 0.3.0
+  (`aud-x.js`, `aud-r.js` + `aud-frame.js`, `aud-u2.js`, `run3.sh`;
+  vault files in `$SC/tp/aud/`). Wrong, fixed: a Clew fence does not stop
+  0.12.0's compile — `<MINTED>` in the PDF, no warning (export.html ×2,
+  tabbing.html); an untitled `ad-` fence is headed by its type's title,
+  not unheaded (callouts.html ×2); 0.12.0 already numbered a footnote's
+  label (math-and-theorems.html). Added: a bare address's `%` in 0.12.0's
+  LaTeX (dialect.html, the page on 0.12.0's URL handling). Everything
+  else engine-side held. Merges clean with `held-tasktoggle` and
+  `held-latextitle`; joins their batch if ready.
+- **CURRENT-BUILD findings, reported to Clew-boss, not drafted:** (1) a
+  note whose first line starts `word(s):` ("Note: …", "Visit https://…")
+  exports EMPTY (HTML, LaTeX, PDF), 0.12.0 and 5c6caae alike: the
+  engine's bare-key header runs to a `---` that never comes; Clew sets
+  `Header style: fenced` for the preview (render-service.js) but not for
+  exports. (2) A note citing only the vault-wide bibliography, with no
+  `Resolve citations` of its own, exports HTML with `\cite{…}`
+  unresolved (export.js passes the file, not resolution), against
+  citations.html's "HTML, LaTeX and PDF exports use the same files".
+  Release-notes candidates (0.12.0 faults): the `%` URL; a Clew fence as
+  `<MINTED>`.
 - **WAITING, don't write yet:** the iPad-only Next list item button
   (Clew-app `7eae0d0`; the live-edit toolbar's Lists group,
   arrow-turn-down, enabled in a list, runs `editor:new-list-item`; never
