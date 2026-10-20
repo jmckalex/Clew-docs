@@ -120,7 +120,9 @@ callout its tint.
 A list item can hold more than one paragraph: a line after a hard break
 (two spaces or a <code>\</code> at the end of the line before), a lazy
 line that simply carries on, or an indented paragraph after a blank
-line. Each is drawn as part of the item — aligned under its text, in the
+line; <kbd>Enter</kbd> in an item starts a new line under its text, and
+<kbd>Enter</kbd> twice a new paragraph
+(<a href="editing.html#lists">Lists and tasks</a>). Each is drawn as part of the item — aligned under its text, in the
 text's colour, in a nested, numbered or task item and inside a quote
 alike — and stays put when the cursor enters it. (In 0.12.0 such a line
 is drawn in the list marker's colour, starting to the left of the item's
@@ -479,7 +481,8 @@ toolbar turns it off.
 	<tr><td>Next / previous cell; down a column</td><td><kbd>Tab</kbd> / <kbd>⇧Tab</kbd>; <kbd>Enter</kbd> (adds a row at the end)</td></tr>
 	<tr><td>A line break in a cell</td><td><kbd>⇧Enter</kbd></td></tr>
 	<tr><td>Rows, columns, alignment</td><td>The toolbar's Table group, or right-click a cell</td></tr>
-	<tr><td>Tick the task on the cursor's line</td><td><kbd>⌘Enter</kbd> (elsewhere: a blank line below)</td></tr>
+	<tr><td>A new line in a list item / the next item</td><td><kbd>Enter</kbd> / <kbd>⌘Enter</kbd>, after the whole of this one (<a href="editing.html#lists">Lists and tasks</a>; in 0.12.0, <kbd>Enter</kbd> starts the next item)</td></tr>
+	<tr><td>Tick the task on the cursor's line</td><td><kbd>⌘L</kbd> (in 0.12.0, <kbd>⌘Enter</kbd>)</td></tr>
 	<tr><td>Indent / outdent a list item</td><td><kbd>Tab</kbd> / <kbd>⇧Tab</kbd></td></tr>
 	<tr><td>The Format menu at the cursor</td><td>Type <code>//</code> at a line start or after a space; <kbd>Enter</kbd> applies, <kbd>Esc</kbd> keeps the slashes</td></tr>
 	<tr><td>Into the toolbar</td><td><kbd>⌥⇧T</kbd>; <kbd>Esc</kbd> back</td></tr>
