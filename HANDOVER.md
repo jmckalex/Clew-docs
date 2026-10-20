@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; no held branches or worktrees but release-0.12.1)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`; the iPad Next item waits for the iOS sync)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -105,9 +105,23 @@ names.
   sha256-identical live. Credentials scan clean; main pushed
   fast-forward to `1357bba`; Clew-boss VERIFIED it. Housekeeping done on
   Clew-boss's approval: the five worktrees removed and the branches
-  deleted (`git branch -d`); only `release-0.12.1` remains. Coming (don't draft until notified): ⌘L on a plain line
-  makes a task (editing.html's "⌘L ticks a task" stays right until
-  then); an iPad-only "Next item" button on the editing toolbar.
+  deleted (`git branch -d`); only `release-0.12.1` remains.
+- **HELD, drafted 2026-10-20 on Clew-boss's notice:** `held-tasktoggle`
+  `e4f0a51` (worktree `../Clew-docs-tasktoggle`, from `1357bba`) — ⌘L
+  as Obsidian's Toggle checkbox status (Clew-app `8408d73`, `0ada21d`,
+  on origin): editing.html #lists (own paragraph) and its Reference row,
+  live-edit.html's and settings-and-hotkeys.html's ⌘L rows. Measured by
+  real ⌘L, live and source, on `$SC/tp/applx4` (`0ada21d`;
+  `tl-scenario.js`, `tl-source.js`): every case as Clew-boss gave it,
+  plus `1)` kept, indentation kept, `*strong*` at a line start is text,
+  a bare `-` → `- [ ] `, a selection ending at a line's start leaves
+  that line. Publishing needs the owner's word.
+- **WAITING, don't write yet:** the iPad-only Next list item button
+  (Clew-app `7eae0d0`; the live-edit toolbar's Lists group,
+  arrow-turn-down, enabled in a list, runs `editor:new-list-item`; never
+  on a Mac). Hold its text until Clew-boss says Clew-iOS's sync of
+  `0ada21d` is verified. The manual's iPad shots (`ipad-*.jpg`) are
+  reading mode or not the editor, so none shows that toolbar.
 - **(Done 2026-10-20, above.) ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
   (2026-10-19): `held-inline` `bf362de`, `held-titlepage` `d8ad312`,
   `held-liveblocks` `96102b6`, `held-listkeys` `ae1e892`,
