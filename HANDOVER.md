@@ -115,7 +115,11 @@ names.
   `tl-scenario.js`, `tl-source.js`): every case as Clew-boss gave it,
   plus `1)` kept, indentation kept, `*strong*` at a line start is text,
   a bare `-` → `- [ ] `, a selection ending at a line's start leaves
-  that line. Publishing needs the owner's word.
+  that line. Clew-boss REVIEWED it; one wording fix (each example its
+  "becomes") → `ad50f6b`. HOLD: Clew-boss will ask the owner to publish
+  it together with the iPad Next item text (after the iOS sync) and a
+  LaTeX title-page change Clew-app is building (notice to follow), or
+  sooner if the owner says.
 - **WAITING, don't write yet:** the iPad-only Next list item button
   (Clew-app `7eae0d0`; the live-edit toolbar's Lists group,
   arrow-turn-down, enabled in a list, runs `editor:new-list-item`; never
