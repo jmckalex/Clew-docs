@@ -366,8 +366,11 @@ single colon: the engine makes <code>:title[…]</code> an HTML
 <code>@today</code> prints the day's date as <em>19 October 2026</em>,
 always in that form, so <code>@date[@today]</code> dates a draft on the
 day it is rendered. <a href="live-edit.html#lines">Live edit</a> draws
-the same lines as a title block. (In 0.12.0 all five are plain body
-text.)
+the same lines as a title block, and a LaTeX export or a PDF via LaTeX
+makes the first such block LaTeX's own title
+(<a href="export.html#latex-title">The title block as LaTeX's
+title</a>). (In 0.12.0 all five are plain body text, and left-aligned
+lines in LaTeX.)
 </p>
 
 <h2 id="normal-syntax">The Standard Markdown switch</h2>
