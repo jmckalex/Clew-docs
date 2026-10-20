@@ -228,6 +228,13 @@ names.
   Chrome" passes unchanged (`mm-scenario.js`, scratch HOME). The iPad
   wording is NOT documented: the manual's iPad has no LaTeX export until
   Clew-iOS ships one. Merges clean with the other five, in sequence.
+  Clew-boss ACCEPTED it; the iPad's `.tex` export, with its Mermaid
+  wording, comes as a notice once Clew-iOS `841ca1f` is pushed.
+- **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
+  Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
+  other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
+  `held-exportread`) depend on nothing. Nothing goes live until the
+  owner says "publish"; Clew-boss verifies against source first.
 - **`%` FINDINGS (reported to Clew-boss 2026-10-20, don't draft):** the
   engine never escapes `%` in LaTeX. A body title block with `%` makes
   PDF via LaTeX FAIL on `a9284a9` ("File ended while scanning use of
