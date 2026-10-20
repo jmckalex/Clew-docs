@@ -480,21 +480,32 @@ inside a callout, a list or an <code>@begin</code> print as left-aligned
 lines; so does a book chapter's, since a
 <a href="books.html#master">book's</a> title page is its master's
 block. A block that comes after prose starts a new page —
-<code>\maketitle</code>'s doing, not Clew's. With a header
-<code>Title</code> as well, the block is the title printed, and the
-header's names the PDF in its metadata.
+<code>\maketitle</code>'s doing, not Clew's.
+</p>
+
+<p>
+The block's title is also the <strong>PDF's Title</strong>, the one in
+its document information — a PDF via LaTeX's, and that of the PDF a
+LaTeX export compiles to (it is hyperref's <code>pdftitle</code>). It
+is the title alone, without the subtitle, and as plain text: formatting
+dropped, maths and inline code as their source, <code>@today</code> as
+the date. The block's authors do not become the PDF's Author; a header's
+<code>Author</code> still does. A header <code>Title</code> wins: with
+one as well, the block is the title printed, and the header's names the
+PDF. A book's PDF takes its master's block, never a chapter's.
 </p>
 
 <p>
 This is jmarkdown's <code>LaTeX maketitle</code> key, off by default in
 the engine and turned on by Clew for every LaTeX build. A note's header
-<code>LaTeX maketitle: false</code> keeps the lines as lines; the key set
+<code>LaTeX maketitle: false</code> keeps the lines as lines, and gives
+the PDF no Title from them; the key set
 false in <code>~/.jmarkdown</code> or a <code>.jmarkdown/</code> folder
 does not, since Clew sets it after both. (Not in 0.12.0, whose LaTeX
 export writes a title block's lines as HTML —
 <code>&lt;div class="title"&gt;</code> and the like — which its PDF
 prints, tags and all; and there a header's <code>Title</code> prints
-today's date.)
+today's date, and is the only thing that names the PDF.)
 </p>
 
 <h2 id="pdf-toolchain">PDF export and the TeX toolchain</h2>
@@ -757,7 +768,8 @@ in the compiler's log.
 		<code>@date</code> lines, as <code>\title</code>,
 		<code>\author</code>, <code>\date</code> and
 		<code>\maketitle</code> where it stands; a missing part, the date
-		included, left out; a book's from its master. jmarkdown's
+		included, left out; a book's from its master. Its title, as plain
+		text, is the PDF's Title where the header names none. jmarkdown's
 		<code>LaTeX maketitle</code>, which Clew sets; a header's
 		<code>LaTeX maketitle: false</code> keeps the lines
 		(<a href="#latex-title">above</a>; not in 0.12.0).</td></tr>
