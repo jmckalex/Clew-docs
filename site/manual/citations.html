@@ -135,7 +135,10 @@ absolute path shared between vaults) and a <em>Bibliography style</em>
 field. With a file set, every note in the vault resolves
 <code>\cite</code> commands with no frontmatter at all — Clew writes the
 choice into the engine configuration it generates for the vault, and
-citation resolution switches on with it.
+citation resolution switches on with it. An HTML export cites the same
+way, in the vault's style unless the note names its own (not in
+0.12.0); a LaTeX export takes the vault's file but not its style
+(<a href="#export">Exporting citations</a>).
 </p>
 
 <p>
@@ -501,8 +504,10 @@ to resolve (<code>\fullcite</code> is translated to the
 <code>bibentry</code> package's <code>\bibentry</code>), and
 <code>@bibliography</code> becomes <code>\bibliographystyle</code> plus
 <code>\bibliography</code>, pointed at your <code>.bib</code> file. The
-<code>.bst</code> style for print is chosen to match your CSL style
-where a reasonable match exists, and can be pinned explicitly with a
+<code>.bst</code> style for print is chosen to match your CSL style —
+the note's own <code>Bibliography style</code>, or the one in
+<code>~/.jmarkdown</code>, but never the vault's — where a reasonable
+match exists, and can be pinned explicitly with a
 <code>LaTeX bib style</code> property in the note. The result compiles
 the way a hand-written manuscript would. (In 0.12.0 it does not: the
 export leaves natbib unloaded — see the caution in

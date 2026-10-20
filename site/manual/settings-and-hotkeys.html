@@ -405,7 +405,10 @@ two exclusion lists:
 	<dd>The vault's citation style: a name the engine ships (apa,
 	chicago, harvard1, vancouver, bjps, ajp, econometrica, ergo) or a
 	path to a custom <code>.csl</code> file. Notes override with a
-	<code>Bibliography style:</code> property.</dd>
+	<code>Bibliography style:</code> property. Reading mode and HTML
+	exports cite in it, ahead of a style in your <code>~/.jmarkdown</code>;
+	a LaTeX export's natbib style does not follow it (in 0.12.0 an HTML
+	export does not either).</dd>
 	<dt>References panel <code>(bibliographyPanel)</code></dt>
 	<dd>Turns on the <em>Refs</em> panel's <em>This note</em> mode: the active
 	note's formatted references, even while the note is in source mode. The
