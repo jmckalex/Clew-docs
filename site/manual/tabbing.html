@@ -252,7 +252,8 @@ A single note's HTML and LaTeX <a href="export.html">exports</a> carry
 tabbing too, and so does PDF via LaTeX: the engine lays it out exactly
 as reading mode does, and the LaTeX is LaTeX's own <code>tabbing</code>
 environment. (Not in 0.12.0, where a <code>```tabbing</code> fence
-exports as a code block that stops a PDF-via-LaTeX compile, and a
+exports as a code block, which a PDF via LaTeX prints as
+<code>&lt;MINTED&gt;</code>, and a
 <code>@begin(tabbing)</code> environment loses its commands — share such
 a note as a <a href="publishing.html">website</a> instead.)
 </p>

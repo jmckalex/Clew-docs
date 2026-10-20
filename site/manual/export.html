@@ -355,9 +355,9 @@ reading-view PDF, or trusting the vault, instead
 	<code>```leaflet</code> and <code>```query</code> fences render as plain
 	code blocks (see <a href="#troubleshooting">Troubleshooting</a>).
 	<a href="tabbing.html">Tabbing</a> is the engine's own and exports
-	whole. (In 0.12.0 a <code>```tabbing</code> fence is a code block too, a
-	<code>@begin(tabbing)</code> environment loses its tab commands, and in a
-	PDF via LaTeX such a block stops the compile.) The
+	whole. (In 0.12.0 a <code>```tabbing</code> fence is a code block too,
+	which a PDF via LaTeX prints as <code>&lt;MINTED&gt;</code>, and a
+	<code>@begin(tabbing)</code> environment loses its tab commands.) The
 	engine's native forms still work — <code>:::mermaid</code> or
 	<code>@begin(mermaid)</code> blocks export fine, in LaTeX and PDF as
 	figures (<a href="diagrams.html#export">Diagrams in export</a>), and
@@ -604,8 +604,10 @@ in the compiler's log.
 	what reading mode shows, export the note as <em>PDF (reading
 	view)</em>, which prints it fences and all (see
 	<a href="#two-pdfs">Two PDFs</a>), or as a
-	<a href="publishing.html">website</a>. (In 0.12.0 the compile stops at
-	the first such block: <em>Pygments lexer … is unknown</em>.)</dd>
+	<a href="publishing.html">website</a>. (In 0.12.0 the PDF is made
+	without a warning, and each such block prints as
+	<code>&lt;MINTED&gt;</code>: minted could not set it, and only the
+	compiler's log says why — <em>Pygments lexer … is unknown</em>.)</dd>
 
 	<dt>The export's notice lists warnings</dt>
 	<dd>The engine checks every note for what would trouble LaTeX, and an
