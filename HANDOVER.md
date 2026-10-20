@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`; the iPad Next item waits for the iOS sync)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`; the iPad Next item waits for the iOS sync)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -120,6 +120,18 @@ names.
   it together with the iPad Next item text (after the iOS sync) and a
   LaTeX title-page change Clew-app is building (notice to follow), or
   sooner if the owner says.
+- **HELD, drafted 2026-10-20 on Clew-boss's notice:** `held-latextitle`
+  `961253c` (worktree `../Clew-docs-latextitle`, from `1357bba`) — the
+  title block as LaTeX's own title (Clew-app `0038ec3`, `5c6caae`,
+  LOCAL, not pushed: publishing needs both on origin). export.html new
+  `#latex-title` h3 after `#latex-style`, the one-source LaTeX bullet,
+  a Reference fact row; dialect.html #title-page one sentence; books.html
+  #master's prelude bullet. Measured on `$SC/tp/applx5` (`5c6caae`;
+  `tt-scenario.js`, `tt-few.js`, `tt-begin.js`, `tt-book.js`, book
+  vaults `bkv-tta`, `bkv-ttb`) and 0.12.0 (`app012`). The `%` URL fix is
+  not mentioned (export.html lists no known limits; my `a%20b` exported
+  fine on 0.12.0 and `41f8713` too). Merges clean with
+  `held-tasktoggle`. Publish together with it and the iPad Next item.
 - **WAITING, don't write yet:** the iPad-only Next list item button
   (Clew-app `7eae0d0`; the live-edit toolbar's Lists group,
   arrow-turn-down, enabled in a list, runs `editor:new-list-item`; never
