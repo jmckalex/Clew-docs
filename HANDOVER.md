@@ -208,7 +208,11 @@ names.
   `pc-*` vault settings, `home-vanc`; `cs012w.js`; files read by
   `$SC/tools/outs.py` — the scenarios' note-read logging is wrong, the
   files are right). Merges clean with all four other held branches, in
-  sequence too.
+  sequence too. Clew-boss ACCEPTED it: the 0.12.0 caution paragraph
+  stays ("an export that comes out silently empty is exactly what a
+  caution is for"), the LaTeX sentence checked against export-config.js
+  44–64. All five held branches wait for the owner's "publish";
+  Clew-boss verifies against source before the push.
 - **`%` FINDINGS (reported to Clew-boss 2026-10-20, don't draft):** the
   engine never escapes `%` in LaTeX. A body title block with `%` makes
   PDF via LaTeX FAIL on `a9284a9` ("File ended while scanning use of
