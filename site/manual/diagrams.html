@@ -126,13 +126,20 @@ graph TD
 <p>
 In the preview all three spellings look identical. The difference
 appears at <a href="export.html">export</a> time: for LaTeX and PDF
-the native forms are drawn as PDF figures by the mermaid CLI
-(<code>mmdc</code>), which you install yourself, while the
+the native forms are drawn as PDF figures by mermaid-cli, a separate
+program you install yourself — run
+<code>npm install -g @mermaid-js/mermaid-cli</code> in a terminal (npm
+comes with Node.js). Its command is <code>mmdc</code>, and Clew looks
+for it in <code>/opt/homebrew/bin</code> and
+<code>/usr/local/bin</code>, where npm usually puts it, and on its PATH (on
+Windows, on its PATH alone). The
 compatibility fence is the preview's alone, and an export prints it as
 code (in LaTeX, with a warning). If you expect a note to become a PDF,
-prefer the native forms. When <code>mmdc</code> is not installed, or
+prefer the native forms. When <code>mmdc</code> is not found, or
 fails on a diagram, the export leaves that diagram out, and its
-warnings name it by its first line. (In 0.12.0 it is left out without
+warning names it by its first line and says why: for a missing
+<code>mmdc</code>, what it is and how to install it; for a failure,
+<code>mmdc</code>'s own reason. (In 0.12.0 it is left out without
 a word.)
 </p>
 
