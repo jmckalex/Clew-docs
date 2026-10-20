@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; no held branches)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; no held branches or worktrees but release-0.12.1)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -103,8 +103,9 @@ names.
   pages — attachments-and-files, dialect, editing, export,
   links-and-embeds, live-edit, settings-and-hotkeys — each 200 and
   sha256-identical live. Credentials scan clean; main pushed
-  fast-forward. Worktrees and branches stay until Clew-boss approves the
-  housekeeping. Coming (don't draft until notified): ⌘L on a plain line
+  fast-forward to `1357bba`; Clew-boss VERIFIED it. Housekeeping done on
+  Clew-boss's approval: the five worktrees removed and the branches
+  deleted (`git branch -d`); only `release-0.12.1` remains. Coming (don't draft until notified): ⌘L on a plain line
   makes a task (editing.html's "⌘L ticks a task" stays right until
   then); an iPad-only "Next item" button on the editing toolbar.
 - **(Done 2026-10-20, above.) ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
