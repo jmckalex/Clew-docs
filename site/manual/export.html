@@ -477,7 +477,7 @@ The title block is the first run of those lines at the top level of the
 note, blank lines between them allowed, that holds a
 <code>@title</code>. A run without one, a second block, and a block
 inside a callout, a list or an <code>@begin</code> print as left-aligned
-lines, as they always have; so does a book chapter's, since a
+lines; so does a book chapter's, since a
 <a href="books.html#master">book's</a> title page is its master's
 block. A block that comes after prose starts a new page —
 <code>\maketitle</code>'s doing, not Clew's. With a header
@@ -490,8 +490,10 @@ This is jmarkdown's <code>LaTeX maketitle</code> key, off by default in
 the engine and turned on by Clew for every LaTeX build. A note's header
 <code>LaTeX maketitle: false</code> keeps the lines as lines; the key set
 false in <code>~/.jmarkdown</code> or a <code>.jmarkdown/</code> folder
-does not, since Clew sets it after both. (Not in 0.12.0, where the lines
-are always left-aligned lines and a header's <code>Title</code> prints
+does not, since Clew sets it after both. (Not in 0.12.0, whose LaTeX
+export writes a title block's lines as HTML —
+<code>&lt;div class="title"&gt;</code> and the like — which its PDF
+prints, tags and all; and there a header's <code>Title</code> prints
 today's date.)
 </p>
 
