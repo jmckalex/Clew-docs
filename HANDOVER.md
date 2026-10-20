@@ -162,8 +162,11 @@ names.
   label (math-and-theorems.html). Added: a bare address's `%` in 0.12.0's
   LaTeX (dialect.html, the page on 0.12.0's URL handling). Everything
   else engine-side held. Merges clean with `held-tasktoggle` and
-  `held-latextitle`; joins their batch if ready.
-- **CURRENT-BUILD findings, reported to Clew-boss, not drafted:** (1) a
+  `held-latextitle`. Clew-boss ACCEPTED it; all three held for the
+  combined publish (after Clew-app's push of `0038ec3`/`5c6caae` and the
+  iOS sync for the Next item text).
+- **CURRENT-BUILD findings, with Clew-app as small fixes (don't draft;
+  Clew-boss sends a notice if the manual must change):** (1) a
   note whose first line starts `word(s):` ("Note: …", "Visit https://…")
   exports EMPTY (HTML, LaTeX, PDF), 0.12.0 and 5c6caae alike: the
   engine's bare-key header runs to a `---` that never comes; Clew sets
