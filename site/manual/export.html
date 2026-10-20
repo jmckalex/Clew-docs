@@ -184,6 +184,14 @@ its <code>[!type]</code> written out.)
 	<code>#</code> is lost, with a line break in its place, and every piece
 	of code in the PDF, inline or a block, prints as
 	<em>&lt;MINTED&gt;</em>. PDF (reading view) is the way round this too.
+	And a note whose first line starts with a word and a colon —
+	<code>Note: remember this.</code>, <code>Visit https://…</code>,
+	<code>Title: …</code> — exports as HTML, LaTeX or PDF via LaTeX with
+	none of its text, and nothing says why: 0.12.0 reads that line as the
+	start of a header with no end, and the rest of the note goes into it.
+	The HTML shows nothing; the LaTeX and its PDF are empty, or only a
+	title page made of those lines. A blank first line, or a
+	<code>---</code> block above it, avoids this.
 </div>
 
 <h3 id="figures-folder">Diagrams go in a folder beside the file</h3>
@@ -324,7 +332,11 @@ jmarkdown command-line tool on the file yourself (a LaTeX export adds
 	extensions, LaTeX preamble additions — without touching how the notes
 	look inside Clew.</li>
 	<li>A note's own metadata header still applies, as it does in the
-	preview.</li>
+	preview: the <a href="properties.html#frontmatter"><code>---</code>
+	block</a> at its top, and nothing else, so a first line such as
+	<code>Note: remember this.</code> is the note's text. (Not in 0.12.0:
+	see its caution under <a href="#one-source">One source, three
+	outputs</a>.)</li>
 </ul>
 
 <p>
