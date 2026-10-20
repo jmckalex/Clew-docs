@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`; the iPad Next item waits for the iOS sync)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem` — the PDF Title item waits for Clew-app's push of `a9284a9`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -134,7 +134,18 @@ names.
   HTML, printed in the PDF; a header Title prints today's date). The `%`
   URL fix is not mentioned (export.html lists no known limits). Merges
   clean with `held-tasktoggle`. Publish together with it and the iPad
-  Next item.
+  Next item. `0038ec3` and `5c6caae` are ON ORIGIN now (Clew-app
+  origin/main `0e773c3`, ls-remote 2026-10-20). **+ `9640259`
+  (Clew-boss's GO, 2026-10-20):** a title block's title is the PDF's
+  Title where the header names none (Clew-app `a9284a9`, jmarkdown
+  `ba83371`, LOCAL — publishing needs it on origin): export.html
+  #latex-title a new paragraph, the maketitle-false clause, the 0.12.0
+  parenthesis, the Reference row; dialect.html #title-page and books.html
+  #master one clause each. Measured on `$SC/tp/appatv` (`a9284a9`, own
+  vendor; `pt-scenario.js`, `pt-markup.js`, `pt-lower.js`, `pt-book.js`
+  over `bkv-tta`/`ttb`/`ptc`/`ptd`/`pte`; pdfinfo) and 0.12.0
+  (`pt012.js`: only a header Title names the PDF). A lowercase `title:`
+  header names nothing, in a note or a book master.
 - **SCRATCH-BUILD TRAP (Clew-boss, 2026-10-20):** Clew-app's
   `node_modules/jmarkdown` is a symlink to `../vendor/jmarkdown`, so a
   scratch build that links `node_modules` whole runs the LIVE Clew-app
@@ -161,8 +172,8 @@ names.
   not unheaded (callouts.html ×2); 0.12.0 already numbered a footnote's
   label (math-and-theorems.html). Added: a bare address's `%` in 0.12.0's
   LaTeX (dialect.html, the page on 0.12.0's URL handling). Everything
-  else engine-side held. Merges clean with `held-tasktoggle` and
-  `held-latextitle`. Clew-boss ACCEPTED it; all three held for the
+  else engine-side held. Merges clean with `held-tasktoggle`,
+  `held-latextitle` and `held-nextitem`. Clew-boss ACCEPTED it; all three held for the
   combined publish (after Clew-app's push of `0038ec3`/`5c6caae` and the
   iOS sync for the Next item text).
 - **CURRENT-BUILD findings, with Clew-app as small fixes (don't draft;
@@ -176,13 +187,35 @@ names.
   unresolved (export.js passes the file, not resolution), against
   citations.html's "HTML, LaTeX and PDF exports use the same files".
   Release-notes candidates (0.12.0 faults): the `%` URL; a Clew fence as
-  `<MINTED>`.
-- **WAITING, don't write yet:** the iPad-only Next list item button
-  (Clew-app `7eae0d0`; the live-edit toolbar's Lists group,
-  arrow-turn-down, enabled in a list, runs `editor:new-list-item`; never
-  on a Mac). Hold its text until Clew-boss says Clew-iOS's sync of
-  `0ada21d` is verified. The manual's iPad shots (`ipad-*.jpg`) are
-  reading mode or not the editor, so none shows that toolbar.
+  `<MINTED>`. Clew-app `cdde7df` (on origin) fixes both (1) and (2);
+  `afbf933` makes an HTML export cite in the vault's style. No notice
+  from Clew-boss yet; nothing drafted.
+- **`%` FINDINGS (reported to Clew-boss 2026-10-20, don't draft):** the
+  engine never escapes `%` in LaTeX. A body title block with `%` makes
+  PDF via LaTeX FAIL on `a9284a9` ("File ended while scanning use of
+  \kvsetkeys": `pdftitle={Up 50% Today}`), where `5c6caae` made the PDF
+  with "Up 50" (a regression from the PDF Title). A header Title with `%`
+  fails the same way on 0.12.0, `5c6caae` and `a9284a9`. Prose "It rose
+  by 50% today." prints "It rose by 50" in every LaTeX PDF; HTML keeps it
+  in a note with no header, but in a note with a header HTML also cuts
+  at the `%` (`<!-- Markdown source commented out -->`). `pt-pct.js`,
+  `pt-pcthtml.js`.
+- **HELD, drafted 2026-10-20 on Clew-boss's notice (Clew-iOS origin/main
+  `b1443f4`, the sync to Clew-app `0ada21d`):** `held-nextitem`
+  `097f45b` (worktree `../Clew-docs-nextitem`, from `held-tasktoggle`
+  `ad50f6b`, so it carries ⌘L too). `29c51bc`: editing.html #lists ends
+  with an On iPad callout — the list keys the same with a hardware
+  keyboard, Return as Enter, the toolbar's **Next list item** (Clew-app
+  `7eae0d0`: Lists group after Task list, ⌘Enter's command, greyed out
+  outside a list, never on a Mac), "checked only in the simulator, not
+  yet on a device" (Clew-boss's ask) — its Reference row; live-edit.html's
+  toolbar paragraph and Reference row. `097f45b`: settings' On iPad
+  callout names the three Appearance rows the iPad lacks (LaTeX engine,
+  the LaTeX export style — dropped at `b1443f4` — and the exports'
+  figure engine; Clew-iOS scripts/build.js, tests/no-latex-ui.test.js);
+  "everything else is the same" had been wrong since earlier syncs. From
+  Clew-iOS's simulator record (UPSTREAM-0ADA21D-PLAN.md). The manual's
+  iPad shots show no editor toolbar; none taken.
 - **(Done 2026-10-20, above.) ALL FIVE HELD BRANCHES now wait ONLY for the owner's publish word**
   (2026-10-19): `held-inline` `bf362de`, `held-titlepage` `d8ad312`,
   `held-liveblocks` `96102b6`, `held-listkeys` `ae1e892`,
