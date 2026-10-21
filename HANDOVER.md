@@ -277,8 +277,8 @@ names.
   `held-exportread` `45c1658` — the In 0.12.0 caution adds a `%` in a
   header's Title or Author (PDF via LaTeX fails, "latexmk failed") or
   Date (a PDF with no title at all), measured on 0.12.0 (`pt-hdrpct.js`);
-  all eight still merge clean. NOTHING MORE until the owner says
-  "publish".
+  all eight still merge clean; Clew-boss VERIFIED `45c1658` and re-merged
+  the chain of eight. NOTHING MORE until the owner says "publish".
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
