@@ -126,7 +126,10 @@ dialog, and cancelling it cancels the export.
 	<code><em>Note</em>-figures/</code> folder, the vault's images the
 	note embeds at their places in the vault, and the <code>.bib</code>
 	files its citations come from, beside the <code>.tex</code>. Unzipped
-	on a Mac with TeX installed, it typesets as it stands. PNG, JPEG and
+	on a Mac with TeX installed, it typesets as it stands —
+	<code>latexmk -lualatex</code> on the <code>.tex</code>, as
+	<a href="#tex-debugging">the debugging tip</a> below describes. PNG,
+	JPEG and
 	PDF images travel; nothing from a hidden folder or file
 	(<code>.git/</code>, <code>.obsidian/</code>, <code>.clew/</code>,
 	<code>.trash/</code>) goes in, and a file the <code>.tex</code> names
@@ -544,7 +547,7 @@ the error says which engine ran, why it was chosen, and the first error
 in the compiler's log.
 </p>
 
-<div class="callout tip">
+<div class="callout tip" id="tex-debugging">
 	<span class="callout-title">Tip — the .tex file is your debugging window</span>
 	A PDF export keeps nothing but the PDF, so to see the LaTeX behind it,
 	export the note as LaTeX: the same <code>.tex</code>, with its
