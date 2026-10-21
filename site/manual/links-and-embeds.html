@@ -520,17 +520,22 @@ extracted from the first frame if <code>ffmpeg</code> is available.
 </p>
 
 <p>
-LaTeX cannot include an <code>.svg</code> or an image by URL. For a
-LaTeX export, an <code>.svg</code> is replaced by a <code>.pdf</code> or
+LaTeX cannot include an image by URL, or an image in a format it does
+not read: an <code>.svg</code>, a GIF, WebP, BMP, AVIF, APNG, TIFF,
+HEIC, HEIF or JPEG&nbsp;XL image, or an icon (<code>.ico</code>). PDF,
+PNG, JPEG and EPS images go in as they are. For a LaTeX export, an image
+LaTeX does not read is replaced by a <code>.pdf</code> or
 <code>.png</code> of the same name beside it, if there is one; with
 neither — and for an image by URL — the image becomes a link to it, its
-alt text the link's words, and the document still compiles. That holds
-however the image is written: <code>@image</code>, a Markdown
-<code>![alt](…)</code>, or a video's poster frame. To print the picture
-itself, put the <code>.pdf</code> or <code>.png</code> beside the
-<code>.svg</code>. (In 0.12.0 only <code>@image</code> links an image by
-URL; an <code>.svg</code> with nothing beside it, and a Markdown image by
-URL, are missing from a PDF via LaTeX.)
+alt text the link's words, with a warning that says so, and the
+document still compiles. That holds however the image is written:
+<code>@image</code>, a Markdown <code>![alt](…)</code>, an embed
+<code>![[…]]</code>, or a video's poster frame. To print the picture
+itself, put a <code>.pdf</code> or <code>.png</code> beside it. (In
+0.12.0 only <code>@image</code> links an image by URL; an
+<code>.svg</code> with nothing beside it, a Markdown image by URL, and a
+GIF, WebP or any other such image — even with a <code>.png</code>
+beside it — are missing from a PDF via LaTeX, without a word.)
 </p>
 
 <p>
