@@ -191,7 +191,7 @@ names.
   `afbf933` makes an HTML export cite in the vault's style. Clew-boss's
   notice came: drafted as `held-exportread`, below.
 - **HELD, drafted 2026-10-20 on Clew-boss's notice (Clew-app `cdde7df`,
-  `afbf933`, on origin):** `held-exportread` `4018440` (worktree
+  `afbf933`, on origin):** `held-exportread` `45c1658` (was `4018440`; worktree
   `../Clew-docs-exportread`, from main `2d53340`). `f475788`: export.html
   #config a new bullet — an HTML export cites as reading mode does (the
   vault's file resolves with no `Resolve citations`; the vault's style
@@ -273,6 +273,12 @@ names.
   merge clean onto origin/main in order: tasktoggle, nextitem, ipadtex,
   latextitle, 0120-audit, exportread, mermaidwarn, engine551 (merged tree
   check-links: only the 5 downloads). engine551 needs `0768f36` on origin.
+  Clew-boss VERIFIED the checkpoint. Last item, on its yes:
+  `held-exportread` `45c1658` — the In 0.12.0 caution adds a `%` in a
+  header's Title or Author (PDF via LaTeX fails, "latexmk failed") or
+  Date (a PDF with no title at all), measured on 0.12.0 (`pt-hdrpct.js`);
+  all eight still merge clean. NOTHING MORE until the owner says
+  "publish".
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
