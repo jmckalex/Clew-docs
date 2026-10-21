@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-exportread`, `held-mermaidwarn` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -230,6 +230,23 @@ names.
   Clew-iOS ships one. Merges clean with the other five, in sequence.
   Clew-boss ACCEPTED it; the iPad's `.tex` export, with its Mermaid
   wording, comes as a notice once Clew-iOS `841ca1f` is pushed.
+- **HELD, drafted 2026-10-21 on Clew-boss's notice (Clew-iOS `841ca1f`,
+  pushed; ls-remote checked):** `held-ipadtex` `7aaf9eb` (worktree
+  `../Clew-docs-ipadtex`, from `held-nextitem` `097f45b`, so it carries
+  tasktoggle and nextitem). `031206c`: export.html #where's On iPad —
+  three of the four exports, the .tex as the Mac's (style, title,
+  MetaPost drawn on the iPad), shared alone or as a zip of one folder
+  (.tex, figures, embedded images at their vault places, .bib beside),
+  typesetting as it stands on a Mac; PNG, JPEG and PDF travel, nothing
+  hidden, a warning for what is not carried; PDF via LaTeX still the
+  desktop's. settings' On iPad: two rows absent now, the style row back
+  (its hint for the iPad). diagrams' On iPad: MetaPost drawn for the .tex;
+  only PDF via LaTeX missing. `7aaf9eb`: the landing page's beta
+  sentence (separate, droppable). From Clew-iOS's record
+  (UPSTREAM-LATEX-EXPORT-PLAN.md "L2 as built") and source. NOT
+  documented (Clew-boss): the Mermaid wording, GIF/WebP/BMP/AVIF embeds,
+  the temporary folder on the share sheet's close. Books unchanged (a
+  book's LaTeX still "needs Clew on a Mac"). No iPad screenshot wrong.
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
