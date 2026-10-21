@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn`, `held-engine551` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -251,6 +251,28 @@ names.
   origin/main in order: clean); the landing commit stays separate for the
   owner to drop. Idea for later, not asked for now: link the iPad
   paragraph to the "the .tex file is your debugging window" tip.
+- **HELD, drafted 2026-10-21 on Clew-boss's brief (the owner's "Go with
+  the plan"; Clew-app `0e773c3..0768f36`, LOCAL, pushed after the 0.5.0
+  re-pin):** `held-engine551` `104f5a8` (worktree
+  `../Clew-docs-engine551`, from main `4632187`). `afa1e44`:
+  links-and-embeds — a LaTeX export links any image LaTeX cannot read
+  (the .svg rule, now GIF, WebP, BMP, AVIF, APNG, TIFF, HEIC, HEIF, JPEG
+  XL, .ico: latex-graphics.js UNREADABLE), or uses a .pdf/.png beside it,
+  with a warning, an embed `![[…]]` too; 0.12.0 left them out silently,
+  the .png beside unused. `104f5a8`: reading-mode #scroll-sync — accurate
+  after a multi-paragraph inline note; 0.12.0's stamps ran short (lines 6,
+  8, 13, 15, 19, 21 stamped 3, 5, 7, 9, 10, 12). Measured on
+  `$SC/tp/app0768v` (own vendor `551485a`) and `app012v` (`im-scenario.js`
+  over `im-vault`). Nothing to write: 2fc3459's hang (no text describes
+  it; no live-edit shot has a numbered item), entities, `%` in titles,
+  `\end{minted}`, a footnote in a code fence, Mathematica's cache, `LaTeX
+  T1 fonts` (no config-key reference), web addresses' `_`/`~`/`%`; no
+  export.html 0.12.0 caution describes any of them. Also `held-ipadtex`
+  `d9ac071`: the iPad .tex paragraph links the debugging tip
+  (`id="tex-debugging"`), Clew-boss's follow-up. All eight held branches
+  merge clean onto origin/main in order: tasktoggle, nextitem, ipadtex,
+  latextitle, 0120-audit, exportread, mermaidwarn, engine551 (merged tree
+  check-links: only the 5 downloads). engine551 needs `0768f36` on origin.
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
