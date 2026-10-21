@@ -247,6 +247,10 @@ names.
   documented (Clew-boss): the Mermaid wording, GIF/WebP/BMP/AVIF embeds,
   the temporary folder on the share sheet's close. Books unchanged (a
   book's LaTeX still "needs Clew on a Mac"). No iPad screenshot wrong.
+  Clew-boss VERIFIED it against 841ca1f (and merge-tree'd all seven onto
+  origin/main in order: clean); the landing commit stays separate for the
+  owner to drop. Idea for later, not asked for now: link the iPad
+  paragraph to the "the .tex file is your debugging window" tip.
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
