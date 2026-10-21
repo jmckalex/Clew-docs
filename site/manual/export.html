@@ -192,6 +192,11 @@ its <code>[!type]</code> written out.)
 	The HTML shows nothing; the LaTeX and its PDF are empty, or only a
 	title page made of those lines. A blank first line, or a
 	<code>---</code> block above it, avoids this.
+	A <code>%</code> in a header's <code>Title</code> or
+	<code>Author</code> — <code>Title: Up 50%</code> — makes a PDF via
+	LaTeX fail, saying only that <code>latexmk</code> failed; one in its
+	<code>Date</code> gives a PDF with no title at all. LaTeX reads the
+	<code>%</code> as the start of a comment.
 </div>
 
 <h3 id="figures-folder">Diagrams go in a folder beside the file</h3>
