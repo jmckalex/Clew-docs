@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn`, `held-engine551` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
+# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn`, `held-engine551`, `held-escapepercent` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -279,6 +279,25 @@ names.
   Date (a PDF with no title at all), measured on 0.12.0 (`pt-hdrpct.js`);
   all eight still merge clean; Clew-boss VERIFIED `45c1658` and re-merged
   the chain of eight. NOTHING MORE until the owner says "publish".
+- **HELD, drafted 2026-10-22 on Clew-boss's notice (the owner's "escape
+  percent"; jmarkdown `2928d5d` via Clew-app `146107c`, both LOCAL):**
+  `held-escapepercent` `27ab995` (worktree `../Clew-docs-escapepercent`,
+  on `held-engine551` `104f5a8`, so ninth in the chain). export.html
+  #one-source, after the callouts paragraph: a `%` that reading mode
+  shows is written `\%` in the LaTeX, so the PDF prints it (prose,
+  heading, footnote, table, link text, callout title, an Obsidian `%%`
+  line); in 0.12.0 TeX took it as a comment — rest of the line missing,
+  a `%%` line all of it, a heading or emphasis made the PDF fail.
+  Measured on `$SC/tp/app146v` (own vendor `2928d5d`), `app0768v` and
+  `app012v` with `HOMEDIR=home-empty` (the owner's ~/.jmarkdown sets
+  fontspec, so 0.12.0's pdfLaTeX fails every PDF without it):
+  `ep-scenario.js`, `ep2-scenario.js` (one construct per note),
+  `ep3-scenario.js` (footnote; an image's alt is no caption, so captions
+  untested), `eprv-*.js` (reading mode: no header shows `%` and `%%`; a
+  header hides from the `%` on, and the `%%` line). Nothing on another
+  page is now false (math-and-theorems.html:407 is 0.12.0's `\%`). All
+  nine merge clean onto origin/main 1357bba; check-links: only the 5
+  downloads. Needs Clew-app `146107c` on origin.
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
