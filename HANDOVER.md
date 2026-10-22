@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `8a0be37`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `e7625b2`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -35,8 +35,15 @@ names.
   for a note with maths, a footnote mark or a superscript (Clew-app
   `a14ec13`, `$SC/tp/appa14v`, `c4-scenario.js`: prose drops the
   `\setmathfont` line; PDF fonts as before); no What's new line, on
-  Clew-boss's word. Still to
-  come: dev.18 (`cfdf3ef`, no visible change), Clew-app's What's new gap list. Version bump, date line, downloads: at release.
+  Clew-boss's word. `e7625b2`: What's new takes Clew-app's gap list (fa01bb0
+  docs/dev/release-0.12.1.md §2), each measured on `appa14v` against
+  `app012v` (`gap-scenario.js`, `gaple-scenario.js`, live-edit shots
+  `$SC/rel/eq-*`, `lt-*`; Mathematica's `.m` by code at both, the index
+  slices from ef5f7f2's code). Left out: "markup in code was swallowed"
+  (0.12.0 already prints it; only the inline `<script>` was real, per
+  ef8577e), 6ab62ae and 038ec6f (faults born after 0.12.0), a table that
+  scrolls (not measured). Still to
+  come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
   pushed, bound for TestFlight):** `held-ipadpdf` `a4e2d67` (worktree
