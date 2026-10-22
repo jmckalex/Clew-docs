@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `14b4363`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `8a0be37`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -31,9 +31,12 @@ names.
   `42bb9c8`, measured on `$SC/tp/app42bv`, `oc-scenario.js`,
   `ocrv-*.js`): dialect's Obsidian box (`#obsidian-comments`) and a
   Reference row; export #one-source's `%` paragraph (an unpartnered `%%`
-  prints, a comment is left out); What's new's Changed item. Still to
-  come: dev.18 (`cfdf3ef`, no visible change), C4 (Garamond-Math
-  only with maths). Version bump, date line, downloads: at release.
+  prints, a comment is left out); What's new's Changed item. `8a0be37`: C4, export #latex-style says Garamond-Math is needed only
+  for a note with maths, a footnote mark or a superscript (Clew-app
+  `a14ec13`, `$SC/tp/appa14v`, `c4-scenario.js`: prose drops the
+  `\setmathfont` line; PDF fonts as before); no What's new line, on
+  Clew-boss's word. Still to
+  come: dev.18 (`cfdf3ef`, no visible change), Clew-app's What's new gap list. Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
   pushed, bound for TestFlight):** `held-ipadpdf` `a4e2d67` (worktree
