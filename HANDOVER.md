@@ -23,8 +23,16 @@ names.
   `make dry-run`: 14 files (index.html and 13 manual pages), no
   deletions; after `make sync` all 14 sha256-identical live. Credentials
   scan of origin/main..main clean. The HELD entries below are history
-  now; their worktrees and branches stay until Clew-boss approves the
-  housekeeping. release-0.12.1 untouched.
+  now. Clew-boss VERIFIED (254ffb2 by ls-remote, all nine tips
+  ancestors, 14 pages byte-identical live) and approved the housekeeping:
+  the nine worktrees removed, the nine branches deleted with `git branch
+  -d` (all merged). release-0.12.1 untouched.
+- **QUEUED NOTICE (Clew-boss, 2026-10-22) — draft NOTHING until it sends
+  the Clew-iOS hash, when the iPad's next TestFlight push is planned:** the
+  iPad's `.tex` code blocks are coloured by highlight.js, not the Mac's
+  minted; PDF via LaTeX is coming to the iPad. Also still waiting: the
+  iPad Mermaid wording (after Clew-iOS syncs `c504a9e`), GIF and similar
+  on the iPad (after jmarkdown `6ac8a6c` reaches it).
 
 - **Live 2026-10-15 on the owner's yes ("Yes to 2 and 3, push them",
   relayed by Clew-boss, whose session address is now
