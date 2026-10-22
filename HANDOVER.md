@@ -1,4 +1,4 @@
-# Handover — 2026-10-20 (site LIVE, serving 0.12.0; the seven held branches PUBLISHED 2026-10-15 and pushed; the next five — `held-inline`, `held-titlepage`, `held-liveblocks`, `held-listkeys`, `held-latexstyle` — PUBLISHED 2026-10-20 and pushed; held: `held-tasktoggle`, `held-latextitle`, `held-0120-audit`, `held-nextitem`, `held-ipadtex`, `held-exportread`, `held-mermaidwarn`, `held-engine551`, `held-escapepercent` — the PDF Title item waits for Clew-app's push of `a9284a9`, the Mermaid text for `c504a9e`)
+# Handover — 2026-10-22 (site LIVE, serving 0.12.0; the nine held branches — `held-tasktoggle`, `held-nextitem`, `held-ipadtex`, `held-latextitle`, `held-0120-audit`, `held-exportread`, `held-mermaidwarn`, `held-engine551`, `held-escapepercent` — PUBLISHED 2026-10-22 on the owner's "Land and push all!" and pushed; nothing held)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -8,6 +8,23 @@ public**: nothing tracked may hold credentials, login accounts or key
 names.
 
 ## 0. Resume here
+
+- **Live 2026-10-22 on the owner's "Land and push all!" (relayed by
+  Clew-boss; the merge needed the owner's "go ahead" typed here, after
+  the auto-mode classifier denied it as a production deploy):** all nine
+  held branches merged into main with `--no-ff`, in order —
+  `held-tasktoggle` `ad50f6b`, `held-nextitem` `097f45b`, `held-ipadtex`
+  `d9ac071` (the landing sentence included), `held-latextitle`
+  `9640259`, `held-0120-audit` `a351ee7`, `held-exportread` `45c1658`,
+  `held-mermaidwarn` `ad6af5f`, `held-engine551` `104f5a8`,
+  `held-escapepercent` `27ab995` (no conflicts; stamp and og-tags
+  unchanged; check-links clean, downloads staged). Clew-app origin/main
+  `146107c` by `ls-remote` (`a9284a9`, `c504a9e`, `0768f36` ancestors).
+  `make dry-run`: 14 files (index.html and 13 manual pages), no
+  deletions; after `make sync` all 14 sha256-identical live. Credentials
+  scan of origin/main..main clean. The HELD entries below are history
+  now; their worktrees and branches stay until Clew-boss approves the
+  housekeeping. release-0.12.1 untouched.
 
 - **Live 2026-10-15 on the owner's yes ("Yes to 2 and 3, push them",
   relayed by Clew-boss, whose session address is now
