@@ -245,7 +245,10 @@ editor and the rendered pane follows; scroll the rendered pane and the
 editor follows. The sync tracks your position by source line — the
 engine stamps every rendered block with the line it came from — so it
 stays accurate even though a paragraph of Markdown and its typeset
-form are rarely the same height.
+form are rarely the same height — after an inline footnote of several
+paragraphs too. (In 0.12.0 every block after such a note is stamped
+with too early a line, so the sync, and a ⌘-click on the page, land
+short of it.)
 </p>
 
 <p>
