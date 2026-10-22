@@ -297,7 +297,9 @@ names.
   header hides from the `%` on, and the `%%` line). Nothing on another
   page is now false (math-and-theorems.html:407 is 0.12.0's `\%`). All
   nine merge clean onto origin/main 1357bba; check-links: only the 5
-  downloads. Needs Clew-app `146107c` on origin.
+  downloads. Needs Clew-app `146107c` on origin. Clew-boss VERIFIED
+  `27ab995` (parent `104f5a8`, export.html only) and merge-tree'd the
+  chain of nine onto 1357bba: clean. NOTHING MORE until "publish".
 - **PUBLISH ORDER (Clew-boss, 2026-10-20):** `held-latextitle` needs
   Clew-app `a9284a9` on origin, `held-mermaidwarn` needs `c504a9e`; the
   other four (`held-tasktoggle`, `held-nextitem`, `held-0120-audit`,
