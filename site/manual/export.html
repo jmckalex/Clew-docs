@@ -109,15 +109,31 @@ dialog, and cancelling it cancels the export.
 
 <div class="callout tip">
 	<span class="callout-title">On iPad</span>
-	Clew for iOS has two of the four, in the command palette:
-	<em>Export note as HTML</em> and <em>Export note as PDF (reading
-	view)</em>. The LaTeX export and the PDF via LaTeX need a TeX
-	installation and stay on the desktop. There is no save dialog on the
-	iPad: the exported file is offered in the share sheet, so <em>Save to
-	Files</em> puts it anywhere Files can reach — the vault included —
-	and <em>Print</em>, <em>Markup</em> and AirDrop are a tap away. The
-	reading-view PDF is made on the device from the same rendered page,
-	figures and mathematics included, at the paper size in Settings.
+	Clew for iOS has three of the four, in the command palette:
+	<em>Export note as HTML</em>, <em>Export note as PDF (reading
+	view)</em> and <em>Export note as LaTeX (.tex)</em>. The PDF via LaTeX
+	needs a TeX installation and stays on the desktop. There is no save
+	dialog on the iPad: the exported file is offered in the share sheet,
+	so <em>Save to Files</em> puts it anywhere Files can reach — the vault
+	included — and <em>Print</em>, <em>Markup</em> and AirDrop are a tap
+	away. The reading-view PDF is made on the device from the same
+	rendered page, figures and mathematics included, at the paper size in
+	Settings. The LaTeX export builds the same <code>.tex</code> as the
+	Mac — <a href="#latex-style">Clew's style</a>, LaTeX's own title,
+	MetaPost figures drawn on the iPad — and shares it alone when the note
+	uses no other file. Otherwise it shares a <code>.zip</code> holding
+	one folder named after the note: the <code>.tex</code>, its
+	<code><em>Note</em>-figures/</code> folder, the vault's images the
+	note embeds at their places in the vault, and the <code>.bib</code>
+	files its citations come from, beside the <code>.tex</code>. Unzipped
+	on a Mac with TeX installed, it typesets as it stands —
+	<code>latexmk -lualatex</code> on the <code>.tex</code>, as
+	<a href="#tex-debugging">the debugging tip</a> below describes. PNG,
+	JPEG and
+	PDF images travel; nothing from a hidden folder or file
+	(<code>.git/</code>, <code>.obsidian/</code>, <code>.clew/</code>,
+	<code>.trash/</code>) goes in, and a file the <code>.tex</code> names
+	that the share does not carry is named in a warning in the status bar.
 </div>
 
 <figure class="shot">
@@ -531,7 +547,7 @@ the error says which engine ran, why it was chosen, and the first error
 in the compiler's log.
 </p>
 
-<div class="callout tip">
+<div class="callout tip" id="tex-debugging">
 	<span class="callout-title">Tip — the .tex file is your debugging window</span>
 	A PDF export keeps nothing but the PDF, so to see the LaTeX behind it,
 	export the note as LaTeX: the same <code>.tex</code>, with its
