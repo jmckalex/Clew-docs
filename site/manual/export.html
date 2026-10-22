@@ -201,6 +201,19 @@ its <code>[!type]</code> written out.)
 	<code>#</code> is lost, with a line break in its place, and every piece
 	of code in the PDF, inline or a block, prints as
 	<em>&lt;MINTED&gt;</em>. PDF (reading view) is the way round this too.
+	And a note whose first line starts with a word and a colon —
+	<code>Note: remember this.</code>, <code>Visit https://…</code>,
+	<code>Title: …</code> — exports as HTML, LaTeX or PDF via LaTeX with
+	none of its text, and nothing says why: 0.12.0 reads that line as the
+	start of a header with no end, and the rest of the note goes into it.
+	The HTML shows nothing; the LaTeX and its PDF are empty, or only a
+	title page made of those lines. A blank first line, or a
+	<code>---</code> block above it, avoids this.
+	A <code>%</code> in a header's <code>Title</code> or
+	<code>Author</code> — <code>Title: Up 50%</code> — makes a PDF via
+	LaTeX fail, saying only that <code>latexmk</code> failed; one in its
+	<code>Date</code> gives a PDF with no title at all. LaTeX reads the
+	<code>%</code> as the start of a comment.
 </div>
 
 <h3 id="figures-folder">Diagrams go in a folder beside the file</h3>
@@ -319,19 +332,33 @@ jmarkdown command-line tool on the file yourself (a LaTeX export adds
 	any customisations you have made to them — rather than Clew's
 	app-oriented preview template.</li>
 	<li>Your bibliography setup, citation style, and other engine options
-	from <code>~/.jmarkdown</code> are honoured. One vault setting reaches
-	an export as well: the vault's bibliography
-	(<strong>Settings&nbsp;→&nbsp;This vault</strong>), used alongside any
-	the note names itself — see
+	from <code>~/.jmarkdown</code> are honoured. The vault's bibliography
+	(<strong>Settings&nbsp;→&nbsp;This vault</strong>) reaches an export
+	as well, used alongside any the note names itself — see
 	<a href="citations.html#vault-wide">A vault-wide bibliography</a> (not
 	in 0.12.0, where an export reads only the note's own).</li>
+	<li>An HTML export cites as reading mode does. With a vault
+	bibliography set, its citations resolve though the note says nothing,
+	in the vault's <em>Bibliography style</em>: that beats the style in
+	<code>~/.jmarkdown</code>, which applies only where the vault names
+	none, and a custom <code>.csl</code> works by its path. The note's own
+	<code>Bibliography style</code> wins over both, and its
+	<code>Resolve citations: false</code> leaves the commands as written.
+	A LaTeX export's citations are natbib's, in a style from the note or
+	<code>~/.jmarkdown</code>, never the vault's
+	(<a href="citations.html#export">Exporting citations</a>). (In 0.12.0
+	an HTML export takes no style from the vault.)</li>
 	<li>Power users can keep a <code>.jmarkdown/</code> configuration
 	folder next to a set of notes to control precisely how those notes
 	export — different templates for different projects, extra engine
 	extensions, LaTeX preamble additions — without touching how the notes
 	look inside Clew.</li>
 	<li>A note's own metadata header still applies, as it does in the
-	preview.</li>
+	preview: the <a href="properties.html#frontmatter"><code>---</code>
+	block</a> at its top, and nothing else, so a first line such as
+	<code>Note: remember this.</code> is the note's text. (Not in 0.12.0:
+	see its caution under <a href="#one-source">One source, three
+	outputs</a>.)</li>
 </ul>
 
 <p>
