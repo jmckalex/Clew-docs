@@ -167,6 +167,16 @@ folding — and every other callout comes out as an ordinary quote with
 its <code>[!type]</code> written out.)
 </p>
 
+<p>
+A <code>%</code> that reading mode shows — in prose, a heading, a
+footnote, a table, a link's text or a callout's title, or an Obsidian
+<code>%%</code> line — is written <code>\%</code> in the LaTeX, so the
+PDF prints it too. (In 0.12.0 TeX took it as the start of a comment:
+the rest of its line was missing from the PDF, an Obsidian
+<code>%%</code> line all of it, and one in a heading or in emphasis
+made the PDF fail.)
+</p>
+
 <div class="callout warn">
 	<span class="callout-title">In 0.12.0</span>
 	A LaTeX export in 0.12.0 does not load the natbib package its
