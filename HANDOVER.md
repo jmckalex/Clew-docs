@@ -1,4 +1,4 @@
-# Handover — 2026-10-22 (site LIVE, serving 0.12.0; the nine held branches — `held-tasktoggle`, `held-nextitem`, `held-ipadtex`, `held-latextitle`, `held-0120-audit`, `held-exportread`, `held-mermaidwarn`, `held-engine551`, `held-escapepercent` — PUBLISHED 2026-10-22 on the owner's "Land and push all!" and pushed; nothing held)
+# Handover — 2026-10-22 (site LIVE, serving 0.12.0; the nine held branches — `held-tasktoggle`, `held-nextitem`, `held-ipadtex`, `held-latextitle`, `held-0120-audit`, `held-exportread`, `held-mermaidwarn`, `held-engine551`, `held-escapepercent` — PUBLISHED 2026-10-22 on the owner's "Land and push all!" and pushed; held: `held-ipadpdf` (PDF via LaTeX on the iPad), waiting for the owner's device check and Clew-boss's word)
 
 Session state and open items. Durable conventions — editing the manual,
 the house style, the nginx gotcha — live in **CLAUDE.md**; the layout and
@@ -8,6 +8,27 @@ public**: nothing tracked may hold credentials, login accounts or key
 names.
 
 ## 0. Resume here
+
+- **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
+  pushed, bound for TestFlight):** `held-ipadpdf` `a4e2d67` (worktree
+  `../Clew-docs-ipadpdf`, off main `6158e10`). `489339d`: export.html's
+  On iPad callout — all four exports; the iPad's .tex colours its code
+  itself, not minted (jmarkdown `LaTeX highlighter: highlight.js`), so no
+  shell escape; PDF via LaTeX typeset by the built-in TeX, only the PDF
+  shared; LuaLaTeX in EB Garamond + Garamond-Math (Latin Modern Math
+  under a header `LaTeX preamble`), Latin Modern without the style,
+  pdfLaTeX on a header's word, XeLaTeX refused; BibTeX/makeindex, five
+  passes at most; TeX handed only the .tex, figures, named .bib files and
+  the vault's images (ExportJobs.mayRead: never hidden), so a restricted
+  vault typesets too; missing image → warning, full path → not found;
+  3 minutes (ExportHost.swift), 60 s silence (typeset.js), out of memory.
+  Also settings (the two absent rows' reason), diagrams, books (Proof's
+  reason), trusting-a-vault (the iPad's restricted PDF). `a4e2d67`: the
+  landing paragraph (only Mathematica desktop-only), separate. Read from
+  875e177's code, tests and UPSTREAM-LATEX-EXPORT-PLAN.md §4–5 (git
+  show). Publish only after the owner's device check and Clew-boss's word.
+  Coming: Garamond-Math only for notes with maths, and Obsidian `%%`
+  hidden (both reword: export #where, export #one-source).
 
 - **Live 2026-10-22 on the owner's "Land and push all!" (relayed by
   Clew-boss; the merge needed the owner's "go ahead" typed here, after
