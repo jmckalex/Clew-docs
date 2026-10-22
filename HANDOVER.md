@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `0e8aac5`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `23bb99a`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -21,10 +21,13 @@ names.
   shots from dev.17 = Clew-app `146107c` (scratch `$SC/tp/app146v`, its
   own vendor, `CLEW_MPTIKZ_DIR` = a copy of the pinned 0.5.0; driver
   `$SC/rel/shot.sh`); `0e8aac5` adds live-edit-source-icon.png to
-  live-edit #frames. trust-restricted came out byte-identical. HELD by
-  Clew-boss: `kanban.jpg` (scratch `$SC/rel/out/kanban.jpg`; its Pipeline
-  board has no `%%` line, so it could go now). Owner calls: math.jpg
-  framing, tabbing's bottom edge, pdf-annotations' fourth quote. Still to
+  live-edit #frames. trust-restricted came out byte-identical.
+  `23bb99a` (tip): Clew-boss's calls — math.jpg cropped at row 1500 of
+  2560 (the Earthrise edge starts at 1520), tabbing.png at 1610 (above
+  "Left Middle Right"), pdf-annotations keeps three quotes, the plain
+  revealed strong accepted — and kanban.jpg in (the Pipeline board has no
+  `%%`). Review shots now live in `shots/out/` (gitignored, `8ca8a6c` on
+  main; today's 25 copied there). Still to
   come: dev.18 (`cfdf3ef`, no visible change), C1 (`%%` hidden: rewords
   export #one-source and What's new's `%` item) and C4 (Garamond-Math
   only with maths). Version bump, date line, downloads: at release.
