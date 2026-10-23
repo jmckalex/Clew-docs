@@ -42,7 +42,18 @@ names.
   slices from ef5f7f2's code). Left out: "markup in code was swallowed"
   (0.12.0 already prints it; only the inline `<script>` was real, per
   ef8577e), 6ab62ae and 038ec6f (faults born after 0.12.0), a table that
-  scrolls (not measured). Still to
+  scrolls (not measured). The owner's "all recommendations" (via
+  Clew-boss, 2026-10-23) needed no edit: an unclosed `%%` stays text
+  (dialect's Obsidian box already says so); PDF citations in the vault's
+  style is parked past 0.12.1 (the pages already say a LaTeX export never
+  takes the vault's style). OWED, WAITING: Clew-app `461cc46` (dev.19) —
+  a PDF via LaTeX failure adds the first error's help paragraph; export.html's
+  "the first error in the compiler's log" (#latex-engine's run paragraph
+  and "The PDF was not produced") and a What's new line. On Clew-boss's
+  word, wait until mp-tikz-wasm 0.5.1 is in and Clew-app has re-pinned
+  it, then measure ONCE on that commit (its own pin, not a scratch
+  `CLEW_MPTIKZ_DIR`): an undefined command and a fontspec error, under
+  pdfLaTeX and LuaLaTeX; one commit on release-0.12.1, held. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
