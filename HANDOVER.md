@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `a02516c`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `46e7edf`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -57,7 +57,13 @@ names.
   family (diagrams #system-fonts holds). Clew-iOS still pins 0.5.0 and
   lacks 461cc46, so held-ipadpdf is untouched. `a02516c`: math.jpg
   retaken on cb0231e (one ∎ ending the proof, demo vault b36b656), cropped
-  at 1500 as before. Still to
+  at 1500 as before. `46e7edf`: What's new
+  Fixed, a failed Mathematica block warned in HTML, LaTeX and PDF via
+  LaTeX, its box Mathematica's, its log the message alone (Clew-app
+  80b6f20; `mx-scenario.js`, real wolframscript, Exit[4], cb0231e against
+  0.12.0 `$SC/tp/app012v`). Not yet in What's new, unqueued: release
+  doc §2's proof ∎ line (58b8331) and inline Mathematica line (58b8331),
+  and 0.12.0's `Mathematica/` folder written into the vault. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
