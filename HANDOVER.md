@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `e7625b2`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `a02516c`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -46,14 +46,18 @@ names.
   Clew-boss, 2026-10-23) needed no edit: an unclosed `%%` stays text
   (dialect's Obsidian box already says so); PDF citations in the vault's
   style is parked past 0.12.1 (the pages already say a LaTeX export never
-  takes the vault's style). OWED, WAITING: Clew-app `461cc46` (dev.19) —
-  a PDF via LaTeX failure adds the first error's help paragraph; export.html's
-  "the first error in the compiler's log" (#latex-engine's run paragraph
-  and "The PDF was not produced") and a What's new line. On Clew-boss's
-  word, wait until mp-tikz-wasm 0.5.1 is in and Clew-app has re-pinned
-  it, then measure ONCE on that commit (its own pin, not a scratch
-  `CLEW_MPTIKZ_DIR`): an undefined command and a fontspec error, under
-  pdfLaTeX and LuaLaTeX; one commit on release-0.12.1, held. Still to
+  takes the vault's style). `d66549f`: Clew-app `461cc46`'s failure help (TeX's
+  help for the first error) in export #latex-engine, "The PDF was not
+  produced", command-line's `--pdf` and a What's new Better item —
+  measured on Clew-app `cb0231e` (`$SC/tp/appcb0`, its own vendor 794cc9c,
+  mp-tikz-wasm 0.5.1 staged from its manifest; `fh-scenario.js`, real
+  latexmk, LuaLaTeX and pdfLaTeX). The desktop reads latexmk's log, never
+  mp-tikz-wasm's diagnostics: 0.5.1 changes no desktop PDF via LaTeX text;
+  a figure's fontspec error box is whole under 0.5.1 and still names the
+  family (diagrams #system-fonts holds). Clew-iOS still pins 0.5.0 and
+  lacks 461cc46, so held-ipadpdf is untouched. `a02516c`: math.jpg
+  retaken on cb0231e (one ∎ ending the proof, demo vault b36b656), cropped
+  at 1500 as before. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
