@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `fc20a1b`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `b2b3f72`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -67,11 +67,13 @@ names.
   the proof's ∎ (reading mode, HTML; a paragraph-ending proof only — the
   owner's open question on lists, maths, code). `fc20a1b`: inline
   Mathematica works, text results in LaTeX/PDF, `<`/`&` as written
-  (`mi-scenario.js`, `mr2-*`, `qe-*`, `qh-*`). NOT WRITTEN, reported:
-  Clew-boss's third line ("no Mathematica/ folder in the vault") does not
-  hold — exports keep the cache in the profile's export cache, but reading
-  a note still writes `<note's folder>/Mathematica/` on cb0231e, as 0.12.0
-  did. Still to
+  (`mi-scenario.js`, `mr2-*`, `qe-*`, `qh-*`). `a080851` and `b2b3f72`:
+  Clew-boss's two one-clause fixes (a PACKAGE's fatal error has no help,
+  TeX's own keeps it; 0.12.0's inline fault both ways, by whether a block
+  had run in the folder). Third line WITHDRAWN by Clew-boss: reading mode
+  still writes `<note's folder>/Mathematica/` (unchanged since 0.12.0, the
+  jmarkdown CLI's folder too) — the owner's call whether it moves; no line,
+  no advice to delete it. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
