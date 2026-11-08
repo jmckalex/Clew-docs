@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `46e7edf`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `fc20a1b`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -61,9 +61,17 @@ names.
   Fixed, a failed Mathematica block warned in HTML, LaTeX and PDF via
   LaTeX, its box Mathematica's, its log the message alone (Clew-app
   80b6f20; `mx-scenario.js`, real wolframscript, Exit[4], cb0231e against
-  0.12.0 `$SC/tp/app012v`). Not yet in What's new, unqueued: release
-  doc §2's proof ∎ line (58b8331) and inline Mathematica line (58b8331),
-  and 0.12.0's `Mathematica/` folder written into the vault. Still to
+  0.12.0 `$SC/tp/app012v`). `5599d7a`: export #latex-engine corrected for Clew-app
+  `21d6d0f` (`$SC/tp/appd21`, `fh2-scenario.js`): a LaTeX3 error's help is
+  given too (fontspec's missing font), only a fatal one has none. `580d810`:
+  the proof's ∎ (reading mode, HTML; a paragraph-ending proof only — the
+  owner's open question on lists, maths, code). `fc20a1b`: inline
+  Mathematica works, text results in LaTeX/PDF, `<`/`&` as written
+  (`mi-scenario.js`, `mr2-*`, `qe-*`, `qh-*`). NOT WRITTEN, reported:
+  Clew-boss's third line ("no Mathematica/ folder in the vault") does not
+  hold — exports keep the cache in the profile's export cache, but reading
+  a note still writes `<note's folder>/Mathematica/` on cb0231e, as 0.12.0
+  did. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
