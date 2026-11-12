@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `b2b3f72`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `8c4a18d`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -73,7 +73,15 @@ names.
   had run in the folder). Third line WITHDRAWN by Clew-boss: reading mode
   still writes `<note's folder>/Mathematica/` (unchanged since 0.12.0, the
   jmarkdown CLI's folder too) — the owner's call whether it moves; no line,
-  no advice to delete it. Still to
+  no advice to delete it. `8c4a18d`: the file explorer's icons and
+  indentation (Clew-app `cd39a81`/`cfa279b`, ships in 0.12.1):
+  vaults-and-files #explorer and a What's new Better item, no iPad line
+  (Clew-iOS has empty icon slots until it syncs); welcome.jpg (new recipe
+  `shots/welcome.js`, Apps closed), math.jpg, live-edit.png,
+  shell-panel.png and the landing kanban.jpg retaken on `cfa279b`
+  (`$SC/tp/appcfa`) — outside the explorer unchanged but for a date, a
+  clock and a word total. The older full shots with no recipe still show
+  the old explorer. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
