@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `8c4a18d`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `241da81`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -81,7 +81,13 @@ names.
   shell-panel.png and the landing kanban.jpg retaken on `cfa279b`
   (`$SC/tp/appcfa`) — outside the explorer unchanged but for a date, a
   clock and a word total. The older full shots with no recipe still show
-  the old explorer. Still to
+  the old explorer (Clew-boss: a known gap for after 0.12.1).
+  `241da81`: folders start closed (Clew-app `0045b24`, the owner's ask
+  2026-11-17): #explorer's folders paragraph, the workspace.json row ("left
+  open"), a What's new Changed item with the once-only upgrade note. 35
+  shots show folders open (no text calls that the default); the five
+  recipe shots would retake on their top level unless the recipe opens
+  folders — not retaken, on Clew-boss's word. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
