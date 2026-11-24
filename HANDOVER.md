@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `f4cfc6b`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `10cffe6`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -96,7 +96,9 @@ names.
   the release pass, Clew-boss). `f4cfc6b`: renamed `@begin(clew-only)`
   (Clew-app `c37ce1c`, the owner's name), now out of every export, HTML
   and website too; anchor #clew-only; measured on `$SC/tp/appc37`
-  (`$SC/co`). iPad lines for both features to come from Clew-boss. Still to
+  (`$SC/co`). `10cffe6`: the iPad lines for both (Clew-iOS p4 `9abb00c`, p5
+  `d676821`, simulator only; Keep Both/Cancel, Replace the owner's open
+  question; no PDF via LaTeX named, as held-ipadpdf would add it). Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
