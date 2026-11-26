@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `afc50c7`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `bfaa6d8`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -102,7 +102,14 @@ names.
   add it to #clew-only's iPad callout when held-ipadpdf merges).
   `afc50c7`: the iPad's explorer (icons and indentation, Clew-iOS
   `0456399`; folders closed, `8e20535`), an On iPad callout in #explorer
-  and What's new's iPad list. Still to
+  and What's new's iPad list. `bbea2b1`: live edit's environment
+  frames, a rule per level ending in a └, blocks inside the rules,
+  clew-only's rule dashed and head "Clew only" + faint "left out of PDFs
+  and exports" (no "·" on screen) — Clew-app `73b9d0e`, read from source:
+  live-edit #lines (and its 0.12.0 parenthetical) and export #clew-only.
+  `bfaa6d8` (tip): its What's new Better item. Both verified by Clew-boss.
+  crossref-preview.png shows a frame (Figure 1 at its foot): review it at
+  the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
 
 - **HELD, drafted 2026-10-22 on Clew-boss's notice (Clew-iOS 875e177,
