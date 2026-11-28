@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `a96dd12`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `b21233f`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -22,7 +22,7 @@ names.
   own vendor, `CLEW_MPTIKZ_DIR` = a copy of the pinned 0.5.0; driver
   `$SC/rel/shot.sh`); `0e8aac5` adds live-edit-source-icon.png to
   live-edit #frames. trust-restricted came out byte-identical.
-  `23bb99a` (tip): Clew-boss's calls — math.jpg cropped at row 1500 of
+  `23bb99a`: Clew-boss's calls — math.jpg cropped at row 1500 of
   2560 (the Earthrise edge starts at 1520), tabbing.png at 1610 (above
   "Left Middle Right"), pdf-annotations keeps three quotes, the plain
   revealed strong accepted — and kanban.jpg in (the Pipeline board has no
@@ -123,7 +123,7 @@ names.
   #link-previews; the "No note called …" card follows the same rule
   ("opens it as Open would"; back to the old wording if the owner wants
   it in this tab). `9505b07`: What's new Changed item. Both
-  accepted by Clew-boss. `a96dd12` (tip): Clew-app `23eb983` (a link
+  accepted by Clew-boss. `a96dd12`: Clew-app `23eb983` (a link
   clicked inside a preview opens in a new tab too; the setting
   `linkPreviewOpens`, Appearance → "Links followed from a link preview
   open", new-tab | this-tab, ⌘ the other, a PDF as a PDF link whatever
@@ -132,7 +132,18 @@ names.
   handed back): editing #link-previews, a settings row, What's new's
   Changed item widened and a Fixed item (in 0.12.0 by code: `64fb7b2`'s
   onBlur unchanged to `f6763c1`). Accepted by Clew-boss; no settings shot
-  shows Appearance.
+  shows Appearance. `b21233f` (tip): spell checking (Clew-app `9bcd744`):
+  editing #spelling (what is checked and left alone, tags included; the
+  right-click menu; 500 KB; no autocorrect), "Check spelling" and
+  "Spelling languages" rows after Auto-fill, the owner's privacy line
+  (Windows and Linux fetch dictionaries from Google's servers), What's
+  new New. Accepted by Clew-boss; no iPad line. OPEN, the owner's call:
+  index.html:701 and introduction.html:66 say Clew "talks to no server it
+  was not explicitly pointed at" — untrue on Windows and Linux once the
+  dictionaries are fetched. Options (a) qualify both (Clew-boss
+  recommends), (b) the introduction only, (c) change the app. Change
+  nothing until Clew-boss relays the owner's answer verbatim; it matters
+  at the 0.12.1 release (the live site is right for 0.12.0).
   crossref-preview.png shows a frame (Figure 1 at its foot): review it at
   the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
