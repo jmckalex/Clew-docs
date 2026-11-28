@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `8a8a5f1`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `ff119c2`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -153,14 +153,22 @@ names.
   `{{name}}` prints; quotes kept; only `[-a-zA-Z0-9 ]` keys, so
   `due_date:` is part of the key above), What's new Better. live-edit.png
   shows the old `title` chip: a recipe shot, retaken at the release pass.
-  `8a8a5f1` (tip): Paragraphs spaced or indented (Clew-app `f474784`,
+  `8a8a5f1`: Paragraphs spaced or indented (Clew-app `f474784`,
   the owner's choice 2026-11-28): reading-mode #paragraphs (new h2),
   live-edit #paragraphs, export #two-pdfs ("Four details"), an
   Appearance row after Live preview, What's new New. `dbc20f2` (a
   callout's box ends at its last `>` line) not written: the manual does
-  not describe callout edges in live edit. No screenshot change. Still to
-  come, NOT to write yet: jmarkdown's "Joined quotes" (a quote inside a
-  paragraph, text going on after it), Clew-boss to send.
+  not describe callout edges in live edit. No screenshot change.
+  `ff119c2` (tip): Joined quotes (jmarkdown `8ce758d`, Clew-app `594d4b8`
+  + `a2a0e7b`, the owner's "middle way" 2026-11-28): dialect #quotes (the
+  Blockquotes bullet: a quote ends at its first line without `>`; one
+  touching a paragraph belongs to it; `Joined quotes: false`; the CLI
+  keeps CommonMark's rule), a callouts paragraph, live-edit #lines (the
+  line after a quote is prose; a callout's box ends at its last `>`
+  line, so `dbc20f2` is in after all) and #paragraphs, reading-mode
+  #paragraphs, an export Reference row, What's new Changed. The half
+  line is reading mode's only (an HTML export uses the user's template).
+  No screenshot change (no example-vault quote touches a paragraph).
   crossref-preview.png shows a frame (Figure 1 at its foot): review it at
   the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
