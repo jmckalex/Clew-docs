@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `55f1ce3`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `8a8a5f1`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -144,7 +144,7 @@ names.
   recommends), (b) the introduction only, (c) change the app. Change
   nothing until Clew-boss relays the owner's answer verbatim; it matters
   at the 0.12.1 release (the live site is right for 0.12.0).
-  `55f1ce3` (tip): `{{name}}` in live edit shows the header's value
+  `55f1ce3`: `{{name}}` in live edit shows the header's value
   (Clew-app `6af8a0d`, the owner's ask 2026-11-28): live-edit
   #inline-text (the value in the note's font, "empty" faint, an unset
   name as written in red, the name matched exactly, the engine's markers
@@ -153,6 +153,14 @@ names.
   `{{name}}` prints; quotes kept; only `[-a-zA-Z0-9 ]` keys, so
   `due_date:` is part of the key above), What's new Better. live-edit.png
   shows the old `title` chip: a recipe shot, retaken at the release pass.
+  `8a8a5f1` (tip): Paragraphs spaced or indented (Clew-app `f474784`,
+  the owner's choice 2026-11-28): reading-mode #paragraphs (new h2),
+  live-edit #paragraphs, export #two-pdfs ("Four details"), an
+  Appearance row after Live preview, What's new New. `dbc20f2` (a
+  callout's box ends at its last `>` line) not written: the manual does
+  not describe callout edges in live edit. No screenshot change. Still to
+  come, NOT to write yet: jmarkdown's "Joined quotes" (a quote inside a
+  paragraph, text going on after it), Clew-boss to send.
   crossref-preview.png shows a frame (Figure 1 at its foot): review it at
   the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
