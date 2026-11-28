@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `3ca5548`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `9505b07`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -113,11 +113,17 @@ names.
   tables, #hk-unbound, What's new New; "Every item is a command" now
   names the text styles, ⌘K, ⌘⌥T and ⌘⌥E. The older palette "Insert
   environment…" (format:env) is a different command — called by key and
-  menu path. `3ca5548` (tip): each rule starts with a ┌ (`9e445ce`), and
+  menu path. `3ca5548`: each rule starts with a ┌ (`9e445ce`), and
   an `@begin` body is drawn without the indentation reading mode strips
   (`d751de3`; closed `@begin` only, not `:::`), with the What's new item
   rewritten. Both verified by Clew-boss; Mac only, no iPad line until
-  Clew-iOS syncs.
+  Clew-iOS syncs. `8090e7b`: the link preview's Open opens a new tab
+  (Clew-app `5046097`, link-at.js#openInNewTab), its own tab where this
+  pane has one, ⌘-click this tab, a PDF as #pdf-links says — editing
+  #link-previews; the "No note called …" card follows the same rule
+  ("opens it as Open would"; back to the old wording if the owner wants
+  it in this tab). `9505b07` (tip): What's new Changed item. Both
+  accepted by Clew-boss.
   crossref-preview.png shows a frame (Figure 1 at its foot): review it at
   the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
