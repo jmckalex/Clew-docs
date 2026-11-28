@@ -10,7 +10,7 @@ names.
 ## 0. Resume here
 
 - **0.12.1 RELEASE PASS (the owner's "Go … B", via Clew-boss,
-  2026-10-22), HELD on `release-0.12.1` `9505b07`** (worktree
+  2026-10-22), HELD on `release-0.12.1` `a96dd12`** (worktree
   `../Clew-docs-0.12.1`): `0a0c2e2` merges main (stamp-only conflicts in
   37 pages, restamped); `94a4baf` brings What's new up to date (every
   manual commit since `8473369`: books, title pages, Clew's LaTeX style,
@@ -122,8 +122,17 @@ names.
   pane has one, ⌘-click this tab, a PDF as #pdf-links says — editing
   #link-previews; the "No note called …" card follows the same rule
   ("opens it as Open would"; back to the old wording if the owner wants
-  it in this tab). `9505b07` (tip): What's new Changed item. Both
-  accepted by Clew-boss.
+  it in this tab). `9505b07`: What's new Changed item. Both
+  accepted by Clew-boss. `a96dd12` (tip): Clew-app `23eb983` (a link
+  clicked inside a preview opens in a new tab too; the setting
+  `linkPreviewOpens`, Appearance → "Links followed from a link preview
+  open", new-tab | this-tab, ⌘ the other, a PDF as a PDF link whatever
+  it says) and `f6763c1` (inner links were seldom followed — the popover
+  hid on window blur under the press; Esc after a click inside; focus
+  handed back): editing #link-previews, a settings row, What's new's
+  Changed item widened and a Fixed item (in 0.12.0 by code: `64fb7b2`'s
+  onBlur unchanged to `f6763c1`). Accepted by Clew-boss; no settings shot
+  shows Appearance.
   crossref-preview.png shows a frame (Figure 1 at its foot): review it at
   the release pass, no retake now. Still to
   come: dev.18 (`cfdf3ef`, no visible change), Version bump, date line, downloads: at release.
